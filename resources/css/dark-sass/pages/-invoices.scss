@@ -1,0 +1,368 @@
+
+
+  
+/* Style for .selectBox (Dropdown container) */
+.multipleSelection {
+    position: relative;
+    background-color: transparent !important;
+  }
+  .selectBox {
+    position: relative;
+    cursor: pointer;
+    border: 1px solid #5C607B;
+    padding: 10px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    background-color: transparent !important;
+    @media only screen and (max-width:580px){
+        padding:7px 10px;
+    }
+  }
+  
+  .selectBox p {
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    color: $white-light;
+  }
+  .selectBox input{
+    border: none;
+    padding: 0 !important;
+    font-size: 16px;
+    background-color: transparent !important;
+    color: $white-light;
+    &::placeholder{
+      color: $white-light;
+    }
+    &:focus,
+    &:active{
+        outline: none;
+        border: none;
+        box-shadow: none;
+    }
+  }
+  .fa-angle-down{
+    color: $gray;
+  }
+  .down-icon {
+    display: inline-block;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+  }
+  
+  .selectBox.active .down-icon {
+    transform: rotate(180deg);
+  }
+  
+  /* Style for #checkBoxes (Dropdown content) */
+  .checkBoxes {
+    display: none;
+    position: absolute;
+    top: calc(100% + 15px);
+    right: 0;
+    min-width: 220px;
+    background-color:$dark;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    z-index: 1;
+    -webkit-box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.05);
+    padding: 15px;
+    border-top: none;
+    @media only screen and (max-width:580px){
+        padding: 10px;
+    }
+    // min-width: 300px;
+    border: 1px solid #e6effa;
+  }
+  .checkBoxes form {
+    position: relative;
+  }
+  .arrow-up {
+    // position: absolute;
+    // top: -10px;
+    // width: 0;
+    // height: 0;
+    // border-left: 10px solid transparent;
+    // border-right: 10px solid transparent;
+    // border-bottom: 10px solid white;
+    // z-index: 10;
+    border: 7px solid #f2ecff;
+    border-color: transparent transparent #ffffff #ffffff;
+    box-shadow: -2px 2px 2px -1px rgba(0, 0, 0, 0.1);
+    content: "";
+    right: 0px;
+    position: absolute;
+    top: -15px;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: rotate(135deg);
+    transform: rotate(135deg);
+  }
+  .checkbox-title {
+    padding: 0px;
+    margin: 0;
+    font-weight: 500;
+    color: #86c6f0;
+    font-size: 14px;
+  }
+  
+  .form-custom {
+    padding: 10px 0px;
+    input {
+      font-size: 14px;
+    }
+  }
+  
+  .selectBox.active .checkBoxes {
+    display: block;
+  }
+  .selectBox-cont {
+    margin: 5px 0px 10px 0px;
+    max-height: 200px;
+    overflow-y: scroll;
+    @media only screen and (max-width:580px){
+        margin: 5px 0px 0px 0px;
+    }
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+  
+    &::-webkit-scrollbar-thumb {
+      background-color: darkgrey;
+      border-radius: 10px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: $white-light;
+      cursor: pointer;
+      &:hover{
+        color: #86c6f0;
+      }
+      input {
+        margin-right: 7px;
+        height: 15px;
+      width: 15px;
+      border: 1px solid #C4C4C4;
+      background-color: transparent;
+      border-radius: 0 !important;
+      }
+    }
+  }
+  .selectBox-cont1 {
+    margin: 10px;
+    @media only screen and (max-width:580px){
+        margin: 5px 0px 0px 0px;
+    }
+    label {
+      margin-bottom: 10px;
+      font-size: 14px;
+      input {
+        margin-right: 5px;
+      }
+    }
+  }
+  .date-list ul{
+    list-style: none !important;
+    margin-left: 0px !important;
+    padding-left: 0px !important;
+  }
+  .date-list li a{
+    width: 100%;
+    border: 1px solid #e7eafc;
+    border-radius: 4px;
+    margin-bottom: 7px;
+    padding: 10px;
+    font-size: 16px;
+    color: $white-light;
+    &:hover{
+      background-color: #e7eafc;
+    }
+    @media only screen and (max-width:580px){
+        padding: 7px;
+    }
+  }
+  .table-checkbox{
+    height: 15px !important;
+    width: 15px !important;
+    border: 1px solid $light-gray !important;
+    margin-right: 5px;
+  }
+
+  .invoice-paid {
+    background-color: green;
+    color: white;
+    padding: 3px 5px;
+    border-radius: 4px;
+    text-align: center;
+    width: fit-content;
+    font-size: 12px;
+  }
+  .invoice-overdue {
+    background-color: red;
+    color: white;
+    padding: 3px 5px;
+    border-radius: 4px;
+    text-align: center;
+    width: fit-content;
+    font-size: 12px;
+  }
+  .invoice-cancelled{
+    background-color: #3596f7;
+    color: white;
+    padding: 3px 5px;
+    border-radius: 4px;
+    text-align: center;
+    width: fit-content;
+    font-size: 12px;
+  }
+  .invoice-active{
+    background-color: greenyellow;
+    color: white;
+    padding: 3px 5px;
+    border-radius: 4px;
+    text-align: center;
+    width: fit-content;
+    font-size: 12px;
+  }
+  .invoice-expired{
+    background-color: red;
+    color: white;
+    padding: 3px 5px;
+    border-radius: 4px;
+    text-align: center;
+    width: fit-content;
+    font-size: 12px;
+  }
+  .invoice-tabs-div{
+overflow-x: auto;
+  }
+  .invoice-tabs{
+min-width: 500px;
+}
+
+
+.invoice-heading{
+    font-size: 18px;
+    font-weight: 500;
+}
+.invoice-label{
+    font-size: 14px;
+    font-weight: 500;
+    min-width: 100px;
+    color: $white-light;
+}
+.invoice-value{
+    font-size: 14px;
+    font-weight: 400;
+    color: #86c6f0;
+}
+.form-check-label{
+    font-size: 14px !important;
+    color: $white-light;
+}
+.line{
+    height: 1px;
+    background-color: $gray !important;
+    width: 90%;
+    margin: 0px auto;
+}
+
+.accordian-invoice-icon::after {
+    z-index: 5;
+  }
+  .accordian-invoice-icon:not(.collapsed),
+  .accordian-invoice-icon {
+    background-color: #e6effa !important;
+    box-shadow: none !important;
+    outline: none !important;
+    font-size: 14px !important;
+    color: $gray;
+    background-color: transparent !important;
+  }
+  .accordian-invoice-icon::after {
+    @media only screen and (min-width: 768px) {
+      display: block !important;
+    }
+  }
+  .cursonr-pointer{
+    cursor: pointer;
+    &:hover{
+        color: $primary !important;
+    }
+  }
+  .w-sm-100{
+    @media only screen and (max-width:580px){
+        width: 100% !important;
+    }
+  }
+  .edit-bank{
+    background-color: #86c6f0;
+    border-radius: 6px;
+    padding: 7px;
+    color: white;
+    button i{
+        color: white !important;
+    }
+  }
+  // ==========================================================preview
+  .invoice-heading-row{
+    background-color: #86c6f0;
+    display: flex;
+    justify-content: flex-end;
+    padding:15px 45px;
+    position: relative;
+    .invoice-heading{
+      color: $white-light;
+      font-size: 50px;
+      font-weight: 600;
+      background-color: $dark;
+      width: fit-content;
+      padding: 0px 15px;
+      position: absolute;
+      top: -15px;
+      right: 45px;
+    }
+
+  }
+  .summary-div-total {
+    background-color: #86c6f0;
+    padding: 5px ;
+    color: white;
+  }
+  .sign-text{
+    border-top: 1px solid $gray;
+    p{
+      font-size: 14px;
+    }
+  }
+  .invoice-footer{
+    border-top: 2px solid $secondry;
+    padding: 20px !important;
+    display: flex;
+    justify-content: space-between;
+  }
+  .box-gray  textarea{
+    color: $white-light !important;
+  }
+  .accordian-invoice-icon:not(.collapsed), .accordian-invoice-icon{
+    color: $white-light !important;
+  }
+  .summary-div  p{
+    color: $white-light;
+  }
+  #dropzone p{
+    color: $white-light !important;
+  }
+  .dropzone{
+    background-color: transparent !important;
+  }
+  .accordion-body textarea{
+    background-color: transparent !important;
+  }

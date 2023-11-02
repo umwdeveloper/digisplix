@@ -1,0 +1,146 @@
+.menu-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background-color: $dark;
+  z-index: 1000;
+  display: none;
+  justify-content: space-around;
+  align-items: center;
+  .footer-menu-link a {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    i {
+      font-size: 20px;
+      margin-bottom: 7px;
+      color: $white-light;
+    }
+    font-size: 10px;
+    font-weight: 500;
+    color: $gray;
+    line-height: 10px;
+  }
+  @media only screen and (max-width: 575px) {
+    display: flex;
+  }
+
+}
+.active-footer-menu a {
+  i {
+    color: $secondry !important;
+  }
+  color: $secondry !important;
+}
+.menu-footer-shadow {
+  box-shadow: none;
+}
+// ===============================more option
+.menu-footer-popup {
+  position: fixed;
+  bottom: -600px;
+  left: 0;
+  right: 0;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background-color: $dark;
+  z-index: 999;
+  height: 400px;
+  overflow-y: auto;
+  border-radius: 10px 10px 0px 0px !important;
+  padding: 20px;
+  padding-bottom: 65px;
+  padding-top: 0;
+  transition: all 0.5s;
+  display: none;
+  @media only screen and (max-width: 575px) {
+    display: block;
+  }
+  h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: $white-light;
+    position: fixed;
+    padding: 20px 20px 10px 20px;
+    background-color: $dark;
+    border-radius: 10px 10px 0px 0px !important;
+    left: 0;
+    right: 0;
+    z-index: 3;
+  }
+  .menu-footer-padding {
+    padding-top: 50px;
+  }
+  .more-footer-link {
+    padding: 15px 0px;
+    .more-dropdown {
+      background-color: transparent;
+      padding: 0 !important;
+      border: none;
+      margin: 0;
+      position: relative;
+      display: flex;
+      align-items: center;
+      &:focus,
+      &:active {
+        outline: none !important;
+        box-shadow: none !important;
+      }
+      .more-icon {
+        width: 20px;
+        margin-right: 7px;
+        i {
+          font-size: 16px;
+        }
+      }
+      font-size: 14px;
+      font-weight: 500;
+      color: $white-light;
+      line-height: 10px;
+    }
+    .more-dropdown.active-footer-menu{
+      color: $secondry !important;
+    }
+    .more-dropdown-menu {
+      position: relative !important;
+      transform: none !important;
+      border: none !important;
+      margin-top: 15px !important;
+      padding-bottom: 0px !important;
+      padding-left: 20px !important;
+      background-color: $dark !important;
+      .menu-item:not(:last-child) {
+        margin-bottom: 22px !important;
+      }
+    }
+    a {
+      display: flex;
+      align-items: center;
+      .more-icon {
+        margin-right: 7px;
+        width: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        i {
+          font-size: 14px;
+        }
+      }
+
+      font-size: 14px;
+      font-weight: 500;
+      color: $light-gray;
+      line-height: 10px;
+    }
+  }
+}
+.menu-footer-popup-show {
+  bottom: 0;
+}
+
+.menu-footer-popup.menu-footer-popup-show .menu-footer {
+  box-shadow: none !important;
+}

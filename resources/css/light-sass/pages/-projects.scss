@@ -1,0 +1,387 @@
+.box-white {
+  position: relative;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.05);
+  border: 1px solid #efeffd;
+  padding: 20px 15px;
+  overflow: hidden;
+  @media only screen and (max-width: 580px) {
+    padding: 0px;
+  }
+}
+.project-card {
+  position: relative;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.05);
+  border: 1px solid #efeffd;
+  padding: 15px 0px;
+  &--header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px 10px 20px;
+    h2 {
+      font-size: 16px;
+      font-weight: 600;
+      color: $secondry;
+    }
+
+    a {
+      i {
+        color: $gray;
+        font-size: 18px;
+        &:hover {
+          color: $secondry;
+          cursor: pointer;
+        }
+      }
+    }
+    .project-msg {
+      position: relative;
+      .project-msg-number {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        height: 14px;
+        width: 14px;
+        border-radius: 100%;
+        background-color: $primary;
+        font-size: 10px;
+        color: white;
+        text-align: center;
+      }
+    }
+  }
+  &-data {
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    background-color: $light-skin;
+    img {
+      height: 40px;
+      width: 40px;
+      border-radius: 100%;
+      object-fit: cover;
+    }
+    h1 {
+      font-size: 16px;
+      font-weight: 500;
+      color: $dark-blue;
+      display: block;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    h3 {
+      font-size: 14px;
+      color: $gray;
+      display: block;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  &-details {
+    padding: 15px 20px 0px 20px;
+    p {
+      display: block;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 14px;
+      font-weight: 500;
+      text-align: left;
+      color: $gray;
+    }
+    .paid {
+      padding: 5px 20px !important;
+      background-color: green;
+      font-size: 14px;
+      font-weight: 500;
+      color: white;
+      border: none;
+      line-height: 14px !important;
+      height: 35px;
+      border-radius: 5px;
+      &:hover {
+        background-color: rgb(1, 83, 1);
+      }
+    }
+    .overdue {
+      padding: 5px 20px !important;
+      background-color: rgb(218, 4, 4);
+      font-size: 14px;
+      font-weight: 500;
+      color: white;
+      border: none;
+      line-height: 14px !important;
+      height: 35px;
+      border-radius: 5px;
+      &:hover {
+        background-color: rgb(153, 8, 8);
+      }
+    }
+    i {
+      color: $gray;
+    }
+    span {
+      font-weight: 500;
+      font-size: 16px;
+      color: $gray;
+    }
+  }
+}
+.completed {
+  color: green !important;
+  i {
+    color: green !important;
+  }
+  span {
+    color: green !important;
+  }
+}
+// =====================================================tabs
+/* Style the tab */
+.tabProjects {
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Style the buttons inside the tab */
+.tabProjects button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 10px 16px;
+  transition: 0.3s;
+  font-size: 16px;
+  font-weight: 500;
+  flex-grow: 1;
+  background-color: rgba($secondry, 0.1);
+  color: $secondry;
+  border-bottom: 2px dashed $secondry;
+}
+.tabProjects button span {
+  @media only screen and (max-width: 580px) {
+    display: none;
+  }
+}
+/* Change background color of buttons on hover */
+.tabProjects button:hover {
+  // background-color: rgba($secondry, 1);
+  border-bottom: 2px solid $secondry;
+}
+
+/* Create an active/current tablink class */
+.tabProjects button.activeProjects {
+  // background-color: rgba($secondry, 1);
+  border-bottom: 2px solid $secondry;
+  font-weight: 600;
+}
+
+/* Style the tab content */
+.tabcontentProjects {
+  padding: 10px 10px;
+  display: none;
+  border-top: none;
+  // background-color: $light-skin;
+}
+.box-gray {
+  width: 100%;
+  background-color: $light-skin;
+  border-radius: 10px;
+  border: 1px solid #efeffd;
+  padding: 20px;
+  height: 100%;
+  // min-height: 200px;
+  @media only screen and (max-width: 580px) {
+    padding: 20px 5px;
+  }
+}
+.caption {
+  font-size: 14px;
+  font-weight: 400;
+  color: $gray;
+  @media only screen and (max-width: 580px) {
+    font-size: 14px;
+  }
+}
+.caption-step {
+  font-size: 14px;
+  font-weight: 400;
+  color: $gray;
+  @media only screen and (max-width: 580px) {
+    font-size: 10px;
+  }
+}
+.launch-img {
+  height: 80px;
+}
+
+.step-count {
+  text-align: center;
+  padding: 10px;
+  @media only screen and (max-width: 580px) {
+    padding: 5px;
+  }
+  i {
+    font-size: 30px;
+    @media only screen and (max-width: 580px) {
+      font-size: 30px;
+    }
+  }
+  .complete-step {
+    color: green;
+  }
+  .in-progress-step {
+    color: $secondry;
+  }
+}
+.progress-step-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+// ============================================================================tasks
+.task-card {
+  height: 100%;
+  width: 100%;
+  background-color: $light-skin;
+  border-radius: 10px;
+  border: 1px solid #efeffd;
+  // padding-bottom: 15px;
+  height: 100%;
+  position: relative;
+  padding-top: 50px;
+
+  &--header {
+    position: absolute;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 500;
+    color: $dark-blue;
+    padding: 15px;
+    background-color: #e6effa;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-bottom: 1px solid $light-gray;
+    .edit {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      &:hover {
+        color: $secondry;
+        cursor: pointer;
+      }
+    }
+    .edit-able {
+      padding: 4px;
+    }
+  }
+  &--body {
+    max-height: 280px;
+    overflow-y: auto;
+    padding: 20px;
+    padding-bottom: 0px;
+    background-color: white;
+    @media only screen and (max-width: 767px) {
+      padding: 10px;
+    }
+    &::-webkit-scrollbar {
+      width: 7px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #aaa;
+      border-radius: 10px;
+    }
+
+    p {
+      font-size: 14px;
+      font-weight: 400;
+      color: $gray;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      span {
+        color: gray;
+      }
+    }
+    i {
+      color: gray;
+    }
+    .complete-step {
+      color: green;
+    }
+  }
+  &--footer {
+    padding: 0px 15px;
+    border-top: 1px solid $light-gray;
+  }
+}
+.edit {
+  i {
+    &:hover {
+      color: $secondry;
+      cursor: pointer;
+    }
+  }
+}
+.edit-task {
+  i {
+    &:hover {
+      color: $secondry;
+      cursor: pointer;
+    }
+  }
+}
+.score {
+  background-color: $light-skin !important;
+  height: 30px;
+  width: 50px;
+  border: 1px solid $gray;
+  text-align: center;
+}
+.accordion-button::after {
+  z-index: 5;
+}
+.accordion-button:not(.collapsed),
+.accordion-button {
+  background-color: #e6effa !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+.accordion-button::after {
+  @media only screen and (min-width: 768px) {
+    display: none !important;
+  }
+}
+
+.blue-icon {
+  background-color: #3596f7 !important;
+  color: white;
+  i {
+    color: white !important;
+  }
+}

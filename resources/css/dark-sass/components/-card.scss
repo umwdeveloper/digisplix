@@ -1,0 +1,277 @@
+.person-card {
+    position: relative;
+    width: 100%;
+    background-color: $dark;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.05);
+    border: 1px solid #efeffd;
+    padding: 0px;
+    height: 100%;
+    // z-index: 2;
+    .person-img {
+      border-radius: 10px 10px 0px 0px;
+    }
+    .person-detail {
+      position: relative;
+      padding: 20px 10px 7px 10px;
+      text-align: center;
+      h1 {
+       color: #86c6f0;
+        font-size: 22px;
+        font-weight: 400;
+        text-align: center;
+      }
+      h2 {
+       color: #86c6f0;
+        font-size: 16px;
+        font-weight: 500;
+        text-align: center;
+      }
+      p {
+        font-size: 14px;
+        font-weight: 400;
+        color: $white-light;
+      }
+      a {
+        font-size: 14px;
+        font-weight: 400;
+        color: $white-light;
+        text-decoration: none;
+        &:hover {
+         color: #86c6f0;
+        }
+      }
+      i {
+        font-size: 14px;
+        color: $white-light;
+        @media only screen and (max-width:400px){
+        font-size: 12px;
+        }
+      }
+    }
+    .contact-icon {
+      cursor: pointer;
+      margin-top: -36px;
+      .fb {
+        height: 35px;
+        width: 35px;
+        border-radius: 100%;
+        i {
+          color: #ffff;
+          font-size: 18px;
+        }
+        background-color: #3b5998;
+        border-color: #3b5998;
+      }
+      .insta {
+        height: 35px;
+        width: 35px;
+        border-radius: 100%;
+        i {
+          color: #ffff;
+          font-size: 18px;
+        }
+        background-color: #e1306c;
+        border-color: #e1306c;
+        color: #ffffff;
+      }
+      .twitter {
+        height: 35px;
+        width: 35px;
+        border-radius: 100%;
+        i {
+          color: #ffff;
+          font-size: 18px;
+        }
+        background-color: #1da1f2;
+        border-color: #1da1f2;
+        color: #ffffff;
+      }
+      .msg {
+        height: 35px;
+        width: 35px;
+        border-radius: 100%;
+        i {
+          color: #ffff;
+          font-size: 18px;
+        }
+        background-color: #ffa800;
+        border-color: #ffa800;
+        color: #ffffff;
+      }
+    }
+  }
+  // ======================================dropdown
+  .dots-btn {
+    position: relative;
+    background-color: transparent;
+    padding: 0;
+    border: none;
+  }
+  .dots-btn2{
+     height: 30px;
+     width: 30px;
+     border-radius: 100%;
+     padding: 0px;
+     border: none;
+     background-color: $dark-skin;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     color: white;
+  }
+  .dots-menu {
+    background-color: $dark;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.05);
+    border: 1px solid #efeffd;
+    display: none;
+    position: relative;
+    position: absolute;
+    top: 0px;
+    left: 15px;
+    // z-index: 3;
+  }
+  .dots-menu2 {
+    // position: relative;
+    // z-index: 3;
+    background-color: $dark-skin;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.05);
+    border: 1px solid #efeffd;
+    position: absolute;
+    top: 0px;
+    right: 20px;
+    display: none;
+    color: $white-light;
+  }
+  .dots-menu .dropdown-item,
+  .dots-menu2 .dropdown-item{
+  font-size: 14px;
+  color: $white-light;
+  }
+  .dots-dropdown {
+    position: relative;
+    text-align: left;
+    z-index:2;
+  }
+  // .dots-btn:active ~ .dots-menu,
+  // .dots-btn:focus ~ .dots-menu {
+  //   // position: absolute;
+  //   // top: 0px;
+  //   // left: 15px;
+  //   display: block;
+  // }
+  // .dots-btn2:active ~ .dots-menu2,
+  // .dots-btn2:focus ~ .dots-menu2 {
+  //   // position: absolute;
+  //   // top: 0px;
+  //   // right: 20px;
+  //   display: block;
+  // }
+  .dots-menu2-show{
+    display: block ;
+  }
+  .dots-menu-show{
+    display: block ;
+  }
+  .person-flag {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    border-radius: 100%;
+    top: 10px;
+    right: 10px;
+    object-fit: cover;
+  }
+  // =================================================ribbon4
+  .ribbon-two {
+    position: absolute;
+    left: -5px;
+    top: -5px;
+    z-index: 1;
+    overflow: hidden;
+    width: 71px;
+    height: 71px;
+    text-align: right;
+    span {
+      font-size: 14px;
+      color: white;
+      text-align: center;
+      line-height: 20px;
+      transform: rotate(-45deg);
+      -webkit-transform: rotate(-45deg);
+      width: 100px;
+      display: block;
+      background-color: $primary;
+      -webkit-box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.06),
+        0 1px 0 0 rgba(0, 0, 0, 0.02);
+      box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0 0 rgba(0, 0, 0, 0.02);
+      position: absolute;
+      top: 19px;
+      left: -21px;
+      font-weight: 600;
+      &:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 100%;
+        z-index: -1;
+        border-right: 3px solid $primary;
+        border-bottom: 3px solid $primary;
+      }
+      &:after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 100%;
+        z-index: -1;
+        border-left: 3px solid $primary;
+        border-bottom: 3px solid $primary;
+      }
+    }
+  }
+  
+  .ribbox-blue {
+    span {
+      background-color: $secondry !important;
+      &:before {
+        content: "";
+        border-right: 3px solid $secondry;
+        border-bottom: 3px solid $secondry;
+      }
+      &:after {
+        content: "";
+        border-left: 3px solid $secondry;
+        border-bottom: 3px solid $secondry;
+      }
+    }
+  }
+  .ribbox-red {
+    span {
+      background-color: green !important;
+      &:before {
+        content: "";
+        border-right: 3px solid green;
+        border-bottom: 3px solid green;
+      }
+      &:after {
+        content: "";
+        border-left: 3px solid green;
+        border-bottom: 3px solid green;
+      }
+    }
+  }
+  .person-image {
+    position: relative;
+    .dots-dropdown {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 5;
+    }
+  }
+  

@@ -1,0 +1,45 @@
+.table-btn{
+  background-color: $secondry;
+  border: none;
+  text-decoration: none;
+  border-radius: 3px;
+  font-size: 14px;
+  font-weight: 400;
+  color: white !important;
+  padding: 4px 7px;
+}
+.table-btn-blank{
+  background-color: transparent;
+  border: none;
+  text-decoration: none;
+  border-radius: 3px;
+  font-size: 14px;
+  font-weight: 400;
+  color: $secondry;
+  padding: 4px 7px;
+  border: 1px solid $secondry;
+  // &:hover{
+  //   background-color: $secondry !important;
+  //   color: white !important;
+  // }
+}
+.table-btn-blank-completed{
+  background-color: green!important;
+  color: white !important;
+  border: 1px solid green;
+}
+.delete {
+  // height: 30px;
+  // width: 30px;
+  font-size: 14px;
+  padding: 3px 7px;
+  border-radius: 4px;
+  background-color: red;
+  color: white;
+  border: none;
+  margin-left: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}

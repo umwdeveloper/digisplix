@@ -1,0 +1,64 @@
+
+/* Style the tabs */
+.tab,
+.tab2 {
+  overflow: hidden;
+  border: none;
+  background-color: transparent;
+  border-bottom: 1px solid $light-gray;
+  margin-bottom: 20px;
+}
+
+/* Style the buttons inside the tabs */
+.tab button,
+.tab2 button{
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 7px 16px;
+  transition: 0.3s;
+  font-size: 14px;
+  font-weight: 500;
+  color: $gray;
+  background-color: transparent !important;
+  border-bottom: 1px solid transparent;
+  @media only screen and (max-width:420px){
+    padding: 7px 10px;
+    font-size: 14px;
+  }
+  @media only screen and (max-width:360px){
+    padding: 7px 8px;
+    font-size: 13px;
+  }
+  @media only screen and (max-width:328px){
+    padding: 7px 7px;
+    font-size: 13px;
+  }
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    border-bottom: 1px solid $secondry;
+    color: $secondry;
+}
+
+/* Create an active/current tabslink class */
+.tab button.active,
+.tab2 button.active2 {
+    border-bottom: 1px solid $secondry;
+    color: $secondry;
+}
+// .tab2 button.active2{
+//   display: block;
+// }
+/* Style the tabs content */
+.tab-tabcontent {
+  display:none;
+// visibility: hidden;
+// opacity: 0;
+//   padding: 6px 12px;
+//   border: 1px solid #ccc;
+//   border-top: none;
+}

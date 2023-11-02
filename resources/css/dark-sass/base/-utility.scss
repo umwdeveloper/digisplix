@@ -1,0 +1,88 @@
+.hide-sm{
+    @media only screen and (max-width:580px){
+        display: none !important;
+    }
+}
+.show-md{
+   display: none;
+   @media only screen and (max-width:991px){
+    display: block !important;
+} 
+}
+.text-primary{
+    color: #86c6f0 !important;
+}
+.text-danger{
+    color: red !important;
+}
+.text-yellow{
+    color: rgb(201, 201, 5) !important;
+}
+.ellipsis-3{
+    color: $dark-blue;
+    font-size: 14px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3 !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0px !important;
+}
+.ellipsis-2{
+    color: $dark-blue;
+    font-size: 14px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2 !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0px !important;
+}
+.page-title{
+    color: $white-light;
+    font-size: 15px;
+    font-weight: 500;
+}
+// ================================================input type file
+// /* Hide the default file input */
+#file {
+    // display: none;
+    position: absolute;
+    left: 0;
+    bottom: 7px;
+    left: 5px;
+    height: 25px;
+    opacity: 0;
+    width: 135px ;
+    padding: 7px 0px;
+    background-color: red;
+}
+
+/* Style the custom label as a button */
+.custom-file-upload {
+    border: 0px solid #ccc;
+    display: inline-block;
+    padding: 4px 12px;
+    cursor: pointer;
+    color: $white-light;
+    border-radius: 3px;
+    width: 135px;
+    // width: 90% !important;
+}
+
+/* Style the label when hovering */
+.custom-file-upload:hover {
+    background-color: $dark;
+}
+// .selected-file-name{
+//     margin: 7px 12px; 
+// }
+ /* Style the delete icon (X) */
+ .delete-icon {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 25px !important;
+    color: red;
+}
