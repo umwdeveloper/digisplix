@@ -244,3 +244,16 @@ const currentYear = new Date().getFullYear();
 document.getElementById(
   "copyright-year"
 ).textContent = `Copyright © ${currentYear} DigiSplix, LLC. All Rights Reserved`;
+
+
+// Show preloader only once in 2 hours
+const twoHours = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
+const now = new Date();
+const twoHoursLater = new Date(now.getTime() + twoHours);
+
+Cookies.set('preloader', 'set', {
+    expires: twoHoursLater,
+    path: '/'
+});
+
+// Cookies.remove("preloader", {path: '/'})

@@ -10,10 +10,11 @@
 
     {{-- Bootstrap --}}
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/bootstrap-icons.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     {{-- Fonts --}}
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
     {{-- Icons --}}
     <link rel="stylesheet" href="{{ asset('fa-icons/all.css') }}">
@@ -31,19 +32,32 @@
     {{-- Css --}}
     <link rel="stylesheet" href="{{ asset('css/css-pro.css') }}">
     <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
-    <link rel="stylesheet" id="theme-link" href="{{ asset('css/light-theme.css') }}">
+    @php
+        $preferredMode = request()->cookie('preferredMode');
+    @endphp
+    <link rel="stylesheet" id="theme-link"
+        href="{{ asset($preferredMode && $preferredMode == 'dark' ? 'css/dark-theme.css' : 'css/light-theme.css') }}">
 
 
     <title>DigiSplix | Admin</title>
 </head>
 
 <body class="theme">
-    <div class="loader">
-        <img src="{{ asset('images/d-png.png') }}" alt="">
-    </div>
+    @php
+        $preloader = request()->cookie('preloader');
+    @endphp
+    @if (!$preloader)
+        <div class="loader">
+            <img src="{{ asset('images/d-png.png') }}" alt="">
+        </div>
+    @endif
     <div class="layout has-sidebar fixed-sidebar d-flex" style="width: fit-content !important;">
         <!-- ---------------------Side bar-------------- -->
-        <aside id="sidebar" class="sidebar break-point-lg has-bg-image ">
+        @php
+            $preferredSidebar = request()->cookie('preferredSidebar');
+        @endphp
+        <aside id="sidebar"
+            class="sidebar break-point-lg has-bg-image {{ $preferredSidebar && $preferredSidebar == 'close' ? 'collapsed' : '' }}">
 
             <div class="sidebar-layout">
                 <div class="sidebar-header d-flex justify-content-center">
@@ -59,8 +73,8 @@
                 <div class="d-flex  user-account ">
 
                     <div class="user-icon">
-                        <img src="{{ asset('images/vatar-removebg-preview.png') }}" alt="" class="" height="50"
-                            width="50">
+                        <img src="{{ asset('images/vatar-removebg-preview.png') }}" alt="" class=""
+                            height="50" width="50">
                     </div>
                     <div class="dropdown profile-dropdown ms-auto">
                         <button class="dropdown-toggle d-flex align-items-center pe-3" type="button"
@@ -77,8 +91,14 @@
                             </li>
                             <li><a class="dropdown-item" href="settings.html"><i
                                         class="bi bi-gear me-3"></i>Settings</a>
-                            <li><a class="dropdown-item" href="log-in.html"><i
+                            <li><a class="dropdown-item" href="logout"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit()"><i
                                         class="bi bi-arrow-bar-left me-3"></i>Logout</a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    style="display: none">
+                                    @csrf
+                                </form>
                             </li>
                         </ul>
                     </div>
@@ -845,7 +865,9 @@
         document.addEventListener("DOMContentLoaded", function() {
             setTimeout(function() {
                 var loader = document.querySelector(".loader");
-                loader.style.display = "none";
+                if (loader) {
+                    loader.style.display = "none";
+                }
             }, 4000);
         });
     </script>
