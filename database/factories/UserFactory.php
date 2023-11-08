@@ -28,6 +28,7 @@ class UserFactory extends Factory {
             'address' => fake()->address(),
             'country' => fake()->country(),
             'designation' => fake()->jobTitle(),
+            'img' => 'https://i.pravatar.cc/300',
         ];
     }
 
@@ -40,17 +41,48 @@ class UserFactory extends Factory {
         ]);
     }
 
-    public function me(): static {
+    public function staff(): static {
         return $this->state(fn (array $attributes) => [
-            'name' => 'Awais',
-            'email' => 'umwdeveloper@gmail.com',
+            'name' => 'Staff',
+            'email' => 'staff@gmail.com',
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('123'),
+            'password' => Hash::make('123'),
             'remember_token' => Str::random(10),
-            'phone' => '03064027086',
-            'address' => 'Mianwali',
-            'country' => 'Pakistan',
-            'designation' => 'Developer',
+            'phone' => fake()->phoneNumber(),
+            'address' => fake()->address(),
+            'country' => fake()->country(),
+            'designation' => fake()->jobTitle(),
+            'img' => 'https://i.pravatar.cc/300',
+        ]);
+    }
+
+    public function partner(): static {
+        return $this->state(fn (array $attributes) => [
+            'name' => 'Partner',
+            'email' => 'partner@gmail.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('123'),
+            'remember_token' => Str::random(10),
+            'phone' => fake()->phoneNumber(),
+            'address' => fake()->address(),
+            'country' => fake()->country(),
+            'designation' => fake()->jobTitle(),
+            'img' => 'https://i.pravatar.cc/300',
+        ]);
+    }
+
+    public function client(): static {
+        return $this->state(fn (array $attributes) => [
+            'name' => 'Client',
+            'email' => 'client@gmail.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('123'),
+            'remember_token' => Str::random(10),
+            'phone' => fake()->phoneNumber(),
+            'address' => fake()->address(),
+            'country' => fake()->country(),
+            'designation' => fake()->jobTitle(),
+            'img' => 'https://i.pravatar.cc/300',
         ]);
     }
 }

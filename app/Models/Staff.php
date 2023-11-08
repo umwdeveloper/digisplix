@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Staff extends Model {
     use HasFactory;
 
+    public $timestamps = false;
+
     public function user() {
         return $this->morphOne('App\User', 'userable');
     }

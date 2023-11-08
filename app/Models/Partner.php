@@ -18,6 +18,10 @@ class Partner extends Model {
     ];
 
     public function user() {
-        return $this->morphOne('App\User', 'userable');
+        return $this->morphOne(User::class, 'userable');
+    }
+
+    public function clients() {
+        return $this->hasMany(Client::class);
     }
 }

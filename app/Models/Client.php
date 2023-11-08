@@ -23,4 +23,8 @@ class Client extends Model {
     public function user() {
         return $this->morphOne('App\User', 'userable');
     }
+
+    public function partner() {
+        return $this->belongsTo(Partner::class);
+    }
 }
