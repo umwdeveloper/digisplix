@@ -69,7 +69,7 @@
                     </div>
 
                     <div class="form-check d-flex justify-content-center mt-4 align-items-center">
-                        <input class="form-check-input log-checkbox me-2" type="checkbox" name="remember_me"
+                        <input class="form-check-input log-checkbox me-2" type="checkbox" name="remember"
                             id="flexCheckDefault">
                         <label class="form-check-label f-14 w-400 text-white" for="flexCheckDefault">
                             Remember
