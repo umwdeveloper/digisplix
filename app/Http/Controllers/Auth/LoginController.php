@@ -13,6 +13,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller {
     /*
@@ -42,6 +43,7 @@ class LoginController extends Controller {
      */
     public function __construct() {
         $this->middleware('guest')->except('logout');
+        // Session::flush();
     }
 
     /**
@@ -68,11 +70,11 @@ class LoginController extends Controller {
      */
     protected function authenticated(Request $request, $user) {
         if ($user->userable_type === Staff::class) {
-            return redirect('/');
+            return redirect()->route('staff.index');
         } else if ($user->userable_type === Partner::class) {
-            return redirect('/partners');
+            return redirect()->route('partner.index');
         } else if ($user->userable_type === Client::class) {
-            return redirect('/clients');
+            return redirect()->route('client.index');
         }
     }
 }

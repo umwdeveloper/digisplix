@@ -40,6 +40,10 @@
 
 
     <title>DigiSplix | Admin</title>
+
+    @php
+        $user = auth()->user();
+    @endphp
 </head>
 
 <body class="theme">
@@ -80,7 +84,7 @@
                         <button class="dropdown-toggle d-flex align-items-center pe-3" type="button"
                             id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             <div>
-                                <h3 class="mb-0">Nil Yeager </h3>
+                                <h3 class="mb-0">{{ $user->name }}</h3>
                                 <p class="mb-0 pb-0">Super Admin</p>
                             </div>
                         </button>

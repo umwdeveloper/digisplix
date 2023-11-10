@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class StaffController extends Controller {
 
@@ -13,7 +15,16 @@ class StaffController extends Controller {
      * Display a listing of the resource.
      */
     public function index() {
-        return view('staff.index');
+        $clients = Client::with('projects')->get();
+
+        return view('staff.index', [
+            'totalClients' => count($clients),
+            'activeClients' => $clients->where('status', 1)->count(),
+            'totalProjects' => $clients->pluck('projects')->flatten()->count(),
+            'overdueProjects' => $clients->pluck('projects')->flatten()->where('billing_status', 0)->count(),
+            'onGoingProjects' => $clients->pluck('projects')->flatten()->where('current_status', 0)->count(),
+            'completedProjects' => $clients->pluck('projects')->flatten()->where('current_status', 1)->count(),
+        ]);
     }
 
     /**

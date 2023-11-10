@@ -24,11 +24,11 @@ class RedirectIfAuthenticated {
             if (Auth::guard($guard)->check()) {
                 $user_type = Auth::user()->userable_type;
                 if ($user_type === Staff::class) {
-                    return redirect('/');
+                    return redirect()->route('staff.index');
                 } elseif ($user_type === Partner::class) {
-                    return redirect('/partners');
+                    return redirect()->route('partner.index');
                 } elseif ($user_type === Client::class) {
-                    return redirect('/clients');
+                    return redirect()->route('client.index');
                 }
                 return redirect(RouteServiceProvider::HOME);
             }

@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder {
                 StaffTableSeeder::class,
                 PartnersTableSeeder::class,
                 ClientsTableSeeder::class,
+                ProjectTableSeeder::class,
                 UsersTableSeeder::class,
             ]
         );

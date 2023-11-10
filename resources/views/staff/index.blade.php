@@ -12,7 +12,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class=" flex-grow-1  box-text d-flex align-items-center">
 
-                                        <span class="box-value">102</span>
+                                        <span class="box-value">{{ $totalClients }}</span>
 
                                     </div>
                                     <div class="box-icon">
@@ -28,7 +28,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class=" flex-grow-1  box-text d-flex align-items-center">
 
-                                        <span class="box-value">32</span>
+                                        <span class="box-value">{{ $activeClients }}</span>
 
                                     </div>
                                     <div class="box-icon">
@@ -43,7 +43,7 @@
                                 <h1 class="box-heading">Total Projects</h1>
                                 <div class="d-flex align-items-center">
                                     <div class=" flex-grow-1  box-text d-flex align-items-center">
-                                        <span class="box-value">143</span>
+                                        <span class="box-value">{{ $totalProjects }}</span>
 
                                     </div>
                                     <div class="box-icon">
@@ -58,7 +58,7 @@
                                 <h1 class="box-heading">Overdue Projects</h1>
                                 <div class="d-flex align-items-center">
                                     <div class=" flex-grow-1  box-text d-flex align-items-center">
-                                        <span class="box-value">09</span>
+                                        <span class="box-value">{{ $overdueProjects }}</span>
 
                                     </div>
                                     <div class="box-icon">
@@ -73,7 +73,7 @@
                                 <h1 class="box-heading">Ongoing Projects</h1>
                                 <div class="d-flex align-items-center">
                                     <div class=" flex-grow-1  box-text d-flex align-items-center">
-                                        <span class="box-value">32</span>
+                                        <span class="box-value">{{ $onGoingProjects }}</span>
 
                                     </div>
                                     <div class="box-icon">
@@ -87,7 +87,7 @@
                                 <h1 class="box-heading">Completed Projects</h1>
                                 <div class="d-flex align-items-center">
                                     <div class=" flex-grow-1  box-text d-flex align-items-center">
-                                        <span class="box-value">132</span>
+                                        <span class="box-value">{{ $completedProjects }}</span>
 
                                     </div>
                                     <div class="box-icon">

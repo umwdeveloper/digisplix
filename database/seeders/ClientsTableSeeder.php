@@ -7,6 +7,7 @@ use App\Models\Partner;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Cache;
 
 class ClientsTableSeeder extends Seeder {
     /**
@@ -36,5 +37,7 @@ class ClientsTableSeeder extends Seeder {
                 ]);
             }
         });
+
+        Cache::forget('clients');
     }
 }
