@@ -62,6 +62,56 @@ class LoginController extends Controller {
     }
 
     /**
+     * Attempt to log the user into the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    protected function attemptLogin(Request $request) {
+        $attempt = $this->guard()->attempt(
+            $this->credentials($request),
+            $request->boolean('remember')
+        );
+
+        if ($attempt) {
+            $user = Auth::user();
+            $subdomain = $this->getSubdomain();
+
+            if ($subdomain === "admin") {
+                if ($user->userable_type === Staff::class) {
+                    return true;
+                }
+                $this->guard()->logout();
+            } elseif ($subdomain === "partner") {
+                if ($user->userable_type === Partner::class) {
+                    return true;
+                }
+                $this->guard()->logout();
+            } elseif ($subdomain === "client") {
+                if ($user->userable_type === Client::class) {
+                    return true;
+                }
+                $this->guard()->logout();
+            }
+        }
+
+        return false;
+    }
+
+    protected function getSubdomain() {
+        $request = request();
+        $host = $request->getHost();
+
+        // Parse the host to extract subdomain
+        $parsedHost = parse_url($host);
+
+        // Check if the subdomain exists
+        $subdomain = isset($parsedHost['path']) ? explode('.', $parsedHost['path'])[0] : null;
+
+        return strtolower($subdomain);
+    }
+
+    /**
      * The user has been authenticated.
      *
      * @param  \Illuminate\Http\Request  $request

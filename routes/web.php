@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PartnerController;
+use App\Http\Controllers\Staff\LeadController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\UsersController;
 use App\Models\Partner;
@@ -20,11 +21,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::domain('admin.digisplix.test')
-    // ->middleware('staff')
+    ->middleware('staff')
     ->name('staff.')
     ->group(function () {
         Route::get('/', [StaffController::class, 'index'])
             ->name('index');
+        Route::get('/leads', [LeadController::class, 'index'])
+            ->name('leads');
+        Route::patch('/update-lead-status/{lead_id}', [LeadController::class, 'updateLeadStatus'])
+            ->name('update_lead_status');
     });
 
 Route::domain('partner.digisplix.test')

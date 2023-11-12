@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Client;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,6 +21,7 @@ class ClientFactory extends Factory {
             'business_name' => fake()->name(),
             'business_email' => fake()->unique()->safeEmail(),
             'business_phone' => fake()->phoneNumber(),
+            'status' => Client::getStatuses()[array_rand(Client::getStatuses())],
             'joined_at' => now(),
             'followup_date' => now()
         ];

@@ -1,0 +1,82 @@
+<?php
+
+namespace App\Http\Controllers\Staff;
+
+use App\Http\Controllers\Controller;
+use App\Models\Client;
+use Illuminate\Http\Request;
+
+class LeadController extends Controller {
+    /**
+     * Display a listing of the resource.
+     */
+    public function index() {
+        $leads = Client::with(['user', 'partner', 'partner.user'])->where('active', 0)->get();
+
+        return view('staff.leads', [
+            'leads' => $leads,
+            'new_leads' => $leads->where('status', Client::NEW_LEAD),
+            'contacted_leads' => $leads->where('status', Client::CONTACTED),
+            'follow_up_leads' => $leads->where('status', Client::FOLLOW_UP),
+            'in_progress_leads' => $leads->where('status', Client::IN_PROGRESS),
+            'failed_leads' => $leads->where('status', Client::FAILED),
+            'qualified_leads' => $leads->where('status', Client::QUALIFIED),
+            'statuses' => Client::getStatuses(),
+            'status_labels' => Client::getStatusLabels(),
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create() {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request) {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id) {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id) {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id) {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id) {
+        //
+    }
+
+    public function updateLeadStatus(Request $request, string $id) {
+        try {
+            $lead = Client::findOrFail($id);
+            $lead->status = $request->status;
+            $lead->save();
+
+            return response()->json(['status' => 'success']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
+        }
+    }
+}

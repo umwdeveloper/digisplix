@@ -115,7 +115,7 @@
 
                         <ul>
                             <li class="menu-item">
-                                <a href="index.html" class="active-menu">
+                                <a href="{{ route('staff.index') }}" class="active-menu">
                                     <span class="menu-icon">
                                         <i class="fa-duotone fa-grid-2"></i>
                                     </span>
@@ -124,7 +124,7 @@
                             </li>
 
                             <li class="menu-item">
-                                <a href="leads.html">
+                                <a href="{{ route('staff.leads') }}">
                                     <span class="menu-icon">
                                         <i class="fa-duotone fa-people-group"></i>
 
@@ -851,12 +851,14 @@
     {{-- Bootstrap --}}
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     {{-- Chart --}}
-    <script src="{{ asset('js/chart.min.js') }}"></script>
-    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-    <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
-    <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
-    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
-    <script src="{{ asset('js/charts.js') }}"></script>
+    @if (isset($chartExists))
+        <script src="{{ asset('js/chart.min.js') }}"></script>
+        <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+        <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+        <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+        <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+        <script src="{{ asset('js/charts.js') }}"></script>
+    @endif
     {{-- Datatables --}}
     <script src="{{ asset('js/datatables.min.js') }}"></script>
     <script src="{{ asset('js/datatables.responsive.min.js') }}"></script>
@@ -875,6 +877,8 @@
             }, 4000);
         });
     </script>
+
+    @yield('script');
 </body>
 
 </html>

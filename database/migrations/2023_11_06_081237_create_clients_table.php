@@ -16,7 +16,8 @@ return new class extends Migration {
             $table->string('business_name')->nullable();
             $table->string('business_email')->nullable();
             $table->string('business_phone')->nullable();
-            $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('active')->default(0)->comment('0=inactive, 1=active');
+            $table->enum('status', ['new_lead', 'contacted', 'follow_up', 'in_progress', 'failed', 'qualified'])->default('new_lead');
             $table->timestamp('joined_at')->default(now());
             $table->timestamp('followup_date')->default(now());
         });
