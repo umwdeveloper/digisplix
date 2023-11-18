@@ -89,7 +89,7 @@
                                 <div class="flex-grow-1">
                                     <div class="d-flex align-items-center justify-content-between mb-3">
                                         <h1 class="f-20 w-500 mb-0 pb-0 text-dark-clr">Leads</h1>
-                                        <button class="table-btn" type="button" class="btn btn-primary"
+                                        <button class="table-btn" id="leadModal-btn" type="button" class="btn btn-primary"
                                             data-bs-toggle="modal" data-bs-target="#leadModal">Add New</button>
                                     </div>
 
@@ -512,127 +512,272 @@
                             class="fa-duotone fa-xmark"></i></button>
                 </div>
                 <div class="modal-body">
-                    <form action="">
+                    <form action="{{ route('staff.leads.store') }}" method="POST" novalidate>
+                        @csrf
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control crm-input" id="name"
+                                        <input type="text"
+                                            class="form-control crm-input {{ $errors->createLead->has('name') ? 'is-invalid' : '' }}"
+                                            id="name" name="name" required value="{{ old('name') }}"
                                             placeholder="Mickel">
                                         <label class="crm-label form-label" for="name">Client Name<span
                                                 class="text-danger">*</span></label>
+                                        @if ($errors->createLead->has('name'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->createLead->first('name') }}
+                                            </small>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control crm-input" id="bussiness-name"
-                                            placeholder="Mickel">
+                                        <input type="text"
+                                            class="form-control crm-input {{ $errors->createLead->has('business_name') ? 'is-invalid' : '' }}"
+                                            id="bussiness-name" name="business_name" required
+                                            value="{{ old('business_name') }}" placeholder="Mickel">
                                         <label class="crm-label form-label" for="bussiness-name">Bussiness Name<span
                                                 class="text-danger">*</span></label>
+                                        @if ($errors->createLead->has('business_name'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->createLead->first('business_name') }}
+                                            </small>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control crm-input" id="Title"
+                                        <input type="text"
+                                            class="form-control crm-input {{ $errors->createLead->has('business_email') ? 'is-invalid' : '' }}"
+                                            id="bussiness-email" name="business_email" required
+                                            value="{{ old('business_email') }}" placeholder="Mickel">
+                                        <label class="crm-label form-label" for="bussiness-email">Bussiness Email<span
+                                                class="text-danger">*</span></label>
+                                        @if ($errors->createLead->has('business_email'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->createLead->first('business_email') }}
+                                            </small>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text"
+                                            class="form-control crm-input {{ $errors->createLead->has('business_phone') ? 'is-invalid' : '' }}"
+                                            id="bussiness-phone" name="business_phone" required
+                                            value="{{ old('business_phone') }}" placeholder="Mickel">
+                                        <label class="crm-label form-label" for="bussiness-phone">Bussiness Phone<span
+                                                class="text-danger">*</span></label>
+                                        @if ($errors->createLead->has('business_phone'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->createLead->first('business_phone') }}
+                                            </small>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text"
+                                            class="form-control crm-input {{ $errors->createLead->has('title') ? 'is-invalid' : '' }}"
+                                            id="Title" name="title" required value="{{ old('title') }}"
                                             placeholder="ABC">
                                         <label class="crm-label form-label" for="Title">Title<span
                                                 class="text-danger">*</span></label>
+                                        @if ($errors->createLead->has('title'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->createLead->first('title') }}
+                                            </small>
+                                        @endif
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
-                                        <input type="email" class="form-control crm-input" id="email"
+                                        <input type="email"
+                                            class="form-control crm-input {{ $errors->createLead->has('email') ? 'is-invalid' : '' }}"
+                                            id="email" name="email" required value="{{ old('email') }}"
                                             placeholder="ABC">
                                         <label class="crm-label form-label" for="email">Email Address<span
                                                 class="text-danger">*</span></label>
+                                        @if ($errors->createLead->has('email'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->createLead->first('email') }}
+                                            </small>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text"
+                                            class="form-control crm-input {{ $errors->createLead->has('password') ? 'is-invalid' : '' }}"
+                                            id="password" name="password" required
+                                            value="{{ generateRandomPassword() }}" placeholder="ABC">
+                                        <label class="crm-label form-label" for="email">Password<span
+                                                class="text-danger">*</span></label>
+                                        @if ($errors->createLead->has('password'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->createLead->first('password') }}
+                                            </small>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text"
+                                            class="form-control crm-input {{ $errors->createLead->has('designation') ? 'is-invalid' : '' }}"
+                                            id="designation" name="designation" required
+                                            value="{{ old('designation') }}" placeholder="ABC">
+                                        <label class="crm-label form-label" for="email">Designation<span
+                                                class="text-danger">*</span></label>
+                                        @if ($errors->createLead->has('designation'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->createLead->first('designation') }}
+                                            </small>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
 
                                     <div class="form-floating">
-                                        <select class="form-select crm-input" id="select-status"
+                                        <select
+                                            class="form-select crm-input {{ $errors->createLead->has('status') ? 'is-invalid' : '' }}"
+                                            required id="select-status" name="status"
                                             aria-label="Floating label select example">
-                                            <option>Select</option>
-                                            <option value="1" style="color: #06F7F0; ">New Lead
-                                            </option>
-                                            <option value="2" style="color: #063AF6; ">
-                                                Contracted</option>
-                                            <option value="3" style="color: #E400F7; ">Follow-Up
-                                            </option>
-                                            <option value="4" style="color: #F75C06; ">
-                                                In-Progress</option>
-                                            <option value="5" style="color: #F70606; ">Failed
-                                            </option>
-                                            <option value="6" style="color: #06F744; ">Qualified
-                                            </option>
+                                            <option selected disabled>Select</option>
+                                            @foreach ($statuses as $status)
+                                                <option {{ old('status') === $status ? 'selected' : '' }}
+                                                    value="{{ $status }}"
+                                                    style="color: {{ $status_colors[$status] }}; ">
+                                                    {{ $status_labels[$status] }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                         <label class="crm-label form-label" for="select-status">Status<span
                                                 class="text-danger">*</span></label>
+                                        @if ($errors->createLead->has('status'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->createLead->first('status') }}
+                                            </small>
+                                        @endif
                                     </div>
 
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control crm-input" id="url"
+                                        <input type="text"
+                                            class="form-control crm-input {{ $errors->createLead->has('url') ? 'is-invalid' : '' }}"
+                                            id="url" name="url" required value="{{ old('url') }}"
                                             placeholder="ABC">
                                         <label class="crm-label form-label" for="url">URL<span
                                                 class="text-danger">*</span></label>
+                                        @if ($errors->createLead->has('url'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->createLead->first('url') }}
+                                            </small>
+                                        @endif
                                     </div>
+                                </div>
+                                <div class="form-floating">
+                                    <select
+                                        class="form-select crm-input {{ $errors->createLead->has('partner_id') ? 'is-invalid' : '' }}"
+                                        required id="partner_id" name="partner_id"
+                                        aria-label="Floating label select example">
+                                        <option selected disabled>Select</option>
+                                        @foreach ($leads as $lead)
+                                            <option {{ old('partner_id') == $lead->partner->id ? 'selected' : '' }}
+                                                value="{{ $lead->partner->id }}">{{ $lead->partner->user->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <label class="crm-label form-label" for="partner_id">Partner<span
+                                            class="text-danger">*</span></label>
+                                    @if ($errors->createLead->has('partner_id'))
+                                        <small class="invalid-feedback " style="font-size: 11px">
+                                            {{ $errors->createLead->first('partner_id') }}
+                                        </small>
+                                    @endif
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control crm-input" id="partner"
-                                            placeholder="ABC">
-                                        <label class="crm-label form-label" for="partner">Partner<span
-                                                class="text-danger">*</span></label>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control crm-input" id="country"
-                                            placeholder="ABC">
+                                        <input type="text"
+                                            class=" {{ $errors->createLead->has('country') ? 'is-invalid' : '' }}"
+                                            id="country" name="country" required value="{{ old('country') }}"
+                                            placeholder="Pakistan">
                                         <label class="crm-label form-label" for="country">Country<span
                                                 class="text-danger">*</span></label>
+                                        @if ($errors->createLead->has('country'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->createLead->first('country') }}
+                                            </small>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control crm-input" id="address"
+                                        <input type="text"
+                                            class="form-control crm-input {{ $errors->createLead->has('address') ? 'is-invalid' : '' }}"
+                                            id="address" name="address" required value="{{ old('address') }}"
                                             placeholder="ABC">
                                         <label class="crm-label form-label" for="address">Address<span
                                                 class="text-danger">*</span></label>
+                                        @if ($errors->createLead->has('address'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->createLead->first('address') }}
+                                            </small>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control crm-input" id="p-number"
+                                        <input type="text"
+                                            class="form-control crm-input {{ $errors->createLead->has('phone') ? 'is-invalid' : '' }}"
+                                            id="p-number" name="phone" required value="{{ old('phone') }}"
                                             placeholder="ABC">
                                         <label class="crm-label form-label" for="p-number">Phone Number<span
                                                 class="text-danger">*</span></label>
+                                        @if ($errors->createLead->has('phone'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->createLead->first('phone') }}
+                                            </small>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
-                                        <input type="date" class="form-control crm-input" id="date"
+                                        <input type="date"
+                                            class="form-control crm-input {{ $errors->createLead->has('joined_date') ? 'is-invalid' : '' }}"
+                                            id="date" name="joined_date" required value="{{ old('joined_date') }}"
                                             placeholder="ABC">
-                                        <label class="crm-label form-label" for="date">Date<span
+                                        <label class="crm-label form-label" for="date">Joined Date<span
                                                 class="text-danger">*</span></label>
+                                        @if ($errors->createLead->has('joined_date'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->createLead->first('joined_date') }}
+                                            </small>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
-                                        <input type="date" class="form-control crm-input" id="follow-date"
-                                            placeholder="ABC">
+                                        <input type="date"
+                                            class="form-control crm-input {{ $errors->createLead->has('followup_date') ? 'is-invalid' : '' }}"
+                                            id="follow-date" name="followup_date" required
+                                            value="{{ old('followup_date') }}" placeholder="ABC">
                                         <label class="crm-label form-label" for="follow-date">Follow-up Date<span
                                                 class="text-danger">*</span></label>
+                                        @if ($errors->createLead->has('followup_date'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->createLead->first('followup_date') }}
+                                            </small>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="d-flex justify-content-lg-end justify-content-center mt-3 mb-3">
                                         <button type="button" class="modal-btn-cancel me-3"
                                             data-bs-dismiss="modal">Cancel</button>
-                                        <button type="button" class="modal-btn-save ">Save </button>
+                                        <button type="submit" name="submit" class="modal-btn-save ">Save </button>
                                     </div>
                                 </div>
                             </div>
@@ -644,8 +789,13 @@
     </div>
 
 
-
 @section('script')
+    @if ($errors->createLead->any())
+        <script>
+            $('#leadModal-btn').click()
+        </script>
+    @endif
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const selectStatus = document.getElementById("select-status");
@@ -689,7 +839,7 @@
     </script>
 
     <script>
-        $('.change-status').on('click', function() {
+        $('body').on('click', '.change-status', function() {
             let status = $(this).data('status');
             let leadID = $(this).closest('ul').data('lead-id');
 
@@ -709,6 +859,9 @@
                 }
             })
         })
+
+        // Country Selector
+        $("#country").countrySelect();
     </script>
 @endsection
 @endsection

@@ -29,6 +29,9 @@
     <link rel="stylesheet" href="{{ asset('css/datatables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/responsive.datatables.min.css') }}">
 
+    {{-- Country Selector --}}
+    <link rel="stylesheet" href="{{ asset('css/countrySelect.min.css') }}">
+
     {{-- Css --}}
     <link rel="stylesheet" href="{{ asset('css/css-pro.css') }}">
     <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
@@ -124,7 +127,7 @@
                             </li>
 
                             <li class="menu-item">
-                                <a href="{{ route('staff.leads') }}">
+                                <a href="{{ route('staff.leads.index') }}">
                                     <span class="menu-icon">
                                         <i class="fa-duotone fa-people-group"></i>
 
@@ -863,6 +866,8 @@
     <script src="{{ asset('js/datatables.min.js') }}"></script>
     <script src="{{ asset('js/datatables.responsive.min.js') }}"></script>
     <script src="{{ asset('js/table.js') }}"></script>
+    {{-- Country Selector --}}
+    <script src="{{ asset('js/countrySelect.min.js') }}"></script>
     {{-- JS --}}
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/layout.js') }}"></script>

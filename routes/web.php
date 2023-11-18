@@ -26,8 +26,7 @@ Route::domain('admin.digisplix.test')
     ->group(function () {
         Route::get('/', [StaffController::class, 'index'])
             ->name('index');
-        Route::get('/leads', [LeadController::class, 'index'])
-            ->name('leads');
+        Route::resource('leads', LeadController::class);
         Route::patch('/update-lead-status/{lead_id}', [LeadController::class, 'updateLeadStatus'])
             ->name('update_lead_status');
     });

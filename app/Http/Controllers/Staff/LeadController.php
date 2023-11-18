@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreLead;
 use App\Models\Client;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class LeadController extends Controller {
     /**
@@ -15,7 +18,7 @@ class LeadController extends Controller {
 
         return view('staff.leads', [
             'leads' => $leads,
-            'new_leads' => $leads->where('status', Client::NEW_LEAD),
+            'new_leads' => $leads->whereIn('status', [Client::NEW_LEAD, Client::CONTACTED, Client::FOLLOW_UP]),
             'contacted_leads' => $leads->where('status', Client::CONTACTED),
             'follow_up_leads' => $leads->where('status', Client::FOLLOW_UP),
             'in_progress_leads' => $leads->where('status', Client::IN_PROGRESS),
@@ -23,6 +26,7 @@ class LeadController extends Controller {
             'qualified_leads' => $leads->where('status', Client::QUALIFIED),
             'statuses' => Client::getStatuses(),
             'status_labels' => Client::getStatusLabels(),
+            'status_colors' => Client::getStatusColors(),
         ]);
     }
 
@@ -36,8 +40,15 @@ class LeadController extends Controller {
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) {
-        //
+    public function store(StoreLead $request) {
+        $validatedData = $request->validated();
+        $validatedData['password'] = Hash::make($validatedData['password']);
+        $client = Client::create($validatedData);
+        $client->user()->save(
+            User::make($validatedData)
+        );
+
+        return redirect()->back()->with('status', 'Client created successfully!');
     }
 
     /**

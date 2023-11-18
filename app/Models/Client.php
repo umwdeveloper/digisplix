@@ -17,7 +17,8 @@ class Client extends Model {
         'business_email',
         'business_phone',
         'joined_at',
-        'followup_date'
+        'followup_date',
+        'partner_id'
     ];
 
     const NEW_LEAD = 'new_lead';
@@ -71,6 +72,23 @@ class Client extends Model {
 
     public static function getStatusLabel($status) {
         return self::$statusLabels[$status];
+    }
+
+    private static $statusColors = [
+        self::NEW_LEAD => '#06F7F0',
+        self::CONTACTED => '#063AF6',
+        self::FOLLOW_UP => '#E400F7',
+        self::IN_PROGRESS => '#F75C06',
+        self::FAILED => '#F70606',
+        self::QUALIFIED => '#06F744',
+    ];
+
+    public static function getStatusColors() {
+        return self::$statusColors;
+    }
+
+    public static function getStatusColor($status) {
+        return self::$statusColors[$status];
     }
 
     // public function getStatusAttribute() {
