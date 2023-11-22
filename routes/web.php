@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\Staff\LeadController;
+use App\Http\Controllers\Staff\ProjectController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\UsersController;
 use App\Models\Partner;
@@ -24,11 +25,19 @@ Route::domain('admin.digisplix.test')
     ->middleware('staff')
     ->name('staff.')
     ->group(function () {
+        // Staff
         Route::get('/', [StaffController::class, 'index'])
             ->name('index');
+
+        // Leads
         Route::resource('leads', LeadController::class);
-        Route::patch('/update-lead-status/{lead_id}', [LeadController::class, 'updateLeadStatus'])
-            ->name('update_lead_status');
+        Route::patch('/leads/update-lead-status/{lead_id}', [LeadController::class, 'updateLeadStatus'])
+            ->name('leads.update_lead_status');
+        Route::get('/leads/fetch_lead/{lead_id}', [LeadController::class, 'fetchLead'])
+            ->name('leads.fetch_lead');
+
+        // Projects
+        Route::resource('projects', ProjectController::class);
     });
 
 Route::domain('partner.digisplix.test')

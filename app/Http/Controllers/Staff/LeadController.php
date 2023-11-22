@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreLead;
+use App\Http\Requests\UpdateLead;
 use App\Models\Client;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class LeadController extends Controller {
     public function index() {
         $leads = Client::with(['user', 'partner', 'partner.user'])->where('active', 0)->get();
 
-        return view('staff.leads', [
+        return view('staff.leads.index', [
             'leads' => $leads,
             'new_leads' => $leads->whereIn('status', [Client::NEW_LEAD, Client::CONTACTED, Client::FOLLOW_UP]),
             'contacted_leads' => $leads->where('status', Client::CONTACTED),
@@ -43,12 +44,12 @@ class LeadController extends Controller {
     public function store(StoreLead $request) {
         $validatedData = $request->validated();
         $validatedData['password'] = Hash::make($validatedData['password']);
-        $client = Client::create($validatedData);
-        $client->user()->save(
+        $lead = Client::create($validatedData);
+        $lead->user()->save(
             User::make($validatedData)
         );
 
-        return redirect()->back()->with('status', 'Client created successfully!');
+        return redirect()->back()->with('status', 'Lead created successfully!');
     }
 
     /**
@@ -68,17 +69,25 @@ class LeadController extends Controller {
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id) {
-        //
+    public function update(UpdateLead $request, string $id) {
+        $lead = Client::findOrFail($id);
+        $validatedData = $request->validated();
+        $lead->update($validatedData);
+        $lead->user->update($validatedData);
+
+        return redirect()->back()->with('status', 'Client updated successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id) {
-        //
+        Client::destroy($id);
+
+        return redirect()->back()->with('status', 'Client deleted successfully!');
     }
 
+    // Update lead status
     public function updateLeadStatus(Request $request, string $id) {
         try {
             $lead = Client::findOrFail($id);
@@ -89,5 +98,16 @@ class LeadController extends Controller {
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
         }
+    }
+
+    // Fetch lead by ID
+    public function fetchLead(string $id) {
+        $lead = Client::with(['user', 'partner', 'partner.user'])
+            ->where('active', 0)
+            ->findOrFail($id);
+        return response()->json([
+            'status' => 'success',
+            'lead' => $lead
+        ]);
     }
 }

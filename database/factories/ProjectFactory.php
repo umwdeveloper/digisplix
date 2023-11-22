@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,6 +17,10 @@ class ProjectFactory extends Factory {
     public function definition(): array {
         return [
             'name' => fake()->text(10),
+            'description' => fake()->text(),
+            'billing_status' => rand(0, 1),
+            'current_status' => rand(0, 1),
+            'deadline' => Carbon::now()->addDays(fake()->numberBetween(1, 365)),
             'img' => 'https://i.pravatar.cc/300',
         ];
     }

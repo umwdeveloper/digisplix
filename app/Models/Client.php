@@ -18,7 +18,8 @@ class Client extends Model {
         'business_phone',
         'joined_at',
         'followup_date',
-        'partner_id'
+        'partner_id',
+        'status'
     ];
 
     const NEW_LEAD = 'new_lead';
@@ -98,4 +99,13 @@ class Client extends Model {
     // public static function getStatusFromLabel($label) {
     //     return self::$statusLabels[$label] ?? null;
     // }
+
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function (Client $client) {
+            $client->user()->delete();
+            $client->projects()->delete();
+        });
+    }
 }

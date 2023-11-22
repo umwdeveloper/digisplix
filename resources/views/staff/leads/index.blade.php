@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+
+    @if (session('status'))
+        <x-toast type="success">
+            {{ session('status') }}
+        </x-toast>
+    @endif
+
     <main class="content ">
         <div class="container-fluid px-lg-0">
             <div class="row justify-content-center">
@@ -91,6 +98,10 @@
                                         <h1 class="f-20 w-500 mb-0 pb-0 text-dark-clr">Leads</h1>
                                         <button class="table-btn" id="leadModal-btn" type="button" class="btn btn-primary"
                                             data-bs-toggle="modal" data-bs-target="#leadModal">Add New</button>
+                                        <button class="table-btn d-none" id="editLeadModal-btn" type="button"
+                                            class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#editLeadModal">Edit
+                                            Lead</button>
                                     </div>
 
 
@@ -182,8 +193,15 @@
                                                         </td>
                                                         <td>
                                                             <div class="table-actions d-flex align-items-center">
-                                                                <button class="edit">Edit</button>
-                                                                <button class="save">Save</button>
+                                                                <button class="edit"
+                                                                    data-lead-id="{{ $lead->id }}">Edit</button>
+                                                                <form
+                                                                    action="{{ route('staff.leads.destroy', $lead->id) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button class="delete">Delete</button>
+                                                                </form>
                                                             </div>
 
 
@@ -232,7 +250,8 @@
                                                             <td class="">
                                                                 {{ $lead->title }}
                                                             </td>
-                                                            <td class="bussiness-name">{{ $lead->business_name }}</td>
+                                                            <td class="bussiness-name">{{ $lead->business_name }}
+                                                            </td>
                                                             <td>{{ $lead->business_email }}</td>
                                                             <td>
                                                                 <div class="dropdown table-dropdown">
@@ -248,8 +267,8 @@
                                                                         aria-labelledby="dropdownMenuLink">
                                                                         @foreach ($statuses as $status)
                                                                             <li class="change-status"
-                                                                                data-status="{{ $status }}"><a
-                                                                                    class="dropdown-item {{ $status }}"
+                                                                                data-status="{{ $status }}">
+                                                                                <a class="dropdown-item {{ $status }}"
                                                                                     href="#">{{ $status_labels[$status] }}</a>
                                                                             </li>
                                                                         @endforeach
@@ -278,8 +297,8 @@
                                                             </td>
                                                             <td>
                                                                 <div class="table-actions d-flex align-items-center">
-                                                                    <button class="edit">Edit</button>
-                                                                    <button class="save">Save</button>
+                                                                    <button class="edit"
+                                                                        data-lead-id="{{ $lead->id }}">Edit</button>
                                                                 </div>
 
 
@@ -375,8 +394,8 @@
                                                         </td>
                                                         <td>
                                                             <div class="table-actions d-flex align-items-center">
-                                                                <button class="edit">Edit</button>
-                                                                <button class="save">Save</button>
+                                                                <button class="edit"
+                                                                    data-lead-id="{{ $lead->id }}">Edit</button>
                                                             </div>
 
 
@@ -470,8 +489,8 @@
                                                         </td>
                                                         <td>
                                                             <div class="table-actions d-flex align-items-center">
-                                                                <button class="edit">Edit</button>
-                                                                <button class="save">Save</button>
+                                                                <button class="edit"
+                                                                    data-lead-id="{{ $lead->id }}">Edit</button>
                                                             </div>
 
 
@@ -502,7 +521,7 @@
         </div>
     </main>
 
-    <!-- Modal -->
+    <!-- New Lead Modal -->
     <div class="modal fade" id="leadModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-medium">
             <div class="modal-content">
@@ -535,9 +554,9 @@
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->createLead->has('business_name') ? 'is-invalid' : '' }}"
-                                            id="bussiness-name" name="business_name" required
+                                            id="business-name" name="business_name" required
                                             value="{{ old('business_name') }}" placeholder="Mickel">
-                                        <label class="crm-label form-label" for="bussiness-name">Bussiness Name<span
+                                        <label class="crm-label form-label" for="business-name">Business Name<span
                                                 class="text-danger">*</span></label>
                                         @if ($errors->createLead->has('business_name'))
                                             <small class="invalid-feedback " style="font-size: 11px">
@@ -550,10 +569,10 @@
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->createLead->has('business_email') ? 'is-invalid' : '' }}"
-                                            id="bussiness-email" name="business_email" required
+                                            id="business-email" name="business_email" required
                                             value="{{ old('business_email') }}" placeholder="Mickel">
-                                        <label class="crm-label form-label" for="bussiness-email">Bussiness Email<span
-                                                class="text-danger">*</span></label>
+                                        <label class="crm-label form-label" for="business-email">Business
+                                            Email<span class="text-danger">*</span></label>
                                         @if ($errors->createLead->has('business_email'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->createLead->first('business_email') }}
@@ -565,10 +584,10 @@
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->createLead->has('business_phone') ? 'is-invalid' : '' }}"
-                                            id="bussiness-phone" name="business_phone" required
+                                            id="business-phone" name="business_phone" required
                                             value="{{ old('business_phone') }}" placeholder="Mickel">
-                                        <label class="crm-label form-label" for="bussiness-phone">Bussiness Phone<span
-                                                class="text-danger">*</span></label>
+                                        <label class="crm-label form-label" for="business-phone">Business
+                                            Phone<span class="text-danger">*</span></label>
                                         @if ($errors->createLead->has('business_phone'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->createLead->first('business_phone') }}
@@ -686,7 +705,8 @@
                                         <option selected disabled>Select</option>
                                         @foreach ($leads as $lead)
                                             <option {{ old('partner_id') == $lead->partner->id ? 'selected' : '' }}
-                                                value="{{ $lead->partner->id }}">{{ $lead->partner->user->name }}
+                                                value="{{ $lead->partner->id }}">
+                                                {{ $lead->partner->user->name }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -777,7 +797,281 @@
                                     <div class="d-flex justify-content-lg-end justify-content-center mt-3 mb-3">
                                         <button type="button" class="modal-btn-cancel me-3"
                                             data-bs-dismiss="modal">Cancel</button>
-                                        <button type="submit" name="submit" class="modal-btn-save ">Save </button>
+                                        <button type="submit" name="submit" class="modal-btn-save ">Save
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Lead Modal -->
+    <div class="modal fade" id="editLeadModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-medium">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Lead</h5>
+                    <button type="button" class=" close-btn text-white" data-bs-dismiss="modal" aria-label="Close"><i
+                            class="fa-duotone fa-xmark"></i></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('staff.leads.update', '1') }}" method="POST" novalidate>
+                        @csrf
+                        @method('PUT')
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text"
+                                            class="form-control crm-input {{ $errors->updateLead->has('name') ? 'is-invalid' : '' }}"
+                                            id="name" name="name" required value="{{ old('name') }}"
+                                            placeholder="Mickel">
+                                        <label class="crm-label form-label" for="name">Client Name<span
+                                                class="text-danger">*</span></label>
+                                        @if ($errors->updateLead->has('name'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->updateLead->first('name') }}
+                                            </small>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text"
+                                            class="form-control crm-input {{ $errors->updateLead->has('business_name') ? 'is-invalid' : '' }}"
+                                            id="business-name" name="business_name" required
+                                            value="{{ old('business_name') }}" placeholder="Mickel">
+                                        <label class="crm-label form-label" for="business-name">Business Name<span
+                                                class="text-danger">*</span></label>
+                                        @if ($errors->updateLead->has('business_name'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->updateLead->first('business_name') }}
+                                            </small>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text"
+                                            class="form-control crm-input {{ $errors->updateLead->has('business_email') ? 'is-invalid' : '' }}"
+                                            id="business-email" name="business_email" required
+                                            value="{{ old('business_email') }}" placeholder="Mickel">
+                                        <label class="crm-label form-label" for="business-email">Business
+                                            Email<span class="text-danger">*</span></label>
+                                        @if ($errors->updateLead->has('business_email'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->updateLead->first('business_email') }}
+                                            </small>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text"
+                                            class="form-control crm-input {{ $errors->updateLead->has('business_phone') ? 'is-invalid' : '' }}"
+                                            id="business-phone" name="business_phone" required
+                                            value="{{ old('business_phone') }}" placeholder="Mickel">
+                                        <label class="crm-label form-label" for="business-phone">Business
+                                            Phone<span class="text-danger">*</span></label>
+                                        @if ($errors->updateLead->has('business_phone'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->updateLead->first('business_phone') }}
+                                            </small>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text"
+                                            class="form-control crm-input {{ $errors->updateLead->has('title') ? 'is-invalid' : '' }}"
+                                            id="Title" name="title" required value="{{ old('title') }}"
+                                            placeholder="ABC">
+                                        <label class="crm-label form-label" for="Title">Title<span
+                                                class="text-danger">*</span></label>
+                                        @if ($errors->updateLead->has('title'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->updateLead->first('title') }}
+                                            </small>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="email"
+                                            class="form-control crm-input {{ $errors->updateLead->has('email') ? 'is-invalid' : '' }}"
+                                            id="email" name="email" required value="{{ old('email') }}"
+                                            placeholder="ABC">
+                                        <label class="crm-label form-label" for="email">Email Address<span
+                                                class="text-danger">*</span></label>
+                                        @if ($errors->updateLead->has('email'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->updateLead->first('email') }}
+                                            </small>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text"
+                                            class="form-control crm-input {{ $errors->updateLead->has('designation') ? 'is-invalid' : '' }}"
+                                            id="designation" name="designation" required
+                                            value="{{ old('designation') }}" placeholder="ABC">
+                                        <label class="crm-label form-label" for="email">Designation<span
+                                                class="text-danger">*</span></label>
+                                        @if ($errors->updateLead->has('designation'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->updateLead->first('designation') }}
+                                            </small>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+
+                                    <div class="form-floating">
+                                        <select
+                                            class="form-select crm-input {{ $errors->updateLead->has('status') ? 'is-invalid' : '' }}"
+                                            required id="select-status2" name="status"
+                                            aria-label="Floating label select example">
+                                            @foreach ($statuses as $status)
+                                                <option {{ old('status') === $status ? 'selected' : '' }}
+                                                    value="{{ $status }}"
+                                                    style="color: {{ $status_colors[$status] }}; ">
+                                                    {{ $status_labels[$status] }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <label class="crm-label form-label" for="select-status">Status<span
+                                                class="text-danger">*</span></label>
+                                        @if ($errors->updateLead->has('status'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->updateLead->first('status') }}
+                                            </small>
+                                        @endif
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text"
+                                            class="form-control crm-input {{ $errors->updateLead->has('url') ? 'is-invalid' : '' }}"
+                                            id="url" name="url" required value="{{ old('url') }}"
+                                            placeholder="ABC">
+                                        <label class="crm-label form-label" for="url">URL<span
+                                                class="text-danger">*</span></label>
+                                        @if ($errors->updateLead->has('url'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->updateLead->first('url') }}
+                                            </small>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="form-floating">
+                                    <select
+                                        class="form-select crm-input {{ $errors->updateLead->has('partner_id') ? 'is-invalid' : '' }}"
+                                        required id="partner_id" name="partner_id"
+                                        aria-label="Floating label select example">
+                                        <option selected disabled>Select</option>
+                                        @foreach ($leads as $lead)
+                                            <option {{ old('partner_id') == $lead->partner->id ? 'selected' : '' }}
+                                                value="{{ $lead->partner->id }}">
+                                                {{ $lead->partner->user->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <label class="crm-label form-label" for="partner_id">Partner<span
+                                            class="text-danger">*</span></label>
+                                    @if ($errors->updateLead->has('partner_id'))
+                                        <small class="invalid-feedback " style="font-size: 11px">
+                                            {{ $errors->updateLead->first('partner_id') }}
+                                        </small>
+                                    @endif
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text"
+                                            class=" {{ $errors->updateLead->has('country') ? 'is-invalid' : '' }}"
+                                            id="country2" name="country" required value="{{ old('country') }}"
+                                            placeholder="Pakistan">
+                                        <label class="crm-label form-label" for="country2">Country<span
+                                                class="text-danger">*</span></label>
+                                        @if ($errors->updateLead->has('country'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->updateLead->first('country') }}
+                                            </small>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text"
+                                            class="form-control crm-input {{ $errors->updateLead->has('address') ? 'is-invalid' : '' }}"
+                                            id="address" name="address" required value="{{ old('address') }}"
+                                            placeholder="ABC">
+                                        <label class="crm-label form-label" for="address">Address<span
+                                                class="text-danger">*</span></label>
+                                        @if ($errors->updateLead->has('address'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->updateLead->first('address') }}
+                                            </small>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text"
+                                            class="form-control crm-input {{ $errors->updateLead->has('phone') ? 'is-invalid' : '' }}"
+                                            id="p-number" name="phone" required value="{{ old('phone') }}"
+                                            placeholder="ABC">
+                                        <label class="crm-label form-label" for="p-number">Phone Number<span
+                                                class="text-danger">*</span></label>
+                                        @if ($errors->updateLead->has('phone'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->updateLead->first('phone') }}
+                                            </small>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="date"
+                                            class="form-control crm-input {{ $errors->updateLead->has('joined_date') ? 'is-invalid' : '' }}"
+                                            id="date" name="joined_date" required value="{{ old('joined_date') }}"
+                                            placeholder="ABC">
+                                        <label class="crm-label form-label" for="date">Joined Date<span
+                                                class="text-danger">*</span></label>
+                                        @if ($errors->updateLead->has('joined_date'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->updateLead->first('joined_date') }}
+                                            </small>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="date"
+                                            class="form-control crm-input {{ $errors->updateLead->has('followup_date') ? 'is-invalid' : '' }}"
+                                            id="follow-date" name="followup_date" required
+                                            value="{{ old('followup_date') }}" placeholder="ABC">
+                                        <label class="crm-label form-label" for="follow-date">Follow-up Date<span
+                                                class="text-danger">*</span></label>
+                                        @if ($errors->updateLead->has('followup_date'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->updateLead->first('followup_date') }}
+                                            </small>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="d-flex justify-content-lg-end justify-content-center mt-3 mb-3">
+                                        <button type="button" class="modal-btn-cancel me-3"
+                                            data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" name="submit" class="modal-btn-save ">Update
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -796,17 +1090,42 @@
         </script>
     @endif
 
+    @if ($errors->updateLead->any())
+        <script>
+            $("#country2").countrySelect({
+                defaultCountry: "us"
+            });
+            $("#country2").countrySelect("setCountry", "{{ old('country') }}");
+            $('#editLeadModal-btn').click()
+        </script>
+    @endif
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const selectStatus = document.getElementById("select-status");
+            let selectStatus = document.getElementById("select-status");
 
             selectStatus.addEventListener("change", function() {
                 // Get the selected option
-                const selectedOption = selectStatus.options[selectStatus.selectedIndex];
+                let selectedOption = selectStatus.options[selectStatus.selectedIndex];
 
                 // Get the styles from the selected option
-                const backgroundColor = selectedOption.style.backgroundColor;
-                const color = selectedOption.style.color;
+                let backgroundColor = selectedOption.style.backgroundColor;
+                let color = selectedOption.style.color;
+
+                // Apply the styles to the select element
+                selectStatus.style.backgroundColor = backgroundColor;
+                selectStatus.style.color = color;
+            });
+
+            selectStatus = document.getElementById("select-status2");
+
+            selectStatus.addEventListener("change", function() {
+                // Get the selected option
+                let selectedOption = selectStatus.options[selectStatus.selectedIndex];
+
+                // Get the styles from the selected option
+                let backgroundColor = selectedOption.style.backgroundColor;
+                let color = selectedOption.style.color;
 
                 // Apply the styles to the select element
                 selectStatus.style.backgroundColor = backgroundColor;
@@ -844,7 +1163,8 @@
             let leadID = $(this).closest('ul').data('lead-id');
 
             $.ajax({
-                url: '{{ route('staff.update_lead_status', 'lead_id') }}'.replace('lead_id', leadID),
+                url: '{{ route('staff.leads.update_lead_status', 'lead_id') }}'.replace('lead_id',
+                    leadID),
                 type: 'PATCH',
                 data: {
                     '_token': '{{ csrf_token() }}',
@@ -862,6 +1182,44 @@
 
         // Country Selector
         $("#country").countrySelect();
+    </script>
+
+    {{-- Fetch lead on Edit click --}}
+    <script>
+        $('body').on('click', '.edit', function() {
+            let leadID = $(this).data('lead-id');
+            $('#editLeadModal form').attr('action', "{{ route('staff.leads.update', 'lead_id') }}"
+                .replace('lead_id', leadID))
+            $.ajax({
+                url: '{{ route('staff.leads.fetch_lead', 'lead_id') }}'
+                    .replace('lead_id', leadID),
+                method: 'GET',
+                success: function(response) {
+                    if (response.status == 'success') {
+                        $("#editLeadModal #name").val(response.lead.user.name)
+                        $("#editLeadModal #business-name").val(response.lead.business_name)
+                        $("#editLeadModal #business-email").val(response.lead.business_email)
+                        $("#editLeadModal #business-phone").val(response.lead.business_phone)
+                        $("#editLeadModal #Title").val(response.lead.title)
+                        $("#editLeadModal #email").val(response.lead.user.email)
+                        $("#editLeadModal #designation").val(response.lead.user.designation)
+                        $("#editLeadModal #select-status2").val(response.lead.status)
+                        $("#editLeadModal #url").val(response.lead.url)
+                        $("#editLeadModal #partner_id").val(response.lead.partner.id)
+                        $("#editLeadModal #address").val(response.lead.user.address)
+                        $("#editLeadModal #p-number").val(response.lead.user.phone)
+                        $("#editLeadModal #date").val(response.lead.joined_at.split(" ")[0])
+                        $("#editLeadModal #follow-date").val(response.lead.followup_date.split(" ")[0])
+
+                        $("#country2").countrySelect({
+                            defaultCountry: response.lead.user.country
+                        });
+                        $("#country2").countrySelect("setCountry", response.lead.user.country);
+                        $('#editLeadModal-btn').click()
+                    } else {}
+                }
+            })
+        })
     </script>
 @endsection
 @endsection

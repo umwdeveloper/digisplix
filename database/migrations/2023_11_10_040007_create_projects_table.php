@@ -13,9 +13,11 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('client_id');
             $table->string('name');
+            $table->text('description');
             $table->tinyInteger('billing_status')->default(1)->comment('0=Unpaid, 1=Paid');
-            $table->tinyInteger('current_status')->default(0)->comment('0=On Going, 1=Completed');
+            $table->tinyInteger('current_status')->default(0)->comment('0=Ongoing, 1=Completed');
             $table->text('img')->nullable();
+            $table->date('deadline');
             $table->timestamps();
 
             $table->foreign('client_id')->references('id')->on('clients');

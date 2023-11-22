@@ -137,7 +137,7 @@
                             </li>
 
                             <li class="menu-item">
-                                <a href="projects.html">
+                                <a href="{{ route('staff.projects.index') }}">
                                     <span class="menu-icon">
                                         <i class="fa-duotone fa-rectangle-history"></i>
 

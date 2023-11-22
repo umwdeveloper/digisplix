@@ -8,7 +8,35 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model {
     use HasFactory;
 
+    protected $fillable = [
+        'client_id',
+        'name',
+        'description',
+        'billing_status',
+        'current_status',
+        'img',
+        'deadline',
+    ];
+
     public function client() {
         return $this->belongsTo(Client::class);
+    }
+
+    private static $statusLabels = [
+        "Ongoing",
+        "Completed"
+    ];
+
+    public static function getStatusLabels() {
+        return self::$statusLabels;
+    }
+
+    private static $billingLabels = [
+        "Overdue",
+        "Paid"
+    ];
+
+    public static function getBillingLabels() {
+        return self::$billingLabels;
     }
 }
