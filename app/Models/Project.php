@@ -12,10 +12,10 @@ class Project extends Model {
         'client_id',
         'name',
         'description',
+        'deadline',
         'billing_status',
         'current_status',
-        'img',
-        'deadline',
+        'img'
     ];
 
     public function client() {

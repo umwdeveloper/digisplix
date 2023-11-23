@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProject;
+use App\Http\Requests\UpdateProject;
 use App\Models\Client;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Image;
 
 class ProjectController extends Controller {
     /**
@@ -37,8 +41,23 @@ class ProjectController extends Controller {
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) {
-        //
+    public function store(StoreProject $request) {
+        $validatedData = $request->validated();
+        if ($request->hasFile('img')) {
+            $image = $request->file('img');
+            $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+
+            $thumbnail = Image::make($image)
+                ->fit(100, 100)
+                ->encode($image->getClientOriginalExtension());
+
+            Storage::disk('public')->put('thumbnails/' . $imageName, $thumbnail);
+            $thumbnailPath = 'thumbnails/' . $imageName;
+
+            $validatedData['img'] = $thumbnailPath;
+        }
+        Project::create($validatedData);
+        return redirect()->back()->with('status', 'Project created successfully!');
     }
 
     /**
@@ -58,8 +77,28 @@ class ProjectController extends Controller {
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id) {
-        //
+    public function update(UpdateProject $request, string $id) {
+        $project = Project::findOrFail($id);
+        $validatedData = $request->validated();
+        if ($request->hasFile('img')) {
+            if (!empty($project->img)) {
+                Storage::delete($project->img);
+            }
+
+            $image = $request->file('img');
+            $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+
+            $thumbnail = Image::make($image)
+                ->fit(100, 100)
+                ->encode($image->getClientOriginalExtension());
+
+            Storage::disk('public')->put('thumbnails/' . $imageName, $thumbnail);
+            $thumbnailPath = 'thumbnails/' . $imageName;
+
+            $validatedData['img'] = $thumbnailPath;
+        }
+        $project->update($validatedData);
+        return redirect()->back()->with('status', 'Project updated successfully!');
     }
 
     /**
@@ -67,5 +106,13 @@ class ProjectController extends Controller {
      */
     public function destroy(string $id) {
         //
+    }
+
+    public function fetchProject(string $id) {
+        $project = Project::findOrFail($id);
+        return response()->json([
+            'status' => 'success',
+            'project' => $project
+        ]);
     }
 }

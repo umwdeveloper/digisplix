@@ -819,7 +819,8 @@
                             class="fa-duotone fa-xmark"></i></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('staff.leads.update', '1') }}" method="POST" novalidate>
+                    <form action="{{ route('staff.leads.update', old('lead_id') ? old('lead_id') : '1') }}"
+                        method="POST" novalidate>
                         @csrf
                         @method('PUT')
                         <div class="container-fluid">
@@ -1070,6 +1071,8 @@
                                     <div class="d-flex justify-content-lg-end justify-content-center mt-3 mb-3">
                                         <button type="button" class="modal-btn-cancel me-3"
                                             data-bs-dismiss="modal">Cancel</button>
+                                        <input type="hidden" name="lead_id" id="lead_id"
+                                            value="{{ old('lead_id') ? old('lead_id') : '1' }}">
                                         <button type="submit" name="submit" class="modal-btn-save ">Update
                                         </button>
                                     </div>
@@ -1190,6 +1193,7 @@
             let leadID = $(this).data('lead-id');
             $('#editLeadModal form').attr('action', "{{ route('staff.leads.update', 'lead_id') }}"
                 .replace('lead_id', leadID))
+            $('#editLeadModal #lead_id').val(leadID)
             $.ajax({
                 url: '{{ route('staff.leads.fetch_lead', 'lead_id') }}'
                     .replace('lead_id', leadID),

@@ -38,6 +38,8 @@ Route::domain('admin.digisplix.test')
 
         // Projects
         Route::resource('projects', ProjectController::class);
+        Route::get('/projects/fetch_project/{project_id}', [ProjectController::class, 'fetchProject'])
+            ->name('projects.fetch_project');
     });
 
 Route::domain('partner.digisplix.test')

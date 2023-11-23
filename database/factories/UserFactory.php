@@ -82,7 +82,7 @@ class UserFactory extends Factory {
             'address' => fake()->address(),
             'country' => fake()->country(),
             'designation' => fake()->jobTitle(),
-            'img' => 'https://i.pravatar.cc/300',
+            'img' => 'users/avatar.png',
         ]);
     }
 }

@@ -21,7 +21,7 @@ class ProjectFactory extends Factory {
             'billing_status' => rand(0, 1),
             'current_status' => rand(0, 1),
             'deadline' => Carbon::now()->addDays(fake()->numberBetween(1, 365)),
-            'img' => 'https://i.pravatar.cc/300',
+            'img' => 'thumbnails/project.png',
         ];
     }
 }
