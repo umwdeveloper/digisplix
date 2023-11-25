@@ -834,6 +834,13 @@
 
     <div id="overlay-sidebar"></div>
 
+    {{-- Show toast after an operation --}}
+    @if (session('status'))
+        <x-toast type="success">
+            {{ session('status') }}
+        </x-toast>
+    @endif
+
 
     <script>
         const assetUrls = {

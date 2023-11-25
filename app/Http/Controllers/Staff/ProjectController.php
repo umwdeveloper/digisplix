@@ -15,8 +15,12 @@ class ProjectController extends Controller {
     /**
      * Display a listing of the resource.
      */
-    public function index() {
+    public function index(Request $request) {
+        $current_status = $request->query('filter') === 'ongoing' ? '0' : ($request->query('filter') === 'completed' ? '1' : null);
         $projects = Project::with('client.user')->get();
+        if ($current_status !== null) {
+            $projects = $projects->where('current_status', $current_status);
+        }
         $clients = Client::with('user')->where('active', 1)->get();
 
         return view("staff.projects.index", [
@@ -64,7 +68,10 @@ class ProjectController extends Controller {
      * Display the specified resource.
      */
     public function show(string $id) {
-        //
+        $project = Project::with(['client', 'client.user', 'phases', 'phases.tasks'])->findOrFail($id);
+        return view('staff.projects.show', [
+            'project' => $project
+        ]);
     }
 
     /**
@@ -82,7 +89,7 @@ class ProjectController extends Controller {
         $validatedData = $request->validated();
         if ($request->hasFile('img')) {
             if (!empty($project->img)) {
-                Storage::delete($project->img);
+                Storage::disk('public')->delete($project->img);
             }
 
             $image = $request->file('img');
@@ -105,7 +112,10 @@ class ProjectController extends Controller {
      * Remove the specified resource from storage.
      */
     public function destroy(string $id) {
-        //
+        $project = Project::findOrFail($id);
+        Storage::disk('public')->delete($project->img);
+        $project->delete();
+        return redirect()->back()->with('status', 'Project deleted successfully!');
     }
 
     public function fetchProject(string $id) {

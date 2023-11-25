@@ -1,12 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    @if (session('status'))
-        <x-toast type="success">
-            {{ session('status') }}
-        </x-toast>
-    @endif
-
     <main class="content ">
         <div class="container-fluid px-lg-0">
             <div class="row justify-content-center">
@@ -91,10 +85,12 @@
                             </div>
                         </div>
                         <div class="col-lg-12 mb-3">
-                            <select class="form-select box ms-auto" aria-label="Default select example">
-                                <option selected class="w-600">Filter</option>
-                                <option value="On-Going" class="w-500 f-16">On-Going</option>
-                                <option value="Completed" class="w-500 f-16">Completed</option>
+                            <select class="form-select box ms-auto" id="filter-select" aria-label="Default select example">
+                                <option selected value="all" class="w-600">All</option>
+                                <option {{ request('filter') === 'ongoing' ? 'selected' : '' }} value="ongoing"
+                                    class="w-500 f-16">Ongoing</option>
+                                <option {{ request('filter') === 'completed' ? 'selected' : '' }} value="completed"
+                                    class="w-500 f-16">Completed</option>
                             </select>
                         </div>
                         @foreach ($projects as $project)
@@ -103,6 +99,13 @@
                                     <div class="project-card--header">
                                         <h2 class="mb-0 pb-0 ">{{ $status_labels[$project->current_status] }}</h2>
                                         <div class="d-flex align-items-center">
+                                            <form action="{{ route('staff.projects.destroy', $project->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn p-0"><i
+                                                        class="fa-duotone fa-trash me-3"></i></button>
+                                            </form>
                                             <a type="button" data-project-id="{{ $project->id }}" data-bs-toggle="modal"
                                                 data-bs-target="#settingModal" class="settingModal"><i
                                                     class="fa-duotone fa-gear-complex me-2"></i></a>
@@ -113,7 +116,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="project-detail.html" class="project-card-data">
+                                    <a href="{{ route('staff.projects.show', $project->id) }}" class="project-card-data">
                                         <img src="{{ getURL($project->img) }}" alt="">
                                         <div class="ms-2">
                                             <h1 class="mb-0 pb-0">{{ $project->name }}</h1>
@@ -463,6 +466,19 @@
             $("#editProjectModal-btn").click();
         </script>
     @endif
+
+    <script>
+        $("#filter-select").on('change', function() {
+            var url;
+            if ($(this).val() === "all") {
+                url = "{{ route('staff.projects.index') }}"
+            } else {
+                url = "{{ route('staff.projects.index') }}" +
+                    "?filter=" + $(this).val()
+            }
+            window.location.href = url
+        })
+    </script>
 
     <script>
         $('body').on('click', '.custom-file-upload', function() {

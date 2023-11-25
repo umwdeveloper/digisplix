@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PartnerController;
+use App\Http\Controllers\Staff\PhaseController;
 use App\Http\Controllers\Staff\LeadController;
 use App\Http\Controllers\Staff\ProjectController;
+use App\Http\Controllers\Staff\TaskController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\UsersController;
 use App\Models\Partner;
@@ -37,9 +39,17 @@ Route::domain('admin.digisplix.test')
             ->name('leads.fetch_lead');
 
         // Projects
-        Route::resource('projects', ProjectController::class);
+        Route::resource('projects', ProjectController::class)->parameters(['projects', 'filter']);
         Route::get('/projects/fetch_project/{project_id}', [ProjectController::class, 'fetchProject'])
             ->name('projects.fetch_project');
+
+        // Phases
+        Route::patch('phases/update/{phase_id}', [PhaseController::class, 'update'])
+            ->name('phases.update');
+
+        // Tasks
+        Route::put('tasks/updateAll', [TaskController::class, 'updateAll'])
+            ->name('tasks.updateAll');
     });
 
 Route::domain('partner.digisplix.test')

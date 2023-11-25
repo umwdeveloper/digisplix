@@ -1,13 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
-    @if (session('status'))
-        <x-toast type="success">
-            {{ session('status') }}
-        </x-toast>
-    @endif
-
     <main class="content ">
         <div class="container-fluid px-lg-0">
             <div class="row justify-content-center">

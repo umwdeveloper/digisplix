@@ -23,9 +23,10 @@ class UpdateProject extends FormRequest {
             'name' => 'string|required|min:3',
             'description' => 'string|required|min:10',
             'deadline' => 'date|required',
+            'progress' => 'string|required',
             'billing_status' => 'string',
             'current_status' => 'string',
-            'img' => 'nullable|image|mimes:jpg,jpeg,png,gif,svg|max:1024'
+            'img' => 'nullable|image|mimes:jpg,jpeg,png,gif,svg|max:1024',
         ];
     }
 

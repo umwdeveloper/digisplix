@@ -2,24 +2,24 @@
     position: relative;
 
     &:before {
-      display: block;
-      content: "";
-      //   width: 100%;
-      padding-top: calc($height / $width) * 100%;
+        display: block;
+        content: "";
+        //   width: 100%;
+        padding-top: calc($height / $width) * 100%;
     }
 
-    > img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      width: 100%;
-      height: 100%;
+    >img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
     }
-  }
+}
 
-  .carousel__slide {
+.carousel__slide {
     position: relative;
     display: block;
     flex: 1 0 100%;
@@ -31,171 +31,177 @@
     white-space: normal;
 
     figure {
-      display: flex;
-      margin: 0;
+        display: flex;
+        margin: 0;
 
-      @media only screen and (max-width: 7479px) {
-        justify-content: center;
-      }
+        @media only screen and (max-width: 7479px) {
+            justify-content: center;
+        }
     }
 
     div {
-      width: 100%;
-      @include aspect-ratio(4, 2);
-      overflow: hidden;
-
-      @media only screen and (max-width: 7479px) {
         width: 100%;
-      }
+        @include aspect-ratio(4, 2);
+        overflow: hidden;
+
+        @media only screen and (max-width: 7479px) {
+            width: 100%;
+        }
     }
 
     img {
-      display: block;
-      flex: 1 1 auto;
-      object-fit: cover;
+        display: block;
+        flex: 1 1 auto;
+        object-fit: cover;
     }
 
     .credit {
-      margin-top: 1rem;
-      color: rgba(0, 0, 0, 0.5);
-      display: block;
+        margin-top: 1rem;
+        color: rgba(0, 0, 0, 0.5);
+        display: block;
     }
 
     &.scrollable {
-      overflow-y: scroll;
+        overflow-y: scroll;
     }
-  }
+}
 
-  // ===========================================semi progressbar
-  .progresshalf {
+// ===========================================semi progressbar
+.progresshalf {
     position: relative;
     margin: 4px;
     float: left;
     min-height: fit-content;
     text-align: center;
+
     .barOverflow {
-      /* Wraps the rotating .bar */
-      position: relative;
-      overflow: hidden; /* Comment this line to understand the trick */
-      width: 170px;
-      height: 100px; /* Half circle (overflow) */
-      margin-bottom: -35px; /* bring the numbers up */
+        /* Wraps the rotating .bar */
+        position: relative;
+        overflow: hidden;
+        /* Comment this line to understand the trick */
+        width: 170px;
+        height: 100px;
+        /* Half circle (overflow) */
+        margin-bottom: -35px;
+        /* bring the numbers up */
     }
+
     .bar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 170px;
-      height: 170px; /* full circle! */
-      border-radius: 50%;
-      box-sizing: border-box;
-      border: 15px solid $dark-skin; /* half gray, */
-      border-bottom-color: #feb21f; /* half azure */
-      border-right-color: #feb21f;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 170px;
+        height: 170px;
+        /* full circle! */
+        border-radius: 50%;
+        box-sizing: border-box;
+        border: 15px solid $dark-skin;
+        /* half gray, */
+        border-bottom-color: #feb21f;
+        /* half azure */
+        border-right-color: #feb21f;
     }
 
     font-size: 25px;
     color: #feb21f;
-  }
-  //   ==============================progress bar stripped
-  .progress-stripped {
+}
+
+//   ==============================progress bar stripped
+.progress-stripped {
     padding: 3px;
     background: $dark-skin;
     border-radius: 6px;
-  }
+}
 
-  .progress-bar {
+.progress-bar {
     height: 14px;
     background-color: #ee303c;
     border-radius: 4px;
     transition: 0.4s linear;
     transition-property: width, background-color;
-  }
+}
 
-  .progress-striped .progress-bar {
+.progress-striped .progress-bar {
     background-color: #fcbc51;
     width: 80%;
-    background-image: linear-gradient(
-      45deg,
-      rgb(252, 163, 17) 25%,
-      transparent 25%,
-      transparent 50%,
-      rgb(252, 163, 17) 50%,
-      rgb(252, 163, 17) 75%,
-      transparent 75%,
-      transparent
-    );
+    background-image: linear-gradient(45deg,
+            rgb(252, 163, 17) 25%,
+            transparent 25%,
+            transparent 50%,
+            rgb(252, 163, 17) 50%,
+            rgb(252, 163, 17) 75%,
+            transparent 75%,
+            transparent);
     animation: progressAnimationStrike 6s;
-  }
+}
 
-  @keyframes progressAnimationStrike {
+@keyframes progressAnimationStrike {
     from {
-      width: 0;
+        width: 0;
     }
+
     to {
-      width: 80%;
+        width: 80%;
     }
-  }
-  // ======================================steps progress
-  @property --progress-value {
+}
+
+// ======================================steps progress
+@property --progress-value {
     syntax: "<integer>";
     inherits: false;
     initial-value: 0;
-  }
+}
 
-  @keyframes html-progress {
+@keyframes html-progress {
     to {
-      --progress-value: 62;
+        --progress-value: 62;
     }
-  }
+}
 
-  .progress-bar-container {
+.progress-bar-container {
     background-color: transparent;
 
     .progress-bar {
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      color: $white-light !important;
-      font-size: 12px !important;
-      /* to center the percentage value */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: transparent;
-      @media only screen and (max-width: 580px) {
-        width: 35px;
-        height: 35px;
-        font-size: 10px !important;
-        margin: 13px 0px !important;
-      }
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        color: $white-light !important;
+        font-size: 12px !important;
+        /* to center the percentage value */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: transparent;
+
+        @media only screen and (max-width: 580px) {
+            width: 35px;
+            height: 35px;
+            font-size: 10px !important;
+            margin: 13px 0px !important;
+        }
     }
 
     .progress-bar::before {
-      counter-reset: percentage var(--progress-value);
-      content: counter(percentage) "%";
+        counter-reset: percentage var(--progress-value);
+        content: counter(percentage) "%";
     }
 
     .html {
-      background: radial-gradient(
-          closest-side,
-          $light-skin 79%,
-          transparent 80% 100%
-        ),
-        conic-gradient(
-          $secondry calc(var(--progress-value) * 1%),
-          rgba($secondry, 0.2) 0
-        );
-      animation: html-progress 2s 1 forwards;
+        background: radial-gradient(closest-side,
+                $light-skin 79%,
+                transparent 80% 100%),
+            conic-gradient($secondry calc(var(--progress-value) * 1%),
+                rgba($secondry, 0.2) 0);
+        animation: html-progress 2s 1 forwards;
     }
 
     .html::before {
-      animation: html-progress 2s 1 forwards;
+        animation: html-progress 2s 1 forwards;
     }
 
     progress {
-      visibility: hidden;
-      width: 0;
-      height: 0;
+        visibility: hidden;
+        width: 0;
+        height: 0;
     }
-  }
+}

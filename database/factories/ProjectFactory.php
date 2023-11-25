@@ -22,6 +22,7 @@ class ProjectFactory extends Factory {
             'current_status' => rand(0, 1),
             'deadline' => Carbon::now()->addDays(fake()->numberBetween(1, 365)),
             'img' => 'thumbnails/project.png',
+            'progress' => fake()->numberBetween(0, 100)
         ];
     }
 }

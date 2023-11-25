@@ -22,6 +22,10 @@ class Project extends Model {
         return $this->belongsTo(Client::class);
     }
 
+    public function phases() {
+        return $this->hasMany(Phase::class);
+    }
+
     private static $statusLabels = [
         "Ongoing",
         "Completed"
