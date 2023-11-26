@@ -5,6 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use League\ISO3166\ISO3166;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -18,6 +19,10 @@ class UserFactory extends Factory {
      * @return array<string, mixed>
      */
     public function definition(): array {
+        $iso3166 = new ISO3166();
+        $countries = $iso3166->all();
+        $country = $countries[array_rand($countries)]['name'];
+
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
@@ -26,9 +31,10 @@ class UserFactory extends Factory {
             'remember_token' => Str::random(10),
             'phone' => fake()->phoneNumber(),
             'address' => fake()->address(),
-            'country' => fake()->country(),
+            'country' => $country,
+            'country_code' => strtolower($iso3166->name($country)['alpha2']),
             'designation' => fake()->jobTitle(),
-            'img' => 'https://i.pravatar.cc/300',
+            'img' => 'users/avatar.png',
         ];
     }
 
@@ -42,6 +48,10 @@ class UserFactory extends Factory {
     }
 
     public function staff(): static {
+        $iso3166 = new ISO3166();
+        $countries = $iso3166->all();
+        $country = $countries[array_rand($countries)]['name'];
+
         return $this->state(fn (array $attributes) => [
             'name' => 'Staff',
             'email' => 'staff@gmail.com',
@@ -50,13 +60,18 @@ class UserFactory extends Factory {
             'remember_token' => Str::random(10),
             'phone' => fake()->phoneNumber(),
             'address' => fake()->address(),
-            'country' => fake()->country(),
+            'country' => $country,
+            'country_code' => strtolower($iso3166->name($country)['alpha2']),
             'designation' => fake()->jobTitle(),
-            'img' => 'https://i.pravatar.cc/300',
+            'img' => 'users/avatar.png',
         ]);
     }
 
     public function partner(): static {
+        $iso3166 = new ISO3166();
+        $countries = $iso3166->all();
+        $country = $countries[array_rand($countries)]['name'];
+
         return $this->state(fn (array $attributes) => [
             'name' => 'Partner',
             'email' => 'partner@gmail.com',
@@ -65,13 +80,18 @@ class UserFactory extends Factory {
             'remember_token' => Str::random(10),
             'phone' => fake()->phoneNumber(),
             'address' => fake()->address(),
-            'country' => fake()->country(),
+            'country' => $country,
+            'country_code' => strtolower($iso3166->name($country)['alpha2']),
             'designation' => fake()->jobTitle(),
-            'img' => 'https://i.pravatar.cc/300',
+            'img' => 'users/avatar.png',
         ]);
     }
 
     public function client(): static {
+        $iso3166 = new ISO3166();
+        $countries = $iso3166->all();
+        $country = $countries[array_rand($countries)]['name'];
+
         return $this->state(fn (array $attributes) => [
             'name' => 'Client',
             'email' => 'client@gmail.com',
@@ -80,7 +100,8 @@ class UserFactory extends Factory {
             'remember_token' => Str::random(10),
             'phone' => fake()->phoneNumber(),
             'address' => fake()->address(),
-            'country' => fake()->country(),
+            'country' => $country,
+            'country_code' => strtolower($iso3166->name($country)['alpha2']),
             'designation' => fake()->jobTitle(),
             'img' => 'users/avatar.png',
         ]);

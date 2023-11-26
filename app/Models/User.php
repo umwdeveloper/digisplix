@@ -23,7 +23,9 @@ class User extends Authenticatable {
         'phone',
         'address',
         'country',
-        'designation'
+        'country_code',
+        'designation',
+        'img'
     ];
 
     /**

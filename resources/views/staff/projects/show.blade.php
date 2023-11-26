@@ -869,6 +869,7 @@
                 type: 'PUT',
                 data: {
                     '_token': '{{ csrf_token() }}',
+                    '_target': 'ajax',
                     'name': projectName,
                     'client_id': projectClientID,
                     'description': projectDescription,
@@ -929,6 +930,7 @@
                     }
                 })
             })
+            location.reload()
         })
     </script>
 @endsection

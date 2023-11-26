@@ -717,6 +717,7 @@
                                             class=" {{ $errors->createLead->has('country') ? 'is-invalid' : '' }}"
                                             id="country" name="country" required value="{{ old('country') }}"
                                             placeholder="Pakistan">
+                                        <input type="hidden" id="country_code" name="country_code">
                                         <label class="crm-label form-label" for="country">Country<span
                                                 class="text-danger">*</span></label>
                                         @if ($errors->createLead->has('country'))
@@ -991,6 +992,7 @@
                                             class=" {{ $errors->updateLead->has('country') ? 'is-invalid' : '' }}"
                                             id="country2" name="country" required value="{{ old('country') }}"
                                             placeholder="Pakistan">
+                                        <input type="hidden" id="country2_code" name="country_code">
                                         <label class="crm-label form-label" for="country2">Country<span
                                                 class="text-danger">*</span></label>
                                         @if ($errors->updateLead->has('country'))

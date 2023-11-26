@@ -30,6 +30,7 @@ class UpdateLead extends FormRequest {
             'url' => 'url|required',
             'partner_id' => 'integer|required',
             'country' => 'string|required',
+            'country_code' => 'string|required',
             'address' => 'string|required',
             'phone' => 'string|required',
             'joined_date' => 'date|required',

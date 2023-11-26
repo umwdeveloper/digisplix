@@ -13,7 +13,8 @@ return new class extends Migration {
             $table->string('phone')->nullable()->after('password');
             $table->text('address')->nullable()->after('phone');
             $table->string('country')->after('address');
-            $table->string('designation')->after('country');
+            $table->string('country_code')->after('country');
+            $table->string('designation')->after('country_code');
             $table->text('img')->nullable()->after('designation');
         });
     }

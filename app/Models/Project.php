@@ -13,6 +13,7 @@ class Project extends Model {
         'name',
         'description',
         'deadline',
+        'progress',
         'billing_status',
         'current_status',
         'img'

@@ -105,7 +105,12 @@ class ProjectController extends Controller {
             $validatedData['img'] = $thumbnailPath;
         }
         $project->update($validatedData);
-        return redirect()->back()->with('status', 'Project updated successfully!');
+
+        if ($request->input('_target') == 'ajax') {
+            return response()->json(['status' => 'success']);
+        } else {
+            return redirect()->back()->with('status', 'Project updated successfully!');
+        }
     }
 
     /**

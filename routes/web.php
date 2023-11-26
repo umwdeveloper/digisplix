@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PartnerController;
+use App\Http\Controllers\Staff\PartnerController as StaffPartnerController;
 use App\Http\Controllers\Staff\PhaseController;
 use App\Http\Controllers\Staff\LeadController;
 use App\Http\Controllers\Staff\ProjectController;
@@ -50,6 +51,9 @@ Route::domain('admin.digisplix.test')
         // Tasks
         Route::put('tasks/updateAll', [TaskController::class, 'updateAll'])
             ->name('tasks.updateAll');
+
+        // Partners
+        Route::resource('partners', StaffPartnerController::class);
     });
 
 Route::domain('partner.digisplix.test')

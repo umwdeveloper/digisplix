@@ -38,9 +38,10 @@
     @php
         $preferredMode = request()->cookie('preferredMode');
     @endphp
-    <link rel="stylesheet" id="theme-link"
-        href="{{ asset($preferredMode && $preferredMode == 'dark' ? 'css/dark-theme.css' : 'css/light-theme.css') }}">
+    {{-- <link rel="stylesheet" id="theme-link"
+        href="{{ asset($preferredMode && $preferredMode == 'dark' ? 'css/dark-theme.css' : 'css/light-theme.css') }}"> --}}
 
+    @vite(['resources/css/light-sass/main.scss'])
 
     <title>DigiSplix | Admin</title>
 
@@ -169,7 +170,7 @@
                             </li>
 
                             <li class="menu-item">
-                                <a href="partners.html">
+                                <a href="{{ route('staff.partners.index') }}">
                                     <span class="menu-icon">
                                         <i class="fa-duotone fa-user-group-simple"></i>
                                     </span>
@@ -890,7 +891,7 @@
         });
     </script>
 
-    @yield('script');
+    @yield('script')
 </body>
 
 </html>

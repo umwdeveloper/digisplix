@@ -18,6 +18,7 @@ class StaffMiddleware {
             return $next($request);
         }
 
-        abort(403, "You are not authorized");
+        // abort(403, "You are not authorized");
+        return redirect()->intended();
     }
 }
