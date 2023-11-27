@@ -9,7 +9,7 @@ use App\Models\Client;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Image;
+use Intervention\Image\Facades\Image;
 
 class ProjectController extends Controller {
     /**
@@ -50,7 +50,6 @@ class ProjectController extends Controller {
         if ($request->hasFile('img')) {
             $image = $request->file('img');
             $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
-
             $thumbnail = Image::make($image)
                 ->fit(100, 100)
                 ->encode($image->getClientOriginalExtension());

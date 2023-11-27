@@ -75,16 +75,18 @@ class LeadController extends Controller {
         $lead->update($validatedData);
         $lead->user->update($validatedData);
 
-        return redirect()->back()->with('status', 'Client updated successfully!');
+        return redirect()->back()->with('status', 'Lead updated successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id) {
-        Client::destroy($id);
+        $lead = Client::findOrFail($id);
+        $lead->user()->delete();
+        $lead->delete();
 
-        return redirect()->back()->with('status', 'Client deleted successfully!');
+        return redirect()->back()->with('status', 'Lead deleted successfully!');
     }
 
     // Update lead status

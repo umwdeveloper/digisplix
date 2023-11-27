@@ -54,6 +54,8 @@ Route::domain('admin.digisplix.test')
 
         // Partners
         Route::resource('partners', StaffPartnerController::class);
+        Route::get('/partners/fetch_partner/{partner_id}', [StaffPartnerController::class, 'fetchPartner'])
+            ->name('partners.fetch_partner');
     });
 
 Route::domain('partner.digisplix.test')

@@ -177,7 +177,8 @@
                                             aria-label="Floating label select example">
                                             <option selected disabled>Select</option>
                                             @foreach ($clients as $client)
-                                                <option {{ old('client_id') == $client->id ? 'selected' : '' }}
+                                                <option
+                                                    {{ $errors->hasBag('createProject') && old('client_id') == $client->id ? 'selected' : '' }}
                                                     value="{{ $client->id }}">
                                                     {{ $client->user->name }}
                                                 </option>
@@ -196,7 +197,9 @@
                                     <div class="form-floating mb-3">
                                         <input type="text" required name="name"
                                             class="form-control crm-input {{ $errors->createProject->has('name') ? 'is-invalid' : '' }}"
-                                            id="project" value="{{ old('name') }}" placeholder="ABC">
+                                            id="project"
+                                            value="{{ $errors->hasBag('createProject') ? old('name') : '' }}"
+                                            placeholder="ABC">
                                         <label class="crm-label form-label" for="project">Project Name<span
                                                 class="text-danger">*</span></label>
                                         @if ($errors->createProject->has('name'))
@@ -210,7 +213,8 @@
                                     <div class="form-floating mb-3">
                                         <input type="date" required
                                             class="form-control crm-input {{ $errors->createProject->has('deadline') ? 'is-invalid' : '' }}"
-                                            id="date" name="deadline" value="{{ old('deadline') }}" required
+                                            id="date" name="deadline"
+                                            value="{{ $errors->hasBag('createProject') ? old('deadline') : '' }}" required
                                             placeholder="ABC">
                                         <label class="crm-label form-label" for="date">Deadline<span
                                                 class="text-danger">*</span></label>
@@ -225,7 +229,7 @@
                                     <div class="form-floating mb-3">
                                         <textarea name="description" required
                                             class="form-control crm-input {{ $errors->createProject->has('description') ? 'is-invalid' : '' }}"
-                                            placeholder="ABC" id="description" rows="10">{{ old('description') }}</textarea>
+                                            placeholder="ABC" id="description" rows="10">{{ $errors->hasBag('createProject') ? old('description') : '' }}</textarea>
                                         <label class="crm-label form-label" for="description">Description<span
                                                 class="text-danger">*</span></label>
                                         @if ($errors->createProject->has('description'))
@@ -264,6 +268,7 @@
                                     <div class="d-flex justify-content-lg-end justify-content-center mt-3 mb-3">
                                         <button type="button" class="modal-btn-cancel me-3"
                                             data-bs-dismiss="modal">Cancel</button>
+                                        <input type="hidden" name="progress" value="0">
                                         <button type="submit" class="modal-btn-save ">Save </button>
                                     </div>
                                 </div>
@@ -291,7 +296,7 @@
                         @method('PUT')
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-6">
                                     <div class="form-floating mb-3">
                                         <select
                                             class="form-select crm-input {{ $errors->updateProject->has('client_id') ? 'is-invalid' : '' }}"
@@ -299,7 +304,8 @@
                                             aria-label="Floating label select example">
                                             <option selected disabled>Select</option>
                                             @foreach ($clients as $client)
-                                                <option {{ old('client_id') == $client->id ? 'selected' : '' }}
+                                                <option
+                                                    {{ $errors->hasBag('updateProject') && old('client_id') == $client->id ? 'selected' : '' }}
                                                     value="{{ $client->id }}">
                                                     {{ $client->user->name }}
                                                 </option>
@@ -318,7 +324,9 @@
                                     <div class="form-floating mb-3">
                                         <input type="text" required name="name"
                                             class="form-control crm-input {{ $errors->updateProject->has('name') ? 'is-invalid' : '' }}"
-                                            id="name" value="{{ old('name') }}" placeholder="ABC">
+                                            id="name"
+                                            value="{{ $errors->hasBag('updateProject') ? old('name') : '' }}"
+                                            placeholder="ABC">
                                         <label class="crm-label form-label" for="project">Project Name<span
                                                 class="text-danger">*</span></label>
                                         @if ($errors->updateProject->has('name'))
@@ -332,7 +340,8 @@
                                     <div class="form-floating mb-3">
                                         <input type="date" required
                                             class="form-control crm-input {{ $errors->updateProject->has('deadline') ? 'is-invalid' : '' }}"
-                                            id="deadline" name="deadline" value="{{ old('deadline') }}" required
+                                            id="deadline" name="deadline"
+                                            value="{{ $errors->hasBag('updateProject') ? old('deadline') : '' }}" required
                                             placeholder="ABC">
                                         <label class="crm-label form-label" for="date">Deadline<span
                                                 class="text-danger">*</span></label>
@@ -351,13 +360,15 @@
                                             aria-label="Floating label select example">
                                             <option selected disabled>Select</option>
 
-                                            <option {{ old('billing_status') == '0' ? 'selected' : '' }} value="0"
-                                                style="color: #063AF6; ">
+                                            <option
+                                                {{ $errors->hasBag('updateProject') && old('billing_status') == '0' ? 'selected' : '' }}
+                                                value="0" style="color: #063AF6; ">
                                                 Overdue</option>
 
 
-                                            <option {{ old('billing_status') == '1' ? 'selected' : '' }} value="1"
-                                                style="color: #039227; ">Paid
+                                            <option
+                                                {{ $errors->hasBag('updateProject') && old('billing_status') == '1' ? 'selected' : '' }}
+                                                value="1" style="color: #039227; ">Paid
                                             </option>
                                         </select>
                                         <label class="crm-label form-label" for="select-billing">Billing Status<span
@@ -378,13 +389,15 @@
                                             aria-label="Floating label select example">
                                             <option selected disabled>Select</option>
 
-                                            <option {{ old('current_status') == '0' ? 'selected' : '' }} value="0"
-                                                style="color: #063AF6; ">
+                                            <option
+                                                {{ $errors->hasBag('updateProject') && old('current_status') == '0' ? 'selected' : '' }}
+                                                value="0" style="color: #063AF6; ">
                                                 Ongoing</option>
 
 
-                                            <option {{ old('current_status') == '1' ? 'selected' : '' }} value="1"
-                                                style="color: #039227; ">Completed
+                                            <option
+                                                {{ $errors->hasBag('updateProject') && old('current_status') == '1' ? 'selected' : '' }}
+                                                value="1" style="color: #039227; ">Completed
                                             </option>
                                         </select>
                                         <label class="crm-label form-label" for="select-status">Current Status<span
@@ -397,11 +410,27 @@
                                     </div>
 
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" required name="progress"
+                                            class="form-control crm-input {{ $errors->updateProject->has('progress') ? 'is-invalid' : '' }}"
+                                            id="progress"
+                                            value="{{ $errors->hasBag('updateProject') ? old('progress') : '' }}"
+                                            placeholder="ABC">
+                                        <label class="crm-label form-label" for="project">Project Progress<span
+                                                class="text-danger">*</span></label>
+                                        @if ($errors->updateProject->has('progress'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->updateProject->first('progress') }}
+                                            </small>
+                                        @endif
+                                    </div>
+                                </div>
                                 <div class="col-lg-12">
                                     <div class="form-floating mb-3">
                                         <textarea name="description" required id="description"
                                             class="form-control crm-input {{ $errors->updateProject->has('description') ? 'is-invalid' : '' }}"
-                                            placeholder="ABC" id="description" rows="10">{{ old('description') }}</textarea>
+                                            placeholder="ABC" id="description" rows="10">{{ $errors->hasBag('updateProject') ? old('description') : '' }}</textarea>
                                         <label class="crm-label form-label" for="description">Description<span
                                                 class="text-danger">*</span></label>
                                         @if ($errors->updateProject->has('description'))
@@ -442,7 +471,7 @@
                                         <button type="button" class="modal-btn-cancel me-3"
                                             data-bs-dismiss="modal">Cancel</button>
                                         <input type="hidden" name="project_id" id="project_id"
-                                            value="{{ old('project_id') ? old('project_id') : '1' }}">
+                                            value="{{ $errors->hasBag('updateProject') && old('project_id') ? old('project_id') : '1' }}">
                                         <button type="submit" class="modal-btn-save ">Update </button>
                                     </div>
                                 </div>
@@ -580,6 +609,10 @@
     {{-- Fetch project on Edit click --}}
     <script>
         $('body').on('click', '.settingModal', function() {
+            // Remove validation errors
+            $('.is-invalid').removeClass('is-invalid')
+            $('.invalid-feedback').remove()
+
             let projectID = $(this).data('project-id');
             $('#settingModal form').attr('action', "{{ route('staff.projects.update', 'project_id') }}"
                 .replace('project_id', projectID))
@@ -595,6 +628,7 @@
                         $("#settingModal #deadline").val(response.project.deadline)
                         $("#settingModal #select-billing").val(response.project.billing_status)
                         $("#settingModal #select-status").val(response.project.current_status)
+                        $("#settingModal #progress").val(response.project.progress)
                         $("#settingModal #description").val(response.project.description)
                         // $('#settingModal-btn').click()
                     } else {}

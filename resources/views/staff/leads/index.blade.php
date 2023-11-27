@@ -532,7 +532,8 @@
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->createLead->has('name') ? 'is-invalid' : '' }}"
-                                            id="name" name="name" required value="{{ old('name') }}"
+                                            id="name" name="name" required
+                                            value="{{ $errors->hasBag('createLead') ? old('name') : '' }}"
                                             placeholder="Mickel">
                                         <label class="crm-label form-label" for="name">Client Name<span
                                                 class="text-danger">*</span></label>
@@ -548,7 +549,8 @@
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->createLead->has('business_name') ? 'is-invalid' : '' }}"
                                             id="business-name" name="business_name" required
-                                            value="{{ old('business_name') }}" placeholder="Mickel">
+                                            value="{{ $errors->hasBag('createLead') ? old('business_name') : '' }}"
+                                            placeholder="Mickel">
                                         <label class="crm-label form-label" for="business-name">Business Name<span
                                                 class="text-danger">*</span></label>
                                         @if ($errors->createLead->has('business_name'))
@@ -563,7 +565,8 @@
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->createLead->has('business_email') ? 'is-invalid' : '' }}"
                                             id="business-email" name="business_email" required
-                                            value="{{ old('business_email') }}" placeholder="Mickel">
+                                            value="{{ $errors->hasBag('createLead') ? old('business_email') : '' }}"
+                                            placeholder="Mickel">
                                         <label class="crm-label form-label" for="business-email">Business
                                             Email<span class="text-danger">*</span></label>
                                         @if ($errors->createLead->has('business_email'))
@@ -578,7 +581,8 @@
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->createLead->has('business_phone') ? 'is-invalid' : '' }}"
                                             id="business-phone" name="business_phone" required
-                                            value="{{ old('business_phone') }}" placeholder="Mickel">
+                                            value="{{ $errors->hasBag('createLead') ? old('business_phone') : '' }}"
+                                            placeholder="Mickel">
                                         <label class="crm-label form-label" for="business-phone">Business
                                             Phone<span class="text-danger">*</span></label>
                                         @if ($errors->createLead->has('business_phone'))
@@ -592,7 +596,8 @@
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->createLead->has('title') ? 'is-invalid' : '' }}"
-                                            id="Title" name="title" required value="{{ old('title') }}"
+                                            id="Title" name="title" required
+                                            value="{{ $errors->hasBag('createLead') ? old('title') : '' }}"
                                             placeholder="ABC">
                                         <label class="crm-label form-label" for="Title">Title<span
                                                 class="text-danger">*</span></label>
@@ -608,7 +613,8 @@
                                     <div class="form-floating mb-3">
                                         <input type="email"
                                             class="form-control crm-input {{ $errors->createLead->has('email') ? 'is-invalid' : '' }}"
-                                            id="email" name="email" required value="{{ old('email') }}"
+                                            id="email" name="email" required
+                                            value="{{ $errors->hasBag('createLead') ? old('email') : '' }}"
                                             placeholder="ABC">
                                         <label class="crm-label form-label" for="email">Email Address<span
                                                 class="text-danger">*</span></label>
@@ -639,7 +645,8 @@
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->createLead->has('designation') ? 'is-invalid' : '' }}"
                                             id="designation" name="designation" required
-                                            value="{{ old('designation') }}" placeholder="ABC">
+                                            value="{{ $errors->hasBag('createLead') ? old('designation') : '' }}"
+                                            placeholder="ABC">
                                         <label class="crm-label form-label" for="email">Designation<span
                                                 class="text-danger">*</span></label>
                                         @if ($errors->createLead->has('designation'))
@@ -658,7 +665,8 @@
                                             aria-label="Floating label select example">
                                             <option selected disabled>Select</option>
                                             @foreach ($statuses as $status)
-                                                <option {{ old('status') === $status ? 'selected' : '' }}
+                                                <option
+                                                    {{ $errors->hasBag('createLead') && old('status') === $status ? 'selected' : '' }}
                                                     value="{{ $status }}"
                                                     style="color: {{ $status_colors[$status] }}; ">
                                                     {{ $status_labels[$status] }}
@@ -679,7 +687,8 @@
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->createLead->has('url') ? 'is-invalid' : '' }}"
-                                            id="url" name="url" required value="{{ old('url') }}"
+                                            id="url" name="url" required
+                                            value="{{ $errors->hasBag('createLead') ? old('url') : '' }}"
                                             placeholder="ABC">
                                         <label class="crm-label form-label" for="url">URL<span
                                                 class="text-danger">*</span></label>
@@ -697,7 +706,8 @@
                                         aria-label="Floating label select example">
                                         <option selected disabled>Select</option>
                                         @foreach ($leads as $lead)
-                                            <option {{ old('partner_id') == $lead->partner->id ? 'selected' : '' }}
+                                            <option
+                                                {{ $errors->hasBag('createLead') && old('partner_id') == $lead->partner->id ? 'selected' : '' }}
                                                 value="{{ $lead->partner->id }}">
                                                 {{ $lead->partner->user->name }}
                                             </option>
@@ -715,7 +725,8 @@
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class=" {{ $errors->createLead->has('country') ? 'is-invalid' : '' }}"
-                                            id="country" name="country" required value="{{ old('country') }}"
+                                            id="country" name="country" required
+                                            value="{{ $errors->hasBag('createLead') ? old('country') : '' }}"
                                             placeholder="Pakistan">
                                         <input type="hidden" id="country_code" name="country_code">
                                         <label class="crm-label form-label" for="country">Country<span
@@ -731,7 +742,8 @@
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->createLead->has('address') ? 'is-invalid' : '' }}"
-                                            id="address" name="address" required value="{{ old('address') }}"
+                                            id="address" name="address" required
+                                            value="{{ $errors->hasBag('createLead') ? old('address') : '' }}"
                                             placeholder="ABC">
                                         <label class="crm-label form-label" for="address">Address<span
                                                 class="text-danger">*</span></label>
@@ -746,7 +758,8 @@
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->createLead->has('phone') ? 'is-invalid' : '' }}"
-                                            id="p-number" name="phone" required value="{{ old('phone') }}"
+                                            id="p-number" name="phone" required
+                                            value="{{ $errors->hasBag('createLead') ? old('phone') : '' }}"
                                             placeholder="ABC">
                                         <label class="crm-label form-label" for="p-number">Phone Number<span
                                                 class="text-danger">*</span></label>
@@ -761,7 +774,8 @@
                                     <div class="form-floating mb-3">
                                         <input type="date"
                                             class="form-control crm-input {{ $errors->createLead->has('joined_date') ? 'is-invalid' : '' }}"
-                                            id="date" name="joined_date" required value="{{ old('joined_date') }}"
+                                            id="date" name="joined_date" required
+                                            value="{{ $errors->hasBag('createLead') ? old('joined_date') : '' }}"
                                             placeholder="ABC">
                                         <label class="crm-label form-label" for="date">Joined Date<span
                                                 class="text-danger">*</span></label>
@@ -777,7 +791,8 @@
                                         <input type="date"
                                             class="form-control crm-input {{ $errors->createLead->has('followup_date') ? 'is-invalid' : '' }}"
                                             id="follow-date" name="followup_date" required
-                                            value="{{ old('followup_date') }}" placeholder="ABC">
+                                            value="{{ $errors->hasBag('createLead') ? old('followup_date') : '' }}"
+                                            placeholder="ABC">
                                         <label class="crm-label form-label" for="follow-date">Follow-up Date<span
                                                 class="text-danger">*</span></label>
                                         @if ($errors->createLead->has('followup_date'))
@@ -823,7 +838,8 @@
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->updateLead->has('name') ? 'is-invalid' : '' }}"
-                                            id="name" name="name" required value="{{ old('name') }}"
+                                            id="name" name="name" required
+                                            value="{{ $errors->hasBag('updateLead') ? old('name') : '' }}"
                                             placeholder="Mickel">
                                         <label class="crm-label form-label" for="name">Client Name<span
                                                 class="text-danger">*</span></label>
@@ -839,7 +855,8 @@
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->updateLead->has('business_name') ? 'is-invalid' : '' }}"
                                             id="business-name" name="business_name" required
-                                            value="{{ old('business_name') }}" placeholder="Mickel">
+                                            value="{{ $errors->hasBag('updateLead') ? old('business_name') : '' }}"
+                                            placeholder="Mickel">
                                         <label class="crm-label form-label" for="business-name">Business Name<span
                                                 class="text-danger">*</span></label>
                                         @if ($errors->updateLead->has('business_name'))
@@ -854,7 +871,8 @@
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->updateLead->has('business_email') ? 'is-invalid' : '' }}"
                                             id="business-email" name="business_email" required
-                                            value="{{ old('business_email') }}" placeholder="Mickel">
+                                            value="{{ $errors->hasBag('updateLead') ? old('business_email') : '' }}"
+                                            placeholder="Mickel">
                                         <label class="crm-label form-label" for="business-email">Business
                                             Email<span class="text-danger">*</span></label>
                                         @if ($errors->updateLead->has('business_email'))
@@ -869,7 +887,8 @@
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->updateLead->has('business_phone') ? 'is-invalid' : '' }}"
                                             id="business-phone" name="business_phone" required
-                                            value="{{ old('business_phone') }}" placeholder="Mickel">
+                                            value="{{ $errors->hasBag('updateLead') ? old('business_phone') : '' }}"
+                                            placeholder="Mickel">
                                         <label class="crm-label form-label" for="business-phone">Business
                                             Phone<span class="text-danger">*</span></label>
                                         @if ($errors->updateLead->has('business_phone'))
@@ -883,7 +902,8 @@
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->updateLead->has('title') ? 'is-invalid' : '' }}"
-                                            id="Title" name="title" required value="{{ old('title') }}"
+                                            id="Title" name="title" required
+                                            value="{{ $errors->hasBag('updateLead') ? old('title') : '' }}"
                                             placeholder="ABC">
                                         <label class="crm-label form-label" for="Title">Title<span
                                                 class="text-danger">*</span></label>
@@ -899,7 +919,8 @@
                                     <div class="form-floating mb-3">
                                         <input type="email"
                                             class="form-control crm-input {{ $errors->updateLead->has('email') ? 'is-invalid' : '' }}"
-                                            id="email" name="email" required value="{{ old('email') }}"
+                                            id="email" name="email" required
+                                            value="{{ $errors->hasBag('updateLead') ? old('email') : '' }}"
                                             placeholder="ABC">
                                         <label class="crm-label form-label" for="email">Email Address<span
                                                 class="text-danger">*</span></label>
@@ -915,7 +936,8 @@
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->updateLead->has('designation') ? 'is-invalid' : '' }}"
                                             id="designation" name="designation" required
-                                            value="{{ old('designation') }}" placeholder="ABC">
+                                            value="{{ $errors->hasBag('updateLead') ? old('designation') : '' }}"
+                                            placeholder="ABC">
                                         <label class="crm-label form-label" for="email">Designation<span
                                                 class="text-danger">*</span></label>
                                         @if ($errors->updateLead->has('designation'))
@@ -933,7 +955,8 @@
                                             required id="select-status2" name="status"
                                             aria-label="Floating label select example">
                                             @foreach ($statuses as $status)
-                                                <option {{ old('status') === $status ? 'selected' : '' }}
+                                                <option
+                                                    {{ $errors->hasBag('updateLead') && old('status') === $status ? 'selected' : '' }}
                                                     value="{{ $status }}"
                                                     style="color: {{ $status_colors[$status] }}; ">
                                                     {{ $status_labels[$status] }}
@@ -954,7 +977,8 @@
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->updateLead->has('url') ? 'is-invalid' : '' }}"
-                                            id="url" name="url" required value="{{ old('url') }}"
+                                            id="url" name="url" required
+                                            value="{{ $errors->hasBag('updateLead') ? old('url') : '' }}"
                                             placeholder="ABC">
                                         <label class="crm-label form-label" for="url">URL<span
                                                 class="text-danger">*</span></label>
@@ -972,7 +996,8 @@
                                         aria-label="Floating label select example">
                                         <option selected disabled>Select</option>
                                         @foreach ($leads as $lead)
-                                            <option {{ old('partner_id') == $lead->partner->id ? 'selected' : '' }}
+                                            <option
+                                                {{ $errors->hasBag('updateLead') && old('partner_id') == $lead->partner->id ? 'selected' : '' }}
                                                 value="{{ $lead->partner->id }}">
                                                 {{ $lead->partner->user->name }}
                                             </option>
@@ -990,7 +1015,8 @@
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class=" {{ $errors->updateLead->has('country') ? 'is-invalid' : '' }}"
-                                            id="country2" name="country" required value="{{ old('country') }}"
+                                            id="country2" name="country" required
+                                            value="{{ $errors->hasBag('updateLead') ? old('country') : '' }}"
                                             placeholder="Pakistan">
                                         <input type="hidden" id="country2_code" name="country_code">
                                         <label class="crm-label form-label" for="country2">Country<span
@@ -1006,7 +1032,8 @@
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->updateLead->has('address') ? 'is-invalid' : '' }}"
-                                            id="address" name="address" required value="{{ old('address') }}"
+                                            id="address" name="address" required
+                                            value="{{ $errors->hasBag('updateLead') ? old('address') : '' }}"
                                             placeholder="ABC">
                                         <label class="crm-label form-label" for="address">Address<span
                                                 class="text-danger">*</span></label>
@@ -1021,7 +1048,8 @@
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->updateLead->has('phone') ? 'is-invalid' : '' }}"
-                                            id="p-number" name="phone" required value="{{ old('phone') }}"
+                                            id="p-number" name="phone" required
+                                            value="{{ $errors->hasBag('updateLead') ? old('phone') : '' }}"
                                             placeholder="ABC">
                                         <label class="crm-label form-label" for="p-number">Phone Number<span
                                                 class="text-danger">*</span></label>
@@ -1036,7 +1064,8 @@
                                     <div class="form-floating mb-3">
                                         <input type="date"
                                             class="form-control crm-input {{ $errors->updateLead->has('joined_date') ? 'is-invalid' : '' }}"
-                                            id="date" name="joined_date" required value="{{ old('joined_date') }}"
+                                            id="date" name="joined_date" required
+                                            value="{{ $errors->hasBag('updateLead') ? old('joined_date') : '' }}"
                                             placeholder="ABC">
                                         <label class="crm-label form-label" for="date">Joined Date<span
                                                 class="text-danger">*</span></label>
@@ -1052,7 +1081,8 @@
                                         <input type="date"
                                             class="form-control crm-input {{ $errors->updateLead->has('followup_date') ? 'is-invalid' : '' }}"
                                             id="follow-date" name="followup_date" required
-                                            value="{{ old('followup_date') }}" placeholder="ABC">
+                                            value="{{ $errors->hasBag('updateLead') ? old('followup_date') : '' }}"
+                                            placeholder="ABC">
                                         <label class="crm-label form-label" for="follow-date">Follow-up Date<span
                                                 class="text-danger">*</span></label>
                                         @if ($errors->updateLead->has('followup_date'))
@@ -1093,7 +1123,7 @@
             $("#country2").countrySelect({
                 defaultCountry: "us"
             });
-            $("#country2").countrySelect("setCountry", "{{ old('country') }}");
+            $("#country2").countrySelect("setCountry", "{{ $errors->hasBag('updateLead') ? old('country') : '' }}");
             $('#editLeadModal-btn').click()
         </script>
     @endif
@@ -1185,6 +1215,10 @@
     {{-- Fetch lead on Edit click --}}
     <script>
         $('body').on('click', '.edit', function() {
+            // Remove validation errors
+            $('.is-invalid').removeClass('is-invalid')
+            $('.invalid-feedback').remove()
+
             let leadID = $(this).data('lead-id');
             $('#editLeadModal form').attr('action', "{{ route('staff.leads.update', 'lead_id') }}"
                 .replace('lead_id', leadID))
