@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreStaff;
+use App\Http\Requests\UpdateStaff;
 use App\Models\Permission;
 use App\Models\Staff;
 use App\Models\User;
@@ -108,14 +109,71 @@ class StaffController extends Controller {
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id) {
-        //
+    public function update(UpdateStaff $request, string $id) {
+        $staff = Staff::with(['user'])->findOrFail($id);
+        $validatedData = $request->validated();
+
+        if ($request->hasFile('img')) {
+            $image = $request->file('img')->store('users');
+        }
+
+        try {
+            DB::beginTransaction();
+
+            if ($request->hasFile('img')) {
+                if (!empty($staff->user->img)) {
+                    Storage::disk('public')->delete($staff->user->img);
+                }
+
+                $validatedData['img'] = $image;
+            }
+
+            $staff->user->update($validatedData);
+
+            $permissions = $request->input('permissions');
+            $staff->permissions()->sync($permissions);
+
+            DB::commit();
+
+            return redirect()->back()->with('status', 'Staff updated successfully!');
+        } catch (QueryException $e) {
+            DB::rollBack();
+
+            // Delete image
+            if ($request->hasFile('img')) {
+                Storage::disk('public')->delete($image);
+            }
+
+            // Log the exception for debugging
+            Log::error('Error updating staff: ' . $e->getMessage());
+
+            $errorCode = $e->errorInfo[1];
+
+            if ($errorCode === 1062) {
+                return redirect()->back()->withErrors(['email' => 'The email is already taken.'], 'updateStaff')->withInput();
+            }
+
+            return redirect()->back()->withErrors(['db_error' => $e->getMessage()], 'updateStaff')->withInput();
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id) {
-        //
+        $staff = Staff::findOrFail($id);
+        Storage::disk('public')->delete($staff->user->img);
+        $staff->user()->delete();
+        $staff->delete();
+
+        return redirect()->back()->with('status', 'Staff deleted successfully!');
+    }
+
+    public function fetchStaff(string $id) {
+        $staff = Staff::with(['user', 'permissions:id'])->findOrFail($id);
+        return response()->json([
+            'status' => 'success',
+            'staff' => $staff
+        ]);
     }
 }

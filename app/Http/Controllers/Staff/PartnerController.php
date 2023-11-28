@@ -99,7 +99,7 @@ class PartnerController extends Controller {
      * Update the specified resource in storage.
      */
     public function update(UpdatePartner $request, string $id) {
-        $partner = Partner::findOrFail($id);
+        $partner = Partner::with(['user'])->findOrFail($id);
         $validatedData = $request->validated();
 
         if ($request->hasFile('img')) {
@@ -110,8 +110,8 @@ class PartnerController extends Controller {
             DB::beginTransaction();
 
             if ($request->hasFile('img')) {
-                if (!empty($partner->img)) {
-                    Storage::disk('public')->delete($partner->img);
+                if (!empty($partner->user->img)) {
+                    Storage::disk('public')->delete($partner->user->img);
                 }
 
                 $validatedData['img'] = $image;
@@ -149,6 +149,7 @@ class PartnerController extends Controller {
      */
     public function destroy(string $id) {
         $partner = Partner::findOrFail($id);
+        Storage::disk('public')->delete($partner->user->img);
         $partner->user()->delete();
         $partner->delete();
 
