@@ -3,6 +3,8 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\Staff\PartnerController as StaffPartnerController;
+use App\Http\Controllers\Staff\ClientController as StaffClientController;
+use App\Http\Controllers\Staff\StaffController as StaffStaffController;
 use App\Http\Controllers\Staff\PhaseController;
 use App\Http\Controllers\Staff\LeadController;
 use App\Http\Controllers\Staff\ProjectController;
@@ -56,6 +58,20 @@ Route::domain('admin.digisplix.test')
         Route::resource('partners', StaffPartnerController::class);
         Route::get('/partners/fetch_partner/{partner_id}', [StaffPartnerController::class, 'fetchPartner'])
             ->name('partners.fetch_partner');
+
+        // Clients
+        Route::resource('clients', StaffClientController::class);
+        Route::patch('/clients/update_client_status/{client_id}', [StaffClientController::class, 'updateClientStatus'])
+            ->name('clients.update_client_status');
+        Route::get('/clients/fetch_client/{client_id}', [StaffClientController::class, 'fetchClient'])
+            ->name('clients.fetch_client');
+
+        // Staff
+        Route::resource('staff', StaffStaffController::class);
+        Route::patch('/staff/update_staff_status/{staff_id}', [StaffStaffController::class, 'updateStaffStatus'])
+            ->name('staff.update_staff_status');
+        Route::get('/staff/fetch_staff/{staff_id}', [StaffStaffController::class, 'fetchStaff'])
+            ->name('staff.fetch_staff');
     });
 
 Route::domain('partner.digisplix.test')

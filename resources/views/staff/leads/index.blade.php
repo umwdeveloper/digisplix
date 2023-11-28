@@ -13,7 +13,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class=" flex-grow-1  box-text d-flex align-items-center">
 
-                                        <span class="box-value">{{ $new_leads->count() }}</span>
+                                        <span class="box-value">{{ $new_leads_count }}</span>
 
                                     </div>
                                     <div class="box-icon">
@@ -524,6 +524,9 @@
                             class="fa-duotone fa-xmark"></i></button>
                 </div>
                 <div class="modal-body">
+                    @if ($errors->createLead->has('db_error'))
+                        <small>{{ $errors->createLead->first('db_error') }}</small>
+                    @endif
                     <form action="{{ route('staff.leads.store') }}" method="POST" novalidate>
                         @csrf
                         <div class="container-fluid">

@@ -18,7 +18,8 @@
                             <div class="col-xl-4 col-md-6 mb-3">
                                 <a href="partner-detail.html">
                                     <div class="person-card">
-                                        <div class="ribbon-two ribbon-two-success"><span>{{ $partner->commission }}%</span>
+                                        <div class="ribbon-two ribbon-two-success"><span
+                                                style="background-color: {{ getRandomColor() }}">{{ $partner->commission }}%</span>
                                         </div>
                                         <div class="carousel__slide">
                                             <figure>

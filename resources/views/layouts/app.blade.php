@@ -181,7 +181,7 @@
                             </li>
 
                             <li class="menu-item">
-                                <a href="clients.html">
+                                <a href="{{ route('staff.clients.index') }}">
                                     <span class="menu-icon">
                                         <i class="fa-duotone fa-users-line"></i>
 
@@ -203,7 +203,7 @@
                             </li>
 
                             <li class="menu-item">
-                                <a href="staff.html">
+                                <a href="{{ route('staff.staff.index') }}">
                                     <span class="menu-icon">
                                         <i class="fa-duotone fa-user-tie"></i>
 

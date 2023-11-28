@@ -11,6 +11,10 @@ class Staff extends Model {
     public $timestamps = false;
 
     public function user() {
-        return $this->morphOne('App\User', 'userable');
+        return $this->morphOne(User::class, 'userable');
+    }
+
+    public function permissions() {
+        return $this->belongsToMany(Permission::class, 'staff_permissions')->withTimestamps();
     }
 }

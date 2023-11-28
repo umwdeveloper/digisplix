@@ -24,3 +24,17 @@ if (!function_exists('getURL')) {
         return Storage::url($path);
     }
 }
+
+// Generate random color
+if (!function_exists('getRandomColor')) {
+    function getRandomColor() {
+        $letters = '0123456789ABCDEF';
+        $color = '#';
+
+        for ($i = 0; $i < 6; $i++) {
+            $color .= $letters[random_int(0, 15)];
+        }
+
+        return $color;
+    }
+}

@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder {
                 PhaseSeeder::class,
                 TaskSeeder::class,
                 UsersTableSeeder::class,
+                PermissionSeeder::class,
+                StaffPermissionSeeder::class,
             ]
         );
     }

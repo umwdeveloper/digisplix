@@ -19,7 +19,8 @@ class Client extends Model {
         'joined_at',
         'followup_date',
         'partner_id',
-        'status'
+        'status',
+        'active'
     ];
 
     const NEW_LEAD = 'new_lead';

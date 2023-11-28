@@ -7,8 +7,11 @@ use App\Http\Requests\StorePartner;
 use App\Http\Requests\UpdatePartner;
 use App\Models\Partner;
 use App\Models\User;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -39,25 +42,43 @@ class PartnerController extends Controller {
         $validatedData['password'] = Hash::make($validatedData['password']);
 
         if ($request->hasFile('img')) {
-            $image = $request->file('img');
-            $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
-
-            $userImg = Image::make($image)
-                ->fit(100, 100)
-                ->encode($image->getClientOriginalExtension());
-
-            Storage::disk('public')->put('users/' . $imageName, $userImg);
-            $userImgPath = 'users/' . $imageName;
-
-            $validatedData['img'] = $userImgPath;
+            $image = $request->file('img')->store('users');
         }
 
-        $partner = Partner::create($validatedData);
-        $partner->user()->save(
-            User::make($validatedData)
-        );
+        try {
+            DB::beginTransaction();
 
-        return redirect()->back()->with('status', 'Partner created successfully!');
+            if ($request->hasFile('img')) {
+                $validatedData['img'] = $image;
+            }
+
+            $partner = Partner::create($validatedData);
+            $partner->user()->save(
+                User::make($validatedData)
+            );
+
+            DB::commit();
+
+            return redirect()->back()->with('status', 'Partner created successfully!');
+        } catch (QueryException $e) {
+            DB::rollBack();
+
+            // Delete image
+            if ($request->hasFile('img')) {
+                Storage::disk('public')->delete($image);
+            }
+
+            // Log the exception for debugging
+            Log::error(': ' . $e->getMessage());
+
+            $errorCode = $e->errorInfo[1];
+
+            if ($errorCode === 1062) {
+                return redirect()->back()->withErrors(['email' => 'The email is already taken.'], 'createPartner')->withInput();
+            }
+
+            return redirect()->back()->withErrors(['db_error' => $e->getMessage()], 'createPartner')->withInput();
+        }
     }
 
     /**
@@ -82,27 +103,45 @@ class PartnerController extends Controller {
         $validatedData = $request->validated();
 
         if ($request->hasFile('img')) {
-            if (!empty($partner->img)) {
-                Storage::disk('public')->delete($partner->img);
-            }
-
-            $image = $request->file('img');
-            $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
-
-            $userImg = Image::make($image)
-                ->fit(100, 100)
-                ->encode($image->getClientOriginalExtension());
-
-            Storage::disk('public')->put('users/' . $imageName, $userImg);
-            $userImgPath = 'users/' . $imageName;
-
-            $validatedData['img'] = $userImgPath;
+            $image = $request->file('img')->store('users');
         }
 
-        $partner->update($validatedData);
-        $partner->user->update($validatedData);
+        try {
+            DB::beginTransaction();
 
-        return redirect()->back()->with('status', 'Partner updated successfully!');
+            if ($request->hasFile('img')) {
+                if (!empty($partner->img)) {
+                    Storage::disk('public')->delete($partner->img);
+                }
+
+                $validatedData['img'] = $image;
+            }
+
+            $partner->update($validatedData);
+            $partner->user->update($validatedData);
+
+            DB::commit();
+
+            return redirect()->back()->with('status', 'Partner updated successfully!');
+        } catch (QueryException $e) {
+            DB::rollBack();
+
+            // Delete image
+            if ($request->hasFile('img')) {
+                Storage::disk('public')->delete($image);
+            }
+
+            // Log the exception for debugging
+            Log::error('Error updating partner: ' . $e->getMessage());
+
+            $errorCode = $e->errorInfo[1];
+
+            if ($errorCode === 1062) {
+                return redirect()->back()->withErrors(['email' => 'The email is already taken.'], 'updatePartner')->withInput();
+            }
+
+            return redirect()->back()->withErrors(['db_error' => $e->getMessage()], 'updatePartner')->withInput();
+        }
     }
 
     /**

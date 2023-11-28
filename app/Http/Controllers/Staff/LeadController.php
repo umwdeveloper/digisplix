@@ -7,18 +7,23 @@ use App\Http\Requests\StoreLead;
 use App\Http\Requests\UpdateLead;
 use App\Models\Client;
 use App\Models\User;
+use Exception;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class LeadController extends Controller {
     /**
      * Display a listing of the resource.
      */
     public function index() {
-        $leads = Client::with(['user', 'partner', 'partner.user'])->where('active', 0)->get();
+        $leads = Client::with(['user', 'partner', 'partner.user'])->where('active', 0)->where('status', '!=', Client::QUALIFIED)->get();
 
         return view('staff.leads.index', [
             'leads' => $leads,
+            'new_leads_count' => $leads->where('status', Client::NEW_LEAD)->count(),
             'new_leads' => $leads->whereIn('status', [Client::NEW_LEAD, Client::CONTACTED, Client::FOLLOW_UP]),
             'contacted_leads' => $leads->where('status', Client::CONTACTED),
             'follow_up_leads' => $leads->where('status', Client::FOLLOW_UP),
@@ -44,12 +49,32 @@ class LeadController extends Controller {
     public function store(StoreLead $request) {
         $validatedData = $request->validated();
         $validatedData['password'] = Hash::make($validatedData['password']);
-        $lead = Client::create($validatedData);
-        $lead->user()->save(
-            User::make($validatedData)
-        );
 
-        return redirect()->back()->with('status', 'Lead created successfully!');
+        try {
+            DB::beginTransaction();
+
+            $lead = Client::create($validatedData);
+            $lead->user()->save(
+                User::make($validatedData)
+            );
+
+            DB::commit();
+
+            return redirect()->back()->with('status', 'Lead created successfully!');
+        } catch (QueryException $e) {
+            DB::rollBack();
+
+            // Log the exception for debugging
+            Log::error('Error creating lead: ' . $e->getMessage());
+
+            $errorCode = $e->errorInfo[1];
+
+            if ($errorCode === 1062) {
+                return redirect()->back()->withErrors(['email' => 'The email address is already taken.'], 'createLead')->withInput();
+            }
+
+            return redirect()->back()->withErrors(['db_error' => $e->getMessage()], 'createLead')->withInput();
+        }
     }
 
     /**
@@ -72,10 +97,28 @@ class LeadController extends Controller {
     public function update(UpdateLead $request, string $id) {
         $lead = Client::findOrFail($id);
         $validatedData = $request->validated();
-        $lead->update($validatedData);
-        $lead->user->update($validatedData);
 
-        return redirect()->back()->with('status', 'Lead updated successfully!');
+        try {
+            DB::beginTransaction();
+
+            $lead->update($validatedData);
+            $lead->user->update($validatedData);
+
+            DB::commit();
+            return redirect()->back()->with('status', 'Lead updated successfully!');
+        } catch (QueryException $e) {
+            DB::rollBack();
+            // Log the exception for debugging
+            Log::error('Error updating lead: ' . $e->getMessage());
+
+            $errorCode = $e->errorInfo[1];
+
+            if ($errorCode === 1062) {
+                return redirect()->back()->withErrors(['email' => 'The email address is already taken.'], 'updateLead')->withInput();
+            }
+
+            return redirect()->back()->withErrors(['db_error' => $e->getMessage()], 'updateLead')->withInput();
+        }
     }
 
     /**
@@ -105,7 +148,6 @@ class LeadController extends Controller {
     // Fetch lead by ID
     public function fetchLead(string $id) {
         $lead = Client::with(['user', 'partner', 'partner.user'])
-            ->where('active', 0)
             ->findOrFail($id);
         return response()->json([
             'status' => 'success',
