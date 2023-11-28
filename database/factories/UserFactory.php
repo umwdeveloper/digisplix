@@ -64,6 +64,7 @@ class UserFactory extends Factory {
             'country_code' => strtolower($iso3166->name($country)['alpha2']),
             'designation' => fake()->jobTitle(),
             'img' => 'users/avatar.png',
+            'is_admin' => true,
         ]);
     }
 

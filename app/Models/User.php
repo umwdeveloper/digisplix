@@ -25,7 +25,8 @@ class User extends Authenticatable {
         'country',
         'country_code',
         'designation',
-        'img'
+        'img',
+        'is_admin'
     ];
 
     /**
@@ -50,5 +51,17 @@ class User extends Authenticatable {
 
     public function userable() {
         return $this->morphTo();
+    }
+
+    public function staff() {
+        return $this->userable instanceof Staff ? $this->userable : null;
+    }
+
+    public function partner() {
+        return $this->userable instanceof Partner ? $this->userable : null;
+    }
+
+    public function client() {
+        return $this->userable instanceof Client ? $this->userable : null;
     }
 }

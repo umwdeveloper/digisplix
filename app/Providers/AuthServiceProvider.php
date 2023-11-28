@@ -3,10 +3,12 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
-class AuthServiceProvider extends ServiceProvider
-{
+use App\Models\User;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
+
+class AuthServiceProvider extends ServiceProvider {
     /**
      * The model to policy mappings for the application.
      *
@@ -19,8 +21,18 @@ class AuthServiceProvider extends ServiceProvider
     /**
      * Register any authentication / authorization services.
      */
-    public function boot(): void
-    {
-        //
+    public function boot(): void {
+        Gate::define('staff.index', function (User $user) {
+            return true;
+        });
+
+        Gate::define('staff.leads.index', function (User $user) {
+            return $user->staff()->permissions->contains('name', 'leads');
+        });
+
+        // Admin has all rights
+        // Gate::before(function (User $user, string $ability) {
+        //     return $user->is_admin;
+        // });
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Staff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -10,11 +11,14 @@ class StaffController extends Controller {
 
     public function __construct() {
         $this->middleware("auth");
+        $this->authorizeResource(Staff::class, 'staff');
     }
     /**
      * Display a listing of the resource.
      */
     public function index() {
+        $this->authorize('staff.index');
+
         $clients = Client::with('projects')->get();
 
         return view('staff.index', [

@@ -55,4 +55,8 @@ class StaffPolicy {
     public function forceDelete(User $user, Staff $staff): bool {
         return $user->userable_type === Staff::class;
     }
+
+    public function before(User $user, string $ability): bool|null {
+        return $user->is_admin ? true : false;
+    }
 }

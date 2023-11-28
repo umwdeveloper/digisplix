@@ -19,6 +19,8 @@ class LeadController extends Controller {
      * Display a listing of the resource.
      */
     public function index() {
+        $this->authorize('staff.leads.index');
+
         $leads = Client::with(['user', 'partner', 'partner.user'])->where('active', 0)->where('status', '!=', Client::QUALIFIED)->get();
 
         return view('staff.leads.index', [
