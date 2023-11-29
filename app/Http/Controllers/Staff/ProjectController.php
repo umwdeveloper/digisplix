@@ -16,6 +16,8 @@ class ProjectController extends Controller {
      * Display a listing of the resource.
      */
     public function index(Request $request) {
+        $this->authorize('staff.projects');
+
         $current_status = $request->query('filter') === 'ongoing' ? '0' : ($request->query('filter') === 'completed' ? '1' : null);
         $projects = Project::with('client.user')->get();
         if ($current_status !== null) {
@@ -46,6 +48,8 @@ class ProjectController extends Controller {
      * Store a newly created resource in storage.
      */
     public function store(StoreProject $request) {
+        $this->authorize('staff.projects');
+
         $validatedData = $request->validated();
         if ($request->hasFile('img')) {
             $image = $request->file('img');
@@ -67,6 +71,8 @@ class ProjectController extends Controller {
      * Display the specified resource.
      */
     public function show(string $id) {
+        $this->authorize('staff.projects');
+
         $project = Project::with(['client', 'client.user', 'phases', 'phases.tasks'])->findOrFail($id);
         return view('staff.projects.show', [
             'project' => $project
@@ -84,6 +90,8 @@ class ProjectController extends Controller {
      * Update the specified resource in storage.
      */
     public function update(UpdateProject $request, string $id) {
+        $this->authorize('staff.projects');
+
         $project = Project::findOrFail($id);
         $validatedData = $request->validated();
         if ($request->hasFile('img')) {
@@ -116,6 +124,8 @@ class ProjectController extends Controller {
      * Remove the specified resource from storage.
      */
     public function destroy(string $id) {
+        $this->authorize('staff.projects');
+
         $project = Project::findOrFail($id);
         Storage::disk('public')->delete($project->img);
         $project->delete();
@@ -123,6 +133,8 @@ class ProjectController extends Controller {
     }
 
     public function fetchProject(string $id) {
+        $this->authorize('staff.projects');
+
         $project = Project::findOrFail($id);
         return response()->json([
             'status' => 'success',

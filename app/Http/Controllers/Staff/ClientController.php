@@ -11,10 +11,16 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ClientController extends Controller {
+
+    public function __construct() {
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index() {
+        $this->authorize('staff.clients');
+
         $clients = Client::with(['user', 'partner', 'partner.user'])
             ->where('status', Client::QUALIFIED)
             ->get();
@@ -58,6 +64,8 @@ class ClientController extends Controller {
      * Update the specified resource in storage.
      */
     public function update(UpdateClient $request, string $id) {
+        $this->authorize('staff.clients');
+
         $client = Client::findOrFail($id);
         $validatedData = $request->validated();
 
@@ -90,6 +98,8 @@ class ClientController extends Controller {
      * Remove the specified resource from storage.
      */
     public function destroy(string $id) {
+        $this->authorize('staff.clients');
+
         $client = Client::findOrFail($id);
         $client->user()->delete();
         $client->delete();
@@ -99,6 +109,8 @@ class ClientController extends Controller {
 
     // Update client status
     public function updateClientStatus(Request $request, string $id) {
+        $this->authorize('staff.clients');
+
         try {
             $client = Client::findOrFail($id);
             $client->active = $request->status;
@@ -112,6 +124,8 @@ class ClientController extends Controller {
 
     // Fetch client by ID
     public function fetchClient(string $id) {
+        $this->authorize('staff.clients');
+
         $client = Client::with(['user', 'partner', 'partner.user'])
             ->findOrFail($id);
         return response()->json([

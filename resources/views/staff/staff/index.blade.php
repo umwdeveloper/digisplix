@@ -8,9 +8,11 @@
                     <div class="row">
                         <div class="col-lg-12 mb-3 mt-3 d-flex justify-content-between align-items-center">
                             <h4 class="page-title">Staff</h4>
-                            <button class="table-btn" id="staffModal-btn" type="button" data-bs-toggle="modal"
-                                data-bs-target="#staffModal">Add
-                                Staff</button>
+                            @can('staff.staff')
+                                <button class="table-btn" id="staffModal-btn" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#staffModal">Add
+                                    Staff</button>
+                            @endcan
                             <button class="table-btn d-none" id="editStaffModal-btn" type="button" data-bs-toggle="modal"
                                 data-bs-target="#editStaffModal">Add
                                 Staff</button>

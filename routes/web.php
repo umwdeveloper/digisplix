@@ -35,14 +35,15 @@ Route::domain('admin.digisplix.test')
             ->name('index');
 
         // Leads
-        Route::resource('leads', LeadController::class);
+        Route::resource('leads', LeadController::class)->except(['create', 'show', 'edit']);
         Route::patch('/leads/update-lead-status/{lead_id}', [LeadController::class, 'updateLeadStatus'])
             ->name('leads.update_lead_status');
         Route::get('/leads/fetch_lead/{lead_id}', [LeadController::class, 'fetchLead'])
             ->name('leads.fetch_lead');
 
         // Projects
-        Route::resource('projects', ProjectController::class)->parameters(['projects', 'filter']);
+        Route::resource('projects', ProjectController::class)->parameters(['projects', 'filter'])
+            ->except(['create', 'edit']);
         Route::get('/projects/fetch_project/{project_id}', [ProjectController::class, 'fetchProject'])
             ->name('projects.fetch_project');
 
@@ -55,23 +56,28 @@ Route::domain('admin.digisplix.test')
             ->name('tasks.updateAll');
 
         // Partners
-        Route::resource('partners', StaffPartnerController::class);
+        Route::resource('partners', StaffPartnerController::class)->except(['create', 'show', 'edit']);
         Route::get('/partners/fetch_partner/{partner_id}', [StaffPartnerController::class, 'fetchPartner'])
             ->name('partners.fetch_partner');
 
         // Clients
-        Route::resource('clients', StaffClientController::class);
+        Route::resource('clients', StaffClientController::class)->except(['create', 'store', 'show', 'edit']);
         Route::patch('/clients/update_client_status/{client_id}', [StaffClientController::class, 'updateClientStatus'])
             ->name('clients.update_client_status');
         Route::get('/clients/fetch_client/{client_id}', [StaffClientController::class, 'fetchClient'])
             ->name('clients.fetch_client');
 
         // Staff
-        Route::resource('staff', StaffStaffController::class);
+        Route::resource('staff', StaffStaffController::class)->except(['create', 'show', 'edit']);
         Route::patch('/staff/update_staff_status/{staff_id}', [StaffStaffController::class, 'updateStaffStatus'])
             ->name('staff.update_staff_status');
         Route::get('/staff/fetch_staff/{staff_id}', [StaffStaffController::class, 'fetchStaff'])
             ->name('staff.fetch_staff');
+
+        // If route not found
+        Route::fallback(function () {
+            abort(404);
+        });
     });
 
 Route::domain('partner.digisplix.test')

@@ -21,6 +21,8 @@ class StaffController extends Controller {
      * Display a listing of the resource.
      */
     public function index() {
+        $this->authorize('staff.staff');
+
         $staff = Staff::with(['user', 'permissions'])
             ->whereHas('user', function ($query) {
                 $query->where('id', '!=', auth()->user()->id);
@@ -45,6 +47,8 @@ class StaffController extends Controller {
      * Store a newly created resource in storage.
      */
     public function store(StoreStaff $request) {
+        $this->authorize('staff.staff');
+
         $validatedData = $request->validated();
         $validatedData['password'] = Hash::make($validatedData['password']);
 
@@ -110,6 +114,8 @@ class StaffController extends Controller {
      * Update the specified resource in storage.
      */
     public function update(UpdateStaff $request, string $id) {
+        $this->authorize('staff.staff');
+
         $staff = Staff::with(['user'])->findOrFail($id);
         $validatedData = $request->validated();
 
@@ -161,6 +167,8 @@ class StaffController extends Controller {
      * Remove the specified resource from storage.
      */
     public function destroy(string $id) {
+        $this->authorize('staff.staff');
+
         $staff = Staff::findOrFail($id);
         Storage::disk('public')->delete($staff->user->img);
         $staff->user()->delete();
@@ -170,6 +178,8 @@ class StaffController extends Controller {
     }
 
     public function fetchStaff(string $id) {
+        $this->authorize('staff.staff');
+
         $staff = Staff::with(['user', 'permissions:id'])->findOrFail($id);
         return response()->json([
             'status' => 'success',

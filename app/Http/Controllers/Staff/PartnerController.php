@@ -20,6 +20,8 @@ class PartnerController extends Controller {
      * Display a listing of the resource.
      */
     public function index() {
+        $this->authorize('staff.partners');
+
         $partners = Partner::with(['user'])->get();
 
         return view('staff.partners.index', [
@@ -38,6 +40,8 @@ class PartnerController extends Controller {
      * Store a newly created resource in storage.
      */
     public function store(StorePartner $request) {
+        $this->authorize('staff.partners');
+
         $validatedData = $request->validated();
         $validatedData['password'] = Hash::make($validatedData['password']);
 
@@ -99,6 +103,8 @@ class PartnerController extends Controller {
      * Update the specified resource in storage.
      */
     public function update(UpdatePartner $request, string $id) {
+        $this->authorize('staff.partners');
+
         $partner = Partner::with(['user'])->findOrFail($id);
         $validatedData = $request->validated();
 
@@ -148,6 +154,8 @@ class PartnerController extends Controller {
      * Remove the specified resource from storage.
      */
     public function destroy(string $id) {
+        $this->authorize('staff.partners');
+
         $partner = Partner::findOrFail($id);
         Storage::disk('public')->delete($partner->user->img);
         $partner->user()->delete();
@@ -157,6 +165,8 @@ class PartnerController extends Controller {
     }
 
     public function fetchPartner(string $id) {
+        $this->authorize('staff.partners');
+
         $partner = Partner::with(['user'])->findOrFail($id);
         return response()->json([
             'status' => 'success',

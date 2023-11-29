@@ -10,54 +10,61 @@
     padding-right: 0px;
     background-color: transparent;
     color: $white-light;
-  }
-  .crm-input:focus,
-  .crm-input:active {
+}
+
+.crm-input:focus,
+.crm-input:active {
     box-shadow: none;
     border-bottom-color: $secondry;
     background-color: transparent;
-  }
-  
-  
-  .crm-label > .form-control:focus ~ label,
-  .crm-label > .form-control:not(:placeholder-shown) ~ label,
-  .crm-label > .form-select ~ label {
+}
+
+
+.crm-label>.form-control:focus~label,
+.crm-label>.form-control:not(:placeholder-shown)~label,
+.crm-label>.form-select~label {
     transform: scale(0.85) translateY(-0.5rem) translateX(-0.1rem);
-  }
-  .form-select option {
+}
+
+.form-select option {
     margin: 10px !important;
     min-height: 50px !important;
     padding-left: 20px !important;
     padding-right: 20px !important;
-  }
-  .form-floating > .form-select,
-  .form-floating>.form-control:focus, .form-floating>.form-control:not(:placeholder-shown){
-      padding-bottom: .3rem;
-  }
-  .crm-label {
+}
+
+.form-floating>.form-select,
+.form-floating>.form-control:focus,
+.form-floating>.form-control:not(:placeholder-shown) {
+    padding-bottom: .3rem;
+}
+
+.crm-label {
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
     line-height: 16px;
     color: $white-light;
     /* 150% */
-  }
-  /* Add a class for styling the selected text */
-  //  .form-floating>.form-select~label
-  // {
-  //   color: white !important;
-  //   opacity: 1;
-  // }
-  // =============================================check boxes
-  .sign-check-label {
+}
+
+/* Add a class for styling the selected text */
+//  .form-floating>.form-select~label
+// {
+//   color: white !important;
+//   opacity: 1;
+// }
+// =============================================check boxes
+.sign-check-label {
     color: $white-light;
     font-family: Manrope;
     font-size: 12px;
     font-style: normal;
     font-weight: 500;
     line-height: 18px;
-  }
-  .sign-check-label a {
+}
+
+.sign-check-label a {
     color: #86c6f0;
     /* Regular Text / 12px / Semibold */
     font-family: Manrope;
@@ -67,35 +74,46 @@
     line-height: 18px;
     text-decoration: none;
 
-  }
-  
-  .form-check-input {
+}
+
+.form-check-input {
     border-color: $secondry !important;
     color: $white-light !important;
-  }
-  
-  .form-check-input:checked {
+}
+
+.form-check-input:checked {
     background-color: $secondry !important;
     border: $secondry !important;
-  }
-  
-  .form-check-input:active,
-  .form-check-input:focus {
+}
+
+.form-check-input:active,
+.form-check-input:focus {
     outline: none !important;
     box-shadow: none !important;
-  }
-  .form-floating  input{
+}
+
+.form-floating input {
     color: $white-light !important;
-  }
-  .form-select{
+}
+
+.form-select {
     color: $white-light;
-  }
-  .border-bottom{
+}
+
+.border-bottom {
     border-color: #5C607B !important;
-  }
-  .form-control:disabled, .form-control[readonly]{
+}
+
+.form-control:disabled,
+.form-control[readonly] {
     background-color: transparent !important;
-  }
-  .form-select{
+}
+
+.form-select {
     background-color: $dark !important;
-  }
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px $dark inset !important;
+    box-shadow: 0 0 0 30px $dark inset !important;
+}

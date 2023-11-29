@@ -89,7 +89,7 @@
                             id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             <div>
                                 <h3 class="mb-0">{{ $user->name }}</h3>
-                                <p class="mb-0 pb-0">Super Admin</p>
+                                <p class="mb-0 pb-0">{{ $user->designation }}</p>
                             </div>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -119,7 +119,7 @@
 
                         <ul>
                             <li class="menu-item">
-                                <a href="{{ route('staff.index') }}" class="active-menu">
+                                <a href="{{ route('staff.index') }}" class="dashboard-link">
                                     <span class="menu-icon">
                                         <i class="fa-duotone fa-grid-2"></i>
                                     </span>
@@ -127,15 +127,17 @@
                                 </a>
                             </li>
 
-                            <li class="menu-item">
-                                <a href="{{ route('staff.leads.index') }}">
-                                    <span class="menu-icon">
-                                        <i class="fa-duotone fa-people-group"></i>
+                            @can('staff.leads')
+                                <li class="menu-item">
+                                    <a href="{{ route('staff.leads.index') }}">
+                                        <span class="menu-icon">
+                                            <i class="fa-duotone fa-people-group"></i>
 
-                                    </span>
-                                    <span class="menu-title">Leads</span>
-                                </a>
-                            </li>
+                                        </span>
+                                        <span class="menu-title">Leads</span>
+                                    </a>
+                                </li>
+                            @endcan
 
                             <li class="menu-item">
                                 <a href="{{ route('staff.projects.index') }}">

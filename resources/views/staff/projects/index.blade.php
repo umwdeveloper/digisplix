@@ -74,9 +74,11 @@
                                 <div class="flex-grow-1">
                                     <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-3">
                                         <h1 class="f-20 w-500 mb-0 pb-0 text-dark-clr">Projects</h1>
-                                        <button class="table-btn" id="projectModal-btn" class="btn btn-primary"
-                                            type="button" data-bs-toggle="modal" data-bs-target="#clientModal">Add
-                                            New</button>
+                                        @can('staff.projects')
+                                            <button class="table-btn" id="projectModal-btn" class="btn btn-primary"
+                                                type="button" data-bs-toggle="modal" data-bs-target="#clientModal">Add
+                                                New</button>
+                                        @endcan
                                         <button class="table-btn d-none " id="editProjectModal-btn" type="button"
                                             data-bs-toggle="modal" data-bs-target="#settingModal">Edit
                                             Project</button>

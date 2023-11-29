@@ -8,8 +8,10 @@
                     <div class="row">
                         <div class="col-lg-12 mb-3 mt-3 d-flex justify-content-between align-items-center">
                             <h4 class="page-title">Partners</h4>
-                            <button class="table-btn" type="button" id="partnerModal-btn" class="btn btn-primary"
-                                data-bs-toggle="modal" data-bs-target="#partnerModal">Add Partner</button>
+                            @can('staff.partners')
+                                <button class="table-btn" type="button" id="partnerModal-btn" class="btn btn-primary"
+                                    data-bs-toggle="modal" data-bs-target="#partnerModal">Add Partner</button>
+                            @endcan
                             <button class="table-btn d-none" type="button" id="editPartnerModal-btn"
                                 class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editPartnerModal">Edit
                                 Partner</button>

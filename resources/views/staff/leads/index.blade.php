@@ -89,8 +89,10 @@
                                 <div class="flex-grow-1">
                                     <div class="d-flex align-items-center justify-content-between mb-3">
                                         <h1 class="f-20 w-500 mb-0 pb-0 text-dark-clr">Leads</h1>
-                                        <button class="table-btn" id="leadModal-btn" type="button" class="btn btn-primary"
-                                            data-bs-toggle="modal" data-bs-target="#leadModal">Add New</button>
+                                        @can('staff.leads')
+                                            <button class="table-btn" id="leadModal-btn" type="button" class="btn btn-primary"
+                                                data-bs-toggle="modal" data-bs-target="#leadModal">Add New</button>
+                                        @endcan
                                         <button class="table-btn d-none" id="editLeadModal-btn" type="button"
                                             class="btn btn-primary" data-bs-toggle="modal"
                                             data-bs-target="#editLeadModal">Edit
