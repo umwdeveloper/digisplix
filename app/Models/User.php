@@ -64,4 +64,12 @@ class User extends Authenticatable {
     public function client() {
         return $this->userable instanceof Client ? $this->userable : null;
     }
+
+    public function supports() {
+        return $this->hasMany(Support::class);
+    }
+
+    public function replies() {
+        return $this->hasMany(SupportReply::class);
+    }
 }

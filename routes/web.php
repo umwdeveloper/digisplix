@@ -9,6 +9,7 @@ use App\Http\Controllers\Staff\PhaseController;
 use App\Http\Controllers\Staff\LeadController;
 use App\Http\Controllers\Staff\ProjectController;
 use App\Http\Controllers\Staff\TaskController;
+use App\Http\Controllers\Staff\SupportController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\UsersController;
 use App\Models\Partner;
@@ -73,6 +74,15 @@ Route::domain('admin.digisplix.test')
             ->name('staff.update_staff_status');
         Route::get('/staff/fetch_staff/{staff_id}', [StaffStaffController::class, 'fetchStaff'])
             ->name('staff.fetch_staff');
+
+        // Support
+        Route::resource('support', SupportController::class);
+        Route::post('/support/uploadAttachment', [SupportController::class, 'uploadAttachment'])
+            ->name('support.upload_attachment');
+        Route::post('/support/store_reply', [SupportController::class, 'storeReply'])
+            ->name('support.store_reply');
+        Route::patch('/support/update_status/{id}', [SupportController::class, 'updateStatus'])
+            ->name('support.update_status');
 
         // If route not found
         Route::fallback(function () {

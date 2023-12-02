@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder {
                 UsersTableSeeder::class,
                 PermissionSeeder::class,
                 StaffPermissionSeeder::class,
+                SupportsSeeder::class,
+                SupportRepliesSeeder::class
             ]
         );
     }

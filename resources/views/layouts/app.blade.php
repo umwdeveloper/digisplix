@@ -32,6 +32,9 @@
     {{-- Country Selector --}}
     <link rel="stylesheet" href="{{ asset('css/countrySelect.min.css') }}">
 
+    {{-- Individual Styles --}}
+    @yield('styles')
+
     {{-- Css --}}
     <link rel="stylesheet" href="{{ asset('css/css-pro.css') }}">
     <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
@@ -216,7 +219,7 @@
                             </li>
 
                             <li class="menu-item">
-                                <a href="support.html">
+                                <a href="{{ route('staff.support.index') }}">
                                     <span class="menu-icon">
                                         <i class="fa-duotone fa-user-headset"></i>
                                     </span>
