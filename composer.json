@@ -16,6 +16,7 @@
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.2",
         "league/iso3166": "^4.3",
+        "munafio/chatify": "^1.6",
         "outhebox/blade-flags": "^1.2",
         "predis/predis": "^2.2"
     },

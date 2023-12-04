@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- Favicon --}}
     <link rel="icon" type="image/png" sizes="48x48" href="{{ asset('images/favi.ico') }}">
@@ -859,7 +860,7 @@
 
 
     {{-- Jquery --}}
-    <script src="{{ asset('js/jquery.js') }}"></script>
+    {{-- <script src="{{ asset('js/jquery.js') }}"></script> --}}
     {{-- Cookies --}}
     <script src="{{ asset('js/cookie.min.js') }}"></script>
     {{-- Popper --}}

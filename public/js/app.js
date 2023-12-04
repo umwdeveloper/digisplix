@@ -241,9 +241,10 @@ applyStyles2();
 const currentYear = new Date().getFullYear();
 
 // Update the content of the element with the current year
-document.getElementById(
-    "copyright-year"
-).textContent = `Copyright © ${currentYear} DigiSplix, LLC. All Rights Reserved`;
+var copyrightYear = document.getElementById("copyright-year")
+if (copyrightYear) {
+    copyrightYear.textContent = `Copyright © ${currentYear} DigiSplix, LLC. All Rights Reserved`;
+}
 
 
 // Show preloader only once in 2 hours
