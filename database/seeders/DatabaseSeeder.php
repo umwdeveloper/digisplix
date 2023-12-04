@@ -28,7 +28,10 @@ class DatabaseSeeder extends Seeder {
                 PermissionSeeder::class,
                 StaffPermissionSeeder::class,
                 SupportsSeeder::class,
-                SupportRepliesSeeder::class
+                SupportRepliesSeeder::class,
+                CategorySeeder::class,
+                InvoiceSeeder::class,
+                InvoiceItemSeeder::class
             ]
         );
     }
