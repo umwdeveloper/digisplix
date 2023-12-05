@@ -72,4 +72,8 @@ class User extends Authenticatable {
     public function replies() {
         return $this->hasMany(SupportReply::class);
     }
+
+    public function getAvatarAttribute() {
+        return $this->attributes['img'];
+    }
 }
