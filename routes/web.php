@@ -34,6 +34,10 @@ Route::domain('admin.digisplix.test')
         // Staff
         Route::get('/', [StaffController::class, 'index'])
             ->name('index');
+        Route::put('/update/{id}', [StaffController::class, 'update'])
+            ->name('update');
+        Route::get('/profile', [StaffController::class, 'profile'])
+            ->name('profile');
 
         // Leads
         Route::resource('leads', LeadController::class)->except(['create', 'show', 'edit']);

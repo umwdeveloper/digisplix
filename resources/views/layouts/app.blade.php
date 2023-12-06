@@ -85,8 +85,8 @@
                 <div class="d-flex  user-account ">
 
                     <div class="user-icon">
-                        <img src="{{ asset('images/vatar-removebg-preview.png') }}" alt="" class=""
-                            height="50" width="50">
+                        <img src="{{ getURL($user->img) }}" alt="" class="" height="50"
+                            width="50">
                     </div>
                     <div class="dropdown profile-dropdown ms-auto">
                         <button class="dropdown-toggle d-flex align-items-center pe-3" type="button"
@@ -98,7 +98,7 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 
-                            <li><a class="dropdown-item" href="profile.html"><i
+                            <li><a class="dropdown-item" href="{{ route('staff.profile') }}"><i
                                         class="bi bi-person me-3"></i>Profile</a>
                             </li>
                             <li><a class="dropdown-item" href="settings.html"><i
@@ -362,7 +362,7 @@
                         </div>
                     </div>
                     <div class="col-6 pe-1 mb-2">
-                        <a href="projects.html">
+                        <a href="{{ route('staff.projects.index') }}">
                             <div class="actions-card">
                                 <i class="fa-duotone fa-rectangle-history"></i>
                                 <p class="mb-0 pb-0">
@@ -372,7 +372,7 @@
                         </a>
                     </div>
                     <div class="col-6 ps-1 mb-2">
-                        <a href="clients.html">
+                        <a href="{{ route('staff.clients.index') }}">
                             <div class="actions-card">
                                 <i class="fa-duotone fa-users-line"></i>
                                 <p class="mb-0 pb-0">
@@ -382,7 +382,7 @@
                         </a>
                     </div>
                     <div class="col-6 pe-1 mb-2">
-                        <a href="partners.html">
+                        <a href="{{ route('staff.partners.index') }}">
                             <div class="actions-card">
                                 <i class="fa-duotone fa-user-group-simple"></i>
                                 <p class="mb-0 pb-0">
@@ -392,7 +392,7 @@
                         </a>
                     </div>
                     <div class="col-6 ps-1 mb-2">
-                        <a href="staff.html">
+                        <a href="{{ route('staff.staff.index') }}">
                             <div class="actions-card">
                                 <i class="fa-duotone fa-user-tie"></i>
                                 <p class="mb-0 pb-0">
@@ -402,7 +402,7 @@
                         </a>
                     </div>
                     <div class="col-6 pe-1 mb-2">
-                        <a href="leads.html">
+                        <a href="{{ route('staff.leads.index') }}">
                             <div class="actions-card">
                                 <i class="fa-duotone fa-people-simple"></i>
                                 <p class="mb-0 pb-0">
@@ -860,7 +860,7 @@
 
 
     {{-- Jquery --}}
-    {{-- <script src="{{ asset('js/jquery.js') }}"></script> --}}
+    <script src="{{ asset('js/jquery.js') }}"></script>
     {{-- Cookies --}}
     <script src="{{ asset('js/cookie.min.js') }}"></script>
     {{-- Popper --}}

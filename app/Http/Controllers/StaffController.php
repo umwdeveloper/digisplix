@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateProfile;
 use App\Models\Client;
 use App\Models\Staff;
+use App\Models\User;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class StaffController extends Controller {
 
     public function __construct() {
         $this->middleware("auth");
-        $this->authorizeResource(Staff::class, 'staff');
+        // $this->authorizeResource(Staff::class, 'staff');
     }
     /**
      * Display a listing of the resource.
@@ -62,8 +69,49 @@ class StaffController extends Controller {
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id) {
-        //
+    public function update(UpdateProfile $request, string $id) {
+        $staff = Staff::with(['user'])->findOrFail($id);
+        $validatedData = $request->validated();
+
+        if ($request->hasFile('img')) {
+            $image = $request->file('img')->store('users');
+        }
+
+        try {
+            DB::beginTransaction();
+
+            if ($request->hasFile('img')) {
+                if (!empty($staff->user->img)) {
+                    Storage::disk('public')->delete($staff->user->img);
+                }
+
+                $validatedData['img'] = $image;
+            }
+
+            $staff->user->update($validatedData);
+
+            DB::commit();
+
+            return redirect()->back()->with('status', 'Profile updated successfully!');
+        } catch (QueryException $e) {
+            DB::rollBack();
+
+            // Delete image
+            if ($request->hasFile('img')) {
+                Storage::disk('public')->delete($image);
+            }
+
+            // Log the exception for debugging
+            Log::error('Error updating profile: ' . $e->getMessage());
+
+            $errorCode = $e->errorInfo[1];
+
+            if ($errorCode === 1062) {
+                return redirect()->back()->withErrors(['email' => 'The email is already taken.'])->withInput();
+            }
+
+            return redirect()->back()->withErrors(['db_error' => $e->getMessage()])->withInput();
+        }
     }
 
     /**
@@ -71,5 +119,12 @@ class StaffController extends Controller {
      */
     public function destroy(string $id) {
         //
+    }
+
+    public function profile() {
+        $profile = Auth::user();
+        return view('staff.profile', [
+            'profile' => $profile
+        ]);
     }
 }

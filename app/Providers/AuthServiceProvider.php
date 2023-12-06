@@ -56,7 +56,9 @@ class AuthServiceProvider extends ServiceProvider {
 
         // Admin has all rights
         Gate::before(function (User $user, string $ability) {
-            return $user->is_admin;
+            if ($user->is_admin) {
+                return true;
+            }
         });
     }
 }

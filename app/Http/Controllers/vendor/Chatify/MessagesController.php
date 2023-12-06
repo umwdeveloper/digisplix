@@ -58,6 +58,11 @@ class MessagesController extends Controller {
     public function idFetchData(Request $request) {
         $favorite = Chatify::inFavorite($request['id']);
         $fetch = User::where('id', $request['id'])->first();
+        if ($fetch->userable_type === Auth::user()->userable_type && $fetch->id !== Auth::user()->id) {
+            return Response::json([
+                'error' => 'User not found!',
+            ]);
+        }
         if ($fetch) {
             $userAvatar = Chatify::getUserWithAvatar($fetch)->avatar;
         }
@@ -222,6 +227,7 @@ class MessagesController extends Controller {
                     ->orWhere('ch_messages.to_id', Auth::user()->id);
             })
             ->where('users.id', '!=', Auth::user()->id)
+            ->where('users.userable_type', '!=', Auth::user()->userable_type)
             ->select('users.*', DB::raw('MAX(ch_messages.created_at) max_created_at'))
             ->orderBy('max_created_at', 'desc')
             ->groupBy('users.id')
@@ -321,6 +327,7 @@ class MessagesController extends Controller {
         $input = trim(filter_var($request['input']));
         $records = User::where('id', '!=', Auth::user()->id)
             ->where('name', 'LIKE', "%{$input}%")
+            ->where('userable_type', '!=', Auth::user()->userable_type)
             ->paginate($request->per_page ?? $this->perPage);
         foreach ($records->items() as $record) {
             $getRecords .= view('Chatify::layouts.listItem', [
