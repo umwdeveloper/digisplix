@@ -101,7 +101,7 @@
                             <li><a class="dropdown-item" href="{{ route('staff.profile') }}"><i
                                         class="bi bi-person me-3"></i>Profile</a>
                             </li>
-                            <li><a class="dropdown-item" href="settings.html"><i
+                            <li><a class="dropdown-item" href="{{ route('staff.settings') }}"><i
                                         class="bi bi-gear me-3"></i>Settings</a>
                             <li><a class="dropdown-item" href="logout"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit()"><i

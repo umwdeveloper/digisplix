@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\Staff\PartnerController as StaffPartnerController;
 use App\Http\Controllers\Staff\ClientController as StaffClientController;
@@ -11,8 +10,9 @@ use App\Http\Controllers\Staff\ProjectController;
 use App\Http\Controllers\Staff\TaskController;
 use App\Http\Controllers\Staff\SupportController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\TwoFAController;
 use App\Http\Controllers\UsersController;
-use App\Models\Partner;
+use App\Mail\TwoFA;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +38,14 @@ Route::domain('admin.digisplix.test')
             ->name('update');
         Route::get('/profile', [StaffController::class, 'profile'])
             ->name('profile');
+        Route::get('/settings', [StaffController::class, 'settings'])
+            ->name('settings');
+        Route::patch('/reset_password', [StaffController::class, 'resetPassword'])
+            ->name('reset_password');
+
+        // 2FA
+        Route::get('/enable2FA', [TwoFAController::class, 'enable2FA'])
+            ->name('enable2FA');
 
         // Leads
         Route::resource('leads', LeadController::class)->except(['create', 'show', 'edit']);

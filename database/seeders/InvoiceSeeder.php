@@ -17,11 +17,13 @@ class InvoiceSeeder extends Seeder {
         $clients = Client::where('active', 1)->where('status', Client::QUALIFIED)->get();
         $categories = Category::all();
 
-        Invoice::factory($invoicesCount)->make()->each(function ($invoice) use ($clients, $categories) {
-            $invoice->client_id = $clients->random()->id;
-            $invoice->category_id = $categories->random()->id;
+        if ($clients->count() > 0) {
+            Invoice::factory($invoicesCount)->make()->each(function ($invoice) use ($clients, $categories) {
+                $invoice->client_id = $clients->random()->id;
+                $invoice->category_id = $categories->random()->id;
 
-            $invoice->save();
-        });
+                $invoice->save();
+            });
+        }
     }
 }

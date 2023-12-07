@@ -11,8 +11,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class StaffController extends Controller {
 
@@ -126,5 +128,29 @@ class StaffController extends Controller {
         return view('staff.profile', [
             'profile' => $profile
         ]);
+    }
+
+    public function settings() {
+        return view('staff.settings');
+    }
+
+    public function resetPassword(Request $request) {
+        $validatedData = $request->validate([
+            'old_password' => ['required', function ($attribute, $value, $fail) {
+                if (!Hash::check($value, Auth::user()->getAuthPassword())) {
+                    $fail("Old password is incorrect!");
+                }
+            }],
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        $user = User::findOrFail(Auth::user()->id);
+        $user->update([
+            'password' => Hash::make($validatedData['password'])
+        ]);
+
+        Auth::setUser($user);
+
+        return redirect()->back()->with(['status' => "Password has been reset!"]);
     }
 }
