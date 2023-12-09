@@ -18,7 +18,8 @@ return new class extends Migration {
             $table->rememberToken();
             $table->timestamps();
             $table->boolean('is_admin')->default(false);
-            $table->boolean('2fa')->default(false);
+            $table->boolean('two_fa')->default(false);
+            $table->boolean('two_fa_completed')->default(false);
         });
     }
 

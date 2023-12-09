@@ -67,7 +67,7 @@
                                             <div class="col-lg-12">
                                                 <div class="d-flex justify-content-lg-end justify-content-center mt-3 mb-3">
                                                     <!-- <button type="button" class="modal-btn-cancel me-3"
-                                                                                                                                                                                data-bs-dismiss="modal">Cancel</button> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            data-bs-dismiss="modal">Cancel</button> -->
                                                     <button type="submit" class="modal-btn-save ">Save </button>
                                                 </div>
                                             </div>
@@ -81,67 +81,127 @@
                                 <div class="">
                                     <div class="row">
                                         <div class="col-lg-5 mx-auto">
-                                            <div class="verification-div mx-auto">
-                                                <div class="verification-div--header">
-                                                    <h1>Two Factor Authentication</h1>
-                                                </div>
-                                                <div class="verification-div-body">
-                                                    <form action="" id="" class="multistep-form">
+                                            @if (auth()->user()->two_fa)
+                                                <div class="verification-div mx-auto">
+                                                    <div class="verification-div--header">
+                                                        <h1>Two Factor Authentication</h1>
+                                                    </div>
+                                                    <div class="verification-div-body">
+                                                        <form action="{{ route('staff.disable2FA') }}" method="POST"
+                                                            class="">
+                                                            @csrf
 
-
-                                                        <div class="tab-step">
-                                                            <p class="mb-0 pb-0">When 2FA is enabled you will get the
-                                                                confirmation code on the following email address
-                                                            </p>
-                                                            <div class="col-lg-12 mt-3">
-                                                                <div class="form-floating mb-3">
-                                                                    <input type="text" readonly
-                                                                        value="{{ auth()->user()->email }}"
-                                                                        class="form-control crm-input" id="old-pass"
-                                                                        placeholder="Mickel">
-                                                                    <label class="crm-label form-label"
-                                                                        for="old-pass">Verification
-                                                                        Email<span class="text-danger"></span></label>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="tab-step">
-                                                            <p class="mb-0 pb-0">Enter Code send to your email
-                                                            </p>
-                                                            <div class="d-flex justify-content-center mt-4">
-                                                                <input type="text" maxlength="1" class="code-input">
-                                                                <input type="text" maxlength="1" class="code-input">
-                                                                <input type="text" maxlength="1" class="code-input">
-                                                                <input type="text" maxlength="1" class="code-input">
-                                                            </div>
-                                                            <div class="d-flex justify-content-center">
-                                                                <button
-                                                                    class="bg-transparent border-0 mt-4 pt-2 f-14 text-primary text-center">Resend</button>
-                                                            </div>
-                                                        </div>
-                                                        <div class="tab-step">
-                                                            <div
-                                                                class="d-flex justify-content-center align-items-center flex-column congratulations">
-
-                                                                <img src="{{ asset('images/happy.svg') }}" alt="">
-                                                                <h2>Congratulations!</h2>
-                                                                <p class="mb-0 pb-0">
-                                                                    Your Email has been Verified.
+                                                            <div class="">
+                                                                <p class="mb-0 pb-0">2FA is enabled and the confirmation
+                                                                    codes are sent to the following email address
                                                                 </p>
+                                                                <div class="col-lg-12 mt-3">
+                                                                    <div class="form-floating mb-3">
+                                                                        <input type="text" readonly
+                                                                            value="{{ auth()->user()->email }}"
+                                                                            class="form-control crm-input" id="email"
+                                                                            placeholder="Mickel">
+                                                                        <label class="crm-label form-label"
+                                                                            for="email">Verification
+                                                                            Email<span class="text-danger"></span></label>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                            <div
+                                                                class="d-flex justify-content-lg-end justify-content-center mt-4">
 
-                                                        <div
-                                                            class="d-flex justify-content-lg-end justify-content-center mt-4">
+                                                                <button type="submit"
+                                                                    class="modal-btn-save">Disable</button>
 
-                                                            <button type="button" class="modal-btn-save nextBtn"
-                                                                id="" onclick="nextPrev(1)">continue</button>
-
-                                                        </div>
-                                                    </form>
+                                                            </div>
+                                                        </form>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            @else
+                                                <div class="verification-div mx-auto">
+                                                    <div class="verification-div--header">
+                                                        <h1>Two Factor Authentication</h1>
+                                                    </div>
+                                                    <div class="verification-div-body">
+                                                        <form action="" class="multistep-form">
+
+
+                                                            <div class="tab-step">
+                                                                <p class="mb-0 pb-0">When 2FA is enabled you will get the
+                                                                    confirmation code on the following email address
+                                                                </p>
+                                                                <div class="col-lg-12 mt-3">
+                                                                    <div class="form-floating mb-3">
+                                                                        <input type="text" readonly
+                                                                            value="{{ auth()->user()->email }}"
+                                                                            class="form-control crm-input" id="email"
+                                                                            placeholder="Mickel">
+                                                                        <label class="crm-label form-label"
+                                                                            for="email">Verification
+                                                                            Email<span class="text-danger"></span></label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="tab-step confirmation-tab">
+                                                                <p class="mb-0 pb-0">Enter code sent to your email
+                                                                </p>
+                                                                <div class="d-flex justify-content-center mt-4">
+                                                                    <input type="text" id="digit1" maxlength="1"
+                                                                        class="code-input"
+                                                                        oninput="validateNumericInput(this)">
+                                                                    <input type="text" id="digit2" maxlength="1"
+                                                                        class="code-input"
+                                                                        oninput="validateNumericInput(this)">
+                                                                    <input type="text" id="digit3" maxlength="1"
+                                                                        class="code-input"
+                                                                        oninput="validateNumericInput(this)">
+                                                                    <input type="text" id="digit4" maxlength="1"
+                                                                        class="code-input"
+                                                                        oninput="validateNumericInput(this)">
+                                                                </div>
+                                                                <div class="text-center ">
+                                                                    <small id="timer" class="text-danger ">Wait <span
+                                                                            id="time">00:59</span> seconds to resend
+                                                                        the code</small>
+                                                                </div>
+                                                                <div class="d-flex justify-content-center">
+                                                                    <style>
+                                                                        .disabled {
+                                                                            cursor: not-allowed;
+                                                                        }
+                                                                    </style>
+                                                                    <button type="button" disabled id="resend-btn"
+                                                                        class="bg-transparent border-0 mt-4 pt-2 f-14 text-primary text-center disabled ">Resend</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="tab-step">
+                                                                <div
+                                                                    class="d-flex justify-content-center align-items-center flex-column congratulations">
+
+                                                                    <img src="{{ asset('images/happy.svg') }}"
+                                                                        alt="">
+                                                                    <h2>Congratulations!</h2>
+                                                                    <p class="mb-0 pb-0">
+                                                                        Two Factor Authentication is now enabled
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+
+                                                            <div id="wait-msg" class="text-center d-none">
+                                                                <small class="text-danger ">Please wait while we send
+                                                                    the confirmation code...</small>
+                                                            </div>
+                                                            <div
+                                                                class="d-flex justify-content-lg-end justify-content-center mt-4">
+
+                                                                <button type="button"
+                                                                    class="modal-btn-save nextBtn">Continue</button>
+
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            @endif
 
                                         </div>
 
@@ -167,6 +227,10 @@
 
 @section('script')
     <script>
+        function validateNumericInput(input) {
+            // Remove non-numeric characters using a regular expression
+            input.value = input.value.replace(/[^0-9]/g, '');
+        }
         $(document).ready(function() {
             // Click event for tab buttons
             $(".tablink").click(function() {
@@ -191,35 +255,36 @@
     </script>
     <script>
         const inputs = document.querySelectorAll(".code-input");
-        const codeBlock = document.getElementById("code-block");
-        const code = document.getElementById("code");
-        const form = document.querySelector("form");
 
         inputs.forEach((input, key) => {
-            if (key !== 0) {
-                input.addEventListener("click", function() {
-                    inputs[0].focus();
-                });
-            }
+            input.addEventListener("keydown", function(event) {
+                if (event.key === "Backspace") {
+                    // Handle backspace key
+                    if (input.value === "") {
+                        // Input is empty, focus on the previous input
+                        if (key > 0) {
+                            inputs[key - 1].focus();
+                        }
+                    } else {
+                        // Remove the last digit
+                        input.value = input.value.slice(0, -1);
+                    }
+                }
+            });
+
             input.addEventListener("keyup", function() {
                 if (input.value) {
-                    if (key === 3) {
+                    if (key === inputs.length - 1) {
                         // Last one tadaa
                         const userCode = [...inputs].map((input) => input.value).join("");
-                        codeBlock.classList.remove("hidden");
-                        code.innerText = userCode;
+                        // codeBlock.classList.remove("hidden");
+                        // code.innerText = userCode;
                     } else {
                         inputs[key + 1].focus();
                     }
                 }
             });
         });
-
-        const reset = () => {
-            form.reset();
-            codeBlock.classList.add("hidden");
-            code.innerText = "";
-        };
     </script>
 
     <script>
@@ -247,8 +312,18 @@
 
                 nextBtn.click(function() {
                     if (currentTab === 0) {
-                        enable2FA()
+                        sendCode('next')
+                    } else if (currentTab === 1) {
+                        confirmCode()
                     }
+                    // proceedToNextTab()
+                });
+
+                $('#resend-btn').on('click', function() {
+                    sendCode('resend')
+                })
+
+                function proceedToNextTab() {
                     tabSteps.eq(currentTab).hide();
                     currentTab = currentTab + 1;
                     if (currentTab >= tabSteps.length) {
@@ -256,15 +331,115 @@
                         return false;
                     }
                     showTab(currentTab);
-                });
+                }
 
-                function enable2FA() {
+                // Set the initial time
+                var timeInSeconds = 0;
+
+                function showTimer() {
+                    timeInSeconds = 59
+
+                    // Display the initial time
+                    updateTimeDisplay();
+
+                    // Update the time every second
+                    var timerInterval = setInterval(function() {
+                        timeInSeconds--;
+
+                        // Check if the timer has reached 0
+                        if (timeInSeconds <= 0) {
+                            clearInterval(timerInterval); // Stop the timer
+                            $('#timer').addClass(
+                                'd-none'); // Update the message
+                            $('#resend-btn').attr('disabled', false)
+                            $('#resend-btn').removeClass('disabled')
+
+                        } else {
+                            updateTimeDisplay(); // Update the displayed time
+                        }
+                    }, 1000);
+                }
+
+                // Function to update the displayed time
+                function updateTimeDisplay() {
+                    var minutes = Math.floor(timeInSeconds / 60);
+                    var seconds = timeInSeconds % 60;
+
+                    // Add leading zeros if needed
+                    var formattedTime = ('0' + minutes).slice(-2) + ':' + ('0' +
+                        seconds).slice(-2);
+
+                    // Update the span content
+                    $('#time').text(formattedTime);
+                }
+
+                function sendCode(type) {
+                    $('#wait-msg').removeClass('d-none')
+                    $('#wait-msg small').text('Please wait while we send the confirmation code...')
                     $.ajax({
-                        url: '{{ route('staff.enable2FA') }}',
+                        url: '{{ route('staff.sendCode') }}',
                         success: function() {
-                            alert('2fa enabled')
+                            $('#wait-msg').addClass('d-none')
+                            if (type === 'next') {
+                                proceedToNextTab()
+                                showTimer()
+                            } else {
+                                $('#wait-msg small').removeClass('text-danger')
+                                $('#wait-msg small').addClass('text-success')
+                                $('#wait-msg small').text('Code has been resent')
+                                $('#wait-msg').removeClass('d-none')
+
+                                setTimeout(function() {
+                                    $('#wait-msg').addClass('d-none');
+                                    $('#wait-msg small').removeClass('text-success')
+                                    $('#wait-msg small').addClass('text-danger')
+                                }, 5000);
+
+                                $('#timer').removeClass('d-none'); // Update the message
+                                $('#resend-btn').attr('disabled', true)
+                                $('#resend-btn').addClass('disabled')
+                                showTimer()
+                            }
                         }
                     })
+                }
+
+                function confirmCode() {
+                    var code = "";
+                    var empty = false;
+                    $('.confirmation-tab input').each(function() {
+                        if ($(this).val() === "") {
+                            $(this).addClass('is-invalid')
+                            empty = true;
+                            $('#wait-msg').removeClass('d-none')
+                            $('#wait-msg small').text("Please insert the full code!")
+                        } else {
+                            $(this).removeClass('is-invalid')
+                            code += $(this).val();
+                        }
+                    })
+
+                    if (!empty) {
+                        $('#wait-msg').removeClass('d-none')
+                        $('#wait-msg small').text('Please wait while we confirm the code...')
+                        $.ajax({
+                            url: '{{ route('staff.confirmCode') }}',
+                            type: 'POST',
+                            data: {
+                                '_token': '{{ csrf_token() }}',
+                                code
+                            },
+                            success: function(response) {
+                                $('#wait-msg').addClass('d-none')
+                                if (response.error) {
+                                    $('#wait-msg').removeClass('d-none')
+                                    $('#wait-msg small').text(response.error)
+                                } else {
+                                    proceedToNextTab()
+                                }
+                            }
+                        })
+                    }
                 }
             });
         });

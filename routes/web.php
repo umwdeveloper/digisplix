@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\Staff\PartnerController as StaffPartnerController;
 use App\Http\Controllers\Staff\ClientController as StaffClientController;
@@ -28,7 +29,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::domain('admin.digisplix.test')
-    ->middleware('staff')
+    ->middleware(['staff', '2fa'])
     ->name('staff.')
     ->group(function () {
         // Staff
@@ -44,8 +45,14 @@ Route::domain('admin.digisplix.test')
             ->name('reset_password');
 
         // 2FA
-        Route::get('/enable2FA', [TwoFAController::class, 'enable2FA'])
-            ->name('enable2FA');
+        Route::get('/2fa/index', [TwoFAController::class, 'index'])
+            ->name('2FA.index')->withoutMiddleware('2fa');
+        Route::get('/sendCode', [TwoFAController::class, 'sendCode'])
+            ->name('sendCode')->withoutMiddleware('2fa');
+        Route::post('/confirmCode', [TwoFAController::class, 'confirmCode'])
+            ->name('confirmCode')->withoutMiddleware('2fa');
+        Route::post('/disable2FA', [TwoFAController::class, 'disable2FA'])
+            ->name('disable2FA')->withoutMiddleware('2fa');
 
         // Leads
         Route::resource('leads', LeadController::class)->except(['create', 'show', 'edit']);
