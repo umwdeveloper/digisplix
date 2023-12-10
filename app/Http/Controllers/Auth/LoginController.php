@@ -78,7 +78,7 @@ class LoginController extends Controller {
             if (auth()->user() && auth()->user()->two_fa) {
                 $twoFA = new TwoFAController();
                 $twoFA->sendCode();
-                return redirect()->route('staff.2FA.index');
+                return redirect()->route('2fa.index');
             }
 
             return $this->sendLoginResponse($request);

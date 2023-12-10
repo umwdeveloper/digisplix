@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Partner\ClientController as PartnerClientController;
+use App\Http\Controllers\Partner\LeadController as PartnerLeadController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\Staff\PartnerController as StaffPartnerController;
 use App\Http\Controllers\Staff\ClientController as StaffClientController;
@@ -43,16 +45,6 @@ Route::domain('admin.digisplix.test')
             ->name('settings');
         Route::patch('/reset_password', [StaffController::class, 'resetPassword'])
             ->name('reset_password');
-
-        // 2FA
-        Route::get('/2fa/index', [TwoFAController::class, 'index'])
-            ->name('2FA.index')->withoutMiddleware('2fa');
-        Route::get('/sendCode', [TwoFAController::class, 'sendCode'])
-            ->name('sendCode')->withoutMiddleware('2fa');
-        Route::post('/confirmCode', [TwoFAController::class, 'confirmCode'])
-            ->name('confirmCode')->withoutMiddleware('2fa');
-        Route::post('/disable2FA', [TwoFAController::class, 'disable2FA'])
-            ->name('disable2FA')->withoutMiddleware('2fa');
 
         // Leads
         Route::resource('leads', LeadController::class)->except(['create', 'show', 'edit']);
@@ -112,10 +104,33 @@ Route::domain('admin.digisplix.test')
 Route::domain('partner.digisplix.test')
     ->name('partner.')
     ->group(function () {
-        Route::get('/', [PartnerController::class, 'index'])
-            ->name('index');
+        // Leads
+        Route::get('/', [PartnerLeadController::class, 'index'])
+            ->name('leads.index');
+        Route::resource('leads', PartnerLeadController::class)->except(['create', 'show', 'edit']);
+        Route::patch('/leads/update-lead-status/{lead_id}', [PartnerLeadController::class, 'updateLeadStatus'])
+            ->name('leads.update_lead_status');
+        Route::get('/leads/fetch_lead/{lead_id}', [PartnerLeadController::class, 'fetchLead'])
+            ->name('leads.fetch_lead');
+
+        // Clients
+        Route::resource('clients', PartnerClientController::class)->except(['create', 'store', 'show', 'edit']);
+        Route::patch('/clients/update_client_status/{client_id}', [PartnerClientController::class, 'updateClientStatus'])
+            ->name('clients.update_client_status');
+        Route::get('/clients/fetch_client/{client_id}', [PartnerClientController::class, 'fetchClient'])
+            ->name('clients.fetch_client');
     });
 
 Route::resource('users', UsersController::class);
 
 Auth::routes();
+
+// 2FA
+Route::get('/2fa/index', [TwoFAController::class, 'index'])
+    ->name('2fa.index');
+Route::get('/sendCode', [TwoFAController::class, 'sendCode'])
+    ->name('2fa.sendCode');
+Route::post('/confirmCode', [TwoFAController::class, 'confirmCode'])
+    ->name('2fa.confirmCode');
+Route::post('/disable2FA', [TwoFAController::class, 'disable2FA'])
+    ->name('2fa.disable2FA');

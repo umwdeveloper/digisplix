@@ -1,34 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\Staff;
+namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateClient;
 use App\Models\Client;
-use App\Models\Partner;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ClientController extends Controller {
-
-    public function __construct() {
-    }
-
     /**
      * Display a listing of the resource.
      */
     public function index() {
-        $this->authorize('staff.clients');
-
         $clients = Client::with(['user', 'partner', 'partner.user'])
             ->where('status', Client::QUALIFIED)
+            ->where('partner_id', auth()->user()->userable->id)
             ->get();
 
-        $partners = Partner::with('user')->get();
-
-        return view('staff.clients.index', [
+        return view('partners.clients.index', [
             'clients' => $clients,
             'active_clients' => $clients->where('active', 1)->where('status', Client::QUALIFIED),
             'inactive_clients' => $clients->where('active', 0)->where('status', Client::QUALIFIED),
@@ -67,8 +59,6 @@ class ClientController extends Controller {
      * Update the specified resource in storage.
      */
     public function update(UpdateClient $request, string $id) {
-        $this->authorize('staff.clients');
-
         $client = Client::findOrFail($id);
         $validatedData = $request->validated();
 
@@ -96,13 +86,10 @@ class ClientController extends Controller {
             return redirect()->back()->withErrors(['db_error' => $e->getMessage()], 'updateClient')->withInput();
         }
     }
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id) {
-        $this->authorize('staff.clients');
-
         $client = Client::findOrFail($id);
         $client->user()->delete();
         $client->delete();
@@ -112,8 +99,6 @@ class ClientController extends Controller {
 
     // Update client status
     public function updateClientStatus(Request $request, string $id) {
-        $this->authorize('staff.clients');
-
         try {
             $client = Client::findOrFail($id);
             $client->active = $request->status;
@@ -127,8 +112,6 @@ class ClientController extends Controller {
 
     // Fetch client by ID
     public function fetchClient(string $id) {
-        $this->authorize('staff.clients');
-
         $client = Client::with(['user', 'partner', 'partner.user'])
             ->findOrFail($id);
         return response()->json([

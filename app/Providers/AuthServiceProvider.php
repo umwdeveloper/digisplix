@@ -29,6 +29,7 @@ class AuthServiceProvider extends ServiceProvider {
             return true;
         });
 
+        // Staff
         // LeadController
         Gate::define('staff.leads', function (User $user) {
             return $user->staff()->permissions->contains('name', 'leads');
@@ -53,6 +54,8 @@ class AuthServiceProvider extends ServiceProvider {
         Gate::define('staff.staff', function (User $user) {
             return $user->staff()->permissions->contains('name', 'staff');
         });
+
+        // Partner
 
         // Admin has all rights
         Gate::before(function (User $user, string $ability) {

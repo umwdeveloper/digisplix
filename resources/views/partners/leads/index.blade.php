@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.partner')
 
 @section('content')
     <main class="content ">
@@ -89,10 +89,8 @@
                                 <div class="flex-grow-1">
                                     <div class="d-flex align-items-center justify-content-between mb-3">
                                         <h1 class="f-20 w-500 mb-0 pb-0 text-dark-clr">Leads</h1>
-                                        @can('staff.leads')
-                                            <button class="table-btn" id="leadModal-btn" type="button" class="btn btn-primary"
-                                                data-bs-toggle="modal" data-bs-target="#leadModal">Add New</button>
-                                        @endcan
+                                        <button class="table-btn" id="leadModal-btn" type="button" class="btn btn-primary"
+                                            data-bs-toggle="modal" data-bs-target="#leadModal">Add New</button>
                                         <button class="table-btn d-none" id="editLeadModal-btn" type="button"
                                             class="btn btn-primary" data-bs-toggle="modal"
                                             data-bs-target="#editLeadModal">Edit
@@ -191,7 +189,7 @@
                                                                 <button class="edit"
                                                                     data-lead-id="{{ $lead->id }}">Edit</button>
                                                                 <form
-                                                                    action="{{ route('staff.leads.destroy', $lead->id) }}"
+                                                                    action="{{ route('partner.leads.destroy', $lead->id) }}"
                                                                     method="POST">
                                                                     @csrf
                                                                     @method('DELETE')
@@ -529,7 +527,7 @@
                     @if ($errors->createLead->has('db_error'))
                         <small>{{ $errors->createLead->first('db_error') }}</small>
                     @endif
-                    <form action="{{ route('staff.leads.store') }}" method="POST" novalidate>
+                    <form action="{{ route('partner.leads.store') }}" method="POST" novalidate>
                         @csrf
                         <div class="container-fluid">
                             <div class="row">
@@ -704,28 +702,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="form-floating">
-                                    <select
-                                        class="form-select crm-input {{ $errors->createLead->has('partner_id') ? 'is-invalid' : '' }}"
-                                        required id="partner_id" name="partner_id"
-                                        aria-label="Floating label select example">
-                                        <option selected disabled>Select</option>
-                                        @foreach ($partners as $partner)
-                                            <option
-                                                {{ $errors->hasBag('createLead') && old('partner_id') == $partner->id ? 'selected' : '' }}
-                                                value="{{ $partner->id }}">
-                                                {{ $partner->user->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    <label class="crm-label form-label" for="partner_id">Partner<span
-                                            class="text-danger">*</span></label>
-                                    @if ($errors->createLead->has('partner_id'))
-                                        <small class="invalid-feedback " style="font-size: 11px">
-                                            {{ $errors->createLead->first('partner_id') }}
-                                        </small>
-                                    @endif
-                                </div>
+                                <input type="hidden" name="partner_id" value="{{ auth()->user()->partner()->id }}">
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
                                         <input type="text"
@@ -833,7 +810,7 @@
                             class="fa-duotone fa-xmark"></i></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('staff.leads.update', old('lead_id') ? old('lead_id') : '1') }}"
+                    <form action="{{ route('partner.leads.update', old('lead_id') ? old('lead_id') : '1') }}"
                         method="POST" novalidate>
                         @csrf
                         @method('PUT')
@@ -994,28 +971,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="form-floating">
-                                    <select
-                                        class="form-select crm-input {{ $errors->updateLead->has('partner_id') ? 'is-invalid' : '' }}"
-                                        required id="partner_id" name="partner_id"
-                                        aria-label="Floating label select example">
-                                        <option selected disabled>Select</option>
-                                        @foreach ($partners as $partner)
-                                            <option
-                                                {{ $errors->hasBag('updateLead') && old('partner_id') == $partner->id ? 'selected' : '' }}
-                                                value="{{ $partner->id }}">
-                                                {{ $partner->user->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    <label class="crm-label form-label" for="partner_id">Partner<span
-                                            class="text-danger">*</span></label>
-                                    @if ($errors->updateLead->has('partner_id'))
-                                        <small class="invalid-feedback " style="font-size: 11px">
-                                            {{ $errors->updateLead->first('partner_id') }}
-                                        </small>
-                                    @endif
-                                </div>
+                                <input type="hidden" name="partner_id" value="{{ auth()->user()->partner()->id }}">
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
                                         <input type="text"
@@ -1196,7 +1152,7 @@
             let leadID = $(this).closest('ul').data('lead-id');
 
             $.ajax({
-                url: '{{ route('staff.leads.update_lead_status', 'lead_id') }}'.replace('lead_id',
+                url: '{{ route('partner.leads.update_lead_status', 'lead_id') }}'.replace('lead_id',
                     leadID),
                 type: 'PATCH',
                 data: {
@@ -1225,11 +1181,11 @@
             $('.invalid-feedback').remove()
 
             let leadID = $(this).data('lead-id');
-            $('#editLeadModal form').attr('action', "{{ route('staff.leads.update', 'lead_id') }}"
+            $('#editLeadModal form').attr('action', "{{ route('partner.leads.update', 'lead_id') }}"
                 .replace('lead_id', leadID))
             $('#editLeadModal #lead_id').val(leadID)
             $.ajax({
-                url: '{{ route('staff.leads.fetch_lead', 'lead_id') }}'
+                url: '{{ route('partner.leads.fetch_lead', 'lead_id') }}'
                     .replace('lead_id', leadID),
                 method: 'GET',
                 success: function(response) {

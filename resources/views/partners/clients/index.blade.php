@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.partner')
 
 @section('content')
     <main class="content ">
@@ -134,7 +134,7 @@
                                                             <button class="edit"
                                                                 data-client-id="{{ $client->id }}">Edit</button>
                                                             <form
-                                                                action="{{ route('staff.clients.destroy', $client->id) }}"
+                                                                action="{{ route('partner.clients.destroy', $client->id) }}"
                                                                 method="POST">
                                                                 @csrf
                                                                 @method('DELETE')
@@ -176,7 +176,7 @@
                             class="fa-duotone fa-xmark"></i></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('staff.leads.update', old('client_id') ? old('client_id') : '1') }}"
+                    <form action="{{ route('partner.leads.update', old('client_id') ? old('client_id') : '1') }}"
                         method="POST" novalidate>
                         @csrf
                         @method('PUT')
@@ -337,28 +337,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="form-floating col-lg-6">
-                                    <select
-                                        class="form-select crm-input {{ $errors->updateClient->has('partner_id') ? 'is-invalid' : '' }}"
-                                        required id="partner_id" name="partner_id"
-                                        aria-label="Floating label select example">
-                                        <option selected disabled>Select</option>
-                                        @foreach ($partners as $partner)
-                                            <option
-                                                {{ $errors->hasBag('updateClient') && old('partner_id') == $partner->id ? 'selected' : '' }}
-                                                value="{{ $partner->id }}">
-                                                {{ $partner->user->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    <label class="crm-label form-label" for="partner_id">Partner<span
-                                            class="text-danger">*</span></label>
-                                    @if ($errors->updateClient->has('partner_id'))
-                                        <small class="invalid-feedback " style="font-size: 11px">
-                                            {{ $errors->updateClient->first('partner_id') }}
-                                        </small>
-                                    @endif
-                                </div>
+                                <input type="hidden" name="partner_id" value="{{ auth()->user()->partner()->id }}">
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
                                         <input type="text"
@@ -392,7 +371,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-6">
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->updateClient->has('address') ? 'is-invalid' : '' }}"
@@ -495,7 +474,8 @@
             let clientID = $(this).data('client-id');
 
             $.ajax({
-                url: '{{ route('staff.clients.update_client_status', 'client_id') }}'.replace('client_id',
+                url: '{{ route('partner.clients.update_client_status', 'client_id') }}'.replace(
+                    'client_id',
                     clientID),
                 type: 'PATCH',
                 data: {
@@ -527,11 +507,11 @@
             $('.invalid-feedback').remove()
 
             let clientID = $(this).data('client-id');
-            $('#editClientModal form').attr('action', "{{ route('staff.clients.update', 'client_id') }}"
+            $('#editClientModal form').attr('action', "{{ route('partner.clients.update', 'client_id') }}"
                 .replace('client_id', clientID))
             $('#editClientModal #client_id').val(clientID)
             $.ajax({
-                url: '{{ route('staff.clients.fetch_client', 'client_id') }}'
+                url: '{{ route('partner.clients.fetch_client', 'client_id') }}'
                     .replace('client_id', clientID),
                 method: 'GET',
                 success: function(response) {

@@ -67,7 +67,7 @@
                                             <div class="col-lg-12">
                                                 <div class="d-flex justify-content-lg-end justify-content-center mt-3 mb-3">
                                                     <!-- <button type="button" class="modal-btn-cancel me-3"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            data-bs-dismiss="modal">Cancel</button> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        data-bs-dismiss="modal">Cancel</button> -->
                                                     <button type="submit" class="modal-btn-save ">Save </button>
                                                 </div>
                                             </div>
@@ -87,7 +87,7 @@
                                                         <h1>Two Factor Authentication</h1>
                                                     </div>
                                                     <div class="verification-div-body">
-                                                        <form action="{{ route('staff.disable2FA') }}" method="POST"
+                                                        <form action="{{ route('2fa.disable2FA') }}" method="POST"
                                                             class="">
                                                             @csrf
 
@@ -377,7 +377,7 @@
                     $('#wait-msg').removeClass('d-none')
                     $('#wait-msg small').text('Please wait while we send the confirmation code...')
                     $.ajax({
-                        url: '{{ route('staff.sendCode') }}',
+                        url: '{{ route('2fa.sendCode') }}',
                         success: function() {
                             $('#wait-msg').addClass('d-none')
                             if (type === 'next') {
@@ -423,7 +423,7 @@
                         $('#wait-msg').removeClass('d-none')
                         $('#wait-msg small').text('Please wait while we confirm the code...')
                         $.ajax({
-                            url: '{{ route('staff.confirmCode') }}',
+                            url: '{{ route('2fa.confirmCode') }}',
                             type: 'POST',
                             data: {
                                 '_token': '{{ csrf_token() }}',

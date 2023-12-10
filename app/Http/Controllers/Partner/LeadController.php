@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Staff;
+namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreLead;
@@ -16,20 +16,19 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 class LeadController extends Controller {
-
     /**
      * Display a listing of the resource.
      */
     public function index() {
-        $this->authorize('staff.leads');
 
-        $leads = Client::with(['user', 'partner', 'partner.user'])->where('active', 0)->where('status', '!=', Client::QUALIFIED)->get();
+        $leads = Client::with(['user', 'partner', 'partner.user'])
+            ->where('active', 0)
+            ->where('status', '!=', Client::QUALIFIED)
+            ->where('partner_id', auth()->user()->userable->id)
+            ->get();
 
-        $partners = Partner::with('user')->get();
-
-        return view('staff.leads.index', [
+        return view('partners.leads.index', [
             'leads' => $leads,
-            'partners' => $partners,
             'new_leads_count' => $leads->where('status', Client::NEW_LEAD)->count(),
             'new_leads' => $leads->whereIn('status', [Client::NEW_LEAD, Client::CONTACTED, Client::FOLLOW_UP]),
             'contacted_leads' => $leads->where('status', Client::CONTACTED),
@@ -54,8 +53,6 @@ class LeadController extends Controller {
      * Store a newly created resource in storage.
      */
     public function store(StoreLead $request) {
-        $this->authorize('staff.leads');
-
         $validatedData = $request->validated();
         $validatedData['password'] = Hash::make($validatedData['password']);
 
@@ -104,8 +101,6 @@ class LeadController extends Controller {
      * Update the specified resource in storage.
      */
     public function update(UpdateLead $request, string $id) {
-        $this->authorize('staff.leads');
-
         $lead = Client::findOrFail($id);
         $validatedData = $request->validated();
 
@@ -136,8 +131,6 @@ class LeadController extends Controller {
      * Remove the specified resource from storage.
      */
     public function destroy(string $id) {
-        $this->authorize('staff.leads');
-
         $lead = Client::findOrFail($id);
         $lead->user()->delete();
         $lead->delete();
@@ -147,8 +140,6 @@ class LeadController extends Controller {
 
     // Update lead status
     public function updateLeadStatus(Request $request, string $id) {
-        $this->authorize('staff.leads');
-
         try {
             $lead = Client::findOrFail($id);
             $lead->status = $request->status;
@@ -162,8 +153,6 @@ class LeadController extends Controller {
 
     // Fetch lead by ID
     public function fetchLead(string $id) {
-        $this->authorize('staff.leads');
-
         $lead = Client::with(['user', 'partner', 'partner.user'])
             ->findOrFail($id);
         return response()->json([

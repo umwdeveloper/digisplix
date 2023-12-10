@@ -15,7 +15,7 @@ class PartnerController extends Controller {
      * Display a listing of the resource.
      */
     public function index() {
-        return view('partners.index');
+        return view('partners.leads.index');
     }
 
     /**

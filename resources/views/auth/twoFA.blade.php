@@ -58,7 +58,7 @@
                 </x-toast>
             @endif
             <div class="mt-4 d-flex justify-content-center pt-3">
-                <form method="POST" action="{{ route('staff.confirmCode') }}" class="w-100">
+                <form method="POST" action="{{ route('2fa.confirmCode') }}" class="w-100">
                     @csrf
 
                     <div class="password-input mx-auto">
