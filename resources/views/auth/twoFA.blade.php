@@ -53,9 +53,9 @@
                 </x-toast>
             @endforeach
             @if (!$errors->any())
-                <div class="text-center">
-                    <small class="text-danger ">Please check email for the confirmation code</small>
-                </div>
+                <x-toast type="success">
+                    Please check email for the confirmation code!
+                </x-toast>
             @endif
             <div class="mt-4 d-flex justify-content-center pt-3">
                 <form method="POST" action="{{ route('staff.confirmCode') }}" class="w-100">

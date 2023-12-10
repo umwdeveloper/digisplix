@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\TwoFaEvent;
 use App\Mail\TwoFA;
 use App\Models\Client;
 use App\Models\Partner;
@@ -29,7 +30,8 @@ class TwoFAController extends Controller {
             ['code' => $code]
         );
 
-        Mail::to($user->email)->send(new TwoFA($code));
+        // Mail::to($user->email)->send(new TwoFA($code));
+        event(new TwoFaEvent($user, $code));
     }
 
     public function confirmCode(Request $request) {

@@ -52,11 +52,6 @@
                     {{ $error }}
                 </x-toast>
             @endforeach
-            @if (session('2fa'))
-                <div class="text-center">
-                    <small class="text-danger">{{ session('2fa') }}</small>
-                </div>
-            @endif
             <div class="mt-4 d-flex justify-content-center pt-3">
                 <form method="POST" action="{{ route('login') }}" class="w-100">
                     @csrf

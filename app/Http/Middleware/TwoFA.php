@@ -16,7 +16,7 @@ class TwoFA {
         $user = auth()->user();
         if ($user && $user->two_fa && !$user->two_fa_completed) {
             auth()->logout();
-            return redirect()->route('login')->with('2fa', '2FA is required!');
+            return redirect()->route('login')->withErrors(['2fa' => '2FA is required!']);
         }
         return $next($request);
     }

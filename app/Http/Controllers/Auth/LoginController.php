@@ -125,16 +125,25 @@ class LoginController extends Controller {
 
             if ($subdomain === "admin") {
                 if ($user->userable_type === Staff::class) {
+                    $user = User::findOrFail($user->id);
+                    $user->two_fa_completed = false;
+                    $user->save();
                     return true;
                 }
                 $this->guard()->logout();
             } elseif ($subdomain === "partner") {
                 if ($user->userable_type === Partner::class) {
+                    $user = User::findOrFail($user->id);
+                    $user->two_fa_completed = false;
+                    $user->save();
                     return true;
                 }
                 $this->guard()->logout();
             } elseif ($subdomain === "client") {
                 if ($user->userable_type === Client::class) {
+                    $user = User::findOrFail($user->id);
+                    $user->two_fa_completed = false;
+                    $user->save();
                     return true;
                 }
                 $this->guard()->logout();
