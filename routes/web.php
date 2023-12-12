@@ -104,6 +104,15 @@ Route::domain('admin.digisplix.test')
 Route::domain('partner.digisplix.test')
     ->name('partner.')
     ->group(function () {
+        Route::put('/update/{id}', [PartnerController::class, 'update'])
+            ->name('update');
+        Route::get('/profile', [PartnerController::class, 'profile'])
+            ->name('profile');
+        Route::get('/settings', [PartnerController::class, 'settings'])
+            ->name('settings');
+        Route::patch('/reset_password', [PartnerController::class, 'resetPassword'])
+            ->name('reset_password');
+
         // Leads
         Route::get('/', [PartnerLeadController::class, 'index'])
             ->name('leads.index');

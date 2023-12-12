@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Partner;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateProfile extends FormRequest {
@@ -18,7 +19,7 @@ class UpdateProfile extends FormRequest {
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array {
-        return [
+        $rules = [
             'name' => 'string|min:3|required',
             'email' => 'email|required',
             'designation' => 'string|required',
@@ -28,5 +29,13 @@ class UpdateProfile extends FormRequest {
             'phone' => 'string|required',
             'img' => 'nullable|image|mimes:jpg,jpeg,png,gif,svg|max:1024'
         ];
+
+        if ($this->user() && $this->user()->userable_type === Partner::class) {
+            $rules['facebook'] = 'nullable|url';
+            $rules['instagram'] = 'nullable|url';
+            $rules['linkedin'] = 'nullable|url';
+        }
+
+        return $rules;
     }
 }

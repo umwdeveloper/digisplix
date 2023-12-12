@@ -124,7 +124,7 @@ class StaffController extends Controller {
     }
 
     public function profile() {
-        $profile = Auth::user();
+        $profile = Staff::with('user')->findOrFail(Auth::user()->userable->id);
         return view('staff.profile', [
             'profile' => $profile
         ]);

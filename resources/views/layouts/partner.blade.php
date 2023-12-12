@@ -98,9 +98,11 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 
-                            <li><a class="dropdown-item" href=""><i class="bi bi-person me-3"></i>Profile</a>
+                            <li><a class="dropdown-item" href="{{ route('partner.profile') }}"><i
+                                        class="bi bi-person me-3"></i>Profile</a>
                             </li>
-                            <li><a class="dropdown-item" href=""><i class="bi bi-gear me-3"></i>Settings</a>
+                            <li><a class="dropdown-item" href="{{ route('partner.settings') }}"><i
+                                        class="bi bi-gear me-3"></i>Settings</a>
                             <li><a class="dropdown-item" href="logout"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit()"><i
                                         class="bi bi-arrow-bar-left me-3"></i>Logout</a>
@@ -136,6 +138,17 @@
 
                                     </span>
                                     <span class="menu-title">Clients
+                                    </span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item">
+                                <a href="{{ route('chat') }}">
+                                    <span class="menu-icon">
+                                        <i class="fa-duotone fa-messages"></i>
+
+                                    </span>
+                                    <span class="menu-title">Chats
                                     </span>
                                 </a>
                             </li>

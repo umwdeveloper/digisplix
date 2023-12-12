@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.partner')
 
 @section('content')
     <main class="content ">
@@ -12,7 +12,7 @@
                                     <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-3">
                                         <h1 class="f-20 w-500 mb-0 pb-0 text-dark-clr">Profile</h1>
                                     </div>
-                                    <form action="{{ route('staff.update', $profile->id) }}" method="POST"
+                                    <form action="{{ route('partner.update', $profile->id) }}" method="POST"
                                         enctype="multipart/form-data">
                                         @csrf
                                         @method('PUT')
@@ -109,7 +109,7 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-12">
                                                     <div class="form-floating mb-3">
                                                         <input type="text"
                                                             class="form-control crm-input {{ $errors->has('address') ? 'is-invalid' : '' }}"
@@ -139,12 +139,57 @@
                                                         @endif
                                                     </div>
                                                 </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text"
+                                                            class="form-control crm-input {{ $errors->has('facebook') ? 'is-invalid' : '' }}"
+                                                            id="feedback" name="facebook"
+                                                            value="{{ $profile->facebook }}" placeholder="">
+                                                        <label class="crm-label form-label" for="feedback">Facebook Link
+                                                            <span class="f-12">(Optional)</span></label>
+                                                        @if ($errors->has('facebook'))
+                                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                                {{ $errors->first('facebook') }}
+                                                            </small>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text"
+                                                            class="form-control crm-input {{ $errors->has('instagram') ? 'is-invalid' : '' }}"
+                                                            id="feedback" name="instagram"
+                                                            value="{{ $profile->instagram }}" placeholder="">
+                                                        <label class="crm-label form-label" for="feedback">Instagram Link
+                                                            <span class="f-12">(Optional)</span></label>
+                                                        @if ($errors->has('instagram'))
+                                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                                {{ $errors->first('instagram') }}
+                                                            </small>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text"
+                                                            class="form-control crm-input {{ $errors->has('linkedin') ? 'is-invalid' : '' }}"
+                                                            id="feedback" name="linkedin"
+                                                            value="{{ $profile->linkedin }}" placeholder="">
+                                                        <label class="crm-label form-label" for="feedback">Linkedin Link
+                                                            <span class="f-12">(Optional)</span></label>
+                                                        @if ($errors->has('linkedin'))
+                                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                                {{ $errors->first('linkedin') }}
+                                                            </small>
+                                                        @endif
+                                                    </div>
+                                                </div>
 
                                                 <div class="col-lg-12">
                                                     <div
                                                         class="d-flex justify-content-lg-end justify-content-center mt-3 mb-3">
                                                         <!-- <button type="button" class="modal-btn-cancel me-3"
-                                                                                                                                                                                                            data-bs-dismiss="modal">Cancel</button> -->
+                                                                                                                                                                                                                                                    data-bs-dismiss="modal">Cancel</button> -->
                                                         <button class="modal-btn-save ">Save </button>
                                                     </div>
                                                 </div>

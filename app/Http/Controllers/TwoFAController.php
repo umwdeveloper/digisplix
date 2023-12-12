@@ -30,8 +30,8 @@ class TwoFAController extends Controller {
             ['code' => $code]
         );
 
-        // Mail::to($user->email)->send(new TwoFA($code));
-        event(new TwoFaEvent($user, $code));
+        Mail::to($user->email)->send(new TwoFA($code));
+        // event(new TwoFaEvent($user, $code));
     }
 
     public function confirmCode(Request $request) {
