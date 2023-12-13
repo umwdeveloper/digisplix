@@ -83,4 +83,8 @@ class User extends Authenticatable {
     public function sendPasswordResetNotification($token) {
         $this->notify(new CustomResetPasswordNotification($token));
     }
+
+    public static function getAdmin() {
+        return static::where('is_admin', true)->first();
+    }
 }

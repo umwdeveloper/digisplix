@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Client\ProjectController as ClientProjectController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\Partner\ClientController as PartnerClientController;
 use App\Http\Controllers\Partner\LeadController as PartnerLeadController;
 use App\Http\Controllers\PartnerController;
@@ -31,7 +33,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::domain('admin.digisplix.test')
-    ->middleware(['staff', '2fa'])
+    ->middleware(['auth', 'staff', '2fa'])
     ->name('staff.')
     ->group(function () {
         // Staff
@@ -103,6 +105,7 @@ Route::domain('admin.digisplix.test')
 
 Route::domain('partner.digisplix.test')
     ->name('partner.')
+    ->middleware(['auth', '2fa'])
     ->group(function () {
         Route::put('/update/{id}', [PartnerController::class, 'update'])
             ->name('update');
@@ -128,6 +131,25 @@ Route::domain('partner.digisplix.test')
             ->name('clients.update_client_status');
         Route::get('/clients/fetch_client/{client_id}', [PartnerClientController::class, 'fetchClient'])
             ->name('clients.fetch_client');
+    });
+
+Route::domain('client.digisplix.test')
+    ->name('client.')
+    ->middleware(['auth', '2fa'])
+    ->group(function () {
+        Route::put('/update/{id}', [ClientController::class, 'update'])
+            ->name('update');
+        Route::get('/profile', [ClientController::class, 'profile'])
+            ->name('profile');
+        Route::get('/settings', [ClientController::class, 'settings'])
+            ->name('settings');
+        Route::patch('/reset_password', [ClientController::class, 'resetPassword'])
+            ->name('reset_password');
+
+        // Projects
+        Route::resource('projects', ClientProjectController::class)->parameters(['projects', 'filter']);
+        Route::get('/', [ClientProjectController::class, 'index'])
+            ->name('projects.index');
     });
 
 Route::resource('users', UsersController::class);

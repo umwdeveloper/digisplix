@@ -85,8 +85,8 @@
                 <div class="d-flex  user-account ">
 
                     <div class="user-icon">
-                        <img src="{{ getURL($user->img) }}" alt="" class="" height="50"
-                            width="50">
+                        <img src="{{ !empty($user->img) ? getURL($user->img) : asset('images/avatar.png') }}"
+                            alt="" class="" height="50" width="50">
                     </div>
                     <div class="dropdown profile-dropdown ms-auto">
                         <button class="dropdown-toggle d-flex align-items-center pe-3" type="button"
@@ -123,28 +123,17 @@
 
                         <ul>
                             <li class="menu-item">
-                                <a href="{{ route('partner.leads.index') }}">
+                                <a href="{{ route('client.projects.index') }}">
                                     <span class="menu-icon">
-                                        <i class="fa-duotone fa-people-group"></i>
+                                        <i class="fa-duotone fa-rectangle-history"></i>
 
                                     </span>
-                                    <span class="menu-title">Leads</span>
+                                    <span class="menu-title">Projects</span>
                                 </a>
                             </li>
 
                             <li class="menu-item">
-                                <a href="{{ route('partner.clients.index') }}">
-                                    <span class="menu-icon">
-                                        <i class="fa-duotone fa-users-line"></i>
-
-                                    </span>
-                                    <span class="menu-title">Clients
-                                    </span>
-                                </a>
-                            </li>
-
-                            <li class="menu-item">
-                                <a href="{{ route('chat') }}">
+                                <a href="{{ route('user', \App\Models\User::getAdmin()->id) }}">
                                     <span class="menu-icon">
                                         <i class="fa-duotone fa-messages"></i>
 

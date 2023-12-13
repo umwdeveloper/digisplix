@@ -20,13 +20,15 @@ class ProjectController extends Controller {
 
         $current_status = $request->query('filter') === 'ongoing' ? '0' : ($request->query('filter') === 'completed' ? '1' : null);
         $projects = Project::with('client.user')->get();
+
+        $projectsFilter = '';
         if ($current_status !== null) {
-            $projects = $projects->where('current_status', $current_status);
+            $projectsFilter = $projects->where('current_status', $current_status);
         }
         $clients = Client::with('user')->where('active', 1)->get();
 
         return view("staff.projects.index", [
-            'projects' => $projects,
+            'projects' => $current_status === null ? $projects : $projectsFilter,
             'clients' => $clients,
             'completed_projects' => $projects->where('current_status', 1)->count(),
             'ongoing_projects' => $projects->where('current_status', 0)->count(),

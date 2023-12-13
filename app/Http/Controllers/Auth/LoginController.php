@@ -177,9 +177,9 @@ class LoginController extends Controller {
         if ($user->userable_type === Staff::class) {
             return redirect()->route('staff.index');
         } else if ($user->userable_type === Partner::class) {
-            return redirect()->route('partner.index');
+            return redirect()->route('partner.leads.index');
         } else if ($user->userable_type === Client::class) {
-            return redirect()->route('client.index');
+            return redirect()->route('client.projects.index');
         }
     }
 

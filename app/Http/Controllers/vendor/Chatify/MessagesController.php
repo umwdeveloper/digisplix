@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Response;
 use App\Models\User;
 use App\Models\ChMessage as Message;
 use App\Models\ChFavorite as Favorite;
+use App\Models\Client;
+use App\Models\Partner;
+use App\Models\Staff;
 use Chatify\Facades\ChatifyMessenger as Chatify;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -40,6 +43,9 @@ class MessagesController extends Controller {
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index($id = null) {
+        if (Auth::user()->userable_type !== Staff::class && $id === null) {
+            return redirect()->route('user', User::getAdmin()->id);
+        }
         $messenger_color = Auth::user()->messenger_color;
         return view('Chatify::pages.app', [
             'id' => $id ?? 0,
@@ -58,7 +64,24 @@ class MessagesController extends Controller {
     public function idFetchData(Request $request) {
         $favorite = Chatify::inFavorite($request['id']);
         $fetch = User::where('id', $request['id'])->first();
-        if ($fetch->userable_type === Auth::user()->userable_type && $fetch->id !== Auth::user()->id) {
+
+        // Client or partner cannot access any user except admin
+        if (
+            ($fetch->userable_type === Partner::class
+                ||
+                $fetch->userable_type === Client::class
+                ||
+                $fetch->id !== User::getAdmin()->id)
+            &&
+            Auth::user()->userable_type !== Staff::class
+        ) {
+            return Response::json([
+                'error' => 'User not found!',
+            ]);
+        }
+
+        // Cannot access same user type user except self
+        if ($fetch && $fetch->userable_type === Auth::user()->userable_type && $fetch->id !== Auth::user()->id) {
             return Response::json([
                 'error' => 'User not found!',
             ]);

@@ -4,52 +4,59 @@
     @include('Chatify::layouts.headLinks')
     <div class="messenger">
         {{-- ----------------------Users/Groups lists side---------------------- --}}
-        <div class="messenger-listView {{ !!$id ? 'conversation-active' : '' }}">
-            {{-- Header and search bar --}}
-            <div class="m-header">
-                <nav>
-                    <a href="#"><i class="fas fa-inbox"></i> <span class="messenger-headTitle">MESSAGES</span> </a>
-                    {{-- header buttons --}}
-                    <nav class="m-header-right">
-                        {{-- <a href="#"><i class="fas fa-cog settings-btn"></i></a> --}}
-                        <a href="#" class="listView-x"><i class="fas fa-times"></i></a>
+        @php
+            $is_staff = auth()->user()->userable_type === \App\Models\Staff::class;
+            $admin = \App\Models\User::getAdmin();
+        @endphp
+        @if ($is_staff)
+            <div class="messenger-listView {{ !!$id ? 'conversation-active' : '' }}">
+                {{-- Header and search bar --}}
+                <div class="m-header">
+                    <nav>
+                        <a href="#"><i class="fas fa-inbox"></i> <span class="messenger-headTitle">MESSAGES</span> </a>
+                        {{-- header buttons --}}
+                        <nav class="m-header-right">
+                            {{-- <a href="#"><i class="fas fa-cog settings-btn"></i></a> --}}
+                            <a href="#" class="listView-x"><i class="fas fa-times"></i></a>
+                        </nav>
                     </nav>
-                </nav>
-                {{-- Search input --}}
-                <input type="text" class="messenger-search" placeholder="Search" />
-                {{-- Tabs --}}
-                {{-- <div class="messenger-listView-tabs">
+                    {{-- Search input --}}
+                    <input type="text" class="messenger-search" placeholder="Search" />
+                    {{-- Tabs --}}
+                    {{-- <div class="messenger-listView-tabs">
                 <a href="#" class="active-tab" data-view="users">
                     <span class="far fa-user"></span> Contacts</a>
             </div> --}}
-            </div>
-            {{-- tabs and lists --}}
-            <div class="m-body contacts-container">
-                {{-- Lists [Users/Group] --}}
-                {{-- ---------------- [ User Tab ] ---------------- --}}
-                <div class="show messenger-tab users-tab app-scroll" data-view="users">
-                    {{-- Favorites --}}
-                    <div class="favorites-section">
-                        <p class="messenger-title"><span>Favorites</span></p>
-                        <div class="messenger-favorites app-scroll-hidden"></div>
-                    </div>
-                    {{-- Saved Messages --}}
-                    <p class="messenger-title"><span>Your Space</span></p>
-                    {!! view('Chatify::layouts.listItem', ['get' => 'saved']) !!}
-                    {{-- Contact --}}
-                    <p class="messenger-title"><span>All Messages</span></p>
-                    <div class="listOfContacts" style="width: 100%;height: calc(100% - 272px);position: relative;"></div>
                 </div>
-                {{-- ---------------- [ Search Tab ] ---------------- --}}
-                <div class="messenger-tab search-tab app-scroll" data-view="search">
-                    {{-- items --}}
-                    <p class="messenger-title"><span>Search</span></p>
-                    <div class="search-records">
-                        <p class="message-hint center-el"><span>Type to search..</span></p>
+                {{-- tabs and lists --}}
+                <div class="m-body contacts-container">
+                    {{-- Lists [Users/Group] --}}
+                    {{-- ---------------- [ User Tab ] ---------------- --}}
+                    <div class="show messenger-tab users-tab app-scroll" data-view="users">
+                        {{-- Favorites --}}
+                        <div class="favorites-section">
+                            <p class="messenger-title"><span>Favorites</span></p>
+                            <div class="messenger-favorites app-scroll-hidden"></div>
+                        </div>
+                        {{-- Saved Messages --}}
+                        <p class="messenger-title"><span>Your Space</span></p>
+                        {!! view('Chatify::layouts.listItem', ['get' => 'saved']) !!}
+                        {{-- Contact --}}
+                        <p class="messenger-title"><span>All Messages</span></p>
+                        <div class="listOfContacts" style="width: 100%;height: calc(100% - 272px);position: relative;">
+                        </div>
+                    </div>
+                    {{-- ---------------- [ Search Tab ] ---------------- --}}
+                    <div class="messenger-tab search-tab app-scroll" data-view="search">
+                        {{-- items --}}
+                        <p class="messenger-title"><span>Search</span></p>
+                        <div class="search-records">
+                            <p class="message-hint center-el"><span>Type to search..</span></p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
 
         {{-- ----------------------Messaging side---------------------- --}}
         <div class="messenger-messagingView">
@@ -66,7 +73,9 @@
                     </div>
                     {{-- header buttons --}}
                     <nav class="m-header-right">
-                        <a href="#" class="add-to-favorite"><i class="fas fa-star"></i></a>
+                        @if ($is_staff)
+                            <a href="#" class="add-to-favorite"><i class="fas fa-star"></i></a>
+                        @endif
                         {{-- <a href="/"><i class="fas fa-home"></i></a> --}}
                         <a href="#" class="show-infoSide"><i class="fas fa-info-circle"></i></a>
                     </nav>
@@ -82,7 +91,13 @@
             {{-- Messaging area --}}
             <div class="m-body messages-container app-scroll">
                 <div class="messages">
-                    <p class="message-hint center-el"><span>Please select a chat to start messaging</span></p>
+                    <p class="message-hint center-el">
+                        @if (!$is_staff && request()->route('id') != $admin->id)
+                            <span>404 | Not Found</span>
+                        @else
+                            <span>{{ $is_staff ? 'Please select a chat to start messaging' : 'Trying to connect...' }}</span>
+                        @endif
+                    </p>
                 </div>
                 {{-- Typing indicator --}}
                 <div class="typing-indicator">

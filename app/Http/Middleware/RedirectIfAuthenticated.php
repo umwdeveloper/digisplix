@@ -26,9 +26,9 @@ class RedirectIfAuthenticated {
                 if ($user_type === Staff::class) {
                     return redirect()->route('staff.index');
                 } elseif ($user_type === Partner::class) {
-                    return redirect()->route('partner.index');
+                    return redirect()->route('partner.leads.index');
                 } elseif ($user_type === Client::class) {
-                    return redirect()->route('client.index');
+                    return redirect()->route('client.projects.index');
                 }
                 return redirect(RouteServiceProvider::HOME);
             }
