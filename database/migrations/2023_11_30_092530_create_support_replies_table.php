@@ -13,7 +13,7 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('support_id');
             $table->unsignedBigInteger('user_id');
-            $table->text('reply');
+            $table->text('reply')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();

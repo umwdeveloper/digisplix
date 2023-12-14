@@ -36,7 +36,18 @@ class SupportController extends Controller {
      * Store a newly created resource in storage.
      */
     public function store(Request $request) {
-        //
+        $ticket = Support::create([
+            'user_id' => Auth::user()->id,
+            'subject' => $request->input('subject'),
+            'description' => $request->input('description'),
+            'priority' => $request->input('priority'),
+            'department' => $request->input('department'),
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'ticket' => $ticket
+        ]);
     }
 
     /**
@@ -102,25 +113,12 @@ class SupportController extends Controller {
         if ($request->hasFile('file')) {
             $attachment = $request->file('file')->store('attachments');
 
-            $reply = SupportReply::findOrFail($request->input('replyID'));
+            $reply = Support::findOrFail($request->input('replyID'));
             $reply->attachments()->create([
                 'attachment' => $attachment
             ]);
         }
         return response()->json(['status' => 'success']);
-    }
-
-    public function storeReply(Request $request) {
-        $reply = SupportReply::create([
-            'support_id' => $request->input('support_id'),
-            'user_id' => $request->input('user_id'),
-            'reply' => $request->input('reply'),
-        ]);
-
-        return response()->json([
-            'status' => 'success',
-            'reply' => $reply
-        ]);
     }
 
     public function updateStatus(Request $request, string $id) {

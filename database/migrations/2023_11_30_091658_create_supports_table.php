@@ -13,7 +13,7 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('subject');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->enum('status', ['open', 'awaiting_user_response', 'user_replied', 'closed'])->default('open');
             $table->tinyInteger('priority')->default(0)->comment('0=Low, 1=Medium, 2=High');
             $table->tinyInteger('department')->default(0)->comment('0=General, 1=Sales/Billing, 2=Technical');

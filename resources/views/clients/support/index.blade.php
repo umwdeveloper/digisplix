@@ -22,8 +22,7 @@
                                             <thead>
                                                 <tr>
                                                     <th class="no-sort"></th>
-                                                    <th>ID</th>
-                                                    <th>Customer Email</th>
+                                                    <th>Sr#</th>
                                                     <th>Subject</th>
                                                     <th>Status</th>
                                                     <th>Priority</th>
@@ -45,7 +44,7 @@
                                                     $ticketPriorityClasses = ['priority-low', 'priority-medium', 'priority-high'];
                                                     $ticketPriority = ['Low', 'Medium', 'High'];
                                                 @endphp
-                                                @foreach ($tickets as $ticket)
+                                                @foreach ($tickets as $count => $ticket)
                                                     <tr class="">
                                                         <td>
                                                             <div class="d-flex align-items-center">
@@ -54,8 +53,7 @@
                                                                 </div>
                                                             </div>
                                                         </td>
-                                                        <td>1</td>
-                                                        <td>{{ $ticket->user->email }}</td>
+                                                        <td>{{ $count + 1 }}</td>
 
                                                         <td>
                                                             <p onclick="window.location.href = '{{ route('staff.support.show', $ticket->id) }}'"
@@ -86,15 +84,6 @@
                                                                 <a href="{{ route('staff.support.show', $ticket->id) }}"
                                                                     class="edit"><i
                                                                         class="fa-solid fa-eye me-2"></i>View</a>
-                                                                <form
-                                                                    action="{{ route('staff.support.destroy', $ticket->id) }}"
-                                                                    method="post">
-                                                                    @csrf
-                                                                    @method('delete')
-                                                                    <button class="delete"><i
-                                                                            class="fa-solid fa-trash me-2"></i>
-                                                                        Delete</button>
-                                                                </form>
                                                             </div>
 
 
