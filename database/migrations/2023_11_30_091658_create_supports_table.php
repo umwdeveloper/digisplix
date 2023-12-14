@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->text('description');
             $table->enum('status', ['open', 'awaiting_user_response', 'user_replied', 'closed'])->default('open');
             $table->tinyInteger('priority')->default(0)->comment('0=Low, 1=Medium, 2=High');
+            $table->tinyInteger('department')->default(0)->comment('0=General, 1=Sales/Billing, 2=Technical');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();

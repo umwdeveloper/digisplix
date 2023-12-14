@@ -83,13 +83,7 @@
                                 <div class="project-card">
                                     <div class="project-card--header">
                                         <h2 class="mb-0 pb-0 ">{{ $status_labels[$project->current_status] }}</h2>
-                                        <div class="d-flex align-items-center">
-                                            <div class="project-msg ms-2">
-                                                <a href="chats.html"> <i class="fa-solid fa-envelope"></i></a>
-                                                <div class="project-msg-number">
-                                                    3</div>
-                                            </div>
-                                        </div>
+
                                     </div>
                                     <a href="{{ route('client.projects.show', $project->id) }}" class="project-card-data">
                                         <img src="{{ getURL($project->img) }}" alt="">

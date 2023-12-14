@@ -20,6 +20,7 @@ class SupportFactory extends Factory {
             'description' => fake()->text(),
             'status' => Support::getStatuses()[array_rand(Support::getStatuses())],
             'priority' => rand(0, 2),
+            'department' => rand(0, 2),
         ];
     }
 }

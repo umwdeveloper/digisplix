@@ -47,7 +47,7 @@
 
     @vite(['resources/css/light-sass/main.scss'])
 
-    <title>DigiSplix | Partner</title>
+    <title>DigiSplix | Client</title>
 
     @php
         $user = auth()->user();
@@ -123,7 +123,7 @@
 
                         <ul>
                             <li class="menu-item">
-                                <a href="{{ route('client.projects.index') }}">
+                                <a href="{{ route('client.projects.index') }}" class="dashboard-link">
                                     <span class="menu-icon">
                                         <i class="fa-duotone fa-rectangle-history"></i>
 
@@ -139,6 +139,15 @@
 
                                     </span>
                                     <span class="menu-title">Chats
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="{{ route('client.support.index') }}">
+                                    <span class="menu-icon">
+                                        <i class="fa-duotone fa-user-headset"></i>
+                                    </span>
+                                    <span class="menu-title">Support
                                     </span>
                                 </a>
                             </li>

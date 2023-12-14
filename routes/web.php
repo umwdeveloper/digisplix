@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Client\ProjectController as ClientProjectController;
+use App\Http\Controllers\Client\SupportController as ClientSupportController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\Partner\ClientController as PartnerClientController;
 use App\Http\Controllers\Partner\LeadController as PartnerLeadController;
@@ -150,6 +151,15 @@ Route::domain('client.digisplix.test')
         Route::resource('projects', ClientProjectController::class)->parameters(['projects', 'filter']);
         Route::get('/', [ClientProjectController::class, 'index'])
             ->name('projects.index');
+
+        // Support
+        Route::resource('support', ClientSupportController::class);
+        Route::post('/support/uploadAttachment', [ClientSupportController::class, 'uploadAttachment'])
+            ->name('support.upload_attachment');
+        Route::post('/support/store_reply', [ClientSupportController::class, 'storeReply'])
+            ->name('support.store_reply');
+        Route::patch('/support/update_status/{id}', [ClientSupportController::class, 'updateStatus'])
+            ->name('support.update_status');
     });
 
 Route::resource('users', UsersController::class);
