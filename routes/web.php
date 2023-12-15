@@ -156,6 +156,8 @@ Route::domain('client.digisplix.test')
         Route::resource('support', ClientSupportController::class);
         Route::post('/support/uploadAttachment', [ClientSupportController::class, 'uploadAttachment'])
             ->name('support.upload_attachment');
+        Route::post('/support/uploadAttachmentReply', [ClientSupportController::class, 'uploadAttachmentReply'])
+            ->name('support.upload_attachment_reply');
         Route::post('/support/store_reply', [ClientSupportController::class, 'storeReply'])
             ->name('support.store_reply');
         Route::patch('/support/update_status/{id}', [ClientSupportController::class, 'updateStatus'])

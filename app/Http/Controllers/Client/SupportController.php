@@ -15,7 +15,7 @@ class SupportController extends Controller {
      * Display a listing of the resource.
      */
     public function index() {
-        $tickets = Support::with('user')->where('user_id', Auth::user()->id)->get();
+        $tickets = Support::with('user')->where('user_id', Auth::user()->id)->orderByDesc('updated_at')->get();
 
         return view('clients.support.index', [
             'tickets' => $tickets,
@@ -113,12 +113,42 @@ class SupportController extends Controller {
         if ($request->hasFile('file')) {
             $attachment = $request->file('file')->store('attachments');
 
-            $reply = Support::findOrFail($request->input('replyID'));
+            $ticket = Support::findOrFail($request->input('ticketID'));
+            $ticket->attachments()->create([
+                'attachment' => $attachment
+            ]);
+        }
+        return response()->json(['status' => 'success']);
+    }
+
+    public function uploadAttachmentReply(Request $request) {
+        if ($request->hasFile('file')) {
+            $attachment = $request->file('file')->store('attachments');
+
+            $reply = SupportReply::findOrFail($request->input('replyID'));
             $reply->attachments()->create([
                 'attachment' => $attachment
             ]);
         }
         return response()->json(['status' => 'success']);
+    }
+
+    public function storeReply(Request $request) {
+
+        $ticket = Support::findOrFail($request->input('support_id'));
+        $ticket->status = Support::USER_REPLIED;
+        $ticket->save();
+
+        $reply = SupportReply::create([
+            'support_id' => $request->input('support_id'),
+            'user_id' => $request->input('user_id'),
+            'reply' => $request->input('reply'),
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'reply' => $reply
+        ]);
     }
 
     public function updateStatus(Request $request, string $id) {

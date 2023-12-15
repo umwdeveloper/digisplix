@@ -122,6 +122,10 @@ class SupportController extends Controller {
     }
 
     public function storeReply(Request $request) {
+        $ticket = Support::findOrFail($request->input('support_id'));
+        $ticket->status = Support::AWAITING_USER_RESPONSE;
+        $ticket->save();
+
         $reply = SupportReply::create([
             'support_id' => $request->input('support_id'),
             'user_id' => $request->input('user_id'),

@@ -56,7 +56,7 @@
                                                         <td>{{ $count + 1 }}</td>
 
                                                         <td>
-                                                            <p onclick="window.location.href = '{{ route('staff.support.show', $ticket->id) }}'"
+                                                            <p onclick="window.location.href = '{{ route('client.support.show', $ticket->id) }}'"
                                                                 class="subject mb-0 pb-0">{{ $ticket->subject }}</p>
                                                         </td>
                                                         <td>
@@ -81,7 +81,7 @@
 
                                                         <td>
                                                             <div class="table-actions d-flex align-items-center">
-                                                                <a href="{{ route('staff.support.show', $ticket->id) }}"
+                                                                <a href="{{ route('client.support.show', $ticket->id) }}"
                                                                     class="edit"><i
                                                                         class="fa-solid fa-eye me-2"></i>View</a>
                                                             </div>

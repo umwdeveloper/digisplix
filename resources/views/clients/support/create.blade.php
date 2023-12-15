@@ -107,7 +107,9 @@
                                                 <div id="dropzone">
                                                     <form method="post"
                                                         action="{{ route('client.support.upload_attachment') }}"
-                                                        class="dropzone needsclick" id="demo-upload">
+                                                        class="dropzone needsclick" id="dropzonewidget"
+                                                        enctype="multipart/form-data">
+                                                        @csrf
                                                         <div class="dz-message needsclick">
                                                             <span class="text text-dark-clr">
 
@@ -121,7 +123,8 @@
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="d-flex justify-content-end mt-4 mb-3">
-                                                <button type="button" class="modal-btn-save" id="submitBtn">Submit</button>
+                                                <button type="button" class="modal-btn-save"
+                                                    id="submitBtn">Submit</button>
                                             </div>
                                         </div>
                                         <!-- <h1 class="f-20 w-500 mb-0 pb-0 text-dark-clr">This is Our General Technical Support queu/category</h1> -->
@@ -226,12 +229,16 @@
             acceptedFiles: ".jpeg,.jpg,.png,.pdf,.txt", // Allowed extensions
             init: function() {
                 myDropzone = this;
+                var fileValidity = {};
 
                 // Check for errors
                 this.on("addedfile", function(file) {
+                    fileValidity[file.name] = true;
+
                     if (file.size > myDropzone.options.maxFilesize * 1024 * 1024) {
                         alert("File size exceeds the limit");
                         myDropzone.removeFile(file);
+                        fileValidity[file.name] = false;
                         return;
                     }
 
@@ -239,6 +246,7 @@
                     if (!allowedFileTypes.includes(file.type)) {
                         alert("Invalid file type");
                         myDropzone.removeFile(file);
+                        fileValidity[file.name] = false;
                         return;
                     }
 
@@ -255,8 +263,15 @@
                 });
 
                 this.on("queuecomplete", function(file) {
-                    // saveEditorData()
-                    location.reload()
+                    var allFilesValid = Object.values(fileValidity).every(function(valid) {
+                        return valid;
+                    });
+
+                    if (allFilesValid) {
+                        window.location.href = '{{ route('client.support.index') }}';
+                    }
+
+                    fileValidity = {};
                 });
             },
             success: function(file, response) { // Dropzone upload response
@@ -303,7 +318,7 @@
                         if ($('.upload-area').css('display') == 'block') {
                             myDropzone.processQueue();
                         } else {
-                            location.reload()
+                            window.location.href = '{{ route('client.support.index') }}';
                         }
                     }
                     // location.reload()

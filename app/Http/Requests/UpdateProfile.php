@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Client;
 use App\Models\Partner;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -34,6 +35,14 @@ class UpdateProfile extends FormRequest {
             $rules['facebook'] = 'nullable|url';
             $rules['instagram'] = 'nullable|url';
             $rules['linkedin'] = 'nullable|url';
+        }
+
+        if ($this->user() && $this->user()->userable_type === Client::class) {
+            $rules['title'] = 'string|required';
+            $rules['url'] = 'url|required';
+            $rules['business_name'] = 'string|required';
+            $rules['business_email'] = 'email|required';
+            $rules['business_phone'] = 'string|required';
         }
 
         return $rules;
