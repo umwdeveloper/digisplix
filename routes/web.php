@@ -9,6 +9,7 @@ use App\Http\Controllers\Partner\LeadController as PartnerLeadController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\Staff\PartnerController as StaffPartnerController;
 use App\Http\Controllers\Staff\ClientController as StaffClientController;
+use App\Http\Controllers\Staff\InvoiceController;
 use App\Http\Controllers\Staff\StaffController as StaffStaffController;
 use App\Http\Controllers\Staff\PhaseController;
 use App\Http\Controllers\Staff\LeadController;
@@ -97,6 +98,9 @@ Route::domain('admin.digisplix.test')
             ->name('support.store_reply');
         Route::patch('/support/update_status/{id}', [SupportController::class, 'updateStatus'])
             ->name('support.update_status');
+
+        // Invoice
+        Route::resource('invoices', InvoiceController::class);
 
         // If route not found
         Route::fallback(function () {

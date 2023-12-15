@@ -165,7 +165,7 @@
                             </li>
 
                             <li class="menu-item">
-                                <a href="invoice-list.html">
+                                <a href="{{ route('staff.invoices.index') }}">
                                     <span class="menu-icon">
                                         <i class="fa-duotone fa-file-invoice-dollar"></i>
                                     </span>

@@ -18,8 +18,11 @@ class InvoiceFactory extends Factory {
     public function definition(): array {
         return [
             'invoice_id' => (string) Str::uuid(),
+            'invoice_from' => fake()->name(),
+            'invoice_to' => fake()->name(),
             'status' => Invoice::getStatuses()[array_rand(Invoice::getStatuses())],
             'sent' => rand(0, 1),
+            'recurring' => rand(0, 1),
             'due_date' => now()->addDays(rand(5, 50)),
             'terms_n_conditions' => fake()->text(50),
             'note' => fake()->text(50),

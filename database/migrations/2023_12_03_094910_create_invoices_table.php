@@ -14,12 +14,14 @@ return new class extends Migration {
             $table->string('invoice_id');
             $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('category_id');
+            $table->text('invoice_from')->nullable();
+            $table->text('invoice_to')->nullable();
             $table->enum('status', ['pending', 'paid', 'overdue', 'draft', 'recurring', 'cancelled'])->default('pending');
             $table->tinyInteger('sent')->default(0)->comment('0=Not Sent, 1=Sent');
+            $table->tinyInteger('recurring')->default(0);
             $table->date('due_date');
             $table->text('terms_n_conditions')->nullable();
             $table->text('note')->nullable();
-            $table->string('signature')->nullable();
             $table->timestamps();
         });
     }
