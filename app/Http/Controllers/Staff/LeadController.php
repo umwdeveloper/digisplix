@@ -10,6 +10,7 @@ use App\Mail\LeadStatusChangedMail;
 use App\Models\Client;
 use App\Models\Partner;
 use App\Models\User;
+use App\Notifications\LeadStatusUpdated;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 
 class LeadController extends Controller {
 
@@ -160,7 +162,11 @@ class LeadController extends Controller {
             $lead->status = $request->status;
             $lead->save();
 
-            Mail::to($lead->user->email)->send(new LeadStatusChangedMail($lead->user->name, Client::getStatusLabel($lead->status)));
+            // Send notification
+            Notification::send($lead->user, new LeadStatusUpdated($lead->user->name, Client::getStatusLabel($lead->status)));
+
+            // Send email
+            // Mail::to($lead->user->email)->send(new LeadStatusChangedMail($lead->user->name, Client::getStatusLabel($lead->status)));
 
             return response()->json(['status' => 'success']);
         } catch (Exception $e) {

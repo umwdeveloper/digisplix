@@ -22,6 +22,9 @@ class ProjectController extends Controller {
             $projectsFilter = $projects->where('current_status', $current_status);
         }
 
+        // Get notifications
+        $notifications = Auth::user()->unreadNotifications;
+
         return view("clients.projects.index", [
             'projects' => $current_status === null ? $projects : $projectsFilter,
             'completed_projects' => $projects->where('current_status', 1)->count(),
