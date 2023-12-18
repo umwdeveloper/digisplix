@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Staff;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreLead;
 use App\Http\Requests\UpdateLead;
+use App\Mail\LeadAddedMail;
+use App\Mail\LeadStatusChangedMail;
 use App\Models\Client;
 use App\Models\Partner;
 use App\Models\User;
@@ -14,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class LeadController extends Controller {
 
@@ -57,6 +60,7 @@ class LeadController extends Controller {
         $this->authorize('staff.leads');
 
         $validatedData = $request->validated();
+        $validatedData['original_password'] = $validatedData['password'];
         $validatedData['password'] = Hash::make($validatedData['password']);
 
         try {
@@ -68,6 +72,8 @@ class LeadController extends Controller {
             );
 
             DB::commit();
+
+            Mail::to($lead->user->email)->send(new LeadAddedMail($lead->user->name, $lead->user->email, $validatedData['original_password']));
 
             return redirect()->back()->with('status', 'Lead created successfully!');
         } catch (QueryException $e) {
@@ -153,6 +159,8 @@ class LeadController extends Controller {
             $lead = Client::findOrFail($id);
             $lead->status = $request->status;
             $lead->save();
+
+            Mail::to($lead->user->email)->send(new LeadStatusChangedMail($lead->user->name, Client::getStatusLabel($lead->status)));
 
             return response()->json(['status' => 'success']);
         } catch (Exception $e) {

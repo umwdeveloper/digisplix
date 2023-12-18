@@ -175,59 +175,70 @@
 
                             </li>
 
-                            <li class="menu-item">
-                                <a href="{{ route('staff.partners.index') }}">
-                                    <span class="menu-icon">
-                                        <i class="fa-duotone fa-user-group-simple"></i>
-                                    </span>
+                            @can('staff.partners')
+                                <li class="menu-item">
+                                    <a href="{{ route('staff.partners.index') }}">
+                                        <span class="menu-icon">
+                                            <i class="fa-duotone fa-user-group-simple"></i>
+                                        </span>
 
-                                    <span class="menu-title">Partners
-                                    </span>
-                                </a>
-                            </li>
+                                        <span class="menu-title">Partners
+                                        </span>
+                                    </a>
+                                </li>
+                            @endcan
 
-                            <li class="menu-item">
-                                <a href="{{ route('staff.clients.index') }}">
-                                    <span class="menu-icon">
-                                        <i class="fa-duotone fa-users-line"></i>
+                            @can('staff.clients')
+                                <li class="menu-item">
+                                    <a href="{{ route('staff.clients.index') }}">
+                                        <span class="menu-icon">
+                                            <i class="fa-duotone fa-users-line"></i>
 
-                                    </span>
-                                    <span class="menu-title">Clients
-                                    </span>
-                                </a>
-                            </li>
+                                        </span>
+                                        <span class="menu-title">Clients
+                                        </span>
+                                    </a>
+                                </li>
+                            @endcan
 
-                            <li class="menu-item">
-                                <a href="chats.html">
-                                    <span class="menu-icon">
-                                        <i class="fa-duotone fa-messages"></i>
+                            @can('staff.chats')
+                                <li class="menu-item">
+                                    <a href="{{ route('chat') }}">
+                                        <span class="menu-icon">
+                                            <i class="fa-duotone fa-messages"></i>
 
-                                    </span>
-                                    <span class="menu-title">Chats
-                                    </span>
-                                </a>
-                            </li>
+                                        </span>
+                                        <span class="menu-title">Chats
+                                        </span>
+                                    </a>
+                                </li>
+                            @endcan
 
-                            <li class="menu-item">
-                                <a href="{{ route('staff.staff.index') }}">
-                                    <span class="menu-icon">
-                                        <i class="fa-duotone fa-user-tie"></i>
+                            @can('staff.staff')
+                                <li class="menu-item">
+                                    <a href="{{ route('staff.staff.index') }}">
+                                        <span class="menu-icon">
+                                            <i class="fa-duotone fa-user-tie"></i>
 
-                                    </span>
-                                    <span class="menu-title">Staff
-                                    </span>
-                                </a>
-                            </li>
+                                        </span>
+                                        <span class="menu-title">Staff
+                                        </span>
+                                    </a>
+                                </li>
+                            @endcan
 
-                            <li class="menu-item">
-                                <a href="{{ route('staff.support.index') }}">
-                                    <span class="menu-icon">
-                                        <i class="fa-duotone fa-user-headset"></i>
-                                    </span>
-                                    <span class="menu-title">Support
-                                    </span>
-                                </a>
-                            </li>
+                            @can('staff.support')
+                                <li class="menu-item">
+                                    <a href="{{ route('staff.support.index') }}">
+                                        <span class="menu-icon">
+                                            <i class="fa-duotone fa-user-headset"></i>
+                                        </span>
+                                        <span class="menu-title">Support
+                                        </span>
+                                    </a>
+                                </li>
+                            @endcan
+
                             <li class="menu-item">
                                 <a href="email.html">
                                     <span class="menu-icon">

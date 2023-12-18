@@ -50,18 +50,28 @@ class AuthServiceProvider extends ServiceProvider {
             return $user->staff()->permissions->contains('name', 'clients');
         });
 
+        // ChatController
+        Gate::define('staff.chats', function (User $user) {
+            return $user->staff()->permissions->contains('name', 'chats');
+        });
+
         // StaffController
         Gate::define('staff.staff', function (User $user) {
             return $user->staff()->permissions->contains('name', 'staff');
         });
 
+        // SupportController
+        Gate::define('staff.support', function (User $user) {
+            return $user->staff()->permissions->contains('name', 'support');
+        });
+
         // Partner
 
         // Admin has all rights
-        Gate::before(function (User $user, string $ability) {
-            if ($user->is_admin) {
-                return true;
-            }
-        });
+        // Gate::before(function (User $user, string $ability) {
+        //     if ($user->is_admin) {
+        //         return true;
+        //     }
+        // });
     }
 }

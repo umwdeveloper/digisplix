@@ -14,6 +14,8 @@ class SupportController extends Controller {
      * Display a listing of the resource.
      */
     public function index() {
+        $this->authorize('staff.support');
+
         $tickets = Support::with('user')->get();
         $statusCounts = Support::groupBy('status')
             ->select('status', DB::raw('count(*) as count'))
@@ -54,6 +56,8 @@ class SupportController extends Controller {
      * Display the specified resource.
      */
     public function show(string $id) {
+        $this->authorize('staff.support');
+
         $ticket = Support::with([
             'user',
             'replies',
@@ -86,6 +90,8 @@ class SupportController extends Controller {
      * Remove the specified resource from storage.
      */
     public function destroy(string $id) {
+        $this->authorize('staff.support');
+
         $ticket = Support::with([
             'attachments',
             'replies.attachments'
@@ -122,6 +128,8 @@ class SupportController extends Controller {
     }
 
     public function storeReply(Request $request) {
+        $this->authorize('staff.support');
+
         $ticket = Support::findOrFail($request->input('support_id'));
         $ticket->status = Support::AWAITING_USER_RESPONSE;
         $ticket->save();
@@ -139,6 +147,8 @@ class SupportController extends Controller {
     }
 
     public function updateStatus(Request $request, string $id) {
+        $this->authorize('staff.support');
+
         $ticket = Support::findOrFail($id);
         $ticket->status = $request->input('status');
         $ticket->update();

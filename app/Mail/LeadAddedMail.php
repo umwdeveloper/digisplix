@@ -9,18 +9,18 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class TwoFA extends Mailable implements ShouldQueue {
+class LeadAddedMail extends Mailable implements ShouldQueue {
     use Queueable, SerializesModels;
 
-    public $name;
-    public $code;
+    public $name, $email, $password;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(string $name, string $code) {
+    public function __construct($name, $email, $password) {
         $this->name = $name;
-        $this->code = $code;
+        $this->email = $email;
+        $this->password = $password;
     }
 
     /**
@@ -28,7 +28,7 @@ class TwoFA extends Mailable implements ShouldQueue {
      */
     public function envelope(): Envelope {
         return new Envelope(
-            subject: 'Two Factor Authentication',
+            subject: 'Registration',
         );
     }
 
@@ -37,7 +37,7 @@ class TwoFA extends Mailable implements ShouldQueue {
      */
     public function content(): Content {
         return new Content(
-            markdown: 'emails.2fa',
+            markdown: 'emails.lead-added',
         );
     }
 

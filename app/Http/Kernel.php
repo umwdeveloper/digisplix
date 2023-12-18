@@ -37,6 +37,8 @@ class Kernel extends HttpKernel {
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\SubdomainMiddleware::class,
             \App\Http\Middleware\LayoutMiddleware::class,
+            \App\Http\Middleware\SetAdminIdForStaffChat::class,
+
         ],
 
         'api' => [
@@ -67,5 +69,6 @@ class Kernel extends HttpKernel {
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'staff' => \App\Http\Middleware\StaffMiddleware::class,
         '2fa' => \App\Http\Middleware\TwoFA::class,
+        'SetAdminIdForStaffChat' => \App\Http\Middleware\SetAdminIdForStaffChat::class,
     ];
 }
