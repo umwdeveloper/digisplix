@@ -112,14 +112,18 @@
                                                 data-bs-target="#settingModal" class="settingModal"><i
                                                     class="fa-duotone fa-gear-complex me-2"></i></a>
                                             <div class="project-msg ms-2">
-                                                <a href="chats.html"> <i class="fa-solid fa-envelope"></i></a>
-                                                <div class="project-msg-number">
-                                                    3</div>
+                                                <a href="{{ route('user', $project->client->user->id) }}"> <i
+                                                        class="fa-solid fa-envelope"></i></a>
+                                                @if ($project->messagesCount > 0)
+                                                    <div class="project-msg-number">
+                                                        {{ $project->messagesCount }}</div>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
                                     <a href="{{ route('staff.projects.show', $project->id) }}" class="project-card-data">
-                                        <img src="{{ getURL($project->img) }}" alt="">
+                                        <img src="{{ $project->img ? getURL($project->img) : asset('images/project.png') }}"
+                                            alt="">
                                         <div class="ms-2">
                                             <h1 class="mb-0 pb-0">{{ $project->name }}</h1>
                                             <h3 class="mb-0 pb-0">{{ $project->client->user->name }}</h3>

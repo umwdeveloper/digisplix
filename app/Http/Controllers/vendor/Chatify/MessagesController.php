@@ -50,7 +50,9 @@ class MessagesController extends Controller {
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index($id = null) {
-        $this->authorize('staff.chats');
+        if (Auth::user()->userable_type === Staff::class) {
+            $this->authorize('staff.chats');
+        }
 
         if (Auth::user()->userable_type !== Staff::class && $id === null) {
             return redirect()->route('user', User::getAdmin()->id);
@@ -71,7 +73,9 @@ class MessagesController extends Controller {
      * @return JsonResponse
      */
     public function idFetchData(Request $request) {
-        $this->authorize('staff.chats');
+        if (Auth::user()->userable_type === Staff::class) {
+            $this->authorize('staff.chats');
+        }
 
         $favorite = Chatify::inFavorite($request['id']);
         $fetch = User::where('id', $request['id'])->first();
@@ -199,7 +203,9 @@ class MessagesController extends Controller {
      * @return JsonResponse
      */
     public function fetch(Request $request) {
-        $this->authorize('staff.chats');
+        if (Auth::user()->userable_type === Staff::class) {
+            $this->authorize('staff.chats');
+        }
 
         $query = Chatify::fetchMessagesQuery($request['id'])->latest();
         $messages = $query->paginate($request->per_page ?? $this->perPage);
@@ -253,7 +259,9 @@ class MessagesController extends Controller {
      * @return JsonResponse
      */
     public function getContacts(Request $request) {
-        $this->authorize('staff.chats');
+        if (Auth::user()->userable_type === Staff::class) {
+            $this->authorize('staff.chats');
+        }
 
         // get all users that received/sent message from/to [Auth user]
         $users = Message::join('users',  function ($join) {
@@ -296,7 +304,9 @@ class MessagesController extends Controller {
      * @return JsonResponse
      */
     public function updateContactItem(Request $request) {
-        $this->authorize('staff.chats');
+        if (Auth::user()->userable_type === Staff::class) {
+            $this->authorize('staff.chats');
+        }
 
         // Get user data
         $user = User::where('id', $request['user_id'])->first();
@@ -363,7 +373,9 @@ class MessagesController extends Controller {
      * @return JsonResponse|void
      */
     public function search(Request $request) {
-        $this->authorize('staff.chats');
+        if (Auth::user()->userable_type === Staff::class) {
+            $this->authorize('staff.chats');
+        }
 
         $getRecords = null;
         $input = trim(filter_var($request['input']));

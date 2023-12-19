@@ -100,7 +100,7 @@
                                                     @endforeach
                                                 </div>
                                                 @php
-                                                    $progressWidth = round($phasesProgress / $phasesCount);
+                                                    $progressWidth = $phasesCount > 0 ? round($phasesProgress / $phasesCount) : 0;
                                                 @endphp
                                                 <div class="progress-stripped progress-striped">
                                                     <div class="progress-bar" width="{{ $progressWidth }}">

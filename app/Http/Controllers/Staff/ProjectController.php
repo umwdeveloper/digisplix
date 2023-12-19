@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers\Staff;
 
+use App\Models\ChMessage as Message;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProject;
 use App\Http\Requests\UpdateProject;
 use App\Models\Client;
 use App\Models\Project;
+use App\Models\User;
+use App\Notifications\ProjectAdded;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Chatify\Facades\ChatifyMessenger as Chatify;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 
 class ProjectController extends Controller {
     /**
@@ -20,6 +26,15 @@ class ProjectController extends Controller {
 
         $current_status = $request->query('filter') === 'ongoing' ? '0' : ($request->query('filter') === 'completed' ? '1' : null);
         $projects = Project::with('client.user')->get();
+
+        $projects = $projects->map(function ($project) {
+            $user = $project->client->user;
+
+            $messagesCount = $this->fetchMessagesCount($user->id);
+            $project->setAttribute('messagesCount', $messagesCount);
+
+            return $project;
+        });
 
         $projectsFilter = '';
         if ($current_status !== null) {
@@ -65,7 +80,10 @@ class ProjectController extends Controller {
 
             $validatedData['img'] = $thumbnailPath;
         }
-        Project::create($validatedData);
+        $project = Project::create($validatedData);
+
+        Notification::send($project->client->user, new ProjectAdded($project->client->user->name, $project->id, $project->name));
+
         return redirect()->back()->with('status', 'Project created successfully!');
     }
 
@@ -76,8 +94,13 @@ class ProjectController extends Controller {
         $this->authorize('staff.projects');
 
         $project = Project::with(['client', 'client.user', 'phases', 'phases.tasks'])->findOrFail($id);
+
+        $messenger_color = Auth::user()->messenger_color;
         return view('staff.projects.show', [
-            'project' => $project
+            'project' => $project,
+            'id' => $project->client->user->id,
+            'messengerColor' => $messenger_color ? $messenger_color : Chatify::getFallbackColor(),
+            'dark_mode' => Auth::user()->dark_mode < 1 ? 'light' : 'dark',
         ]);
     }
 
@@ -142,5 +165,15 @@ class ProjectController extends Controller {
             'status' => 'success',
             'project' => $project
         ]);
+    }
+
+    // Fetch messages count for each client
+    public function fetchMessagesCount($id) {
+        $query = Message::where('from_id', $id)
+            ->where('to_id', User::getAdmin()->id)
+            ->where('seen', 0);
+        $totalMessages = $query->count();
+
+        return $totalMessages;
     }
 }

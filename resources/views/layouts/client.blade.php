@@ -191,7 +191,8 @@
                                     {{-- <button>Clear All</button> --}}
                                 </div>
                                 @forelse (auth()->user()->unreadNotifications->take(5) as $notification)
-                                    <li><a href="{{ $notification->link ? $notification->link : '#' }}">
+                                    <li><a
+                                            href="{{ !empty($notification->data['link']) ? $notification->data['link'] : '#' }}">
                                             <p class="mb-0 pb-0 ">{{ $notification->data['message'] }}</p>
                                         </a>
                                     </li>

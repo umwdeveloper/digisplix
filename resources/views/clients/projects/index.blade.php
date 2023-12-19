@@ -86,7 +86,8 @@
 
                                     </div>
                                     <a href="{{ route('client.projects.show', $project->id) }}" class="project-card-data">
-                                        <img src="{{ getURL($project->img) }}" alt="">
+                                        <img src="{{ $project->img ? getURL($project->img) : asset('images/project.png') }}"
+                                            alt="">
                                         <div class="ms-2">
                                             <h1 class="mb-0 pb-0">{{ $project->name }}</h1>
                                             <h3 class="mb-0 pb-0">{{ $project->client->user->name }}</h3>

@@ -44,4 +44,17 @@ class Project extends Model {
     public static function getBillingLabels() {
         return self::$billingLabels;
     }
+
+    public static function boot(): void {
+        parent::boot();
+
+        static::created(function ($createdProject) {
+            $createdProject->phases()->createMany([
+                ['name' => 'Planning'],
+                ['name' => 'Designing'],
+                ['name' => 'Development'],
+                ['name' => 'Testing'],
+            ]);
+        });
+    }
 }
