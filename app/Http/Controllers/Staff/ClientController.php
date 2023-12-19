@@ -32,6 +32,7 @@ class ClientController extends Controller {
             'clients' => $clients,
             'active_clients' => $clients->where('active', 1)->where('status', Client::QUALIFIED),
             'inactive_clients' => $clients->where('active', 0)->where('status', Client::QUALIFIED),
+            'partners' => $partners
         ]);
     }
 

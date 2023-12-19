@@ -5,9 +5,13 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\Support;
 use App\Models\SupportReply;
+use App\Models\User;
+use App\Notifications\SupportCreated;
+use App\Notifications\SupportReplied;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 
 class SupportController extends Controller {
@@ -43,6 +47,8 @@ class SupportController extends Controller {
             'priority' => $request->input('priority'),
             'department' => $request->input('department'),
         ]);
+
+        Notification::send(User::getAdmin(), new SupportCreated($ticket->id));
 
         return response()->json([
             'status' => 'success',
@@ -144,6 +150,8 @@ class SupportController extends Controller {
             'user_id' => $request->input('user_id'),
             'reply' => $request->input('reply'),
         ]);
+
+        Notification::send(User::getAdmin(), new SupportReplied($ticket->subject, $ticket->id));
 
         return response()->json([
             'status' => 'success',

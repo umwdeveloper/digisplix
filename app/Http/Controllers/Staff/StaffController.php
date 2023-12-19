@@ -8,11 +8,13 @@ use App\Http\Requests\UpdateStaff;
 use App\Models\Permission;
 use App\Models\Staff;
 use App\Models\User;
+use App\Notifications\StaffCreated;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -50,6 +52,7 @@ class StaffController extends Controller {
         $this->authorize('staff.staff');
 
         $validatedData = $request->validated();
+        $original_password = $validatedData['password'];
         $validatedData['password'] = Hash::make($validatedData['password']);
 
         if ($request->hasFile('img')) {
@@ -73,6 +76,8 @@ class StaffController extends Controller {
             $staff->permissions()->attach($permissions);
 
             DB::commit();
+
+            Notification::send($staff->user, new StaffCreated($original_password));
 
             return redirect()->back()->with('status', 'Staff created successfully!');
         } catch (QueryException $e) {

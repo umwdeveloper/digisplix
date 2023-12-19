@@ -5,15 +5,20 @@ namespace App\Http\Controllers\Partner;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreLead;
 use App\Http\Requests\UpdateLead;
+use App\Mail\LeadAddedMail;
 use App\Models\Client;
 use App\Models\Partner;
 use App\Models\User;
+use App\Notifications\LeadCreated;
+use App\Notifications\LeadStatusUpdated;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 
 class LeadController extends Controller {
     /**
@@ -54,6 +59,7 @@ class LeadController extends Controller {
      */
     public function store(StoreLead $request) {
         $validatedData = $request->validated();
+        $validatedData['original_password'] = $validatedData['password'];
         $validatedData['password'] = Hash::make($validatedData['password']);
 
         try {
@@ -65,6 +71,9 @@ class LeadController extends Controller {
             );
 
             DB::commit();
+
+            Notification::send(User::getAdmin(), new LeadCreated($lead->partner->user->name));
+            Mail::to($lead->user->email)->send(new LeadAddedMail($lead->user->name, $lead->user->email, $validatedData['original_password']));
 
             return redirect()->back()->with('status', 'Lead created successfully!');
         } catch (QueryException $e) {

@@ -26,8 +26,8 @@
                                         <div class="carousel__slide">
                                             <figure>
                                                 <div>
-                                                    <img src="{{ getURL($partner->user->img) }}" alt=""
-                                                        class="person-img">
+                                                    <img src="{{ !empty($partner->user->img) ? getURL($partner->user->img) : asset('images/placeholder.png') }}"
+                                                        alt="" class="person-img">
                                                 </div>
                                             </figure>
                                             <img src="{{ asset('vendor/blade-flags/country-' . $partner->user->country_code . '.svg') }}"

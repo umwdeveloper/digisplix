@@ -7,11 +7,13 @@ use App\Http\Requests\StorePartner;
 use App\Http\Requests\UpdatePartner;
 use App\Models\Partner;
 use App\Models\User;
+use App\Notifications\PartnerCreated;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -43,6 +45,7 @@ class PartnerController extends Controller {
         $this->authorize('staff.partners');
 
         $validatedData = $request->validated();
+        $original_password = $validatedData['password'];
         $validatedData['password'] = Hash::make($validatedData['password']);
 
         if ($request->hasFile('img')) {
@@ -62,6 +65,8 @@ class PartnerController extends Controller {
             );
 
             DB::commit();
+
+            Notification::send($partner->user, new PartnerCreated($original_password));
 
             return redirect()->back()->with('status', 'Partner created successfully!');
         } catch (QueryException $e) {
@@ -157,7 +162,9 @@ class PartnerController extends Controller {
         $this->authorize('staff.partners');
 
         $partner = Partner::findOrFail($id);
-        Storage::disk('public')->delete($partner->user->img);
+        if (!empty($partner->user->img)) {
+            Storage::disk('public')->delete($partner->user->img);
+        }
         $partner->user()->delete();
         $partner->delete();
 

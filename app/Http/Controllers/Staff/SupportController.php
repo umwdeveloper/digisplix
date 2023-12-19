@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Staff;
 use App\Http\Controllers\Controller;
 use App\Models\Support;
 use App\Models\SupportReply;
+use App\Notifications\SupportUpdate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 
 class SupportController extends Controller {
@@ -139,6 +141,8 @@ class SupportController extends Controller {
             'user_id' => $request->input('user_id'),
             'reply' => $request->input('reply'),
         ]);
+
+        Notification::send($ticket->user, new SupportUpdate($ticket->id, $ticket->subject));
 
         return response()->json([
             'status' => 'success',

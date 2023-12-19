@@ -10,6 +10,7 @@ use App\Models\Client;
 use App\Models\Project;
 use App\Models\User;
 use App\Notifications\ProjectAdded;
+use App\Notifications\ProjectStatusUpdated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -136,7 +137,16 @@ class ProjectController extends Controller {
 
             $validatedData['img'] = $thumbnailPath;
         }
+
+        $statusUpdated = $project->current_status != $validatedData['current_status'];
+
         $project->update($validatedData);
+
+        $status = ["Ongoing", "Completed"];
+
+        if ($statusUpdated) {
+            Notification::send($project->client->user, new ProjectStatusUpdated($project->name, $status[$project->current_status], $project->id));
+        }
 
         if ($request->input('_target') == 'ajax') {
             return response()->json(['status' => 'success']);

@@ -24,8 +24,8 @@
                                         <div class="carousel__slide">
                                             <figure>
                                                 <div>
-                                                    <img src="{{ getURL($member->user->img) }}" alt=""
-                                                        class="person-img">
+                                                    <img src="{{ !empty($member->user->img) ? getURL($member->user->img) : asset('images/placeholder.png') }}"
+                                                        alt="" class="person-img">
                                                 </div>
                                             </figure>
                                         </div>
