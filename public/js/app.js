@@ -279,3 +279,28 @@ $("nav li a").each(function () {
         $(this).removeClass("active-menu");
     }
 });
+
+// Active footer menu item
+$(".footer-menu-link, .more-footer-link").each(function () {
+
+    var currentUrl = window.location.href;
+    var url = new URL(currentUrl);
+    var pathname = url.pathname;
+    var segments = pathname.split('/');
+    var partSegment = segments[1];
+
+    if (partSegment.length == 0) {
+        $(".dashboard-link").addClass("active-footer-menu");
+    } else if (currentUrl.includes($(this).find('a').attr("href")) && partSegment.length > 0) {
+        if ($(this).hasClass('dashboard-link')) {
+            return;
+        }
+
+        if ($(this).hasClass('more-footer-link')) {
+            $('#show-more-menu').addClass("active-footer-menu")
+        }
+        $(this).addClass("active-footer-menu");
+    } else {
+        $(this).removeClass("active-footer-menu");
+    }
+});

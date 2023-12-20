@@ -16,7 +16,7 @@
                                 class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editPartnerModal">Edit
                                 Partner</button>
                         </div>
-                        @foreach ($partners as $partner)
+                        @forelse ($partners as $partner)
                             <div class="col-xl-4 col-md-6 mb-3">
                                 <a href="partner-detail.html">
                                     <div class="person-card">
@@ -91,7 +91,9 @@
                                     </div>
                                 </a>
                             </div>
-                        @endforeach
+                        @empty
+                            <x-no_data></x-no_data>
+                        @endforelse
                     </div>
                     <div class="row mb-3">
                         <div class="col-lg-12">
@@ -561,122 +563,122 @@
         </div>
     </div>
 
-@section('script')
-    @if ($errors->createPartner->any())
+    @section('script')
+        @if ($errors->createPartner->any())
+            <script>
+                $('#partnerModal-btn').click()
+            </script>
+        @endif
+
+        @if ($errors->updatePartner->any())
+            <script>
+                $("#country2").countrySelect({
+                    defaultCountry: "us"
+                });
+                $("#country2").countrySelect("setCountry", "{{ $errors->hasBag('updatePartner') ? old('country') : '' }}");
+
+                $('#editPartnerModal-btn').click()
+            </script>
+        @endif
+
         <script>
-            $('#partnerModal-btn').click()
-        </script>
-    @endif
-
-    @if ($errors->updatePartner->any())
-        <script>
-            $("#country2").countrySelect({
-                defaultCountry: "us"
-            });
-            $("#country2").countrySelect("setCountry", "{{ $errors->hasBag('updatePartner') ? old('country') : '' }}");
-
-            $('#editPartnerModal-btn').click()
-        </script>
-    @endif
-
-    <script>
-        $('body').on('click', '.custom-file-upload', function() {
-            let parentEl = $(this).closest('.crm-input')
-            parentEl.find('.files').click();
-        })
-
-        $('.files').on('change', function() {
-            let parentEl = $(this).closest('.crm-input')
-            const fileName = this.files[0].name;
-            parentEl.find('.selected-file-name').text(fileName)
-            parentEl.find('.selected-file-name').css('display', 'inline')
-            parentEl.find('.delete-icon').css('display', 'inline')
-            parentEl.find('.custom-file-upload').css('display', 'none')
-        })
-
-        $('.delete-icon').on('click', function(e) {
-            e.preventDefault()
-
-            let parentEl = $(this).closest('.crm-input')
-            parentEl.find('.files').val('')
-            parentEl.find('.selected-file-name').text('')
-            parentEl.find('.selected-file-name').css('display', 'none')
-            parentEl.find('.delete-icon').css('display', 'none')
-            parentEl.find('.custom-file-upload').css('display', 'block')
-        })
-
-        // Country Selector
-        $("#country").countrySelect();
-    </script>
-    <script>
-        // Add a click event handler for each .dots-btn element
-        // Add a click event handler for each .dots-btn element
-        $(".dots-btn").on("click", function(event) {
-            // event.stopPropagation(); // Prevent the click event from propagating to the document
-
-            // Find the corresponding .dots-menu2 for the clicked .dots-btn
-            var $menu = $(this).closest('.dots-dropdown').find('.dots-menu');
-
-            // Toggle the class for the specific .dots-menu2 associated with this button
-            $menu.toggleClass("dots-menu-show");
-
-            // Remove the dots-menu-show class from all other .dots-menu2 elements
-            $(".dots-menu").not($menu).removeClass("dots-menu-show");
-        });
-
-        // Add a document click event handler to close all .dots-menu2 elements
-        $(document).on("click", function(event) {
-            if (!$(event.target).closest(".dots-dropdown").length) {
-                $(".dots-menu").removeClass("dots-menu-show");
-            }
-        });
-        // Add a click event handler for inside .dots-menu2 elements to close them
-        $(".dots-menu").on("click", function(event) {
-            $(this).removeClass("dots-menu-show");
-        });
-        // Add a click event handler for each .dots-menu2 element
-        $(".dots-menu").on("click", function(event) {
-            // event.stopPropagation(); // Prevent the click event from propagating to the document
-        });
-    </script>
-
-    {{-- Fetch partner on Edit click --}}
-    <script>
-        $('body').on('click', '.editPartner', function() {
-            $('#editPartnerModal form')[0].reset()
-            // Remove form validation errors
-            $('.is-invalid').removeClass('is-invalid')
-            $('.invalid-feedback').remove()
-
-            let partnerID = $(this).data('partner-id');
-            $('#editPartnerModal form').attr('action', "{{ route('staff.partners.update', 'partner_id') }}"
-                .replace('partner_id', partnerID))
-            $('#editPartnerModal #partner_id').val(partnerID)
-
-            $.ajax({
-                url: '{{ route('staff.partners.fetch_partner', 'partner_id') }}'
-                    .replace('partner_id', partnerID),
-                method: 'GET',
-                success: function(response) {
-                    if (response.status == 'success') {
-                        $("#editPartnerModal #edit_name").val(response.partner.user.name)
-                        $("#editPartnerModal #edit_email").val(response.partner.user.email)
-                        $("#editPartnerModal #edit_designation").val(response.partner.user.designation)
-                        $("#editPartnerModal #edit_address").val(response.partner.user.address)
-                        $("#editPartnerModal #edit_p-number").val(response.partner.user.phone)
-                        $("#editPartnerModal #edit_commission").val(response.partner.commission)
-                        $("#editPartnerModal #edit_facebook").val(response.partner.facebook)
-                        $("#editPartnerModal #edit_instagram").val(response.partner.instagram)
-                        $("#editPartnerModal #edit_linkedin").val(response.partner.linkedin)
-
-                        $("#country2").countrySelect({
-                            defaultCountry: response.partner.user.country
-                        });
-                        $("#country2").countrySelect("setCountry", response.partner.user.country);
-                    } else {}
-                }
+            $('body').on('click', '.custom-file-upload', function() {
+                let parentEl = $(this).closest('.crm-input')
+                parentEl.find('.files').click();
             })
-        })
-    </script>
-@endsection
+
+            $('.files').on('change', function() {
+                let parentEl = $(this).closest('.crm-input')
+                const fileName = this.files[0].name;
+                parentEl.find('.selected-file-name').text(fileName)
+                parentEl.find('.selected-file-name').css('display', 'inline')
+                parentEl.find('.delete-icon').css('display', 'inline')
+                parentEl.find('.custom-file-upload').css('display', 'none')
+            })
+
+            $('.delete-icon').on('click', function(e) {
+                e.preventDefault()
+
+                let parentEl = $(this).closest('.crm-input')
+                parentEl.find('.files').val('')
+                parentEl.find('.selected-file-name').text('')
+                parentEl.find('.selected-file-name').css('display', 'none')
+                parentEl.find('.delete-icon').css('display', 'none')
+                parentEl.find('.custom-file-upload').css('display', 'block')
+            })
+
+            // Country Selector
+            $("#country").countrySelect();
+        </script>
+        <script>
+            // Add a click event handler for each .dots-btn element
+            // Add a click event handler for each .dots-btn element
+            $(".dots-btn").on("click", function(event) {
+                // event.stopPropagation(); // Prevent the click event from propagating to the document
+
+                // Find the corresponding .dots-menu2 for the clicked .dots-btn
+                var $menu = $(this).closest('.dots-dropdown').find('.dots-menu');
+
+                // Toggle the class for the specific .dots-menu2 associated with this button
+                $menu.toggleClass("dots-menu-show");
+
+                // Remove the dots-menu-show class from all other .dots-menu2 elements
+                $(".dots-menu").not($menu).removeClass("dots-menu-show");
+            });
+
+            // Add a document click event handler to close all .dots-menu2 elements
+            $(document).on("click", function(event) {
+                if (!$(event.target).closest(".dots-dropdown").length) {
+                    $(".dots-menu").removeClass("dots-menu-show");
+                }
+            });
+            // Add a click event handler for inside .dots-menu2 elements to close them
+            $(".dots-menu").on("click", function(event) {
+                $(this).removeClass("dots-menu-show");
+            });
+            // Add a click event handler for each .dots-menu2 element
+            $(".dots-menu").on("click", function(event) {
+                // event.stopPropagation(); // Prevent the click event from propagating to the document
+            });
+        </script>
+
+        {{-- Fetch partner on Edit click --}}
+        <script>
+            $('body').on('click', '.editPartner', function() {
+                $('#editPartnerModal form')[0].reset()
+                // Remove form validation errors
+                $('.is-invalid').removeClass('is-invalid')
+                $('.invalid-feedback').remove()
+
+                let partnerID = $(this).data('partner-id');
+                $('#editPartnerModal form').attr('action', "{{ route('staff.partners.update', 'partner_id') }}"
+                    .replace('partner_id', partnerID))
+                $('#editPartnerModal #partner_id').val(partnerID)
+
+                $.ajax({
+                    url: '{{ route('staff.partners.fetch_partner', 'partner_id') }}'
+                        .replace('partner_id', partnerID),
+                    method: 'GET',
+                    success: function(response) {
+                        if (response.status == 'success') {
+                            $("#editPartnerModal #edit_name").val(response.partner.user.name)
+                            $("#editPartnerModal #edit_email").val(response.partner.user.email)
+                            $("#editPartnerModal #edit_designation").val(response.partner.user.designation)
+                            $("#editPartnerModal #edit_address").val(response.partner.user.address)
+                            $("#editPartnerModal #edit_p-number").val(response.partner.user.phone)
+                            $("#editPartnerModal #edit_commission").val(response.partner.commission)
+                            $("#editPartnerModal #edit_facebook").val(response.partner.facebook)
+                            $("#editPartnerModal #edit_instagram").val(response.partner.instagram)
+                            $("#editPartnerModal #edit_linkedin").val(response.partner.linkedin)
+
+                            $("#country2").countrySelect({
+                                defaultCountry: response.partner.user.country
+                            });
+                            $("#country2").countrySelect("setCountry", response.partner.user.country);
+                        } else {}
+                    }
+                })
+            })
+        </script>
+    @endsection
 @endsection

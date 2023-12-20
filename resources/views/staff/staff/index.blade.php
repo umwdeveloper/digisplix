@@ -17,7 +17,7 @@
                                 data-bs-target="#editStaffModal">Add
                                 Staff</button>
                         </div>
-                        @foreach ($staff as $member)
+                        @forelse ($staff as $member)
                             <div class="col-xl-4 col-md-6 mb-3">
                                 <div class="person-card">
                                     <div class="person-image">
@@ -67,7 +67,9 @@
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        @empty
+                            <x-no_data></x-no_data>
+                        @endforelse
                     </div>
                     <div class="row mb-3">
                         <div class="col-lg-12">
@@ -445,130 +447,130 @@
         </div>
     </div>
 
-@section('script')
-    @if ($errors->createStaff->any())
+    @section('script')
+        @if ($errors->createStaff->any())
+            <script>
+                $('#staffModal-btn').click()
+            </script>
+        @endif
+
+        @if ($errors->updateStaff->any())
+            <script>
+                $("#country2").countrySelect({
+                    defaultCountry: "us"
+                });
+                $("#country2").countrySelect("setCountry", "{{ $errors->hasBag('updateStaff') ? old('country') : '' }}");
+
+                $('#editStaffModal-btn').click()
+            </script>
+        @endif
+
         <script>
-            $('#staffModal-btn').click()
-        </script>
-    @endif
-
-    @if ($errors->updateStaff->any())
-        <script>
-            $("#country2").countrySelect({
-                defaultCountry: "us"
-            });
-            $("#country2").countrySelect("setCountry", "{{ $errors->hasBag('updateStaff') ? old('country') : '' }}");
-
-            $('#editStaffModal-btn').click()
-        </script>
-    @endif
-
-    <script>
-        $('body').on('click', '.custom-file-upload', function() {
-            let parentEl = $(this).closest('.crm-input')
-            parentEl.find('.files').click();
-        })
-
-        $('.files').on('change', function() {
-            let parentEl = $(this).closest('.crm-input')
-            const fileName = this.files[0].name;
-            parentEl.find('.selected-file-name').text(fileName)
-            parentEl.find('.selected-file-name').css('display', 'inline')
-            parentEl.find('.delete-icon').css('display', 'inline')
-            parentEl.find('.custom-file-upload').css('display', 'none')
-        })
-
-        $('.delete-icon').on('click', function(e) {
-            e.preventDefault()
-
-            let parentEl = $(this).closest('.crm-input')
-            parentEl.find('.files').val('')
-            parentEl.find('.selected-file-name').text('')
-            parentEl.find('.selected-file-name').css('display', 'none')
-            parentEl.find('.delete-icon').css('display', 'none')
-            parentEl.find('.custom-file-upload').css('display', 'block')
-        })
-
-        // Country Selector
-        $("#country").countrySelect();
-    </script>
-    <script>
-        // Add a click event handler for each .dots-btn2 element
-        // Add a click event handler for each .dots-btn2 element
-        $(".dots-btn2").on("click", function(event) {
-            // event.stopPropagation(); // Prevent the click event from propagating to the document
-
-            // Find the corresponding .dots-menu2 for the clicked .dots-btn2
-            var $menu = $(this).closest('.dots-dropdown').find('.dots-menu2');
-
-            // Toggle the class for the specific .dots-menu2 associated with this button
-            $menu.toggleClass("dots-menu2-show");
-
-            // Remove the dots-menu2-show class from all other .dots-menu2 elements
-            $(".dots-menu2").not($menu).removeClass("dots-menu2-show");
-        });
-
-        // Add a document click event handler to close all .dots-menu2 elements
-        $(document).on("click", function(event) {
-            if (!$(event.target).closest(".dots-dropdown").length) {
-                $(".dots-menu2").removeClass("dots-menu2-show");
-            }
-        });
-        // Add a click event handler for inside .dots-menu2 elements to close them
-        $(".dots-menu2").on("click", function(event) {
-            $(this).removeClass("dots-menu2-show");
-        });
-        // Add a click event handler for each .dots-menu2 element
-        $(".dots-menu2").on("click", function(event) {
-            // event.stopPropagation(); // Prevent the click event from propagating to the document
-        });
-    </script>
-
-    {{-- Fetch staff on Edit click --}}
-    <script>
-        $('body').on('click', '.editStaff', function() {
-            // Remove form validation errors
-            $('.is-invalid').removeClass('is-invalid')
-            $('.invalid-feedback').remove()
-
-            // Uncheck checked permissions
-            $('#editStaffModal input[type="checkbox"]').prop('checked', false);
-
-            let staffID = $(this).data('staff-id');
-            $('#editStaffModal form').attr('action', "{{ route('staff.staff.update', 'staff_id') }}"
-                .replace('staff_id', staffID))
-            $('#editStaffModal #staff_id').val(staffID)
-
-            $.ajax({
-                url: '{{ route('staff.staff.fetch_staff', 'staff_id') }}'
-                    .replace('staff_id', staffID),
-                method: 'GET',
-                success: function(response) {
-                    if (response.status == 'success') {
-                        console.log(response.staff);
-                        $("#editStaffModal #name").val(response.staff.user.name)
-                        $("#editStaffModal #email").val(response.staff.user.email)
-                        $("#editStaffModal #designation").val(response.staff.user.designation)
-                        $("#editStaffModal #address").val(response.staff.user.address)
-                        $("#editStaffModal #p-number").val(response.staff.user.phone)
-
-                        if (response.staff.permissions.length > 0) {
-                            for (let i = 0; i < response.staff.permissions.length; i++) {
-                                $('#editStaffModal #flexCheckCheckedEdit' + response.staff.permissions[
-                                        i]
-                                    .id).prop(
-                                    'checked', true)
-                            }
-                        }
-
-                        $("#country2").countrySelect({
-                            defaultCountry: response.staff.user.country
-                        });
-                        $("#country2").countrySelect("setCountry", response.staff.user.country);
-                    } else {}
-                }
+            $('body').on('click', '.custom-file-upload', function() {
+                let parentEl = $(this).closest('.crm-input')
+                parentEl.find('.files').click();
             })
-        })
-    </script>
-@endsection
+
+            $('.files').on('change', function() {
+                let parentEl = $(this).closest('.crm-input')
+                const fileName = this.files[0].name;
+                parentEl.find('.selected-file-name').text(fileName)
+                parentEl.find('.selected-file-name').css('display', 'inline')
+                parentEl.find('.delete-icon').css('display', 'inline')
+                parentEl.find('.custom-file-upload').css('display', 'none')
+            })
+
+            $('.delete-icon').on('click', function(e) {
+                e.preventDefault()
+
+                let parentEl = $(this).closest('.crm-input')
+                parentEl.find('.files').val('')
+                parentEl.find('.selected-file-name').text('')
+                parentEl.find('.selected-file-name').css('display', 'none')
+                parentEl.find('.delete-icon').css('display', 'none')
+                parentEl.find('.custom-file-upload').css('display', 'block')
+            })
+
+            // Country Selector
+            $("#country").countrySelect();
+        </script>
+        <script>
+            // Add a click event handler for each .dots-btn2 element
+            // Add a click event handler for each .dots-btn2 element
+            $(".dots-btn2").on("click", function(event) {
+                // event.stopPropagation(); // Prevent the click event from propagating to the document
+
+                // Find the corresponding .dots-menu2 for the clicked .dots-btn2
+                var $menu = $(this).closest('.dots-dropdown').find('.dots-menu2');
+
+                // Toggle the class for the specific .dots-menu2 associated with this button
+                $menu.toggleClass("dots-menu2-show");
+
+                // Remove the dots-menu2-show class from all other .dots-menu2 elements
+                $(".dots-menu2").not($menu).removeClass("dots-menu2-show");
+            });
+
+            // Add a document click event handler to close all .dots-menu2 elements
+            $(document).on("click", function(event) {
+                if (!$(event.target).closest(".dots-dropdown").length) {
+                    $(".dots-menu2").removeClass("dots-menu2-show");
+                }
+            });
+            // Add a click event handler for inside .dots-menu2 elements to close them
+            $(".dots-menu2").on("click", function(event) {
+                $(this).removeClass("dots-menu2-show");
+            });
+            // Add a click event handler for each .dots-menu2 element
+            $(".dots-menu2").on("click", function(event) {
+                // event.stopPropagation(); // Prevent the click event from propagating to the document
+            });
+        </script>
+
+        {{-- Fetch staff on Edit click --}}
+        <script>
+            $('body').on('click', '.editStaff', function() {
+                // Remove form validation errors
+                $('.is-invalid').removeClass('is-invalid')
+                $('.invalid-feedback').remove()
+
+                // Uncheck checked permissions
+                $('#editStaffModal input[type="checkbox"]').prop('checked', false);
+
+                let staffID = $(this).data('staff-id');
+                $('#editStaffModal form').attr('action', "{{ route('staff.staff.update', 'staff_id') }}"
+                    .replace('staff_id', staffID))
+                $('#editStaffModal #staff_id').val(staffID)
+
+                $.ajax({
+                    url: '{{ route('staff.staff.fetch_staff', 'staff_id') }}'
+                        .replace('staff_id', staffID),
+                    method: 'GET',
+                    success: function(response) {
+                        if (response.status == 'success') {
+                            console.log(response.staff);
+                            $("#editStaffModal #name").val(response.staff.user.name)
+                            $("#editStaffModal #email").val(response.staff.user.email)
+                            $("#editStaffModal #designation").val(response.staff.user.designation)
+                            $("#editStaffModal #address").val(response.staff.user.address)
+                            $("#editStaffModal #p-number").val(response.staff.user.phone)
+
+                            if (response.staff.permissions.length > 0) {
+                                for (let i = 0; i < response.staff.permissions.length; i++) {
+                                    $('#editStaffModal #flexCheckCheckedEdit' + response.staff.permissions[
+                                            i]
+                                        .id).prop(
+                                        'checked', true)
+                                }
+                            }
+
+                            $("#country2").countrySelect({
+                                defaultCountry: response.staff.user.country
+                            });
+                            $("#country2").countrySelect("setCountry", response.staff.user.country);
+                        } else {}
+                    }
+                })
+            })
+        </script>
+    @endsection
 @endsection

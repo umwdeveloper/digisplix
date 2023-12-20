@@ -210,12 +210,6 @@
                         </div>
                     </div>
 
-                    <!-- Quick links -->
-                    <div class="header-option align-self-center hide-sm side-menu-quick-btn">
-                        <i class="fa-duotone fa-grid-round-2 header-icon"></i>
-
-                    </div>
-
                     <!-- ticker -->
                     <div class="header-option align-self-center hide-sm side-menu-ticket-btn">
                         <!-- <i class="bi bi-app-indicator path-1"></i> -->
@@ -243,85 +237,11 @@
                 </div>
             </div>
         </header>
-        <!-- quick links menu -->
-        <div class="side-menu side-menu-quick" id="side-menu-quick">
-            <div class="quick-links">
-                <div class="row">
-                    <div class="col-lg-12 mb-4 pb-3 side-menu-header">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h1 class="mb-0 pb-0 ">Quick Actions</h1>
-                            <button class="close-btn">
-                                <i class="fa-duotone fa-xmark-large"></i>
 
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-6 pe-1 mb-2">
-                        <a href="">
-                            <div class="actions-card">
-                                <i class="fa-duotone fa-rectangle-history"></i>
-                                <p class="mb-0 pb-0">
-                                    Projects
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-6 ps-1 mb-2">
-                        <a href="">
-                            <div class="actions-card">
-                                <i class="fa-duotone fa-users-line"></i>
-                                <p class="mb-0 pb-0">
-                                    clients
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-6 pe-1 mb-2">
-                        <a href="">
-                            <div class="actions-card">
-                                <i class="fa-duotone fa-user-group-simple"></i>
-                                <p class="mb-0 pb-0">
-                                    Partners
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-6 ps-1 mb-2">
-                        <a href="">
-                            <div class="actions-card">
-                                <i class="fa-duotone fa-user-tie"></i>
-                                <p class="mb-0 pb-0">
-                                    Staff
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-6 pe-1 mb-2">
-                        <a href="">
-                            <div class="actions-card">
-                                <i class="fa-duotone fa-people-simple"></i>
-                                <p class="mb-0 pb-0">
-                                    Leads
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-6 ps-1 mb-2">
-                        <a href="settings.html">
-                            <div class="actions-card">
-                                <i class="fa-duotone fa-gear-complex-code"></i>
-                                <p class="mb-0 pb-0">
-                                    Settings
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
         <!-- ticket menu -->
+        @php
+            $colors = ['alert', 'warning', 'success', 'info'];
+        @endphp
         <div class="side-menu side-menu-ticket">
             <div class="ticket-links">
                 <div class="row">
@@ -334,152 +254,19 @@
                             </button>
                         </div>
                     </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">03:10</h4>
-                            <div class="ticket-body ticket-alert">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">10:10</h4>
-                            <div class="ticket-body ticket-warning">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">01:10</h4>
-                            <div class="ticket-body ticket-info">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">12:10</h4>
-                            <div class="ticket-body ticket-success">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">03:10</h4>
-                            <div class="ticket-body ticket-alert">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">10:10</h4>
-                            <div class="ticket-body ticket-warning">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">01:10</h4>
-                            <div class="ticket-body ticket-info">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">12:10</h4>
-                            <div class="ticket-body ticket-success">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">03:10</h4>
-                            <div class="ticket-body ticket-alert">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">10:10</h4>
-                            <div class="ticket-body ticket-warning">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">01:10</h4>
-                            <div class="ticket-body ticket-info">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">12:10</h4>
-                            <div class="ticket-body ticket-success">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">03:10</h4>
-                            <div class="ticket-body ticket-alert">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">10:10</h4>
-                            <div class="ticket-body ticket-warning">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">01:10</h4>
-                            <div class="ticket-body ticket-info">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">12:10</h4>
-                            <div class="ticket-body ticket-success">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
+                    @forelse ($shared_tickets as $ticket)
+                        <div class="col-lg-12 pe-1 mb-2">
+                            <a class="ticket-notify px-0 " href="{{ route('staff.support.show', $ticket->id) }}">
+                                <h4 class=" text-gray ">
+                                    {{ \Carbon\Carbon::parse($ticket->created_at)->diffForHumans() }}</h4>
+                                <div class="ticket-body ticket-{{ $colors[array_rand($colors)] }}">
+                                    <p class="mb-2">{{ $ticket->description }}</p>
+                                    <span class="text-fade">by {{ $ticket->user->name }}</span>
+                                </div>
+                            </a>
+                        </div>
+                    @empty
+                    @endforelse
                 </div>
             </div>
         </div>

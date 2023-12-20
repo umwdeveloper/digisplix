@@ -124,7 +124,7 @@
                                                     $ticketPriorityClasses = ['priority-low', 'priority-medium', 'priority-high'];
                                                     $ticketPriority = ['Low', 'Medium', 'High'];
                                                 @endphp
-                                                @foreach ($tickets as $ticket)
+                                                @foreach ($tickets as $key => $ticket)
                                                     <tr class="">
                                                         <td>
                                                             <div class="d-flex align-items-center">
@@ -133,7 +133,7 @@
                                                                 </div>
                                                             </div>
                                                         </td>
-                                                        <td>1</td>
+                                                        <td>{{ ++$key }}</td>
                                                         <td>{{ $ticket->user->email }}</td>
 
                                                         <td>

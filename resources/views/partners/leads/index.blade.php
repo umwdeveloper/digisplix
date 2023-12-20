@@ -702,6 +702,22 @@
                                         @endif
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text"
+                                            class="form-control crm-input {{ $errors->createLead->has('phone') ? 'is-invalid' : '' }}"
+                                            id="p-number" name="phone" required
+                                            value="{{ $errors->hasBag('createLead') ? old('phone') : '' }}"
+                                            placeholder="ABC">
+                                        <label class="crm-label form-label" for="p-number">Phone Number<span
+                                                class="text-danger">*</span></label>
+                                        @if ($errors->createLead->has('phone'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->createLead->first('phone') }}
+                                            </small>
+                                        @endif
+                                    </div>
+                                </div>
                                 <input type="hidden" name="partner_id" value="{{ auth()->user()->partner()->id }}">
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
@@ -720,7 +736,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->createLead->has('address') ? 'is-invalid' : '' }}"
@@ -732,22 +748,6 @@
                                         @if ($errors->createLead->has('address'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->createLead->first('address') }}
-                                            </small>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text"
-                                            class="form-control crm-input {{ $errors->createLead->has('phone') ? 'is-invalid' : '' }}"
-                                            id="p-number" name="phone" required
-                                            value="{{ $errors->hasBag('createLead') ? old('phone') : '' }}"
-                                            placeholder="ABC">
-                                        <label class="crm-label form-label" for="p-number">Phone Number<span
-                                                class="text-danger">*</span></label>
-                                        @if ($errors->createLead->has('phone'))
-                                            <small class="invalid-feedback " style="font-size: 11px">
-                                                {{ $errors->createLead->first('phone') }}
                                             </small>
                                         @endif
                                     </div>
@@ -1176,6 +1176,9 @@
     {{-- Fetch lead on Edit click --}}
     <script>
         $('body').on('click', '.edit', function() {
+
+            $('.loading').removeClass('d-none')
+
             // Remove validation errors
             $('.is-invalid').removeClass('is-invalid')
             $('.invalid-feedback').remove()
@@ -1189,6 +1192,7 @@
                     .replace('lead_id', leadID),
                 method: 'GET',
                 success: function(response) {
+                    $('.loading').addClass('d-none')
                     if (response.status == 'success') {
                         $("#editLeadModal #name").val(response.lead.user.name)
                         $("#editLeadModal #business-name").val(response.lead.business_name)

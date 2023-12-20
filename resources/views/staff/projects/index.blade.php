@@ -95,7 +95,7 @@
                                     class="w-500 f-16">Completed</option>
                             </select>
                         </div>
-                        @foreach ($projects as $project)
+                        @forelse ($projects as $project)
                             <div class=" col-xxl-3 col-xl-4  col-md-6 mb-3">
                                 <div class="project-card">
                                     <div class="project-card--header">
@@ -146,7 +146,9 @@
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        @empty
+                            <x-no_data></x-no_data>
+                        @endforelse
                     </div>
                 </div>
 
@@ -489,160 +491,160 @@
         </div>
     </div>
 
-@section('script')
-    @if ($errors->createProject->any())
+    @section('script')
+        @if ($errors->createProject->any())
+            <script>
+                $('#projectModal-btn').click()
+            </script>
+        @endif
+
+        @if ($errors->updateProject->any())
+            <script>
+                $("#editProjectModal-btn").click();
+            </script>
+        @endif
+
         <script>
-            $('#projectModal-btn').click()
-        </script>
-    @endif
-
-    @if ($errors->updateProject->any())
-        <script>
-            $("#editProjectModal-btn").click();
-        </script>
-    @endif
-
-    <script>
-        $("#filter-select").on('change', function() {
-            var url;
-            if ($(this).val() === "all") {
-                url = "{{ route('staff.projects.index') }}"
-            } else {
-                url = "{{ route('staff.projects.index') }}" +
-                    "?filter=" + $(this).val()
-            }
-            window.location.href = url
-        })
-    </script>
-
-    <script>
-        $('body').on('click', '.custom-file-upload', function() {
-            let parentEl = $(this).closest('.crm-input')
-            parentEl.find('.files').click();
-        })
-
-        $('.files').on('change', function() {
-            let parentEl = $(this).closest('.crm-input')
-            const fileName = this.files[0].name;
-            parentEl.find('.selected-file-name').text(fileName)
-            parentEl.find('.selected-file-name').css('display', 'inline')
-            parentEl.find('.delete-icon').css('display', 'inline')
-            parentEl.find('.custom-file-upload').css('display', 'none')
-        })
-
-        $('.delete-icon').on('click', function(e) {
-            e.preventDefault()
-
-            let parentEl = $(this).closest('.crm-input')
-            parentEl.find('.files').val('')
-            parentEl.find('.selected-file-name').text('')
-            parentEl.find('.selected-file-name').css('display', 'none')
-            parentEl.find('.delete-icon').css('display', 'none')
-            parentEl.find('.custom-file-upload').css('display', 'block')
-        })
-    </script>
-
-    <script>
-        // const customFileUpload = document.querySelector('.custom-file-upload');
-        // const fileInput = document.querySelector('#file');
-        // const selectedFileName = document.querySelector('#selected-file-name');
-        // const deleteIcon = document.querySelector('#delete-icon');
-        // const uploadText = document.querySelector('#upload-text');
-
-        // customFileUpload.addEventListener('click', () => {
-        //     fileInput.click();
-        // });
-
-        // fileInput.addEventListener('change', () => {
-        //     const fileName = fileInput.files[0]?.name || '';
-        //     selectedFileName.textContent = fileName;
-        //     selectedFileName.style.display = 'inline';
-        //     deleteIcon.style.display = 'inline';
-        //     uploadText.style.display = 'none'; // Hide the "Click here to upload" text
-        // });
-
-        // deleteIcon.addEventListener('click', (event) => {
-        //     event.preventDefault(); // Prevent the file dialog from opening
-        //     fileInput.value = ''; // Clear the selected file
-        //     selectedFileName.textContent = '';
-        //     selectedFileName.style.display = 'none';
-        //     deleteIcon.style.display = 'none';
-        //     uploadText.style.display = 'block'; // Show the "Click here to upload" text
-        // });
-
-        // // If there's an initial file selection, hide the "Click here to upload" text
-        // if (fileInput.value) {
-        //     uploadText.style.display = 'none';
-        // }
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const selectStatus = document.getElementById("select-status");
-
-            selectStatus.addEventListener("change", function() {
-                // Get the selected option
-                const selectedOption = selectStatus.options[selectStatus.selectedIndex];
-
-                // Get the styles from the selected option
-                const backgroundColor = selectedOption.style.backgroundColor;
-                const color = selectedOption.style.color;
-
-                // Apply the styles to the select element
-                selectStatus.style.backgroundColor = backgroundColor;
-                selectStatus.style.color = color;
-            });
-        });
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const selectStatus = document.getElementById("select-billing");
-
-            selectStatus.addEventListener("change", function() {
-                // Get the selected option
-                const selectedOption = selectStatus.options[selectStatus.selectedIndex];
-
-                // Get the styles from the selected option
-                const backgroundColor = selectedOption.style.backgroundColor;
-                const color = selectedOption.style.color;
-
-                // Apply the styles to the select element
-                selectStatus.style.backgroundColor = backgroundColor;
-                selectStatus.style.color = color;
-            });
-        });
-    </script>
-
-    {{-- Fetch project on Edit click --}}
-    <script>
-        $('body').on('click', '.settingModal', function() {
-            $('#settingModal form')[0].reset();
-
-            // Remove validation errors
-            $('.is-invalid').removeClass('is-invalid')
-            $('.invalid-feedback').remove()
-
-            let projectID = $(this).data('project-id');
-            $('#settingModal form').attr('action', "{{ route('staff.projects.update', 'project_id') }}"
-                .replace('project_id', projectID))
-            $('#settingModal #project_id').val(projectID)
-            $.ajax({
-                url: '{{ route('staff.projects.fetch_project', 'project_id') }}'
-                    .replace('project_id', projectID),
-                method: 'GET',
-                success: function(response) {
-                    if (response.status == 'success') {
-                        $("#settingModal #client").val(response.project.client_id)
-                        $("#settingModal #name").val(response.project.name)
-                        $("#settingModal #deadline").val(response.project.deadline)
-                        $("#settingModal #select-billing").val(response.project.billing_status)
-                        $("#settingModal #select-status").val(response.project.current_status)
-                        $("#settingModal #progress").val(response.project.progress)
-                        $("#settingModal #description").val(response.project.description)
-                        // $('#settingModal-btn').click()
-                    } else {}
+            $("#filter-select").on('change', function() {
+                var url;
+                if ($(this).val() === "all") {
+                    url = "{{ route('staff.projects.index') }}"
+                } else {
+                    url = "{{ route('staff.projects.index') }}" +
+                        "?filter=" + $(this).val()
                 }
+                window.location.href = url
             })
-        })
-    </script>
-@endsection
+        </script>
+
+        <script>
+            $('body').on('click', '.custom-file-upload', function() {
+                let parentEl = $(this).closest('.crm-input')
+                parentEl.find('.files').click();
+            })
+
+            $('.files').on('change', function() {
+                let parentEl = $(this).closest('.crm-input')
+                const fileName = this.files[0].name;
+                parentEl.find('.selected-file-name').text(fileName)
+                parentEl.find('.selected-file-name').css('display', 'inline')
+                parentEl.find('.delete-icon').css('display', 'inline')
+                parentEl.find('.custom-file-upload').css('display', 'none')
+            })
+
+            $('.delete-icon').on('click', function(e) {
+                e.preventDefault()
+
+                let parentEl = $(this).closest('.crm-input')
+                parentEl.find('.files').val('')
+                parentEl.find('.selected-file-name').text('')
+                parentEl.find('.selected-file-name').css('display', 'none')
+                parentEl.find('.delete-icon').css('display', 'none')
+                parentEl.find('.custom-file-upload').css('display', 'block')
+            })
+        </script>
+
+        <script>
+            // const customFileUpload = document.querySelector('.custom-file-upload');
+            // const fileInput = document.querySelector('#file');
+            // const selectedFileName = document.querySelector('#selected-file-name');
+            // const deleteIcon = document.querySelector('#delete-icon');
+            // const uploadText = document.querySelector('#upload-text');
+
+            // customFileUpload.addEventListener('click', () => {
+            //     fileInput.click();
+            // });
+
+            // fileInput.addEventListener('change', () => {
+            //     const fileName = fileInput.files[0]?.name || '';
+            //     selectedFileName.textContent = fileName;
+            //     selectedFileName.style.display = 'inline';
+            //     deleteIcon.style.display = 'inline';
+            //     uploadText.style.display = 'none'; // Hide the "Click here to upload" text
+            // });
+
+            // deleteIcon.addEventListener('click', (event) => {
+            //     event.preventDefault(); // Prevent the file dialog from opening
+            //     fileInput.value = ''; // Clear the selected file
+            //     selectedFileName.textContent = '';
+            //     selectedFileName.style.display = 'none';
+            //     deleteIcon.style.display = 'none';
+            //     uploadText.style.display = 'block'; // Show the "Click here to upload" text
+            // });
+
+            // // If there's an initial file selection, hide the "Click here to upload" text
+            // if (fileInput.value) {
+            //     uploadText.style.display = 'none';
+            // }
+        </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const selectStatus = document.getElementById("select-status");
+
+                selectStatus.addEventListener("change", function() {
+                    // Get the selected option
+                    const selectedOption = selectStatus.options[selectStatus.selectedIndex];
+
+                    // Get the styles from the selected option
+                    const backgroundColor = selectedOption.style.backgroundColor;
+                    const color = selectedOption.style.color;
+
+                    // Apply the styles to the select element
+                    selectStatus.style.backgroundColor = backgroundColor;
+                    selectStatus.style.color = color;
+                });
+            });
+        </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const selectStatus = document.getElementById("select-billing");
+
+                selectStatus.addEventListener("change", function() {
+                    // Get the selected option
+                    const selectedOption = selectStatus.options[selectStatus.selectedIndex];
+
+                    // Get the styles from the selected option
+                    const backgroundColor = selectedOption.style.backgroundColor;
+                    const color = selectedOption.style.color;
+
+                    // Apply the styles to the select element
+                    selectStatus.style.backgroundColor = backgroundColor;
+                    selectStatus.style.color = color;
+                });
+            });
+        </script>
+
+        {{-- Fetch project on Edit click --}}
+        <script>
+            $('body').on('click', '.settingModal', function() {
+                $('#settingModal form')[0].reset();
+
+                // Remove validation errors
+                $('.is-invalid').removeClass('is-invalid')
+                $('.invalid-feedback').remove()
+
+                let projectID = $(this).data('project-id');
+                $('#settingModal form').attr('action', "{{ route('staff.projects.update', 'project_id') }}"
+                    .replace('project_id', projectID))
+                $('#settingModal #project_id').val(projectID)
+                $.ajax({
+                    url: '{{ route('staff.projects.fetch_project', 'project_id') }}'
+                        .replace('project_id', projectID),
+                    method: 'GET',
+                    success: function(response) {
+                        if (response.status == 'success') {
+                            $("#settingModal #client").val(response.project.client_id)
+                            $("#settingModal #name").val(response.project.name)
+                            $("#settingModal #deadline").val(response.project.deadline)
+                            $("#settingModal #select-billing").val(response.project.billing_status)
+                            $("#settingModal #select-status").val(response.project.current_status)
+                            $("#settingModal #progress").val(response.project.progress)
+                            $("#settingModal #description").val(response.project.description)
+                            // $('#settingModal-btn').click()
+                        } else {}
+                    }
+                })
+            })
+        </script>
+    @endsection
 @endsection

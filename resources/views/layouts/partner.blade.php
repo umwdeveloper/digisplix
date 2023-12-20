@@ -213,20 +213,9 @@
                         </div>
                     </div>
 
-                    <!-- Quick links -->
-                    <div class="header-option align-self-center hide-sm side-menu-quick-btn">
-                        <i class="fa-duotone fa-grid-round-2 header-icon"></i>
-
-                    </div>
-
-                    <!-- ticker -->
-                    <div class="header-option align-self-center hide-sm side-menu-ticket-btn">
-                        <!-- <i class="bi bi-app-indicator path-1"></i> -->
-                        <i class="fa-duotone fa-life-ring header-icon"></i>
-                    </div>
-
                     <!-- chat -->
-                    <div class="header-option align-self-center hide-sm chat-btn">
+                    <div class="header-option align-self-center hide-sm chat-btn"
+                        onclick="window.location.href = '{{ route('chat') }}'">
                         <i class="fa-duotone fa-messages header-icon"></i>
 
                     </div>
@@ -246,379 +235,6 @@
                 </div>
             </div>
         </header>
-        <!-- quick links menu -->
-        <div class="side-menu side-menu-quick" id="side-menu-quick">
-            <div class="quick-links">
-                <div class="row">
-                    <div class="col-lg-12 mb-4 pb-3 side-menu-header">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h1 class="mb-0 pb-0 ">Quick Actions</h1>
-                            <button class="close-btn">
-                                <i class="fa-duotone fa-xmark-large"></i>
-
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-6 pe-1 mb-2">
-                        <a href="">
-                            <div class="actions-card">
-                                <i class="fa-duotone fa-rectangle-history"></i>
-                                <p class="mb-0 pb-0">
-                                    Projects
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-6 ps-1 mb-2">
-                        <a href="">
-                            <div class="actions-card">
-                                <i class="fa-duotone fa-users-line"></i>
-                                <p class="mb-0 pb-0">
-                                    clients
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-6 pe-1 mb-2">
-                        <a href="">
-                            <div class="actions-card">
-                                <i class="fa-duotone fa-user-group-simple"></i>
-                                <p class="mb-0 pb-0">
-                                    Partners
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-6 ps-1 mb-2">
-                        <a href="">
-                            <div class="actions-card">
-                                <i class="fa-duotone fa-user-tie"></i>
-                                <p class="mb-0 pb-0">
-                                    Staff
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-6 pe-1 mb-2">
-                        <a href="">
-                            <div class="actions-card">
-                                <i class="fa-duotone fa-people-simple"></i>
-                                <p class="mb-0 pb-0">
-                                    Leads
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-6 ps-1 mb-2">
-                        <a href="settings.html">
-                            <div class="actions-card">
-                                <i class="fa-duotone fa-gear-complex-code"></i>
-                                <p class="mb-0 pb-0">
-                                    Settings
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-        <!-- ticket menu -->
-        <div class="side-menu side-menu-ticket">
-            <div class="ticket-links">
-                <div class="row">
-                    <div class="col-lg-12 mb-4 pb-3 side-menu-header">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h1 class="mb-0 pb-0">Ticket/support </h1>
-                            <button class="close-btn">
-                                <i class="fa-duotone fa-xmark-large"></i>
-
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">03:10</h4>
-                            <div class="ticket-body ticket-alert">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">10:10</h4>
-                            <div class="ticket-body ticket-warning">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">01:10</h4>
-                            <div class="ticket-body ticket-info">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">12:10</h4>
-                            <div class="ticket-body ticket-success">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">03:10</h4>
-                            <div class="ticket-body ticket-alert">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">10:10</h4>
-                            <div class="ticket-body ticket-warning">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">01:10</h4>
-                            <div class="ticket-body ticket-info">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">12:10</h4>
-                            <div class="ticket-body ticket-success">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">03:10</h4>
-                            <div class="ticket-body ticket-alert">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">10:10</h4>
-                            <div class="ticket-body ticket-warning">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">01:10</h4>
-                            <div class="ticket-body ticket-info">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">12:10</h4>
-                            <div class="ticket-body ticket-success">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">03:10</h4>
-                            <div class="ticket-body ticket-alert">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">10:10</h4>
-                            <div class="ticket-body ticket-warning">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">01:10</h4>
-                            <div class="ticket-body ticket-info">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-12 pe-1 mb-2">
-                        <a class="ticket-notify px-0 " href="#">
-                            <h4 class=" text-gray ">12:10</h4>
-                            <div class="ticket-body ticket-success">
-                                <p class="mb-2">Morbi quis ex eu arcu auctor sagittis.</p>
-                                <span class="text-fade">by Johne</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- chat -->
-        <div class="chat__popup">
-            <div class="chat-header d-flex align-items-center">
-                <div class="d-flex justify-content-between align-items-center w-100">
-                    <div class="d-flex align-items-center">
-                        <div class="image-div">
-                            <img src="{{ asset('images/vatar.png') }}" alt="" class="me-2">
-                        </div>
-                        <div>
-                            <h2>Jhon Doe</h2>
-                            <p class="status mb-0 pb-0">Active</p>
-                        </div>
-                    </div>
-                    <button class="close-chat ms-auto">
-                        <i class="fa-duotone fa-xmark-large"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="body">
-                <!-- recieve -->
-                <div class="recieve">
-                    <div class="d-flex align-items-center">
-                        <div class="image-div">
-                            <img src="{{ asset('images/vatar.png') }}" alt="" class="me-2">
-                        </div>
-                        <div>
-                            <h2>10:20 pm</h2>
-                            <p class="status mb-0 pb-0">Active</p>
-                        </div>
-                    </div>
-                    <div class="recieved-msg">
-                        <p class="mb-0 pb-0">Hi there, I'm Jesse and you?</p>
-                    </div>
-                </div>
-                <!-- send -->
-                <div class="send">
-                    <div class="d-flex align-items-center justify-content-end">
-                        <div class="text-end">
-                            <h2>Jhon Doe</h2>
-                            <p class="status mb-0 pb-0">02:23 am</p>
-                        </div>
-                        <div class="image-div">
-                            <img src="{{ asset('images/vatar.png') }}" alt="" class="me-2">
-                        </div>
-                    </div>
-                    <div class="send-msg ms-auto">
-                        <p class="mb-0 pb-0">Hi there, I'm Jesse and you?</p>
-                    </div>
-                    <div class="send-msg ms-auto">
-                        <p class="mb-0 pb-0">Are You ther?</p>
-                    </div>
-                </div>
-                <!-- recieve -->
-                <div class="recieve">
-                    <div class="d-flex align-items-center">
-                        <div class="image-div">
-                            <img src="{{ asset('images/vatar.png') }}" alt="" class="me-2">
-                        </div>
-                        <div>
-                            <h2>10:20 pm</h2>
-                            <p class="status mb-0 pb-0">Active</p>
-                        </div>
-                    </div>
-                    <div class="recieved-msg">
-                        <p class="mb-0 pb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt porro
-                            delectus quasi dolorem cum sequi.</p>
-                    </div>
-                    <div class="recieved-msg">
-                        <p class="mb-0 pb-0">Lorem ipsum dolor sit.</p>
-                    </div>
-                </div>
-                <!-- recieve -->
-                <div class="recieve">
-                    <div class="d-flex align-items-center">
-                        <div class="image-div">
-                            <img src="{{ asset('images/vatar.png') }}" alt="" class="me-2">
-                        </div>
-                        <div>
-                            <h2>10:20 pm</h2>
-                            <p class="status mb-0 pb-0">Active</p>
-                        </div>
-                    </div>
-                    <div class="recieved-msg">
-                        <p class="mb-0 pb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt porro
-                            delectus quasi dolorem cum sequi.</p>
-                    </div>
-                    <div class="recieved-msg">
-                        <p class="mb-0 pb-0">Lorem ipsum dolor sit.</p>
-                    </div>
-                </div>
-                <!-- send -->
-                <div class="send">
-                    <div class="d-flex align-items-center justify-content-end">
-                        <div class="text-end">
-                            <h2>Jhon Doe</h2>
-                            <p class="status mb-0 pb-0">02:23 am</p>
-                        </div>
-                        <div class="image-div">
-                            <img {{ asset('images/vatar.png') }} alt="" class="me-2">
-                        </div>
-                    </div>
-                    <div class="send-msg ms-auto">
-                        <p class="mb-0 pb-0">Hi there, I'm Jesse and you?</p>
-                    </div>
-                    <div class="send-msg ms-auto">
-                        <p class="mb-0 pb-0">Are You ther?</p>
-                    </div>
-                </div>
-                <!-- recieve -->
-                <div class="recieve">
-                    <div class="d-flex align-items-center">
-                        <div class="image-div">
-                            <img {{ asset('images/vatar.png') }} alt="" class="me-2">
-                        </div>
-                        <div>
-                            <h2>10:20 pm</h2>
-                            <p class="status mb-0 pb-0">Active</p>
-                        </div>
-                    </div>
-                    <div class="recieved-msg">
-                        <p class="mb-0 pb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt porro
-                            delectus quasi dolorem cum sequi.</p>
-                    </div>
-                    <div class="recieved-msg">
-                        <p class="mb-0 pb-0">Lorem ipsum dolor sit.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="type-area">
-                <input type="text" placeholder="Type Here...">
-                <i class="fa-solid fa-paper-plane-top "></i>
-            </div>
-        </div>
         <!-- -----------Main Contents----------- -->
         @yield('content')
         <div class="overlay"></div>
@@ -626,118 +242,40 @@
     </div>
     <!-- menu footer -->
     <footer class="menu-footer">
-        <div class="footer-menu-link active-footer-menu">
-            <a href="index.html">
-                <i class="fa-duotone fa-grid-2"></i>
-                Dashboard
-            </a>
-        </div>
         <div class="footer-menu-link">
-            <a href="leads.html">
+            <a href="{{ route('partner.leads.index') }}">
                 <i class="fa-duotone fa-people-group"></i>
                 Leads
             </a>
         </div>
         <div class="footer-menu-link">
-            <a href="projects.html">
-                <i class="fa-duotone fa-rectangle-history"></i>
-                Projects
+            <a href="{{ route('partner.clients.index') }}">
+                <i class="fa-duotone fa-users-line"></i>
+                Clients
             </a>
         </div>
         <div class="footer-menu-link">
-            <a href="chats.html">
+            <a href="{{ route('chat') }}">
                 <i class="fa-duotone fa-messages"></i>
                 Chats
             </a>
         </div>
-        <div class="footer-menu-link" id="show-more-menu">
-            <a>
-                <i class="fa-duotone fa-circle-ellipsis-vertical"></i>
-                More
-            </a>
-        </div>
-    </footer>
-    <!--show more mobile popup -->
-    <div class="menu-footer-popup">
-        <h3>More Menus</h3>
-        <div class="menu-footer-padding"></div>
-        <div class="d-flex align-items-center more-footer-link">
-            <a href="sales.html" class="d-flex align-items-center">
-                <div class="more-icon">
-                    <i class="fa-duotone fa-chart-mixed-up-circle-dollar"></i>
-                </div>
-                Sales
-            </a>
-        </div>
-        <div class="d-flex align-items-center more-footer-link ">
-            <a href="invoice-list.html" class="d-flex align-items-center ">
-                <div class="more-icon">
-                    <i class="fa-duotone fa-file-invoice-dollar"></i>
-                </div>
-                Invoices
-            </a>
-        </div>
-        <div class="d-flex align-items-center more-footer-link">
-            <a href="clients.html">
-                <div class="more-icon">
-                    <i class="fa-duotone fa-users-line"></i>
-                </div>
-
-                Clients
-            </a>
-        </div>
-        <div class="d-flex align-items-center more-footer-link">
-            <a href="partners.html">
-                <div class="more-icon">
-                    <i class="fa-duotone fa-user-group-simple"></i>
-                </div>
-
-                Partners
-            </a>
-        </div>
-
-        <div class="d-flex align-items-center more-footer-link">
-            <a href="staff.html">
-                <div class="more-icon">
-                    <i class="fa-duotone fa-user-tie"></i>
-                </div>
-
-                Staff
-            </a>
-        </div>
-        <div class="d-flex align-items-center more-footer-link">
-            <a href="support.html">
-                <div class="more-icon">
-                    <i class="fa-duotone fa-user-headset"></i>
-                </div>
-
-                Support
-            </a>
-        </div>
-        <div class="d-flex align-items-center more-footer-link">
-            <a href="email.html">
-                <div class="more-icon">
-                    <i class="fa-duotone fa-envelopes"></i>
-                </div>
-                Email
-            </a>
-        </div>
-        <div class="d-flex align-items-center more-footer-link">
-            <a href="log-in.html">
-                <div class="more-icon">
-                    <i class="fa-duotone fa-right-from-bracket"></i>
-                </div>
-
+        <div class="footer-menu-link">
+            <a href="logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit()">
+                <i class="fa-duotone fa-arrow-right-from-bracket"></i>
                 Logout
             </a>
         </div>
-    </div>
+    </footer>
 
 
 
     <div id="overlay-all" class="overlay"></div>
 
     <div id="overlay-sidebar"></div>
+
+    {{-- Loader/Spinner --}}
+    <div class="loading d-none"></div>
 
     {{-- Show toast after an operation --}}
     @if (session('status'))

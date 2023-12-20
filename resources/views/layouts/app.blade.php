@@ -465,139 +465,6 @@
                 </div>
             </div>
         @endcan
-        <!-- chat -->
-        <div class="chat__popup">
-            <div class="chat-header d-flex align-items-center">
-                <div class="d-flex justify-content-between align-items-center w-100">
-                    <div class="d-flex align-items-center">
-                        <div class="image-div">
-                            <img src="{{ asset('images/vatar.png') }}" alt="" class="me-2">
-                        </div>
-                        <div>
-                            <h2>Jhon Doe</h2>
-                            <p class="status mb-0 pb-0">Active</p>
-                        </div>
-                    </div>
-                    <button class="close-chat ms-auto">
-                        <i class="fa-duotone fa-xmark-large"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="body">
-                <!-- recieve -->
-                <div class="recieve">
-                    <div class="d-flex align-items-center">
-                        <div class="image-div">
-                            <img src="{{ asset('images/vatar.png') }}" alt="" class="me-2">
-                        </div>
-                        <div>
-                            <h2>10:20 pm</h2>
-                            <p class="status mb-0 pb-0">Active</p>
-                        </div>
-                    </div>
-                    <div class="recieved-msg">
-                        <p class="mb-0 pb-0">Hi there, I'm Jesse and you?</p>
-                    </div>
-                </div>
-                <!-- send -->
-                <div class="send">
-                    <div class="d-flex align-items-center justify-content-end">
-                        <div class="text-end">
-                            <h2>Jhon Doe</h2>
-                            <p class="status mb-0 pb-0">02:23 am</p>
-                        </div>
-                        <div class="image-div">
-                            <img src="{{ asset('images/vatar.png') }}" alt="" class="me-2">
-                        </div>
-                    </div>
-                    <div class="send-msg ms-auto">
-                        <p class="mb-0 pb-0">Hi there, I'm Jesse and you?</p>
-                    </div>
-                    <div class="send-msg ms-auto">
-                        <p class="mb-0 pb-0">Are You ther?</p>
-                    </div>
-                </div>
-                <!-- recieve -->
-                <div class="recieve">
-                    <div class="d-flex align-items-center">
-                        <div class="image-div">
-                            <img src="{{ asset('images/vatar.png') }}" alt="" class="me-2">
-                        </div>
-                        <div>
-                            <h2>10:20 pm</h2>
-                            <p class="status mb-0 pb-0">Active</p>
-                        </div>
-                    </div>
-                    <div class="recieved-msg">
-                        <p class="mb-0 pb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt porro
-                            delectus quasi dolorem cum sequi.</p>
-                    </div>
-                    <div class="recieved-msg">
-                        <p class="mb-0 pb-0">Lorem ipsum dolor sit.</p>
-                    </div>
-                </div>
-                <!-- recieve -->
-                <div class="recieve">
-                    <div class="d-flex align-items-center">
-                        <div class="image-div">
-                            <img src="{{ asset('images/vatar.png') }}" alt="" class="me-2">
-                        </div>
-                        <div>
-                            <h2>10:20 pm</h2>
-                            <p class="status mb-0 pb-0">Active</p>
-                        </div>
-                    </div>
-                    <div class="recieved-msg">
-                        <p class="mb-0 pb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt porro
-                            delectus quasi dolorem cum sequi.</p>
-                    </div>
-                    <div class="recieved-msg">
-                        <p class="mb-0 pb-0">Lorem ipsum dolor sit.</p>
-                    </div>
-                </div>
-                <!-- send -->
-                <div class="send">
-                    <div class="d-flex align-items-center justify-content-end">
-                        <div class="text-end">
-                            <h2>Jhon Doe</h2>
-                            <p class="status mb-0 pb-0">02:23 am</p>
-                        </div>
-                        <div class="image-div">
-                            <img {{ asset('images/vatar.png') }} alt="" class="me-2">
-                        </div>
-                    </div>
-                    <div class="send-msg ms-auto">
-                        <p class="mb-0 pb-0">Hi there, I'm Jesse and you?</p>
-                    </div>
-                    <div class="send-msg ms-auto">
-                        <p class="mb-0 pb-0">Are You ther?</p>
-                    </div>
-                </div>
-                <!-- recieve -->
-                <div class="recieve">
-                    <div class="d-flex align-items-center">
-                        <div class="image-div">
-                            <img {{ asset('images/vatar.png') }} alt="" class="me-2">
-                        </div>
-                        <div>
-                            <h2>10:20 pm</h2>
-                            <p class="status mb-0 pb-0">Active</p>
-                        </div>
-                    </div>
-                    <div class="recieved-msg">
-                        <p class="mb-0 pb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt porro
-                            delectus quasi dolorem cum sequi.</p>
-                    </div>
-                    <div class="recieved-msg">
-                        <p class="mb-0 pb-0">Lorem ipsum dolor sit.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="type-area">
-                <input type="text" placeholder="Type Here...">
-                <i class="fa-solid fa-paper-plane-top "></i>
-            </div>
-        </div>
         <!-- -----------Main Contents----------- -->
         @yield('content')
         <div class="overlay"></div>
@@ -605,26 +472,26 @@
     </div>
     <!-- menu footer -->
     <footer class="menu-footer">
-        <div class="footer-menu-link active-footer-menu">
-            <a href="index.html">
+        <div class="footer-menu-link dashboard-link">
+            <a href="{{ route('staff.index') }}">
                 <i class="fa-duotone fa-grid-2"></i>
                 Dashboard
             </a>
         </div>
         <div class="footer-menu-link">
-            <a href="leads.html">
+            <a href="{{ route('staff.leads.index') }}">
                 <i class="fa-duotone fa-people-group"></i>
                 Leads
             </a>
         </div>
         <div class="footer-menu-link">
-            <a href="projects.html">
+            <a href="{{ route('staff.projects.index') }}">
                 <i class="fa-duotone fa-rectangle-history"></i>
                 Projects
             </a>
         </div>
         <div class="footer-menu-link">
-            <a href="chats.html">
+            <a href="{{ route('chat') }}">
                 <i class="fa-duotone fa-messages"></i>
                 Chats
             </a>
@@ -649,7 +516,7 @@
             </a>
         </div>
         <div class="d-flex align-items-center more-footer-link ">
-            <a href="invoice-list.html" class="d-flex align-items-center ">
+            <a href="{{ route('staff.invoices.index') }}" class="d-flex align-items-center ">
                 <div class="more-icon">
                     <i class="fa-duotone fa-file-invoice-dollar"></i>
                 </div>
@@ -657,7 +524,7 @@
             </a>
         </div>
         <div class="d-flex align-items-center more-footer-link">
-            <a href="clients.html">
+            <a href="{{ route('staff.clients.index') }}">
                 <div class="more-icon">
                     <i class="fa-duotone fa-users-line"></i>
                 </div>
@@ -666,7 +533,7 @@
             </a>
         </div>
         <div class="d-flex align-items-center more-footer-link">
-            <a href="partners.html">
+            <a href="{{ route('staff.partners.index') }}">
                 <div class="more-icon">
                     <i class="fa-duotone fa-user-group-simple"></i>
                 </div>
@@ -676,7 +543,7 @@
         </div>
 
         <div class="d-flex align-items-center more-footer-link">
-            <a href="staff.html">
+            <a href="{{ route('staff.staff.index') }}">
                 <div class="more-icon">
                     <i class="fa-duotone fa-user-tie"></i>
                 </div>
@@ -685,7 +552,7 @@
             </a>
         </div>
         <div class="d-flex align-items-center more-footer-link">
-            <a href="support.html">
+            <a href="{{ route('staff.support.index') }}">
                 <div class="more-icon">
                     <i class="fa-duotone fa-user-headset"></i>
                 </div>
@@ -702,7 +569,7 @@
             </a>
         </div>
         <div class="d-flex align-items-center more-footer-link">
-            <a href="log-in.html">
+            <a href="logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit()">
                 <div class="more-icon">
                     <i class="fa-duotone fa-right-from-bracket"></i>
                 </div>
