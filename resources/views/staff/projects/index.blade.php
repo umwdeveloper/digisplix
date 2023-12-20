@@ -615,6 +615,8 @@
     {{-- Fetch project on Edit click --}}
     <script>
         $('body').on('click', '.settingModal', function() {
+            $('#settingModal form')[0].reset();
+
             // Remove validation errors
             $('.is-invalid').removeClass('is-invalid')
             $('.invalid-feedback').remove()

@@ -24,7 +24,7 @@
                                                         <div class="display-pictute text-center">
                                                             <div class="mb-0 mx-auto position-relative"><img
                                                                     class="edit-img  mx-auto "
-                                                                    src="{{ getURL($profile->user->img) }}"
+                                                                    src="{{ !empty($profile->user->img) ? getURL($profile->user->img) : asset('images/avatar.png') }}"
                                                                     id="output" />
                                                                 <div class="gradient"></div>
                                                                 <div class="remove-picture d-none">X</div>
@@ -144,7 +144,7 @@
                                                     <div
                                                         class="d-flex justify-content-lg-end justify-content-center mt-3 mb-3">
                                                         <!-- <button type="button" class="modal-btn-cancel me-3"
-                                                                                                                                                                                                            data-bs-dismiss="modal">Cancel</button> -->
+                                                                                                                                                                                                                        data-bs-dismiss="modal">Cancel</button> -->
                                                         <button class="modal-btn-save ">Save </button>
                                                     </div>
                                                 </div>

@@ -15,7 +15,11 @@ class StaffPermissionSeeder extends Seeder {
         $permissions = Permission::all();
 
         Staff::all()->each(function ($staff) use ($permissions) {
-            $randomPermissions = $permissions->random(rand(1, $permissions->count()))->pluck('id');
+            if ($staff->user->is_admin) {
+                $randomPermissions = $permissions->pluck('id');
+            } else {
+                $randomPermissions = $permissions->random(rand(1, $permissions->count()))->pluck('id');
+            }
             $staff->permissions()->sync($randomPermissions);
         });
     }

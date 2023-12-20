@@ -26,7 +26,6 @@ class InvoiceFactory extends Factory {
             'due_date' => now()->addDays(rand(5, 50)),
             'terms_n_conditions' => fake()->text(50),
             'note' => fake()->text(50),
-            'signature' => fake()->text(10),
         ];
     }
 }

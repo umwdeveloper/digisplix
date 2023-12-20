@@ -522,6 +522,8 @@
     {{-- Fetch client on Edit click --}}
     <script>
         $('body').on('click', '.edit', function() {
+            $('.loading').removeClass('d-none')
+
             // Remove validation errors
             $('.is-invalid').removeClass('is-invalid')
             $('.invalid-feedback').remove()
@@ -535,6 +537,7 @@
                     .replace('client_id', clientID),
                 method: 'GET',
                 success: function(response) {
+                    $('.loading').addClass('d-none')
                     if (response.status == 'success') {
                         $("#editClientModal #name").val(response.client.user.name)
                         $("#editClientModal #business-name").val(response.client.business_name)

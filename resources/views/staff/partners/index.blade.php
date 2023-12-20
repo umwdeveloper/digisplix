@@ -357,7 +357,7 @@
                         @method('PUT')
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-6">
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->updatePartner->has('name') ? 'is-invalid' : '' }}"
@@ -643,6 +643,7 @@
     {{-- Fetch partner on Edit click --}}
     <script>
         $('body').on('click', '.editPartner', function() {
+            $('#editPartnerModal form')[0].reset()
             // Remove form validation errors
             $('.is-invalid').removeClass('is-invalid')
             $('.invalid-feedback').remove()

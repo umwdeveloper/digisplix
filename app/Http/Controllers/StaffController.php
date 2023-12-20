@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateProfile;
 use App\Models\Client;
+use App\Models\Project;
 use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Database\QueryException;
@@ -30,6 +31,8 @@ class StaffController extends Controller {
 
         $clients = Client::with('projects')->get();
 
+        $deliveries = Project::with('client.user')->orderBy('deadline')->take(5)->get();
+
         return view('staff.index', [
             'totalClients' => count($clients),
             'activeClients' => $clients->where('status', 1)->count(),
@@ -37,6 +40,7 @@ class StaffController extends Controller {
             'overdueProjects' => $clients->pluck('projects')->flatten()->where('billing_status', 0)->count(),
             'onGoingProjects' => $clients->pluck('projects')->flatten()->where('current_status', 0)->count(),
             'completedProjects' => $clients->pluck('projects')->flatten()->where('current_status', 1)->count(),
+            'deliveries' => $deliveries
         ]);
     }
 
@@ -132,6 +136,10 @@ class StaffController extends Controller {
 
     public function settings() {
         return view('staff.settings');
+    }
+
+    public function notifications() {
+        return view('staff.notifications');
     }
 
     public function resetPassword(Request $request) {

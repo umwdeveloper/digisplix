@@ -335,6 +335,7 @@
         var editorData;
         var allowedFileTypes = ["image/jpeg", "image/jpg", "image/png", "application/pdf", "text/plain"];
         Dropzone.options.dropzonewidget = {
+            dictCancelUpload: '',
             autoProcessQueue: false,
             addRemoveLinks: true,
             maxFilesize: 2, // 2 MB

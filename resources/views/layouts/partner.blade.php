@@ -190,35 +190,17 @@
                             <ul class="notification-dropdown">
                                 <div class="notifications-header">
                                     <h1 class="mb-0 pb-0">Notifications</h1>
-                                    <button>Clear All</button>
+                                    {{-- <button>Clear All</button> --}}
                                 </div>
-                                <li><a class=" " href="notifications.html"><i
-                                            class="bi bi-people-fill text-primary f-14 me-2"></i>
-                                        <p class="mb-0 pb-0 ">Lorem ipsum dolor, sit amet consectetur adipisicing
-                                            elit. Unde, a!</p>
-                                    </a>
-                                </li>
-                                <li><a class=" " href="#"><i
-                                            class="bi bi-info-circle  text-yellow f-14 me-2"></i>
-                                        <p class="mb-0 pb-0 text-start">Lorem ipsum dolor, sit amet consectetur
-                                            adipisicing
-                                            elit. Unde, a!</p>
-                                    </a>
-                                </li>
-                                <li><a class=" " href="#"><i
-                                            class="bi bi-person-fill text-primary  text-danger f-14 me-2"></i>
-                                        <p class="mb-0 pb-0 text-start">Lorem ipsum dolor, sit amet consectetur
-                                            adipisicing
-                                            elit. Unde, a!</p>
-                                    </a>
-                                </li>
-                                <li><a class=" " href="#"> <i
-                                            class="bi bi-chat-fill  text-yellow f-14 me-2"></i>
-                                        <p class="mb-0 pb-0 text-start">Lorem ipsum dolor, sit amet consectetur
-                                            adipisicing
-                                            elit. Unde, a!</p>
-                                    </a>
-                                </li>
+                                @forelse (auth()->user()->unreadNotifications as $notification)
+                                    <li><a
+                                            href="{{ !empty($notification->data['link']) ? $notification->data['link'] : '#' }}">
+                                            <p class="mb-0 pb-0 ">{{ $notification->data['message'] }}</p>
+                                        </a>
+                                    </li>
+                                @empty
+                                    <li class="text-muted text-center pt-3">No new notifications</li>
+                                @endforelse
 
                                 <li>
                                     <a href="notifications.html" class="text-center">

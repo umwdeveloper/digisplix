@@ -15,7 +15,9 @@
                                     <button class="tablinksProjects"
                                         onclick="openCity(event, 'ProjectDetails')"><span>Project</span>
                                         Details</button>
-                                    <button class="tablinksProjects" onclick="openCity(event, 'Chat')">Chat</button>
+                                    @can('staff.chats')
+                                        <button class="tablinksProjects" onclick="openCity(event, 'Chat')">Chat</button>
+                                    @endcan
                                 </div>
 
                                 <div id="ProjectOverview" class="tabcontentProjects">
@@ -266,14 +268,16 @@
                                     </div>
                                 </div>
 
-                                <div id="Chat" class="tabcontentProjects">
+                                @can('staff.chats')
+                                    <div id="Chat" class="tabcontentProjects">
 
-                                    <div class="chat__screen box p-0">
+                                        <div class="chat__screen box p-0">
 
-                                        <!-- chat body -->
-                                        @include('vendor.Chatify.layouts.main')
+                                            <!-- chat body -->
+                                            @include('vendor.Chatify.layouts.main')
+                                        </div>
                                     </div>
-                                </div>
+                                @endcan
                             </div>
                         </div>
 

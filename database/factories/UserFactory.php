@@ -54,7 +54,7 @@ class UserFactory extends Factory {
 
         return $this->state(fn (array $attributes) => [
             'name' => 'Staff',
-            'email' => 'staff@gmail.com',
+            'email' => 'umwdeveloper@gmail.com',
             'email_verified_at' => now(),
             'password' => Hash::make('123'),
             'remember_token' => Str::random(10),
@@ -75,7 +75,7 @@ class UserFactory extends Factory {
 
         return $this->state(fn (array $attributes) => [
             'name' => 'Partner',
-            'email' => 'partner@gmail.com',
+            'email' => 'uosdevelopers@gmail.com',
             'email_verified_at' => now(),
             'password' => Hash::make('123'),
             'remember_token' => Str::random(10),
@@ -95,7 +95,7 @@ class UserFactory extends Factory {
 
         return $this->state(fn (array $attributes) => [
             'name' => 'Client',
-            'email' => 'client@gmail.com',
+            'email' => 'developeropedia@gmail.com',
             'email_verified_at' => now(),
             'password' => Hash::make('123'),
             'remember_token' => Str::random(10),

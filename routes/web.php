@@ -47,6 +47,8 @@ Route::domain('admin.digisplix.test')
             ->name('profile');
         Route::get('/settings', [StaffController::class, 'settings'])
             ->name('settings');
+        Route::get('/notifications', [StaffController::class, 'notifications'])
+            ->name('notifications');
         Route::patch('/reset_password', [StaffController::class, 'resetPassword'])
             ->name('reset_password');
 

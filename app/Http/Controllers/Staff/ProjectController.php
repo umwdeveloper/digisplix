@@ -83,6 +83,13 @@ class ProjectController extends Controller {
         }
         $project = Project::create($validatedData);
 
+        $project->phases()->createMany([
+            ['name' => 'Planning'],
+            ['name' => 'Designing'],
+            ['name' => 'Development'],
+            ['name' => 'Testing'],
+        ]);
+
         Notification::send($project->client->user, new ProjectAdded($project->client->user->name, $project->id, $project->name));
 
         return redirect()->back()->with('status', 'Project created successfully!');

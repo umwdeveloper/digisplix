@@ -704,27 +704,29 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="form-floating">
-                                    <select
-                                        class="form-select crm-input {{ $errors->createLead->has('partner_id') ? 'is-invalid' : '' }}"
-                                        required id="partner_id" name="partner_id"
-                                        aria-label="Floating label select example">
-                                        <option selected disabled>Select</option>
-                                        @foreach ($partners as $partner)
-                                            <option
-                                                {{ $errors->hasBag('createLead') && old('partner_id') == $partner->id ? 'selected' : '' }}
-                                                value="{{ $partner->id }}">
-                                                {{ $partner->user->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    <label class="crm-label form-label" for="partner_id">Partner<span
-                                            class="text-danger">*</span></label>
-                                    @if ($errors->createLead->has('partner_id'))
-                                        <small class="invalid-feedback " style="font-size: 11px">
-                                            {{ $errors->createLead->first('partner_id') }}
-                                        </small>
-                                    @endif
+                                <div class="col-lg-6">
+                                    <div class="form-floating">
+                                        <select
+                                            class="form-select crm-input {{ $errors->createLead->has('partner_id') ? 'is-invalid' : '' }}"
+                                            required id="partner_id" name="partner_id"
+                                            aria-label="Floating label select example">
+                                            <option selected disabled>Select</option>
+                                            @foreach ($partners as $partner)
+                                                <option
+                                                    {{ $errors->hasBag('createLead') && old('partner_id') == $partner->id ? 'selected' : '' }}
+                                                    value="{{ $partner->id }}">
+                                                    {{ $partner->user->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <label class="crm-label form-label" for="partner_id">Partner<span
+                                                class="text-danger">*</span></label>
+                                        @if ($errors->createLead->has('partner_id'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->createLead->first('partner_id') }}
+                                            </small>
+                                        @endif
+                                    </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
@@ -994,27 +996,45 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="form-floating">
-                                    <select
-                                        class="form-select crm-input {{ $errors->updateLead->has('partner_id') ? 'is-invalid' : '' }}"
-                                        required id="partner_id" name="partner_id"
-                                        aria-label="Floating label select example">
-                                        <option selected disabled>Select</option>
-                                        @foreach ($partners as $partner)
-                                            <option
-                                                {{ $errors->hasBag('updateLead') && old('partner_id') == $partner->id ? 'selected' : '' }}
-                                                value="{{ $partner->id }}">
-                                                {{ $partner->user->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    <label class="crm-label form-label" for="partner_id">Partner<span
-                                            class="text-danger">*</span></label>
-                                    @if ($errors->updateLead->has('partner_id'))
-                                        <small class="invalid-feedback " style="font-size: 11px">
-                                            {{ $errors->updateLead->first('partner_id') }}
-                                        </small>
-                                    @endif
+                                <div class="col-lg-6">
+                                    <div class="form-floating">
+                                        <select
+                                            class="form-select crm-input {{ $errors->updateLead->has('partner_id') ? 'is-invalid' : '' }}"
+                                            required id="partner_id" name="partner_id"
+                                            aria-label="Floating label select example">
+                                            <option selected disabled>Select</option>
+                                            @foreach ($partners as $partner)
+                                                <option
+                                                    {{ $errors->hasBag('updateLead') && old('partner_id') == $partner->id ? 'selected' : '' }}
+                                                    value="{{ $partner->id }}">
+                                                    {{ $partner->user->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <label class="crm-label form-label" for="partner_id">Partner<span
+                                                class="text-danger">*</span></label>
+                                        @if ($errors->updateLead->has('partner_id'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->updateLead->first('partner_id') }}
+                                            </small>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text"
+                                            class="form-control crm-input {{ $errors->updateLead->has('phone') ? 'is-invalid' : '' }}"
+                                            id="p-number" name="phone" required
+                                            value="{{ $errors->hasBag('updateLead') ? old('phone') : '' }}"
+                                            placeholder="ABC">
+                                        <label class="crm-label form-label" for="p-number">Phone Number<span
+                                                class="text-danger">*</span></label>
+                                        @if ($errors->updateLead->has('phone'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->updateLead->first('phone') }}
+                                            </small>
+                                        @endif
+                                    </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
@@ -1033,7 +1053,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->updateLead->has('address') ? 'is-invalid' : '' }}"
@@ -1045,22 +1065,6 @@
                                         @if ($errors->updateLead->has('address'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updateLead->first('address') }}
-                                            </small>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text"
-                                            class="form-control crm-input {{ $errors->updateLead->has('phone') ? 'is-invalid' : '' }}"
-                                            id="p-number" name="phone" required
-                                            value="{{ $errors->hasBag('updateLead') ? old('phone') : '' }}"
-                                            placeholder="ABC">
-                                        <label class="crm-label form-label" for="p-number">Phone Number<span
-                                                class="text-danger">*</span></label>
-                                        @if ($errors->updateLead->has('phone'))
-                                            <small class="invalid-feedback " style="font-size: 11px">
-                                                {{ $errors->updateLead->first('phone') }}
                                             </small>
                                         @endif
                                     </div>
@@ -1220,6 +1224,9 @@
     {{-- Fetch lead on Edit click --}}
     <script>
         $('body').on('click', '.edit', function() {
+
+            $('.loading').removeClass('d-none')
+
             // Remove validation errors
             $('.is-invalid').removeClass('is-invalid')
             $('.invalid-feedback').remove()
@@ -1233,6 +1240,7 @@
                     .replace('lead_id', leadID),
                 method: 'GET',
                 success: function(response) {
+                    $('.loading').addClass('d-none')
                     if (response.status == 'success') {
                         $("#editLeadModal #name").val(response.lead.user.name)
                         $("#editLeadModal #business-name").val(response.lead.business_name)

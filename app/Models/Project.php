@@ -45,16 +45,16 @@ class Project extends Model {
         return self::$billingLabels;
     }
 
-    public static function boot(): void {
-        parent::boot();
+    // public static function boot(): void {
+    //     parent::boot();
 
-        static::created(function ($createdProject) {
-            $createdProject->phases()->createMany([
-                ['name' => 'Planning'],
-                ['name' => 'Designing'],
-                ['name' => 'Development'],
-                ['name' => 'Testing'],
-            ]);
-        });
-    }
+    //     static::created(function ($createdProject) {
+    //         $createdProject->phases()->createMany([
+    //             ['name' => 'Planning'],
+    //             ['name' => 'Designing'],
+    //             ['name' => 'Development'],
+    //             ['name' => 'Testing'],
+    //         ]);
+    //     });
+    // }
 }

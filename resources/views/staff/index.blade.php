@@ -115,216 +115,22 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr class="">
-
-
-                                                    <td scope="row" class="target-cell">
-                                                        <p class="mb-0 pb-0 ms-2">1</p>
-                                                    </td>
-                                                    <td>15</td>
-                                                    <td class="">
-                                                        <p title="Ecommerece Website lorem abscd"
-                                                            class="project-name mb-0 pb-0">Ecommerece Website</p>
-                                                    </td>
-                                                    <td>15 OCT 2023</td>
-                                                    <td>Michal Jhon</td>
-                                                </tr>
-                                                <tr class="">
-
-
-                                                    <td scope="row" class="target-cell">
-                                                        <p class="mb-0 pb-0 ms-2">2</p>
-                                                    </td>
-                                                    <td>15</td>
-                                                    <td class="">
-                                                        <p title="Ecommerece Website lorem abscd"
-                                                            class="project-name mb-0 pb-0">Ecommerece Website</p>
-                                                    </td>
-                                                    <td>15 OCT 2023</td>
-                                                    <td>Michal Jhon</td>
-                                                </tr>
-                                                <tr class="">
-
-
-                                                    <td scope="row" class="target-cell">
-                                                        <p class="mb-0 pb-0 ms-2">3</p>
-                                                    </td>
-                                                    <td>15</td>
-                                                    <td class="">
-                                                        <p title="Ecommerece Website lorem abscd"
-                                                            class="project-name mb-0 pb-0">Ecommerece Website</p>
-                                                    </td>
-                                                    <td>15 OCT 2023</td>
-                                                    <td>Michal Jhon</td>
-                                                </tr>
-                                                <tr class="">
-
-
-                                                    <td scope="row" class="target-cell">
-                                                        <p class="mb-0 pb-0 ms-2">4</p>
-                                                    </td>
-                                                    <td>15</td>
-                                                    <td class="">
-                                                        <p title="Ecommerece Website lorem abscd"
-                                                            class="project-name mb-0 pb-0">Ecommerece Website</p>
-                                                    </td>
-                                                    <td>15 OCT 2023</td>
-                                                    <td>Michal Jhon</td>
-                                                </tr>
-                                                <tr class="">
-
-
-                                                    <td scope="row" class="target-cell">
-                                                        <p class="mb-0 pb-0 ms-2">2</p>
-                                                    </td>
-                                                    <td>15</td>
-                                                    <td class="">
-                                                        <p title="Ecommerece Website lorem abscd"
-                                                            class="project-name mb-0 pb-0">Ecommerece Website</p>
-                                                    </td>
-                                                    <td>15 OCT 2023</td>
-                                                    <td>Michal Jhon</td>
-                                                </tr>
-                                                <tr class="">
-
-
-                                                    <td scope="row" class="target-cell">
-                                                        <p class="mb-0 pb-0 ms-2">3</p>
-                                                    </td>
-                                                    <td>15</td>
-                                                    <td class="">
-                                                        <p title="Ecommerece Website lorem abscd"
-                                                            class="project-name mb-0 pb-0">Ecommerece Website</p>
-                                                    </td>
-                                                    <td>15 OCT 2023</td>
-                                                    <td>Michal Jhon</td>
-                                                </tr>
-                                                <tr class="">
-
-
-                                                    <td scope="row" class="target-cell">
-                                                        <p class="mb-0 pb-0 ms-2">2</p>
-                                                    </td>
-                                                    <td>15</td>
-                                                    <td class="">
-                                                        <p title="Ecommerece Website lorem abscd"
-                                                            class="project-name mb-0 pb-0">Ecommerece Website</p>
-                                                    </td>
-                                                    <td>15 OCT 2023</td>
-                                                    <td>Michal Jhon</td>
-                                                </tr>
-                                                <tr class="">
-
-
-                                                    <td scope="row" class="target-cell">
-                                                        <p class="mb-0 pb-0 ms-2">3</p>
-                                                    </td>
-                                                    <td>15</td>
-                                                    <td class="">
-                                                        <p title="Ecommerece Website lorem abscd"
-                                                            class="project-name mb-0 pb-0">Ecommerece Website</p>
-                                                    </td>
-                                                    <td>15 OCT 2023</td>
-                                                    <td>Michal Jhon</td>
-                                                </tr>
-                                                <tr class="">
-
-
-                                                    <td scope="row" class="target-cell">
-                                                        <p class="mb-0 pb-0 ms-2">4</p>
-                                                    </td>
-                                                    <td>15</td>
-                                                    <td class="">
-                                                        <p title="Ecommerece Website lorem abscd"
-                                                            class="project-name mb-0 pb-0">Ecommerece Website</p>
-                                                    </td>
-                                                    <td>15 OCT 2023</td>
-                                                    <td>Michal Jhon</td>
-                                                </tr>
-                                                <tr class="">
-
-
-                                                    <td scope="row" class="target-cell">
-                                                        <p class="mb-0 pb-0 ms-2">2</p>
-                                                    </td>
-                                                    <td>15</td>
-                                                    <td class="">
-                                                        <p title="Ecommerece Website lorem abscd"
-                                                            class="project-name mb-0 pb-0">Ecommerece Website</p>
-                                                    </td>
-                                                    <td>15 OCT 2023</td>
-                                                    <td>Michal Jhon</td>
-                                                </tr>
-                                                <tr class="">
-
-
-                                                    <td scope="row" class="target-cell">
-                                                        <p class="mb-0 pb-0 ms-2">3</p>
-                                                    </td>
-                                                    <td>15</td>
-                                                    <td class="">
-                                                        <p title="Ecommerece Website lorem abscd"
-                                                            class="project-name mb-0 pb-0">Ecommerece Website</p>
-                                                    </td>
-                                                    <td>15 OCT 2023</td>
-                                                    <td>Michal Jhon</td>
-                                                </tr>
-                                                <tr class="">
-
-
-                                                    <td scope="row" class="target-cell">
-                                                        <p class="mb-0 pb-0 ms-2">4</p>
-                                                    </td>
-                                                    <td>15</td>
-                                                    <td class="">
-                                                        <p title="Ecommerece Website lorem abscd"
-                                                            class="project-name mb-0 pb-0">Ecommerece Website</p>
-                                                    </td>
-                                                    <td>15 OCT 2023</td>
-                                                    <td>Michal Jhon</td>
-                                                </tr>
-                                                <tr class="">
-
-
-                                                    <td scope="row" class="target-cell">
-                                                        <p class="mb-0 pb-0 ms-2">4</p>
-                                                    </td>
-                                                    <td>15</td>
-                                                    <td class="">
-                                                        <p title="Ecommerece Website lorem abscd"
-                                                            class="project-name mb-0 pb-0">Ecommerece Website</p>
-                                                    </td>
-                                                    <td>15 OCT 2023</td>
-                                                    <td>Michal Jhon</td>
-                                                </tr>
-                                                <tr class="">
-
-
-                                                    <td scope="row" class="target-cell">
-                                                        <p class="mb-0 pb-0 ms-2">5</p>
-                                                    </td>
-                                                    <td>15</td>
-                                                    <td class="">
-                                                        <p title="Ecommerece Website lorem abscd"
-                                                            class="project-name mb-0 pb-0">Ecommerece Website</p>
-                                                    </td>
-                                                    <td>15 OCT 2023</td>
-                                                    <td>Michal Jhon</td>
-                                                </tr>
-                                                <tr class="">
-
-
-                                                    <td scope="row" class="target-cell">
-                                                        <p class="mb-0 pb-0 ms-2">6</p>
-                                                    </td>
-                                                    <td>15</td>
-                                                    <td class="">
-                                                        <p title="Ecommerece Website lorem abscd"
-                                                            class="project-name mb-0 pb-0">Ecommerece Website</p>
-                                                    </td>
-                                                    <td>15 OCT 2023</td>
-                                                    <td>Michal Jhon</td>
-                                                </tr>
+                                                @foreach ($deliveries as $key => $delivery)
+                                                    <tr class="">
+                                                        <td scope="row" class="target-cell">
+                                                            <p class="mb-0 pb-0 ms-2">{{ ++$key }}</p>
+                                                        </td>
+                                                        <td>{{ \Carbon\Carbon::parse($delivery->deadline)->diffInDays(now()) }}
+                                                        </td>
+                                                        <td class="">
+                                                            <p title="Ecommerece Website lorem abscd"
+                                                                class="project-name mb-0 pb-0">{{ $delivery->name }}</p>
+                                                        </td>
+                                                        <td>{{ \Carbon\Carbon::parse($delivery->deadline)->format('d M Y') }}
+                                                        </td>
+                                                        <td>{{ $delivery->client->user->name }}</td>
+                                                    </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
@@ -333,49 +139,25 @@
                         </div>
                     </div>
                 </div>
+                @php
+                    $colors = ['alert', 'warning', 'success', 'info'];
+                @endphp
                 <div class="col-xl-3 ">
                     <div class="box ticket-links mb-3">
                         <h1 class="f-20 w-500 mb-3 text-dark-clr">Recent Activity</h1>
                         <div class="recent-activities">
-                            <a class="ticket-notify px-0  mb-3" href="#">
-                                <div class="ticket-body ticket-alert">
-                                    <h4 class="text-gray text-start justify-content-start mb-2">03:10</h4>
-                                    <p class="mb-2 ellipsis-3">Morbi quis ex eu arcu auctor sagittis.</p>
-                                </div>
-                            </a>
-                            <a class="ticket-notify px-0  mb-3" href="#">
-                                <div class="ticket-body ticket-warning">
-                                    <h4 class="text-gray text-start justify-content-start mb-2">03:10</h4>
-                                    <p class="mb-2 ellipsis-3">Morbi quis ex eu arcu auctor sagittis.</p>
-                                </div>
-                            </a>
-                            <a class="ticket-notify px-0  mb-3" href="#">
-                                <div class="ticket-body ticket-info">
-                                    <h4 class="text-gray text-start justify-content-start mb-2">03:10</h4>
-                                    <p class="mb-2 ellipsis-3">Lorem ipsum dolor sit amet consectetur, adipisicing
-                                        elit. Delectus, deserunt.</p>
-                                </div>
-                            </a>
-                            <a class="ticket-notify px-0  mb-3" href="#">
-                                <div class="ticket-body ticket-success">
-                                    <h4 class="text-gray text-start justify-content-start mb-2">03:10</h4>
-                                    <p class="mb-2 ellipsis-3">Lorem ipsum dolor sit amet consectetur, adipisicing
-                                        elit. Delectus, deserunt.</p>
-                                </div>
-                            </a>
-                            <a class="ticket-notify px-0  mb-3" href="#">
-                                <div class="ticket-body ticket-alert">
-                                    <h4 class="text-gray text-start justify-content-start mb-2">03:10</h4>
-                                    <p class="mb-2 ellipsis-3">Morbi quis ex eu arcu auctor sagittis.</p>
-                                </div>
-                            </a>
-                            <a class="ticket-notify px-0  mb-3" href="#">
-                                <div class="ticket-body ticket-warning">
-                                    <h4 class="text-gray text-start justify-content-start mb-2">03:10</h4>
-                                    <p class="mb-2 ellipsis-3">Morbi quis ex eu arcu auctor sagittis.</p>
-                                </div>
-                            </a>
-
+                            @forelse (auth()->user()->notifications as $notification)
+                                <a class="ticket-notify px-0  mb-3"
+                                    href="{{ !empty($notification->data['link']) ? $notification->data['link'] : '#' }}">
+                                    <div class="ticket-body ticket-{{ $colors[array_rand($colors)] }}">
+                                        <h4 class="text-gray text-start justify-content-start mb-2">
+                                            {{ \Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</h4>
+                                        <p class="mb-2 ellipsis-3">{{ $notification->data['message'] }}</p>
+                                    </div>
+                                </a>
+                            @empty
+                                <p>No recent activity</p>
+                            @endforelse
                         </div>
                     </div>
                 </div>
