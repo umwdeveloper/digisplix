@@ -38,3 +38,14 @@ if (!function_exists('getRandomColor')) {
         return $color;
     }
 }
+
+// Generate random code
+if (!function_exists('getRandomCode')) {
+    function getRandomCode(int $length) {
+        $letters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+        $code = substr(str_shuffle($letters), 0, $length);
+
+        return $code;
+    }
+}

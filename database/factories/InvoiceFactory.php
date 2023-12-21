@@ -17,7 +17,7 @@ class InvoiceFactory extends Factory {
      */
     public function definition(): array {
         return [
-            'invoice_id' => (string) Str::uuid(),
+            'invoice_id' => getRandomCode(6),
             'invoice_from' => fake()->name(),
             'invoice_to' => fake()->name(),
             'status' => Invoice::getStatuses()[array_rand(Invoice::getStatuses())],

@@ -20,6 +20,7 @@ use App\Http\Controllers\StaffController;
 use App\Http\Controllers\TwoFAController;
 use App\Http\Controllers\UsersController;
 use App\Mail\TwoFA;
+use App\Models\Invoice;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -103,6 +104,14 @@ Route::domain('admin.digisplix.test')
 
         // Invoice
         Route::resource('invoices', InvoiceController::class);
+        Route::patch('/invoices/update-invoice-status/{invoice_id}', [InvoiceController::class, 'updateInvoiceStatus'])
+            ->name('invoices.update_invoice_status');
+        Route::patch('/invoices/mark-as-sent/{invoice_id}', [InvoiceController::class, 'markAsSent'])
+            ->name('invoices.mark_as_sent');
+        Route::patch('/invoices/send-invoice/{invoice_id}', [InvoiceController::class, 'sendInvoice'])
+            ->name('invoices.send_invoice');
+        Route::post('invoices', [InvoiceController::class, 'filtered'])
+            ->name('invoices.filtered');
 
         // If route not found
         Route::fallback(function () {

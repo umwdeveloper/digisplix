@@ -23,6 +23,9 @@ return new class extends Migration {
             $table->text('terms_n_conditions')->nullable();
             $table->text('note')->nullable();
             $table->timestamps();
+
+            $table->foreign('client_id')->references('id')->on('clients')->cascadeOnDelete();
+            $table->foreign('category_id')->references('id')->on('categories')->cascadeOnDelete();
         });
     }
 

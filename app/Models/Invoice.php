@@ -8,6 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model {
     use HasFactory;
 
+    public function category() {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function client() {
+        return $this->belongsTo(Client::class);
+    }
+
+    public function items() {
+        return $this->hasMany(InvoiceItem::class);
+    }
+
     const PENDING = 'pending';
     const PAID = 'paid';
     const OVERDUE = 'overdue';
