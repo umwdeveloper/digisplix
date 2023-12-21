@@ -5,6 +5,8 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 
 use App\Models\Client;
+use App\Models\Project;
+use App\Models\Support;
 use App\Models\User;
 use App\Policies\ClientPolicy;
 use App\Policies\LeadPolicy;
@@ -66,6 +68,17 @@ class AuthServiceProvider extends ServiceProvider {
         });
 
         // Partner
+
+        // Client
+        // ProjectController
+        Gate::define('client.projects', function (User $user, Project $project) {
+            return $project->client->id === $user->userable->id;
+        });
+
+        // SupportController
+        Gate::define('client.support', function (User $user, Support $support) {
+            return $support->user->id === $user->id;
+        });
 
         // Admin has all rights
         // Gate::before(function (User $user, string $ability) {

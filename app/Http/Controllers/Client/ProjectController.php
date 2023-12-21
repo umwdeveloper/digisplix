@@ -54,7 +54,11 @@ class ProjectController extends Controller {
      * Display the specified resource.
      */
     public function show(string $id) {
+
         $project = Project::with(['client', 'client.user', 'phases', 'phases.tasks'])->findOrFail($id);
+
+        $this->authorize('client.projects', $project);
+
         return view('clients.projects.show', [
             'project' => $project
         ]);

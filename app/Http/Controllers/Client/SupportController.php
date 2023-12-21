@@ -68,6 +68,8 @@ class SupportController extends Controller {
             'replies.attachments'
         ])->findOrFail($id);
 
+        $this->authorize('client.support', $ticket);
+
         return view('clients.support.show', [
             'ticket' => $ticket,
             'status_labels' => Support::getStatusLabels(),
@@ -96,6 +98,8 @@ class SupportController extends Controller {
             'attachments',
             'replies.attachments'
         ])->findOrFail($id);
+
+        $this->authorize('client.support', $ticket);
 
         $this->deleteAttachments($ticket->replies->pluck('attachments')->flatten());
         $this->deleteAttachments($ticket->attachments);
@@ -142,6 +146,9 @@ class SupportController extends Controller {
     public function storeReply(Request $request) {
 
         $ticket = Support::findOrFail($request->input('support_id'));
+
+        $this->authorize('client.support', $ticket);
+
         $ticket->status = Support::USER_REPLIED;
         $ticket->save();
 
@@ -161,6 +168,9 @@ class SupportController extends Controller {
 
     public function updateStatus(Request $request, string $id) {
         $ticket = Support::findOrFail($id);
+
+        $this->authorize('client.support', $ticket);
+
         $ticket->status = $request->input('status');
         $ticket->update();
 

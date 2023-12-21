@@ -78,7 +78,7 @@
                                     class="w-500 f-16">Completed</option>
                             </select>
                         </div>
-                        @foreach ($projects as $project)
+                        @forelse ($projects as $project)
                             <div class=" col-xxl-3 col-xl-4  col-md-6 mb-3">
                                 <div class="project-card">
                                     <div class="project-card--header">
@@ -110,7 +110,9 @@
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        @empty
+                            <x-no_data></x-no_data>
+                        @endforelse
                     </div>
                 </div>
 
@@ -125,18 +127,18 @@
         </div>
     </main>
 
-@section('script')
-    <script>
-        $("#filter-select").on('change', function() {
-            var url;
-            if ($(this).val() === "all") {
-                url = "{{ route('client.projects.index') }}"
-            } else {
-                url = "{{ route('client.projects.index') }}" +
-                    "?filter=" + $(this).val()
-            }
-            window.location.href = url
-        })
-    </script>
-@endsection
+    @section('script')
+        <script>
+            $("#filter-select").on('change', function() {
+                var url;
+                if ($(this).val() === "all") {
+                    url = "{{ route('client.projects.index') }}"
+                } else {
+                    url = "{{ route('client.projects.index') }}" +
+                        "?filter=" + $(this).val()
+                }
+                window.location.href = url
+            })
+        </script>
+    @endsection
 @endsection
