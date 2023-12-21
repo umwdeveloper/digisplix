@@ -460,6 +460,7 @@
                                 </a>
                             </div>
                         @empty
+                            <p class="text-center ">No tickets</p>
                         @endforelse
                     </div>
                 </div>

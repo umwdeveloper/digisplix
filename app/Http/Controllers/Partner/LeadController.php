@@ -26,9 +26,13 @@ class LeadController extends Controller {
      */
     public function index() {
 
+        // $leads = Client::with(['user', 'partner', 'partner.user'])
+        //     ->where('active', 0)
+        //     ->where('status', '!=', Client::QUALIFIED)
+        //     ->where('partner_id', auth()->user()->userable->id)
+        //     ->get();
+
         $leads = Client::with(['user', 'partner', 'partner.user'])
-            ->where('active', 0)
-            ->where('status', '!=', Client::QUALIFIED)
             ->where('partner_id', auth()->user()->userable->id)
             ->get();
 
@@ -116,6 +120,10 @@ class LeadController extends Controller {
         try {
             DB::beginTransaction();
 
+            if ($validatedData['status'] == Client::QUALIFIED) {
+                $validatedData['active'] = 1;
+            }
+
             $lead->update($validatedData);
             $lead->user->update($validatedData);
 
@@ -152,6 +160,11 @@ class LeadController extends Controller {
         try {
             $lead = Client::findOrFail($id);
             $lead->status = $request->status;
+
+            if ($lead->status == Client::QUALIFIED) {
+                $lead->active = 1;
+            }
+
             $lead->save();
 
             return response()->json(['status' => 'success']);

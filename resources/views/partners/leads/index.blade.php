@@ -216,7 +216,7 @@
                                                         <th>Bussiness Name</th>
                                                         <th>Email</th>
                                                         <th>Status</th>
-                                                        <th>Partners</th>
+                                                        <th>Partner</th>
                                                         <th>Country</th>
                                                         <th>Phone Number</th>
                                                         <th>Date</th>
@@ -292,6 +292,13 @@
                                                                 <div class="table-actions d-flex align-items-center">
                                                                     <button class="edit"
                                                                         data-lead-id="{{ $lead->id }}">Edit</button>
+                                                                    <form
+                                                                        action="{{ route('partner.leads.destroy', $lead->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button class="delete">Delete</button>
+                                                                    </form>
                                                                 </div>
 
 
@@ -315,7 +322,7 @@
                                                     <th>Bussiness Name</th>
                                                     <th>Email</th>
                                                     <th>Status</th>
-                                                    <th>Partners</th>
+                                                    <th>Partner</th>
                                                     <th>Country</th>
                                                     <th>Phone Number</th>
                                                     <th>Date</th>
@@ -389,6 +396,13 @@
                                                             <div class="table-actions d-flex align-items-center">
                                                                 <button class="edit"
                                                                     data-lead-id="{{ $lead->id }}">Edit</button>
+                                                                <form
+                                                                    action="{{ route('partner.leads.destroy', $lead->id) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button class="delete">Delete</button>
+                                                                </form>
                                                             </div>
 
 
@@ -410,7 +424,7 @@
                                                     <th>Bussiness Name</th>
                                                     <th>Email</th>
                                                     <th>Status</th>
-                                                    <th>Partners</th>
+                                                    <th>Partner</th>
                                                     <th>Country</th>
                                                     <th>Phone Number</th>
                                                     <th>Date</th>
@@ -484,6 +498,13 @@
                                                             <div class="table-actions d-flex align-items-center">
                                                                 <button class="edit"
                                                                     data-lead-id="{{ $lead->id }}">Edit</button>
+                                                                <form
+                                                                    action="{{ route('partner.leads.destroy', $lead->id) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button class="delete">Delete</button>
+                                                                </form>
                                                             </div>
 
 

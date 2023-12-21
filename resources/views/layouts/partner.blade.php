@@ -144,6 +144,17 @@
                             </li>
 
                             <li class="menu-item">
+                                <a href="/commission">
+                                    <span class="menu-icon">
+                                        <i class="fa-duotone fa-chart-mixed-up-circle-dollar"></i>
+                                    </span>
+                                    <span class="menu-title">Commission
+                                    </span>
+                                </a>
+
+                            </li>
+
+                            <li class="menu-item">
                                 <a href="{{ route('chat') }}">
                                     <span class="menu-icon">
                                         <i class="fa-duotone fa-messages"></i>
@@ -255,13 +266,19 @@
             </a>
         </div>
         <div class="footer-menu-link">
+            <a href="/commission">
+                <i class="fa-duotone fa-chart-mixed-up-circle-dollar"></i>
+                Commission
+            </a>
+        </div>
+        <div class="footer-menu-link">
             <a href="{{ route('chat') }}">
                 <i class="fa-duotone fa-messages"></i>
                 Chats
             </a>
         </div>
         <div class="footer-menu-link">
-            <a href="logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit()">
+            <a href="/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit()">
                 <i class="fa-duotone fa-arrow-right-from-bracket"></i>
                 Logout
             </a>

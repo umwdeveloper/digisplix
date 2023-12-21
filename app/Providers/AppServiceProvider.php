@@ -18,8 +18,8 @@ class AppServiceProvider extends ServiceProvider {
      * Bootstrap any application services.
      */
     public function boot(): void {
-        $sharedTickets = Support::with('user')->orderByDesc('created_at')->get();
+        // $sharedTickets = Support::with('user')->orderByDesc('created_at')->get();
 
-        view()->share('shared_tickets', $sharedTickets);
+        // view()->share('shared_tickets', $sharedTickets);
     }
 }

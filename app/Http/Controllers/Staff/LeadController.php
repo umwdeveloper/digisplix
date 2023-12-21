@@ -28,7 +28,8 @@ class LeadController extends Controller {
     public function index() {
         $this->authorize('staff.leads');
 
-        $leads = Client::with(['user', 'partner', 'partner.user'])->where('active', 0)->where('status', '!=', Client::QUALIFIED)->get();
+        // $leads = Client::with(['user', 'partner', 'partner.user'])->where('active', 0)->where('status', '!=', Client::QUALIFIED)->get();
+        $leads = Client::with(['user', 'partner', 'partner.user'])->get();
 
         $partners = Partner::with('user')->get();
 
@@ -120,6 +121,10 @@ class LeadController extends Controller {
         try {
             DB::beginTransaction();
 
+            if ($validatedData['status'] == Client::QUALIFIED) {
+                $validatedData['active'] = 1;
+            }
+
             $lead->update($validatedData);
             $lead->user->update($validatedData);
 
@@ -160,6 +165,11 @@ class LeadController extends Controller {
         try {
             $lead = Client::findOrFail($id);
             $lead->status = $request->status;
+
+            if ($lead->status == Client::QUALIFIED) {
+                $lead->active = 1;
+            }
+
             $lead->save();
 
             // Send notification

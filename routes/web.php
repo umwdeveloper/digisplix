@@ -35,7 +35,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::domain('admin.digisplix.test')
-    ->middleware(['auth', 'staff', '2fa'])
+    ->middleware(['auth', 'staff', '2fa', 'support_middleware'])
     ->name('staff.')
     ->group(function () {
         // Staff
@@ -112,7 +112,7 @@ Route::domain('admin.digisplix.test')
 
 Route::domain('partner.digisplix.test')
     ->name('partner.')
-    ->middleware(['auth', '2fa'])
+    ->middleware(['auth', '2fa', 'support_middleware'])
     ->group(function () {
         Route::put('/update/{id}', [PartnerController::class, 'update'])
             ->name('update');
@@ -142,7 +142,7 @@ Route::domain('partner.digisplix.test')
 
 Route::domain('client.digisplix.test')
     ->name('client.')
-    ->middleware(['auth', '2fa'])
+    ->middleware(['auth', '2fa', 'support_middleware'])
     ->group(function () {
         Route::put('/update/{id}', [ClientController::class, 'update'])
             ->name('update');
