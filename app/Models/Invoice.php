@@ -24,7 +24,6 @@ class Invoice extends Model {
     const PAID = 'paid';
     const OVERDUE = 'overdue';
     const DRAFT = 'draft';
-    const RECURRING = 'recurring';
     const CANCELLED = 'cancelled';
 
     private static $statuses = [
@@ -32,7 +31,6 @@ class Invoice extends Model {
         self::PAID,
         self::OVERDUE,
         self::DRAFT,
-        self::RECURRING,
         self::CANCELLED,
     ];
 
@@ -49,7 +47,6 @@ class Invoice extends Model {
         self::PAID => 'Paid',
         self::OVERDUE => 'Overdue',
         self::DRAFT => 'Draft',
-        self::RECURRING => 'Recurring',
         self::CANCELLED => 'Cancelled',
     ];
 
@@ -66,7 +63,6 @@ class Invoice extends Model {
         self::PAID => '#063AF6',
         self::OVERDUE => '#E400F7',
         self::DRAFT => '#F75C06',
-        self::RECURRING => '#F70606',
         self::CANCELLED => '#06F744',
     ];
 

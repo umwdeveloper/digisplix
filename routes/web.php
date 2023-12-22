@@ -110,7 +110,7 @@ Route::domain('admin.digisplix.test')
             ->name('invoices.mark_as_sent');
         Route::patch('/invoices/send-invoice/{invoice_id}', [InvoiceController::class, 'sendInvoice'])
             ->name('invoices.send_invoice');
-        Route::post('invoices', [InvoiceController::class, 'filtered'])
+        Route::post('invoices/filtered', [InvoiceController::class, 'filtered'])
             ->name('invoices.filtered');
 
         // If route not found

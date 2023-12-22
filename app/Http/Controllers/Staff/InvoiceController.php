@@ -35,7 +35,7 @@ class InvoiceController extends Controller {
             'paid_invoices' => $invoices->where('status', Invoice::PAID),
             'overdue_invoices' => $invoices->where('status', Invoice::OVERDUE),
             'draft_invoices' => $invoices->where('status', Invoice::DRAFT),
-            'recurring_invoices' => $invoices->where('status', Invoice::RECURRING),
+            'recurring_invoices' => $invoices->where('recurring', 1),
             'cancelled_invoices' => $invoices->where('status', Invoice::CANCELLED),
             'total_price' => round($invoices->sum('items_sum_price')),
             'total_price_paid' => round($invoices->where('status', Invoice::PAID)->sum('items_sum_price')),
@@ -86,7 +86,7 @@ class InvoiceController extends Controller {
             'paid_invoices' => $invoices->where('status', Invoice::PAID),
             'overdue_invoices' => $invoices->where('status', Invoice::OVERDUE),
             'draft_invoices' => $invoices->where('status', Invoice::DRAFT),
-            'recurring_invoices' => $invoices->where('status', Invoice::RECURRING),
+            'recurring_invoices' => $invoices->where('recurring', 1),
             'cancelled_invoices' => $invoices->where('status', Invoice::CANCELLED),
             'total_price' => round($invoices->sum('items_sum_price')),
             'total_price_paid' => round($invoices->where('status', Invoice::PAID)->sum('items_sum_price')),
@@ -118,7 +118,7 @@ class InvoiceController extends Controller {
      * Store a newly created resource in storage.
      */
     public function store(Request $request) {
-        //
+        dd($request);
     }
 
     /**
@@ -156,7 +156,7 @@ class InvoiceController extends Controller {
             $code = getRandomCode(6);
 
             $codeExists = Invoice::where('invoice_id', $code)->get();
-        } while ($codeExists);
+        } while ($codeExists->count() > 0);
 
         return $code;
     }

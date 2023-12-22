@@ -29,266 +29,309 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
 
-                    <div class="col-lg-12 ">
-                        <div class="box mb-4 box-p" style="overflow: normal !important;">
-                            <div class="row ">
-                                <div class="col-lg-12">
-                                    <h1 class="invoice-heading text-primary mb-4">Invoice Details</h1>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="box-gray box-p">
-                                        <div class="row">
-                                            <div class="col-lg-4 ">
-                                                <div class="mb-lg-0 mb-4">
-                                                    <label for="" class="invoice-label">Customer Name</label>
-                                                    <select name="client" id="client">
-                                                        @foreach ($clients as $client)
-                                                            <option value="{{ $client->id }}">{{ $client->user->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 ">
-                                                <div class="mb-lg-0 mb-4">
-                                                    <label for="" class="invoice-label">Category</label>
-                                                    <select name="category" id="category">
-                                                        @foreach ($categories as $category)
-                                                            <option value="{{ $category->id }}">{{ $category->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="mb-lg-0 mb-4">
-                                                    <label for="" class="invoice-label">Select</label>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            id="flexCheckChecked" name="recurring">
-                                                        <label class="form-check-label" for="flexCheckChecked">
-                                                            Recurring Invoice
-                                                        </label>
+                    <form action="{{ route('staff.invoices.store') }}" method="post" id="invoice-form">
+                        @csrf
+                        <div class="col-lg-12 ">
+                            <div class="box mb-4 box-p" style="overflow: normal !important;">
+                                <div class="row ">
+                                    <div class="col-lg-12">
+                                        <h1 class="invoice-heading text-primary mb-4">Invoice Details</h1>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="box-gray box-p">
+                                            <div class="row">
+                                                <div class="col-lg-4 ">
+                                                    <div class="mb-lg-0 mb-4">
+                                                        <label for="" class="invoice-label">Customer Name</label>
+                                                        <select name="client" id="client">
+                                                            @foreach ($clients as $client)
+                                                                <option value="{{ $client->id }}">
+                                                                    {{ $client->user->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 mt-4">
-                                    <div class="d-flex justify-content-between align-items-center  mb-4">
-                                        <div>
-                                            <h1 class="invoice-heading text-primary mb-0 pb-0">Items Details</h1>
-                                        </div>
-                                        <div> <button class="ticket-fill add-item"
-                                                style="width: fit-content !important;">Add
-                                                Item</button></div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="box-gray mb-4 pb-0 pt-0  item-add-box-div box-p">
-                                        <div class="row item-add-box mt-4">
-                                            <div class="col-lg-12 ">
-                                                <div class="d-flex align-items-center justify-content-between mb-3">
-                                                    <h2 class="f-16 w-500 text-primary">Item (1):</h2>
-                                                    <div>
-                                                        <i class="fa-solid fa-trash-xmark text-danger f-20 ms-2"></i>
+                                                <div class="col-lg-4 ">
+                                                    <div class="mb-lg-0 mb-4">
+                                                        <label for="" class="invoice-label">Category</label>
+                                                        <select name="category" id="category">
+                                                            @foreach ($categories as $category)
+                                                                <option value="{{ $category->id }}">{{ $category->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 mb-lg-0 mb-3">
-                                                <label for="" class="invoice-label">Item Description</label>
-                                                <div class="selectBox bg-white">
-                                                    <input type="text" required name="descriptions[]" class="w-100"
-                                                        placeholder="">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-2 col-md-6 mb-lg-0 mb-3">
-                                                <label for="" class="invoice-label">Price</label>
-                                                <div class="selectBox bg-white">
-                                                    <input type="text" required name="prices" pattern="[0-9]+"
-                                                        oninput="validateNumbers(this)" class="w-100" placeholder="">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-2 col-md-6 mb-lg-0 mb-3">
-                                                <label for="" class="invoice-label">Quantity</label>
-                                                <div class="selectBox bg-white">
-                                                    <input type="text" required name="quantities[]" pattern="[0-9]+"
-                                                        oninput="validateNumbers(this)" class="w-100" placeholder="">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-2 col-md-6 mb-lg-0 mb-3">
-                                                <label for="" class="invoice-label">Total</label>
-                                                <div class="selectBox bg-white">
-                                                    <input type="text" required readonly class="w-100" placeholder="">
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <!-- Hidden template for cloning -->
-                                        <div class="item-add-box-template " style="display: none;">
-                                            <div class="row item-add-box mt-4">
-                                                <div class="col-lg-12 ">
-                                                    <div class="d-flex align-items-center justify-content-between mb-3">
-                                                        <h2 class="f-16 w-500 text-primary">Item (1):</h2>
-                                                        <div>
-                                                            <i class="fa-solid fa-trash-xmark text-danger f-20 ms-2"></i>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-lg-0 mb-4">
+                                                        <label for="" class="invoice-label">Select</label>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                id="flexCheckChecked" name="recurring">
+                                                            <label class="form-check-label" for="flexCheckChecked">
+                                                                Recurring Invoice
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6 col-md-6 mb-lg-0 mb-3">
-                                                    <label for="" class="invoice-label">Item Description</label>
-                                                    <div class="selectBox bg-white">
-                                                        <input type="text" required name="descriptions[]"
-                                                            class="w-100" placeholder="">
+                                            </div>
+                                            <div class="recurring-details " style="display: block;">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="">
+                                                            <div class="multipleSelection mt-4">
+                                                                <div class="selectBox bg-white">
+                                                                    <input type="month" name="start_from" class="w-100"
+                                                                        placeholder="Enter references No.">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="">
+                                                            <div class="multipleSelection mt-4">
+                                                                <div class="selectBox bg-white">
+                                                                    <input type="number" name="duration" min="1"
+                                                                        class="w-100" placeholder="Enter Months">
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-2 col-md-6 mb-lg-0 mb-3">
-                                                    <label for="" class="invoice-label">Price</label>
-                                                    <div class="selectBox bg-white">
-                                                        <input type="text" required name="prices" pattern="[0-9]+"
-                                                            oninput="validateNumbers(this)" class="w-100"
-                                                            placeholder="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 mt-4">
+                                        <div class="d-flex justify-content-between align-items-center  mb-4">
+                                            <div>
+                                                <h1 class="invoice-heading text-primary mb-0 pb-0">Items Details</h1>
+                                            </div>
+                                            <div> <button type="button" class="ticket-fill add-item"
+                                                    style="width: fit-content !important;">Add
+                                                    Item</button></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12">
+                                        <div class="box-gray mb-4 pb-0 pt-0  item-add-box-div box-p">
+                                            @php
+                                                $invoiceItems = old('descriptions', ['']); // Set the desired number of items
+                                            @endphp
+
+                                            @for ($i = 0; $i < count($invoiceItems); $i++)
+                                                <div class="row item-add-box mt-4">
+                                                    <div class="col-lg-12 ">
+                                                        <div class="d-flex align-items-center justify-content-between mb-3">
+                                                            <h2 class="f-16 w-500 text-primary">Item ({{ $i + 1 }}):
+                                                            </h2>
+                                                            <div>
+                                                                <i
+                                                                    class="fa-solid fa-trash-xmark text-danger f-20 ms-2"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 mb-lg-0 mb-3">
+                                                        <label for="" class="invoice-label">Item Description</label>
+                                                        <div class="selectBox bg-white">
+                                                            <input type="text" required name="descriptions[]"
+                                                                class="w-100" value="{{ old('descriptions.' . $i) }}"
+                                                                placeholder="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-6 mb-lg-0 mb-3">
+                                                        <label for="" class="invoice-label">Price</label>
+                                                        <div class="selectBox bg-white">
+                                                            <input type="text" required name="prices[]"
+                                                                pattern="[0-9]+" oninput="validateNumbers(this)"
+                                                                class="w-100" value="{{ old('prices.' . $i) }}"
+                                                                placeholder="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-6 mb-lg-0 mb-3">
+                                                        <label for="" class="invoice-label">Quantity</label>
+                                                        <div class="selectBox bg-white">
+                                                            <input type="text" required name="quantities[]"
+                                                                pattern="[0-9]+" oninput="validateNumbers(this)"
+                                                                class="w-100" value="{{ old('quantities.' . $i) }}"
+                                                                placeholder="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-6 mb-lg-0 mb-3">
+                                                        <label for="" class="invoice-label">Total</label>
+                                                        <div class="selectBox bg-white">
+                                                            <input type="text" required readonly class="w-100 total"
+                                                                placeholder="">
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-2 col-md-6 mb-lg-0 mb-3">
-                                                    <label for="" class="invoice-label">Quantity</label>
-                                                    <div class="selectBox bg-white">
-                                                        <input type="text" required name="quantities[]"
-                                                            pattern="[0-9]+" oninput="validateNumbers(this)"
-                                                            class="w-100" placeholder="">
+                                            @endfor
+                                            <!-- Hidden template for cloning -->
+                                            {{-- <div class="item-add-box-template " style="display: none;">
+                                                <div class="row item-add-box mt-4">
+                                                    <div class="col-lg-12 ">
+                                                        <div
+                                                            class="d-flex align-items-center justify-content-between mb-3">
+                                                            <h2 class="f-16 w-500 text-primary">Item (1):</h2>
+                                                            <div>
+                                                                <i
+                                                                    class="fa-solid fa-trash-xmark text-danger f-20 ms-2"></i>
+                                                            </div>
+                                                        </div>
                                                     </div>
+                                                    <div class="col-lg-6 col-md-6 mb-lg-0 mb-3">
+                                                        <label for="" class="invoice-label">Item
+                                                            Description</label>
+                                                        <div class="selectBox bg-white">
+                                                            <input type="text" required name="descriptions[]"
+                                                                class="w-100" placeholder="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-6 mb-lg-0 mb-3">
+                                                        <label for="" class="invoice-label">Price</label>
+                                                        <div class="selectBox bg-white">
+                                                            <input type="text" required name="prices[]"
+                                                                pattern="[0-9]+" oninput="validateNumbers(this)"
+                                                                class="w-100" placeholder="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-6 mb-lg-0 mb-3">
+                                                        <label for="" class="invoice-label">Quantity</label>
+                                                        <div class="selectBox bg-white">
+                                                            <input type="text" required name="quantities[]"
+                                                                pattern="[0-9]+" oninput="validateNumbers(this)"
+                                                                class="w-100" placeholder="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-6 mb-lg-0 mb-3">
+                                                        <label for="" class="invoice-label">Total</label>
+                                                        <div class="selectBox bg-white">
+                                                            <input type="text" required readonly class="w-100 total"
+                                                                placeholder="">
+                                                        </div>
+                                                    </div>
+
                                                 </div>
-                                                <div class="col-lg-2 col-md-6 mb-lg-0 mb-3">
-                                                    <label for="" class="invoice-label">Total</label>
-                                                    <div class="selectBox bg-white">
-                                                        <input type="text" required readonly class="w-100"
-                                                            placeholder="">
-                                                    </div>
+                                            </div> --}}
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-4 mt-4">
+                                        <div class="box-gray box-p">
+                                            <h1 class="invoice-heading text-primary mb-4">Invoice Details</h1>
+                                            <div>
+
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <div class="invoice-label">Invoice NO&nbsp;:&nbsp;</div>
+                                                    <div class="invoice-value" style="outline: none !important;">
+                                                        #{{ $invoice_number }}</div>
+                                                    <input type="hidden" name="invoice_id"
+                                                        value="{{ $invoice_number }}">
+                                                </div>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="invoice-label">Due Date&nbsp;:&nbsp;</div>
+                                                    <div class="invoice-value"><input type="date" required
+                                                            name="due_date" value=""
+                                                            class="border-0 bg-transparent text-primary invoice-date"
+                                                            style="outline: none;"></div>
                                                 </div>
 
                                             </div>
                                         </div>
                                     </div>
-
-                                </div>
-                                <div class="col-lg-4 mt-4">
-                                    <div class="box-gray box-p">
-                                        <h1 class="invoice-heading text-primary mb-4">Invoice Details</h1>
-                                        <div>
-
-                                            <div class="d-flex align-items-center mb-2">
-                                                <div class="invoice-label">Invoice NO&nbsp;:&nbsp;</div>
-                                                <div class="invoice-value" contenteditable="true"
-                                                    style="outline: none !important;">#{{ $invoice_number }}</div>
-                                            </div>
-                                            <div class="d-flex align-items-center mb-2">
-                                                <div class="invoice-label">Date&nbsp;:&nbsp;</div>
-                                                <div class="invoice-value"><input type="date" name=""
-                                                        id="" value=""
-                                                        class="border-0 bg-transparent text-primary invoice-date"
-                                                        style="outline: none;"></div>
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <div class="invoice-label">Due Date&nbsp;:&nbsp;</div>
-                                                <div class="invoice-value"><input type="date" name=""
-                                                        id="" value=""
-                                                        class="border-0 bg-transparent text-primary invoice-date"
-                                                        style="outline: none;"></div>
-                                            </div>
+                                    <div class="col-lg-4 mt-4">
+                                        <div class="box-gray box-p">
+                                            <h1 class="invoice-heading text-primary mb-4">Invoice From
+                                            </h1>
+                                            <textarea name="invoice_from" required id="invoice_from" rows="3" class="border-0 f-14 w-400 bg-transparent"
+                                                style="width: 100%; outline: none;">{{ $admin->name }}</textarea>
 
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-4 mt-4">
-                                    <div class="box-gray box-p">
-                                        <h1 class="invoice-heading text-primary mb-4">Invoice From
-                                        </h1>
-                                        <textarea name="" id="invoice_from" rows="3" class="border-0 f-14 w-400 bg-transparent"
-                                            style="width: 100%; outline: none;">{{ $admin->name }}</textarea>
+                                    <div class="col-lg-4 mt-4">
+                                        <div class="box-gray box-p">
+                                            <h1 class="invoice-heading text-primary mb-4">Invoice To</h1>
+                                            <textarea name="invoice_to" required id="invoice_to" rows="3" class="border-0 f-14 w-400 bg-transparent"
+                                                style="width: 100%; outline: none;">{{ $clients->first()->user->name }}</textarea>
 
+
+
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-4 mt-4">
-                                    <div class="box-gray box-p">
-                                        <h1 class="invoice-heading text-primary mb-4">Invoice To</h1>
-                                        <textarea name="" id="invoice_to" rows="3" class="border-0 f-14 w-400 bg-transparent"
-                                            style="width: 100%; outline: none;">{{ $clients->first()->user->name }}</textarea>
+                                    <div class="col-lg-6 mt-4 ">
+                                        <h1 class="invoice-heading text-primary mb-4">More Fields</h1>
+                                        <div class="box-gray h-auto box-p text-center ">
+                                            <p class="text-danger f-14 d-none bank-error">Enter complete bank details</p>
+                                            <button class="ticket-fill py-4 mb-3 w-100" type="button"
+                                                data-bs-toggle="modal" data-bs-target="#bankModal"><i
+                                                    class="fa-solid fa-circle-plus me-2"></i> Add
+                                                Bank Details</button>
 
-
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mt-4 ">
-                                    <h1 class="invoice-heading text-primary mb-4">More Fields</h1>
-                                    <div class="box-gray h-auto box-p">
-                                        <button class="ticket-fill py-4 mb-3 w-100" type="button" data-bs-toggle="modal"
-                                            data-bs-target="#bankModal"><i class="fa-solid fa-circle-plus me-2"></i> Add
-                                            Bank Details</button>
-
-                                        <div class="accordion" id="accordionExample">
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="headingOne">
-                                                    <button class="accordion-button accordian-invoice-icon collapsed"
-                                                        type="button" data-bs-toggle="collapse"
-                                                        data-bs-target="#collapseOne" aria-expanded="true"
-                                                        aria-controls="collapseOne">
-                                                        <i class="fa-solid fa-circle-plus me-2"></i> Add Terms &
-                                                        Conditions
-                                                    </button>
-                                                </h2>
-                                                <div id="collapseOne" class="accordion-collapse collapse "
-                                                    aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                                    <div class="accordion-body">
-                                                        <textarea name="" id="" rows="5" class="border-0 " style="width: 100%; outline: none;"
-                                                            placeholder="Add Details..."></textarea>
+                                            <div class="accordion" id="accordionExample">
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="headingOne">
+                                                        <button class="accordion-button accordian-invoice-icon collapsed"
+                                                            type="button" data-bs-toggle="collapse"
+                                                            data-bs-target="#collapseOne" aria-expanded="true"
+                                                            aria-controls="collapseOne">
+                                                            <i class="fa-solid fa-circle-plus me-2"></i> Add Terms &
+                                                            Conditions
+                                                        </button>
+                                                    </h2>
+                                                    <div id="collapseOne" class="accordion-collapse collapse "
+                                                        aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                                        <div class="accordion-body">
+                                                            <textarea name="terms_n_conditions" rows="5" class="border-0 " style="width: 100%; outline: none;"
+                                                                placeholder="Add Details..."></textarea>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="headingTwo">
-                                                    <button class="accordion-button accordian-invoice-icon collapsed"
-                                                        type="button" data-bs-toggle="collapse"
-                                                        data-bs-target="#collapseTwo" aria-expanded="false"
-                                                        aria-controls="collapseTwo">
-                                                        <i class="fa-solid fa-circle-plus me-2"></i>Add Notes
-                                                    </button>
-                                                </h2>
-                                                <div id="collapseTwo" class="accordion-collapse collapse"
-                                                    aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                                    <div class="accordion-body">
-                                                        <textarea name="" id="" rows="5" class="border-0 " style="width: 100%; outline: none;"
-                                                            placeholder="Add Details..."></textarea>
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="headingTwo">
+                                                        <button class="accordion-button accordian-invoice-icon collapsed"
+                                                            type="button" data-bs-toggle="collapse"
+                                                            data-bs-target="#collapseTwo" aria-expanded="false"
+                                                            aria-controls="collapseTwo">
+                                                            <i class="fa-solid fa-circle-plus me-2"></i>Add Notes
+                                                        </button>
+                                                    </h2>
+                                                    <div id="collapseTwo" class="accordion-collapse collapse"
+                                                        aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                                        <div class="accordion-body">
+                                                            <textarea name="note" rows="5" class="border-0 " style="width: 100%; outline: none;"
+                                                                placeholder="Add Details..."></textarea>
 
+                                                        </div>
                                                     </div>
                                                 </div>
+
                                             </div>
 
-                                        </div>
 
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mt-4 ">
-                                    <h1 class="invoice-heading text-primary mb-4">Summary</h1>
-                                    <div class="box-gray h-auto box-p">
-                                        <div class="summary-div d-flex justify-content-between">
-                                            <p class="f-20 w-500 text-primary mb-0 pb-0">Total Amount
-                                            </p>
-
-                                            <p class="f-20 w-500 text-primary mb-0 pb-0">534$</p>
                                         </div>
                                     </div>
-                                    <button class="ticket-fill ms-auto mt-3">Save Invoice</button>
-                                </div>
+                                    <div class="col-lg-6 mt-4 ">
+                                        <h1 class="invoice-heading text-primary mb-4">Summary</h1>
+                                        <div class="box-gray h-auto box-p">
+                                            <div class="summary-div d-flex justify-content-between">
+                                                <p class="f-20 w-500 text-primary mb-0 pb-0">Total Amount
+                                                </p>
 
+                                                <input type="hidden" id="grand-total" value="0">
+
+                                                <p class="f-20 w-500 text-primary mb-0 pb-0">$<span
+                                                        class="grand-total"></span></p>
+                                            </div>
+                                        </div>
+                                        <button class="ticket-fill ms-auto mt-3" id="save-invoice">Save Invoice</button>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
 
                     <div class="row mb-3">
                         <div class="col-lg-12">
@@ -303,6 +346,48 @@
         </div>
         <!-- </div> -->
     </main>
+
+    <!-- Hidden template for cloning -->
+    <div class="item-add-box-template " style="display: none;">
+        <div class="row item-add-box mt-4">
+            <div class="col-lg-12 ">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h2 class="f-16 w-500 text-primary">Item (1):</h2>
+                    <div>
+                        <i class="fa-solid fa-trash-xmark text-danger f-20 ms-2"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 mb-lg-0 mb-3">
+                <label for="" class="invoice-label">Item
+                    Description</label>
+                <div class="selectBox bg-white">
+                    <input type="text" required name="descriptions[]" class="w-100" placeholder="">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-6 mb-lg-0 mb-3">
+                <label for="" class="invoice-label">Price</label>
+                <div class="selectBox bg-white">
+                    <input type="text" required name="prices[]" pattern="[0-9]+" oninput="validateNumbers(this)"
+                        class="w-100" placeholder="">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-6 mb-lg-0 mb-3">
+                <label for="" class="invoice-label">Quantity</label>
+                <div class="selectBox bg-white">
+                    <input type="text" required name="quantities[]" pattern="[0-9]+" oninput="validateNumbers(this)"
+                        class="w-100" placeholder="">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-6 mb-lg-0 mb-3">
+                <label for="" class="invoice-label">Total</label>
+                <div class="selectBox bg-white">
+                    <input type="text" required readonly class="w-100 total" placeholder="">
+                </div>
+            </div>
+
+        </div>
+    </div>
 
     <!-- Bank Modal -->
     <div class="modal fade" id="bankModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -319,16 +404,16 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control crm-input" id="name"
-                                            placeholder="Mickel">
+                                        <input type="text" required name="account_holder_name"
+                                            class="form-control crm-input" id="name" placeholder="Mickel">
                                         <label class="crm-label form-label" for="name">Account Holder Name<span
                                                 class="text-danger">*</span></label>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control crm-input" id="bank-name"
-                                            placeholder="Mickel">
+                                        <input type="text" required name="bank_name" class="form-control crm-input"
+                                            id="bank-name" placeholder="Mickel">
                                         <label class="crm-label form-label" for="bank-name">Bank name<span
                                                 class="text-danger">*</span></label>
                                     </div>
@@ -337,8 +422,8 @@
 
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control crm-input" id="code"
-                                            placeholder="ABC">
+                                        <input type="text" required name="ifsc_code" class="form-control crm-input"
+                                            id="code" placeholder="ABC">
                                         <label class="crm-label form-label" for="code">IFSC Code<span
                                                 class="text-danger">*</span></label>
                                     </div>
@@ -346,8 +431,8 @@
 
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control crm-input" id="acc-num"
-                                            placeholder="ABC">
+                                        <input type="text" required name="account_number"
+                                            class="form-control crm-input" id="acc-num" placeholder="ABC">
                                         <label class="crm-label form-label" for="acc-num">Account Number<span
                                                 class="text-danger">*</span></label>
                                     </div>
@@ -358,7 +443,9 @@
                                     <div class="d-flex justify-content-lg-end justify-content-center mt-3 mb-3">
                                         <button type="button" class="modal-btn-cancel me-3"
                                             data-bs-dismiss="modal">Cancel</button>
-                                        <button type="button" class="modal-btn-save ">Save </button>
+                                        <button type="button" class="modal-btn-save save-bank"
+                                            data-bs-dismiss="modal">Save
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -417,17 +504,6 @@
                                     <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">United States</p>
                                 </div>
                             </div>
-                            <!-- <div class="col-lg-4 mb-lg-0 mb-4">
-                                                                                                                                                                                                                                    <div class="">
-                                                                                                                                                                                                                                        <p class="f-14 w-400 text-white mb-2 pb-0">Issue Date : 27 Jul 2022</p>
-                                                                                                                                                                                                                                        <p class="f-14 w-400 text-white mb-2 pb-0">Due Date : 27 Aug 2022</p>
-                                                                                                                                                                                                                                        <p class="f-14 w-400 text-white mb-2 pb-0">Due Amount : $ 1,54,22</p>
-                                                                                                                                                                                                                                        <p class="f-14 w-400 text-white mb-2 pb-0">Recurring Invoice : 15 Months </p>
-                                                                                                                                                                                                                                        <p class="f-14 w-400 text-white mb-2 pb-0">PO Number : 54515454
-
-                                                                                                                                                                                                                                        </p>
-                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                </div> -->
                         </div>
                     </div>
                     <div class="px-4">
@@ -700,7 +776,64 @@
         function validateNumbers(input) {
             // Remove non-numeric characters
             input.value = input.value.replace(/\D/g, '');
+
+            calculateTotal(input);
         }
+    </script>
+
+    {{-- Calculate total prices --}}
+    <script>
+        function calculateTotal(input) {
+            var price = parseFloat($(input).closest('.row').find('input[name="prices[]"]').val()) || 0;
+            var quantity = parseFloat($(input).closest('.row').find('input[name="quantities[]"]').val()) || 0;
+            var total = price * quantity;
+
+            console.log(price);
+            console.log(quantity);
+
+            $(input).closest('.row').find('.total').val(total);
+            calculateGrandTotal();
+        }
+
+        function calculateGrandTotal() {
+            var grandTotal = 0;
+
+            $('.total').each(function() {
+                grandTotal += parseFloat($(this).val()) || 0;
+            });
+
+            $('#grand-total').val(grandTotal)
+            $('.grand-total').text(grandTotal)
+        }
+    </script>
+
+    {{-- Save bank details --}}
+    <script>
+        $('#invoice-form').on('submit', function(e) {
+            let accountHolderName = $('#name').val()
+            let bankName = $('#bank-name').val()
+            let ifscCode = $('#code').val()
+            let accountNumber = $('#acc-num').val()
+
+            $('.bank-error').addClass('d-none')
+
+            if (
+                accountHolderName.trim().length === 0 ||
+                bankName.trim().length === 0 ||
+                ifscCode.trim().length === 0 ||
+                accountNumber.trim().length === 0
+            ) {
+                $('.bank-error').removeClass('d-none')
+                return false;
+            }
+
+            $(this).append(`<input type="text" name="account_holder_name" value="${accountHolderName}">`)
+            $(this).append(`<input type="text" name="bank_name" value="${bankName}">`)
+            $(this).append(`<input type="text" name="ifsc_code" value="${ifscCode}">`)
+            $(this).append(`<input type="text" name="account_number" value="${accountNumber}">`)
+
+            $(this).submit()
+        })
     </script>
 @endsection
 @endsection
