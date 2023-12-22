@@ -384,8 +384,16 @@ a {
     font-weight: 700 !important;
 }
 
-
-
+.user-name h3{
+    width: 125px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.user-name p{
+    width: 125px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .user-icon {
     height: 50px;
     width: 50px;
@@ -394,6 +402,12 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 7px !important;
+    overflow: hidden;
+    flex-shrink: 0 !important;
+}
+.user-icon  img{
+    border-radius: 7px !important;
 }
 
 .user-icon i {

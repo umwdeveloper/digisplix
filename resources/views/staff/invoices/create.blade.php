@@ -44,20 +44,24 @@
                                             <div class="row">
                                                 <div class="col-lg-4 ">
                                                     <div class="mb-lg-0 mb-4">
+                                                        <div class="mb-3">
                                                         <label for="" class="invoice-label">Customer Name</label>
-                                                        <select name="client" id="client">
+                                                        <select name="client" id="client" class="form-select form-select-sm mt-2"
+                                                        >
                                                             @foreach ($clients as $client)
                                                                 <option value="{{ $client->id }}">
                                                                     {{ $client->user->name }}
                                                                 </option>
                                                             @endforeach
                                                         </select>
+                                                        </div>
+                                                      
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4 ">
                                                     <div class="mb-lg-0 mb-4">
                                                         <label for="" class="invoice-label">Category</label>
-                                                        <select name="category" id="category">
+                                                        <select name="category" id="category" class="form-select form-select-sm mt-2">
                                                             @foreach ($categories as $category)
                                                                 <option value="{{ $category->id }}">{{ $category->name }}
                                                                 </option>
@@ -68,7 +72,7 @@
                                                 <div class="col-lg-4">
                                                     <div class="mb-lg-0 mb-4">
                                                         <label for="" class="invoice-label">Select</label>
-                                                        <div class="form-check">
+                                                        <div class="form-check mt-2">
                                                             <input class="form-check-input" type="checkbox"
                                                                 id="flexCheckChecked" name="recurring">
                                                             <label class="form-check-label" for="flexCheckChecked">

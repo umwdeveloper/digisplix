@@ -1,6 +1,6 @@
 <div>
     <div aria-live="polite" aria-atomic="true" class="position-relative">
-        <div class="toast-container top-0 end-0 p-3">
+        <div class="toast-container  p-3 " style="position:absolute;">
             <div class="toast align-items-center" id="toast" role="alert" aria-live="assertive" aria-atomic="true"
                 data-autohide="true">
                 <div class="d-flex text-{{ $type == 'error' ? 'danger' : 'success' }} p-2">

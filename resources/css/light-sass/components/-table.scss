@@ -360,17 +360,17 @@ table.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control:before {
   margin: 0px !important;
 }
 // ===============================================statuses color
-.new {
+.new_lead {
   background-color: #06f7f0;
 }
-.contracted {
+.contacted {
   background-color: #063af6;
 }
-.follow-up {
+.follow_up {
   background-color: #e506f7;
 }
 
-.in-progress {
+.in_progress {
   background-color: #f75c06;
 }
 
@@ -783,4 +783,43 @@ table.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control:before {
     width: 130px;
   }
 
+  }
+  
+  // new css
+  .country-label
+  {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    color: #84818a;
+  }
+  #country2,
+  #country{
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    border: none;
+    border-bottom: 1px solid #ebeaed;
+    border-radius: 0px;
+    padding-bottom: 8px !important;
+    background-color: transparent;
+    color: #84818a;
+    width: 100%  !important;
+  }
+  .country-select{
+    width: 100% !important;
+  }
+  #country2:focus,
+  #country2:active,
+  #country:focus,
+  #country:active{
+outline: none !important;
+  }
+  .country-select .flag-dropdown{
+    bottom: 6px !important;
+  }
+  .accordion-item {
+    height: 100% !important;
   }

@@ -401,9 +401,9 @@ body::-webkit-scrollbar-thumb {
 
 .progress-striped .progress-bar {
     background-color: #fcbc51;
-    width: 80%;
+    /* width: 80%; */
     background-image: linear-gradient(45deg, rgb(252, 163, 17) 25%, transparent 25%, transparent 50%, rgb(252, 163, 17) 50%, rgb(252, 163, 17) 75%, transparent 75%, transparent);
-    animation: progressAnimationStrike 6s;
+    /* animation: progressAnimationStrike 6s; */
 }
 
 @keyframes progressAnimationStrike {

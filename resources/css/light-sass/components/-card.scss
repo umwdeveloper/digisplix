@@ -18,7 +18,9 @@
         position: relative;
         padding: 20px 10px 7px 10px;
         text-align: center;
-
+        @media only screen and (max-width:336px){
+            padding: 20px 7px 7px 7px;
+        }
         h1 {
             color: $secondry;
             font-size: 22px;
@@ -37,6 +39,9 @@
             font-size: 14px;
             font-weight: 400;
             color: $gray;
+            @media only screen and (max-width:336px){
+                font-size: 13px;
+            }
         }
 
         a {

@@ -38,6 +38,7 @@
     <link rel="stylesheet" id="theme-link"
         href="{{ asset($preferredMode && $preferredMode == 'dark' ? 'css/dark-theme.css' : 'css/light-theme.css') }}">
 
+        @vite(['resources/css/light-sass/main.scss'])
 
     <title>DigiSplix | Reset Password</title>
 </head>
@@ -52,7 +53,7 @@
 
     <div class=" d-flex justify-content-center align-items-center w-100">
         <div class="log-screen">
-            <h1>Reset Password</h1>
+            <h1 style="font-size:22px; font-weight:500; ">Reset Password</h1>
             @foreach ($errors->all() as $error)
                 <x-toast type="error">
                     {{ $error }}
@@ -66,7 +67,7 @@
                         <input type="email" required name="email" class="ms-auto" placeholder="name@gmail.com">
                         <i class="bi bi-envelope email-icon"></i>
                     </div>
-                    <div class="send-name-input ms-auto">
+                    <div class="password-input ms-auto">
                         <input type="submit" name="submit" class="ms-auto">
                     </div>
 

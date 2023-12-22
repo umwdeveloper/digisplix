@@ -68,7 +68,7 @@ class Support extends Model {
         self::OPEN => '#3596f7',
         self::AWAITING_USER_RESPONSE => '#ffb22b',
         self::USER_REPLIED => '#00e200',
-        self::CLOSED => '#05825f',
+        self::CLOSED => '#ff3535',
     ];
 
     public static function getStatusColors() {

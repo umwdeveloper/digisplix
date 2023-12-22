@@ -188,7 +188,9 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="form-floating mb-3">
+                                    <div class=" mb-3">
+                                    <label class="country-label form-label mb-2" for="country">Country<span
+                                                                class="text-danger">*</span></label><br>
                                         <input type="text"
                                             class=" {{ $errors->createPartner->has('country') ? 'is-invalid' : '' }}"
                                             id="country" name="country" required
@@ -197,8 +199,8 @@
                                         <input type="hidden" id="country_code"
                                             value="{{ $errors->hasBag('createPartner') ? old('country_code') : '' }}"
                                             name="country_code">
-                                        <label class="crm-label form-label" for="country">Country<span
-                                                class="text-danger">*</span></label>
+                                        <!-- <label class="crm-label form-label" for="country">Country<span
+                                                class="text-danger">*</span></label> -->
                                         @if ($errors->createPartner->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->createPartner->first('country') }}
@@ -408,7 +410,9 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="form-floating mb-3">
+                                    <div class=" mb-3">
+                                    <label class="country-label form-label mb-2" for="country2">Country<span
+                                                                class="text-danger">*</span></label><br>
                                         <input type="text"
                                             class=" {{ $errors->updatePartner->has('country') ? 'is-invalid' : '' }}"
                                             id="country2" name="country" required
@@ -416,8 +420,8 @@
                                             placeholder="Pakistan">
                                         <input type="hidden" id="country2_code" value="{{ old('country_code') }}"
                                             name="country_code">
-                                        <label class="crm-label form-label" for="country2">Country<span
-                                                class="text-danger">*</span></label>
+                                        <!-- <label class="crm-label form-label" for="country2">Country<span
+                                                class="text-danger">*</span></label> -->
                                         @if ($errors->updatePartner->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updatePartner->first('country') }}

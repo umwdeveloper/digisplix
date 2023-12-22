@@ -104,6 +104,27 @@ body {
   width: 100%;
   height: 100%;
   font-family: sans-serif;
+  height: calc(100vh - 114px);
+}
+@media only screen and (max-width: 991px){
+  .messenger {
+    height: calc(100vh - 100px);
+  }
+}
+@media only screen and (max-width: 580px){
+  .messenger {
+    height: calc(100vh - 145px);
+    overflow: hidden !important;
+  }
+  .messenger-messagingView{
+    /* height: calc(100vh - 120px) !important; */
+    overflow: hidden !important;
+    position: relative !important;
+  }
+  .messenger-listView {
+    height: calc(100vh - 137px) !important;
+    top: 70px !important;
+  }
 }
 .messenger-listView {
   display: flex;
@@ -118,6 +139,18 @@ body {
   width: 45%;
   min-width: 200px;
   overflow: auto;
+}
+.messenger-listView::-webkit-scrollbar {
+  width: 7px;
+}
+
+.messenger-listView::-webkit-scrollbar-track {
+  background-color: transparent !important;
+}
+
+.messenger-listView::-webkit-scrollbar-thumb {
+  background-color: #aaa;
+  border-radius: 10px;
 }
 .messenger-listView .m-header {
   height: var(--listView-header-height);
@@ -371,7 +404,7 @@ body {
   z-index: 0;
 }
 .messenger-infoView {
-  display: block;
+  display: none;
   overflow: auto;
   width: 40%;
   min-width: 200px;
@@ -1025,8 +1058,17 @@ div.loadingPlaceholder-date {
   .messenger-infoView {
     position: fixed;
     right: 0;
-    top: 0;
-    bottom: 0;
+    top: 100px;
+    bottom: 22px;
+    max-width: 334px;
+  }
+}
+@media (max-width: 991px){
+  .messenger-infoView {
+    position: fixed;
+    right: 0;
+    top: 75px;
+    bottom: 22px;
     max-width: 334px;
   }
 }
@@ -1037,9 +1079,9 @@ div.loadingPlaceholder-date {
   .messenger-listView {
     position: fixed;
     left: 0;
-    top: 0;
-    bottom: 0;
-    max-width: 334px;
+    top: 70px;
+    bottom: 22px;
+    width: 100% !important;
   }
   .listView-x {
     display: block;
@@ -1094,6 +1136,10 @@ div.loadingPlaceholder-date {
 }
 
 @media (max-width: 576px) {
+  .messenger-listView {
+ 
+    bottom: 85px;
+  }
   .user-name {
     max-width: 150px;
     white-space: nowrap;
@@ -1102,6 +1148,13 @@ div.loadingPlaceholder-date {
   }
   .chatify-md-block {
     display: block;
+  }
+  .messenger-infoView {
+    position: fixed;
+    right: 0;
+    top: 75px;
+    bottom: 70px;
+    padding-bottom: 30px;
   }
 }
 

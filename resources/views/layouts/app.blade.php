@@ -91,7 +91,7 @@
                     <div class="dropdown profile-dropdown ms-auto">
                         <button class="dropdown-toggle d-flex align-items-center pe-3" type="button"
                             id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <div>
+                            <div style="max-width:125px; overflow-x:hidden;" class="user-name">
                                 <h3 class="mb-0">{{ $user->name }}</h3>
                                 <p class="mb-0 pb-0">{{ $user->designation }}</p>
                             </div>
@@ -449,10 +449,21 @@
                             </div>
                         </div>
                         @forelse ($shared_tickets as $ticket)
+
+                            @php
+                                $time = \Carbon\Carbon::parse($ticket->created_at)->diffForHumans();
+                                $timeInt = filter_var($time, FILTER_SANITIZE_NUMBER_INT);
+                                $timeText = str_replace($timeInt, "", $time);
+                            @endphp
                             <div class="col-lg-12 pe-1 mb-2">
                                 <a class="ticket-notify px-0 " href="{{ route('staff.support.show', $ticket->id) }}">
-                                    <h4 class=" text-gray ">
-                                        {{ \Carbon\Carbon::parse($ticket->created_at)->diffForHumans() }}</h4>
+                                    <h4 class=" text-gray  " >
+                                        {{ $timeInt }}
+                                    <br>
+                                    <p class="mb-0 pb-0 ms-2" style="font-size:10px; color:gray; font-weight:500;">
+                                      {{$timeText}}
+                                    </p>
+                                    </h4>
                                     <div class="ticket-body ticket-{{ $colors[array_rand($colors)] }}">
                                         <p class="mb-2">{{ $ticket->description }}</p>
                                         <span class="text-fade">by {{ $ticket->user->name }}</span>

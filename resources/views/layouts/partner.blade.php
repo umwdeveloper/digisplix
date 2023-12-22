@@ -91,7 +91,7 @@
                     <div class="dropdown profile-dropdown ms-auto">
                         <button class="dropdown-toggle d-flex align-items-center pe-3" type="button"
                             id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <div>
+                            <div style="max-width:125px; overflow-x:hidden;" class="user-name">
                                 <h3 class="mb-0">{{ $user->name }}</h3>
                                 <p class="mb-0 pb-0">{{ $user->designation }}</p>
                             </div>

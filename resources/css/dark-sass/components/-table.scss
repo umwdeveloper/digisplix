@@ -371,20 +371,20 @@
     margin: 0px !important;
   }
   // ===============================================statuses color
-  .new {
+  .new_lead {
     background-color: #06f7f0;
     color: white !important;
   }
-  .contracted {
+  .contacted {
     background-color: #063af6;
     color: white !important;
   }
-  .follow-up {
+  .follow_up {
     background-color: #e506f7;
     color: white !important;
   }
   
-  .in-progress {
+  .in_progress {
     background-color: #f75c06;
     color: white !important;
   }
@@ -812,4 +812,43 @@
   .accordion-button::after{
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E") no-repeat;
 
+  }
+
+  // new css
+  .country-label
+  {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    color: #84818a;
+  }
+  #country2,
+  #country{
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    border: none;
+    border-bottom: 1px solid #ebeaed;
+    border-radius: 0px;
+    padding-bottom: 8px !important;
+    background-color: transparent;
+    color: white !important;
+    width: 100%  !important;
+  }
+  .country-select{
+    width: 100% !important;
+  }
+  #country2:focus,
+  #country2:active,
+  #country:focus,
+  #country:active{
+outline: none !important;
+  }
+  .country-select .flag-dropdown{
+    bottom: 6px !important;
+  }
+  .accordion-item {
+    height: 100% !important;
   }

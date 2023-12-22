@@ -38,6 +38,6 @@ class ClientsTableSeeder extends Seeder {
             }
         });
 
-        Cache::forget('clients');
+        // Cache::forget('clients');
     }
 }

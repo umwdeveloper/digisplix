@@ -339,15 +339,17 @@
                                 </div>
                                 <input type="hidden" name="partner_id" value="{{ auth()->user()->partner()->id }}">
                                 <div class="col-lg-6">
-                                    <div class="form-floating mb-3">
+                                    <div class=" mb-3">
+                                    <label class="country-label form-label mb-2" for="country">Country<span
+                                                                class="text-danger">*</span></label><br>
                                         <input type="text"
                                             class=" {{ $errors->updateClient->has('country') ? 'is-invalid' : '' }}"
                                             id="country2" name="country" required
                                             value="{{ $errors->hasBag('updateClient') ? old('country') : '' }}"
                                             placeholder="Pakistan">
                                         <input type="hidden" id="country2_code" name="country_code">
-                                        <label class="crm-label form-label" for="country2">Country<span
-                                                class="text-danger">*</span></label>
+                                        <!-- <label class="crm-label form-label" for="country2">Country<span
+                                                class="text-danger">*</span></label> -->
                                         @if ($errors->updateClient->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updateClient->first('country') }}

@@ -388,7 +388,7 @@
 
                                                     <td>
                                                         <div class="dropdown table-dropdown">
-                                                            <a class="btn  dropdown-toggle table-dropdown-btn {{ $invoice->status }}"
+                                                            <a class="btn  dropdown-toggle table-dropdown-btn invoice-{{ $invoice->status }}"
                                                                 href="#" role="button" id="dropdownMenuLink"
                                                                 data-bs-toggle="dropdown" aria-expanded="false">
                                                                 {{ $status_labels[$invoice->status] }}
@@ -398,7 +398,7 @@
                                                                 data-invoice-id="{{ $invoice->id }}"
                                                                 aria-labelledby="dropdownMenuLink">
                                                                 @foreach ($statuses as $status)
-                                                                    <li class="change-status"
+                                                                    <li class="change-status invoice-{{ $status }}"
                                                                         data-status="{{ $status }}"><a
                                                                             class="dropdown-item {{ $status }}"
                                                                             href="#">{{ $status_labels[$status] }}</a>

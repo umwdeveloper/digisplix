@@ -93,15 +93,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
-                                                    <div class="form-floating mb-3">
+                                                    <div class="mb-3">
+                                                    <label class="country-label form-label mb-2" for="country">Country<span
+                                                                class="text-danger">*</span></label><br>
                                                         <input type="text"
                                                             class=" {{ $errors->has('country') ? 'is-invalid' : '' }}"
                                                             id="country" name="country" required value=""
                                                             placeholder="Pakistan">
                                                         <input type="hidden" id="country_code" value=""
                                                             name="country_code">
-                                                        <label class="crm-label form-label" for="country">Country<span
-                                                                class="text-danger">*</span></label>
+                                                        <!-- <label class="crm-label form-label" for="country">Country<span
+                                                                class="text-danger">*</span></label> -->
                                                         @if ($errors->has('country'))
                                                             <small class="invalid-feedback " style="font-size: 11px">
                                                                 {{ $errors->first('country') }}

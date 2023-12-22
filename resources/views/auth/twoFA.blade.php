@@ -38,6 +38,7 @@
     <link rel="stylesheet" id="theme-link"
         href="{{ asset($preferredMode && $preferredMode == 'dark' ? 'css/dark-theme.css' : 'css/light-theme.css') }}">
 
+        @vite(['resources/css/light-sass/main.scss'])
 
     <title>DigiSplix | Login</title>
 </head>
@@ -45,7 +46,7 @@
 <body class="theme log-theme">
 
     <div class=" d-flex justify-content-center align-items-center w-100">
-        <div class="log-screen">
+        <div class="log-screen" style="min-height:fit-content !important; height:fit-content !important;">
             <h1>2FA</h1>
             @foreach ($errors->all() as $error)
                 <x-toast type="error">

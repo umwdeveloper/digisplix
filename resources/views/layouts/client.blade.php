@@ -45,7 +45,7 @@
     {{-- <link rel="stylesheet" id="theme-link"
         href="{{ asset($preferredMode && $preferredMode == 'dark' ? 'css/dark-theme.css' : 'css/light-theme.css') }}"> --}}
 
-    @vite(['resources/css/light-sass/main.scss'])
+    @vite(['resources/css/dark-sass/main.scss'])
 
     <title>DigiSplix | Client</title>
 
@@ -91,7 +91,7 @@
                     <div class="dropdown profile-dropdown ms-auto">
                         <button class="dropdown-toggle d-flex align-items-center pe-3" type="button"
                             id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <div>
+                            <div style="max-width:125px; overflow-x:hidden;" class="user-name">
                                 <h3 class="mb-0">{{ $user->name }}</h3>
                                 <p class="mb-0 pb-0">{{ $user->designation }}</p>
                             </div>

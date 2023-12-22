@@ -9,7 +9,7 @@
     padding-left: 11px !important;
     padding-right: 0px;
     background-color: transparent;
-    color: $white-light;
+    color: $white-light !important;
 }
 
 .crm-input:focus,
@@ -116,4 +116,12 @@
 input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 30px $dark inset !important;
     box-shadow: 0 0 0 30px $dark inset !important;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px $dark inset !important;
+    box-shadow: 0 0 0 30px $dark inset !important;
+    -webkit-text-fill-color: $white-light !important;
 }

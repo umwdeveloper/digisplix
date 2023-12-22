@@ -66,12 +66,12 @@
         z-index: 2;
         text-align: center;
         &::placeholder{
-            color: white !important;
+            color: rgba(255, 255, 255, 0.521) !important;
         }
         &:active,
         &:focus{
             outline: none;
-            border: noen;
+            border: none;
             box-shadow: none;
         }
       }
@@ -121,13 +121,13 @@
           text-align: center;
           font-size: 14px;
         //   padding-top: 10px;
-          &::placeholder{
-              color: white !important;
-          }
+        &::placeholder{
+          color: rgba(255, 255, 255, 0.521) !important;
+      }
           &:active,
           &:focus{
               outline: none;
-              border: noen;
+              border: none;
               box-shadow: none;
           }
         }
@@ -175,7 +175,7 @@
           &:active,
           &:focus{
               outline: none;
-              border: noen;
+              border: none;
               box-shadow: none;
           }
         }
@@ -227,4 +227,21 @@
     color: white !important;
     font-weight: 500;
     width: 80%;
+}
+
+
+
+
+
+.toast{
+  position: fixed !important;
+  top: 30px !important;
+  right: 30px !important;
+  z-index: 10000;
+  @media only screen and (max-width:500px){
+    position: fixed !important;
+    width: 320px;
+    right: calc(50% - 160px) !important;
+    // transform: translate(-50%, 50%);
+  }
 }
