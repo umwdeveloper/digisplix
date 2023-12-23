@@ -4,36 +4,38 @@
     <main class="content">
         <div class="container-fluid px-lg-0">
             <div class="row justify-content-center">
-                <div class="col-xl-12">
-                    <div class="row">
-                        <div class="col-xl-12  mb-3">
-                            <div class="box box-p">
-                                <div
-                                    class="d-flex align-items-lg-center justify-content-between flex-md-row flex-column align-items-start">
-                                    <div class="d-flex align-items-center">
-                                        <a href="invoice-list.html" class="text-gray text-dark-clr"> <i
-                                                class="fa-solid fa-circle-left me-2"></i> Back to Invoice List</a>
-                                    </div>
-
+                <form action="{{ route('staff.invoices.store') }}" method="post" id="invoice-form">
+                    @csrf
+                    <div class="col-xl-12">
+                        <div class="row">
+                            <div class="col-xl-12  mb-3">
+                                <div class="box box-p">
                                     <div
-                                        class="d-flex  flex-md-row flex-column align-items-md-center align-items-start w-sm-100">
-                                        <button id="previewBtn" type="button" data-bs-toggle="modal"
-                                            data-bs-target="#previewModal"
-                                            class="d-flex align-items-center f-16 bg-transparent border-0 mt-md-0 mt-2 ps-0 text-dark-clr">
-                                            <i class="fa-duotone fa-eye me-2"></i>Preview
-                                        </button>
-                                        <div class="d-flex  mt-md-0 mt-2 justify-content-center w-100">
-                                            <button class="ticket-fill ms-3">Save Draft</button>
-                                            <button class="ticket-blank ms-2">Delete</button>
+                                        class="d-flex align-items-lg-center justify-content-between flex-md-row flex-column align-items-start">
+                                        <div class="d-flex align-items-center">
+                                            <a href="{{ route('staff.invoices.index') }}" class="text-gray text-dark-clr">
+                                                <i class="fa-solid fa-circle-left me-2"></i> Back to Invoice List</a>
+                                        </div>
+
+                                        <div
+                                            class="d-flex  flex-md-row flex-column align-items-md-center align-items-start w-sm-100">
+                                            <button id="previewBtn" type="button" data-bs-toggle="modal"
+                                                data-bs-target="#previewModal"
+                                                class="d-flex align-items-center f-16 bg-transparent border-0 mt-md-0 mt-2 ps-0 text-dark-clr">
+                                                <i class="fa-duotone fa-eye me-2"></i>Preview
+                                            </button>
+                                            <div class="d-flex  mt-md-0 mt-2 justify-content-center w-100">
+                                                <button class="ticket-fill ms-3" id="draftBtn" name="status"
+                                                    value="draft">Save
+                                                    Draft</button>
+                                                {{-- <button class="ticket-blank ms-2">Delete</button> --}}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <form action="{{ route('staff.invoices.store') }}" method="post" id="invoice-form">
-                        @csrf
                         <div class="col-lg-12 ">
                             <div class="box mb-4 box-p" style="overflow: normal !important;">
                                 <div class="row ">
@@ -48,10 +50,12 @@
                                                         <div class="mb-3">
                                                             <label for="" class="invoice-label">Customer
                                                                 Name</label>
-                                                            <select name="client" id="client"
+                                                            <select name="client_id" id="client"
                                                                 class="form-select form-select-sm mt-2">
                                                                 @foreach ($clients as $client)
-                                                                    <option value="{{ $client->id }}">
+                                                                    <option
+                                                                        {{ $client->id == old('client_id') ? 'selected' : '' }}
+                                                                        value="{{ $client->id }}">
                                                                         {{ $client->user->name }}
                                                                     </option>
                                                                 @endforeach
@@ -63,10 +67,12 @@
                                                 <div class="col-lg-4 ">
                                                     <div class="mb-lg-0 mb-4">
                                                         <label for="" class="invoice-label">Category</label>
-                                                        <select name="category" id="category"
+                                                        <select name="category_id" id="category"
                                                             class="form-select form-select-sm mt-2">
                                                             @foreach ($categories as $category)
-                                                                <option value="{{ $category->id }}">{{ $category->name }}
+                                                                <option
+                                                                    {{ $category->id == old('category_id') ? 'selected' : '' }}
+                                                                    value="{{ $category->id }}">{{ $category->name }}
                                                                 </option>
                                                             @endforeach
                                                         </select>
@@ -76,8 +82,9 @@
                                                     <div class="mb-lg-0 mb-4">
                                                         <label for="" class="invoice-label">Select</label>
                                                         <div class="form-check mt-2">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                id="flexCheckChecked" name="recurring">
+                                                            <input {{ old('recurring') == '1' ? 'checked' : '' }}
+                                                                class="form-check-input" type="checkbox"
+                                                                id="flexCheckChecked" value="1" name="recurring">
                                                             <label class="form-check-label" for="flexCheckChecked">
                                                                 Recurring Invoice
                                                             </label>
@@ -91,9 +98,14 @@
                                                         <div class="">
                                                             <div class="multipleSelection mt-4">
                                                                 <div class="selectBox bg-white">
-                                                                    <input type="month" name="start_from" class="w-100"
+                                                                    <input type="date" name="start_from" class="w-100"
                                                                         placeholder="Enter references No.">
                                                                 </div>
+                                                                @error('start_from')
+                                                                    <small class="invalid-feedback " style="font-size: 11px">
+                                                                        {{ $message }}
+                                                                    </small>
+                                                                @enderror
                                                             </div>
                                                         </div>
                                                     </div>
@@ -104,6 +116,11 @@
                                                                     <input type="number" name="duration" min="1"
                                                                         class="w-100" placeholder="Enter Months">
                                                                 </div>
+                                                                @error('duration')
+                                                                    <small class="invalid-feedback " style="font-size: 11px">
+                                                                        {{ $message }}
+                                                                    </small>
+                                                                @enderror
                                                             </div>
                                                         </div>
                                                     </div>
@@ -132,7 +149,8 @@
                                                 <div class="row item-add-box mt-4">
                                                     <div class="col-lg-12 ">
                                                         <div class="d-flex align-items-center justify-content-between mb-3">
-                                                            <h2 class="f-16 w-500 text-primary">Item ({{ $i + 1 }}):
+                                                            <h2 class="f-16 w-500 text-primary">Item
+                                                                ({{ $i + 1 }}):
                                                             </h2>
                                                             <div>
                                                                 <i
@@ -141,12 +159,18 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6 col-md-6 mb-lg-0 mb-3">
-                                                        <label for="" class="invoice-label">Item Description</label>
+                                                        <label for="" class="invoice-label">Item
+                                                            Description</label>
                                                         <div class="selectBox bg-white">
                                                             <input type="text" required name="descriptions[]"
                                                                 class="w-100" value="{{ old('descriptions.' . $i) }}"
                                                                 placeholder="">
                                                         </div>
+                                                        @error('descriptions.' . $i)
+                                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                                {{ $message }}
+                                                            </small>
+                                                        @enderror
                                                     </div>
                                                     <div class="col-lg-2 col-md-6 mb-lg-0 mb-3">
                                                         <label for="" class="invoice-label">Price</label>
@@ -156,6 +180,11 @@
                                                                 class="w-100" value="{{ old('prices.' . $i) }}"
                                                                 placeholder="">
                                                         </div>
+                                                        @error('prices.' . $i)
+                                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                                {{ $message }}
+                                                            </small>
+                                                        @enderror
                                                     </div>
                                                     <div class="col-lg-2 col-md-6 mb-lg-0 mb-3">
                                                         <label for="" class="invoice-label">Quantity</label>
@@ -165,6 +194,11 @@
                                                                 class="w-100" value="{{ old('quantities.' . $i) }}"
                                                                 placeholder="">
                                                         </div>
+                                                        @error('quantities.' . $i)
+                                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                                {{ $message }}
+                                                            </small>
+                                                        @enderror
                                                     </div>
                                                     <div class="col-lg-2 col-md-6 mb-lg-0 mb-3">
                                                         <label for="" class="invoice-label">Total</label>
@@ -182,7 +216,11 @@
                                         <div class="box-gray box-p">
                                             <h1 class="invoice-heading text-primary mb-4">Invoice Details</h1>
                                             <div>
-
+                                                @error('invoice_id')
+                                                    <small class="invalid-feedback " style="font-size: 11px">
+                                                        {{ $message }}
+                                                    </small>
+                                                @enderror
                                                 <div class="d-flex align-items-center mb-2">
                                                     <div class="invoice-label">Invoice NO&nbsp;:&nbsp;</div>
                                                     <div class="invoice-value" style="outline: none !important;">
@@ -193,11 +231,15 @@
                                                 <div class="d-flex align-items-center">
                                                     <div class="invoice-label">Due Date&nbsp;:&nbsp;</div>
                                                     <div class="invoice-value"><input type="date" required
-                                                            name="due_date" value=""
+                                                            name="due_date" value="{{ old('due_date') }}"
                                                             class="border-0 bg-transparent text-primary invoice-date"
                                                             style="outline: none;"></div>
                                                 </div>
-
+                                                @error('due_date')
+                                                    <small class="invalid-feedback " style="font-size: 11px">
+                                                        {{ $message }}
+                                                    </small>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
@@ -205,6 +247,11 @@
                                         <div class="box-gray box-p">
                                             <h1 class="invoice-heading text-primary mb-4">Invoice From
                                             </h1>
+                                            @error('invoice_from')
+                                                <small class="invalid-feedback " style="font-size: 11px">
+                                                    {{ $message }}
+                                                </small>
+                                            @enderror
                                             <textarea name="invoice_from" required id="invoice_from" rows="3" class="border-0 f-14 w-400 bg-transparent"
                                                 style="width: 100%; outline: none;">{{ $admin->name }}</textarea>
 
@@ -213,6 +260,11 @@
                                     <div class="col-lg-4 mt-4">
                                         <div class="box-gray box-p">
                                             <h1 class="invoice-heading text-primary mb-4">Invoice To</h1>
+                                            @error('invoice_to')
+                                                <small class="invalid-feedback " style="font-size: 11px">
+                                                    {{ $message }}
+                                                </small>
+                                            @enderror
                                             <textarea name="invoice_to" required id="invoice_to" rows="3" class="border-0 f-14 w-400 bg-transparent"
                                                 style="width: 100%; outline: none;">{{ $clients->first()->user->name }}</textarea>
 
@@ -223,6 +275,11 @@
                                     <div class="col-lg-6 mt-4 ">
                                         <h1 class="invoice-heading text-primary mb-4">More Fields</h1>
                                         <div class="box-gray h-auto box-p text-center ">
+                                            @if ($errors->any(['account_holder_name', 'bank_name', 'ifsc_code', 'account_number']))
+                                                <small class="invalid-feedback " style="font-size: 11px">
+                                                    Bank details are not correct
+                                                </small>
+                                            @endif
                                             <p class="text-danger f-14 d-none bank-error">Enter complete bank details</p>
                                             <button class="ticket-fill py-4 mb-3 w-100" type="button"
                                                 data-bs-toggle="modal" data-bs-target="#bankModal"><i
@@ -292,17 +349,18 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
 
-                    <div class="row mb-3">
-                        <div class="col-lg-12">
-                            <div class="box">
-                                <p class="f-14 w-500 mb-0 pb-0 text-center text-gray text-dark-clr" id="copyright-year">
-                                </p>
+                        <div class="row mb-3">
+                            <div class="col-lg-12">
+                                <div class="box">
+                                    <p class="f-14 w-500 mb-0 pb-0 text-center text-gray text-dark-clr"
+                                        id="copyright-year">
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
         <!-- </div> -->
@@ -365,37 +423,59 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
-                                        <input type="text" required name="account_holder_name"
-                                            class="form-control crm-input" id="name" placeholder="Mickel">
+                                        <input type="text" required value="{{ old('account_holder_name') }}"
+                                            name="account_holder_name" class="form-control crm-input" id="name"
+                                            placeholder="Mickel">
                                         <label class="crm-label form-label" for="name">Account Holder Name<span
                                                 class="text-danger">*</span></label>
+                                        @error('account_holder_name')
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $message }}
+                                            </small>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
-                                        <input type="text" required name="bank_name" class="form-control crm-input"
-                                            id="bank-name" placeholder="Mickel">
+                                        <input type="text" required value="{{ old('bank_name') }}" name="bank_name"
+                                            class="form-control crm-input" id="bank-name" placeholder="Mickel">
                                         <label class="crm-label form-label" for="bank-name">Bank name<span
                                                 class="text-danger">*</span></label>
+                                        @error('bank_name')
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $message }}
+                                            </small>
+                                        @enderror
                                     </div>
                                 </div>
 
 
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
-                                        <input type="text" required name="ifsc_code" class="form-control crm-input"
-                                            id="code" placeholder="ABC">
+                                        <input type="text" required value="{{ old('ifsc_code') }}" name="ifsc_code"
+                                            class="form-control crm-input" id="code" placeholder="ABC">
                                         <label class="crm-label form-label" for="code">IFSC Code<span
                                                 class="text-danger">*</span></label>
+                                        @error('ifsc_code')
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $message }}
+                                            </small>
+                                        @enderror
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
-                                        <input type="text" required name="account_number"
-                                            class="form-control crm-input" id="acc-num" placeholder="ABC">
+                                        <input type="text" required value="{{ old('account_number') }}"
+                                            name="account_number" class="form-control crm-input" id="acc-num"
+                                            placeholder="ABC">
                                         <label class="crm-label form-label" for="acc-num">Account Number<span
                                                 class="text-danger">*</span></label>
+                                        @error('account_number')
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $message }}
+                                            </small>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -832,5 +912,23 @@
             });
         })
     </script>
+
+    {{-- <script>
+        let draftButtonClicked = false;
+
+        $('#draftBtn').on('click', function() {
+            draftButtonClicked = true;
+
+            $('#save-invoice').click()
+        })
+
+        $('#save-invoice').on('click', function() {
+            if (draftButtonClicked) {
+                $('#invoice-form').append('<input type="hidden" value="draft" name="status">');
+            }
+
+            draftButtonClicked = false;
+        });
+    </script> --}}
 @endsection
 @endsection

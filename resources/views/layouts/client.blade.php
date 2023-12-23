@@ -45,7 +45,10 @@
     {{-- <link rel="stylesheet" id="theme-link"
         href="{{ asset($preferredMode && $preferredMode == 'dark' ? 'css/dark-theme.css' : 'css/light-theme.css') }}"> --}}
 
-    @vite(['resources/css/dark-sass/main.scss'])
+    <link rel="stylesheet" id="theme-link"
+        href="{{ asset($preferredMode && $preferredMode == 'dark' ? Vite::asset('resources/css/dark-sass/dark.scss') : Vite::asset('resources/css/light-sass/light.scss')) }}">
+
+    {{-- @vite(['resources/css/dark-sass/main.scss']) --}}
 
     <title>DigiSplix | Client</title>
 
@@ -349,8 +352,8 @@
 
     <script>
         const assetUrls = {
-            lightThemeURL: "{{ asset('css/light-theme.css') }}",
-            darkThemeURL: "{{ asset('css/dark-theme.css') }}",
+            lightThemeURL: "{{ Vite::asset('resources/css/light-sass/light.scss') }}",
+            darkThemeURL: "{{ Vite::asset('resources/css/dark-sass/dark.scss') }}",
             lightLogoURL: "{{ asset('images/DigiSplix-Logo-for-Light-Mode.png') }}",
             darkLogoURL: "{{ asset('images/DigiSplix-logo-for-dark-mode.png') }}"
         };

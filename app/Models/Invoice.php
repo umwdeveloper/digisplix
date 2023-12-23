@@ -8,6 +8,25 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model {
     use HasFactory;
 
+    protected $fillable = [
+        'invoice_id',
+        'client_id',
+        'category_id',
+        'invoice_from',
+        'invoice_to',
+        'status',
+        'due_date',
+        'terms_n_conditions',
+        'note',
+        'recurring',
+        'start_from',
+        'duration',
+        'account_holder_name',
+        'bank_name',
+        'ifsc_code',
+        'account_number'
+    ];
+
     public function category() {
         return $this->belongsTo(Category::class);
     }

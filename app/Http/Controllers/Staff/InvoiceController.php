@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreInvoice;
 use App\Models\Category;
 use App\Models\Client;
 use App\Models\Invoice;
@@ -117,8 +118,24 @@ class InvoiceController extends Controller {
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) {
-        dd($request);
+    public function store(StoreInvoice $request) {
+        $validatedData = $request->validated();
+
+        $invoice = Invoice::create($validatedData);
+
+        $descriptions = $validatedData['descriptions'];
+        $prices = $validatedData['prices'];
+        $quantities = $validatedData['quantities'];
+
+        foreach ($descriptions as $key => $description) {
+            $invoice->items()->create([
+                'description' => $description,
+                'price' => $prices[$key],
+                'quantity' => $quantities[$key]
+            ]);
+        }
+
+        return redirect()->back()->with('status', 'Invoice created successfully!');
     }
 
     /**

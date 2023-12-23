@@ -44,4 +44,16 @@ class SendInvoice extends Notification implements ShouldQueue {
             ->line(new HtmlString("Total Price: <strong>$" . $this->price . "</strong>"))
             ->line(new HtmlString("Due Date: <strong>" . $this->invoice->due_date . "</strong>"));
     }
+
+    /**
+     * Get the database representation of the notification.
+     *
+     * @return array<string, mixed>
+     */
+    public function toDatabase(object $notifiable): array {
+        return [
+            "message" => "You have received an invoice",
+            "link" => route('client.invoices.index', $this->invoice->id)
+        ];
+    }
 }

@@ -45,7 +45,10 @@
     {{-- <link rel="stylesheet" id="theme-link"
         href="{{ asset($preferredMode && $preferredMode == 'dark' ? 'css/dark-theme.css' : 'css/light-theme.css') }}"> --}}
 
-    @vite(['resources/css/dark-sass/main.scss'])
+    <link rel="stylesheet" id="theme-link"
+        href="{{ asset($preferredMode && $preferredMode == 'dark' ? Vite::asset('resources/css/dark-sass/dark.scss') : Vite::asset('resources/css/light-sass/light.scss')) }}">
+
+    {{-- @vite(['resources/css/light-sass/light.scss']) --}}
 
     <title>DigiSplix | Admin</title>
 
@@ -449,20 +452,19 @@
                             </div>
                         </div>
                         @forelse ($shared_tickets as $ticket)
-
                             @php
                                 $time = \Carbon\Carbon::parse($ticket->created_at)->diffForHumans();
                                 $timeInt = filter_var($time, FILTER_SANITIZE_NUMBER_INT);
-                                $timeText = str_replace($timeInt, "", $time);
+                                $timeText = str_replace($timeInt, '', $time);
                             @endphp
                             <div class="col-lg-12 pe-1 mb-2">
                                 <a class="ticket-notify px-0 " href="{{ route('staff.support.show', $ticket->id) }}">
-                                    <h4 class=" text-gray  " >
+                                    <h4 class=" text-gray  ">
                                         {{ $timeInt }}
-                                    <br>
-                                    <p class="mb-0 pb-0 ms-2" style="font-size:10px; color:gray; font-weight:500;">
-                                      {{$timeText}}
-                                    </p>
+                                        <br>
+                                        <p class="mb-0 pb-0 ms-2" style="font-size:10px; color:gray; font-weight:500;">
+                                            {{ $timeText }}
+                                        </p>
                                     </h4>
                                     <div class="ticket-body ticket-{{ $colors[array_rand($colors)] }}">
                                         <p class="mb-2">{{ $ticket->description }}</p>
@@ -610,8 +612,8 @@
 
     <script>
         const assetUrls = {
-            lightThemeURL: "{{ asset('css/light-theme.css') }}",
-            darkThemeURL: "{{ asset('css/dark-theme.css') }}",
+            lightThemeURL: "{{ Vite::asset('resources/css/light-sass/light.scss') }}",
+            darkThemeURL: "{{ Vite::asset('resources/css/dark-sass/dark.scss') }}",
             lightLogoURL: "{{ asset('images/DigiSplix-Logo-for-Light-Mode.png') }}",
             darkLogoURL: "{{ asset('images/DigiSplix-logo-for-dark-mode.png') }}"
         };

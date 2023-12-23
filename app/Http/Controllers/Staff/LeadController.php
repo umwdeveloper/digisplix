@@ -178,6 +178,8 @@ class LeadController extends Controller {
             // Send email
             // Mail::to($lead->user->email)->send(new LeadStatusChangedMail($lead->user->name, Client::getStatusLabel($lead->status)));
 
+            session()->flash('status', "Status has been updated!");
+
             return response()->json(['status' => 'success']);
         } catch (Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
