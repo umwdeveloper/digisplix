@@ -17,7 +17,8 @@
 
                                     <div
                                         class="d-flex  flex-md-row flex-column align-items-md-center align-items-start w-sm-100">
-                                        <button type="button" data-bs-toggle="modal" data-bs-target="#previewModal"
+                                        <button id="previewBtn" type="button" data-bs-toggle="modal"
+                                            data-bs-target="#previewModal"
                                             class="d-flex align-items-center f-16 bg-transparent border-0 mt-md-0 mt-2 ps-0 text-dark-clr">
                                             <i class="fa-duotone fa-eye me-2"></i>Preview
                                         </button>
@@ -45,23 +46,25 @@
                                                 <div class="col-lg-4 ">
                                                     <div class="mb-lg-0 mb-4">
                                                         <div class="mb-3">
-                                                        <label for="" class="invoice-label">Customer Name</label>
-                                                        <select name="client" id="client" class="form-select form-select-sm mt-2"
-                                                        >
-                                                            @foreach ($clients as $client)
-                                                                <option value="{{ $client->id }}">
-                                                                    {{ $client->user->name }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
+                                                            <label for="" class="invoice-label">Customer
+                                                                Name</label>
+                                                            <select name="client" id="client"
+                                                                class="form-select form-select-sm mt-2">
+                                                                @foreach ($clients as $client)
+                                                                    <option value="{{ $client->id }}">
+                                                                        {{ $client->user->name }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
                                                         </div>
-                                                      
+
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4 ">
                                                     <div class="mb-lg-0 mb-4">
                                                         <label for="" class="invoice-label">Category</label>
-                                                        <select name="category" id="category" class="form-select form-select-sm mt-2">
+                                                        <select name="category" id="category"
+                                                            class="form-select form-select-sm mt-2">
                                                             @foreach ($categories as $category)
                                                                 <option value="{{ $category->id }}">{{ $category->name }}
                                                                 </option>
@@ -172,53 +175,6 @@
                                                     </div>
                                                 </div>
                                             @endfor
-                                            <!-- Hidden template for cloning -->
-                                            {{-- <div class="item-add-box-template " style="display: none;">
-                                                <div class="row item-add-box mt-4">
-                                                    <div class="col-lg-12 ">
-                                                        <div
-                                                            class="d-flex align-items-center justify-content-between mb-3">
-                                                            <h2 class="f-16 w-500 text-primary">Item (1):</h2>
-                                                            <div>
-                                                                <i
-                                                                    class="fa-solid fa-trash-xmark text-danger f-20 ms-2"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6 col-md-6 mb-lg-0 mb-3">
-                                                        <label for="" class="invoice-label">Item
-                                                            Description</label>
-                                                        <div class="selectBox bg-white">
-                                                            <input type="text" required name="descriptions[]"
-                                                                class="w-100" placeholder="">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-6 mb-lg-0 mb-3">
-                                                        <label for="" class="invoice-label">Price</label>
-                                                        <div class="selectBox bg-white">
-                                                            <input type="text" required name="prices[]"
-                                                                pattern="[0-9]+" oninput="validateNumbers(this)"
-                                                                class="w-100" placeholder="">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-6 mb-lg-0 mb-3">
-                                                        <label for="" class="invoice-label">Quantity</label>
-                                                        <div class="selectBox bg-white">
-                                                            <input type="text" required name="quantities[]"
-                                                                pattern="[0-9]+" oninput="validateNumbers(this)"
-                                                                class="w-100" placeholder="">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-6 mb-lg-0 mb-3">
-                                                        <label for="" class="invoice-label">Total</label>
-                                                        <div class="selectBox bg-white">
-                                                            <input type="text" required readonly class="w-100 total"
-                                                                placeholder="">
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div> --}}
                                         </div>
 
                                     </div>
@@ -323,10 +279,11 @@
                                                 <p class="f-20 w-500 text-primary mb-0 pb-0">Total Amount
                                                 </p>
 
-                                                <input type="hidden" id="grand-total" value="0">
+                                                <input type="hidden" name="grand_total" id="grand-total"
+                                                    value="0">
 
                                                 <p class="f-20 w-500 text-primary mb-0 pb-0">$<span
-                                                        class="grand-total"></span></p>
+                                                        class="grand-total">0</span></p>
                                             </div>
                                         </div>
                                         <button class="ticket-fill ms-auto mt-3" id="save-invoice">Save Invoice</button>
@@ -353,7 +310,7 @@
 
     <!-- Hidden template for cloning -->
     <div class="item-add-box-template " style="display: none;">
-        <div class="row item-add-box mt-4">
+        <div class="row item-add-box mt-4 item-template">
             <div class="col-lg-12 ">
                 <div class="d-flex align-items-center justify-content-between mb-3">
                     <h2 class="f-16 w-500 text-primary">Item (1):</h2>
@@ -469,13 +426,13 @@
                         aria-hidden="true"></i>Download</button>
                 <div
                     class="modal-header d-flex flex-md-row flex-column align-items-md-center align-items-start border-bottom-0">
-                    <img src="assets/images/DigiSplix-Logo-for-Light-Mode.png" alt=""
+                    <img src="{{ asset('images/DigiSplix-Logo-for-Light-Mode.png') }}" alt=""
                         class="img-fluid modal-logo">
                     <div class="mt-md-0 mt-3 pe-2 text-gray">
-                        <p class="mb-0 pb-0 f-16 w-500 d-flex justify-content-between">Invoice # : <span
-                                class="ms-3">In8782</span></p>
+                        <p class="mb-0 pb-0 f-16 w-500 d-flex justify-content-between">Invoice # : <span class="ms-3"
+                                id="pv-invoice-id"></span></p>
                         <p class="mb-0 pb-0 f-16 w-500 d-flex justify-content-between">Date : <span
-                                class="ms-3">07/08/2023</span></p>
+                                class="ms-3">{{ now()->format('d/m/Y') }}</span></p>
                     </div>
                 </div>
                 <div class="modal-body p-0">
@@ -489,23 +446,23 @@
                             <div class="col-lg-6 mb-lg-0 mb-4 mx-auto">
                                 <div class="border-right">
                                     <h1 class="invoice-heading text-dark-clr">Invoice From:</h1>
-                                    <div class="  w-500 f-16 text-dark-clr">DigiSplix, LLC </div>
-                                    <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">5900 Balcones Dr #15419
+                                    <div class="  w-500 f-16 text-dark-clr" id="pv-invoice-from"></div>
+                                    {{-- <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">5900 Balcones Dr #15419
                                     </p>
                                     <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">Austin, Texas 78731,
                                     </p>
                                     <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">United States
-                                    </p>
+                                    </p> --}}
                                 </div>
                             </div>
                             <div class="col-lg-6 mb-lg-0 mb-4 mx-auto">
                                 <div class="border-right">
-                                    <h1 class="invoice-heading  text-dark-clr">Customer:</h1>
-                                    <div class="  w-500 f-16 text-dark-clr">Mike Roofers</div>
-                                    <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">45 Balcones STE 200,
+                                    <h1 class="invoice-heading  text-dark-clr">Invoice To:</h1>
+                                    <div class="  w-500 f-16 text-dark-clr" id="pv-invoice-to"></div>
+                                    {{-- <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">45 Balcones STE 200,
                                     </p>
                                     <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">Los Anageles, Califronia</p>
-                                    <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">United States</p>
+                                    <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">United States</p> --}}
                                 </div>
                             </div>
                         </div>
@@ -526,44 +483,7 @@
                                                 </th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr class="">
-                                                <td>1.</td>
-                                                <td scope="row" style="white-space: normal;">
-                                                    ipsum dolor sit, consectetur elit.
-                                                </td>
-                                                <td>$50,00</td>
-                                                <td class="text-center">
-                                                    1
-                                                </td>
-                                                <td>%50,00</td>
-
-                                            </tr>
-                                            <tr class="">
-                                                <td>2.</td>
-                                                <td scope="row" style="white-space: normal;">
-                                                    ipsum dolor sit, consectetur elit.
-                                                </td>
-                                                <td>$50,00</td>
-                                                <td class="text-center">
-                                                    1
-                                                </td>
-                                                <td>%50,00</td>
-
-                                            </tr>
-                                            <tr class="">
-                                                <td>3.</td>
-                                                <td scope="row" style="white-space: normal;">
-                                                    ipsum dolor sit, consectetur elit.
-                                                </td>
-                                                <td>$50,00</td>
-                                                <td class="text-center">
-                                                    1
-                                                </td>
-                                                <td>%50,00</td>
-
-                                            </tr>
-
+                                        <tbody id="pv-items">
                                         </tbody>
                                     </table>
                                 </div>
@@ -577,16 +497,22 @@
 
                                 <div class="mt-3 mb-2 text-dark-clr">
                                     <h1 class="f-16 w-600">Payment Info:</h1>
-                                    <p class="mb-0 pb-0 f-14 w-500">Account# : <span class="ms-3">In8782</span></p>
-                                    <p class="mb-0 pb-0 f-14 w-500">A/C Name : <span class="ms-3">Lorem ipsum dolor
-                                            sit.</span></p>
-                                    <p class="mb-0 pb-0 f-14 w-500">Bank Details : <span
-                                            class="ms-3">XXX552425172672F34</span></p>
+                                    <p class="mb-0 pb-0 f-14 w-500">Account# : <span class="ms-3"
+                                            id="pv-acc-num"></span></p>
+                                    <p class="mb-0 pb-0 f-14 w-500">A/C Name : <span class="ms-3"
+                                            id="pv-acc-name"></span></p>
+                                    <p class="mb-0 pb-0 f-14 w-500">Bank Name : <span class="ms-3"
+                                            id="pv-bank-name"></span></p>
+                                    <p class="mb-0 pb-0 f-14 w-500">IFSC Code : <span class="ms-3"
+                                            id="pv-ifsc-code"></span></p>
                                 </div>
-                                <div class=" mt-3 text-dark-clr">
+                                <div class=" mt-3 text-dark-clr" id="pv-terms-conditions">
                                     <h1 class="f-16 w-600">Terms & Conditions:</h1>
-                                    <p class="mb-0 pb-0 f-14 w-500">Lorem ipsum dolor sit amet consectetur adipisicing
-                                        elit. </p>
+                                    <p class="mb-0 pb-0 f-14 w-500"></p>
+                                </div>
+                                <div class=" mt-3 text-dark-clr" id="pv-note">
+                                    <h1 class="f-16 w-600">Note:</h1>
+                                    <p class="mb-0 pb-0 f-14 w-500"></p>
                                 </div>
 
                             </div>
@@ -597,26 +523,19 @@
                                 <div class="summary-box pe-4 ps-3" style="background-color: transparent;">
                                     <div class="summary-div d-flex justify-content-between mb-1">
                                         <p class="f-14 w-400 text-gray mb-0 pb-0">Sub Total:</p>
-                                        <p class="f-14 w-400 text-gray mb-0 pb-0">$220.00</p>
+                                        <p class="f-14 w-400 text-gray mb-0 pb-0 pv-total"></p>
                                     </div>
-                                    <div class="summary-div d-flex justify-content-between mt-1">
+                                    {{-- <div class="summary-div d-flex justify-content-between mt-1">
                                         <p class="f-14 w-400 text-gray mb-0 pb-0">Discount:</p>
                                         <p class="f-14 w-400 text-gray mb-0 pb-0">$22</p>
-                                    </div>
+                                    </div> --}}
 
                                 </div>
 
                                 <div class="summary-div-total d-flex justify-content-between  pe-4 mt-3 ps-3">
                                     <p class="f-16 w-500   mb-0 pb-0">Total Amount
                                     </p>
-                                    <p class="f-16 w-400   mb-0 pb-0">534$</p>
-                                </div>
-
-                                <div class="d-flex align-items-center justify-content-center flex-column w-100 px-4 pt-3 ">
-                                    <img src="assets/images/signature.png" alt="" class="img-fluid">
-                                    <div class="sign-text w-100">
-                                        <p class="text-center">Autorized Sign</p>
-                                    </div>
+                                    <p class="f-16 w-400   mb-0 pb-0 pv-total"></p>
                                 </div>
                             </div>
 
@@ -723,6 +642,7 @@
                 // Clone the item-add-box template
                 const newItemAddBox = itemAddBoxTemplate.cloneNode(true);
                 newItemAddBox.style.display = "block"; // Show the cloned item
+                newItemAddBox.querySelector('.item-add-box').classList.remove('item-template')
 
                 // Update the title for the new item
                 const itemTitle = newItemAddBox.querySelector(".f-16.w-500.text-primary");
@@ -831,12 +751,85 @@
                 return false;
             }
 
-            $(this).append(`<input type="text" name="account_holder_name" value="${accountHolderName}">`)
-            $(this).append(`<input type="text" name="bank_name" value="${bankName}">`)
-            $(this).append(`<input type="text" name="ifsc_code" value="${ifscCode}">`)
-            $(this).append(`<input type="text" name="account_number" value="${accountNumber}">`)
+            $(this).append(`<input type="hidden" name="account_holder_name" value="${accountHolderName}">`)
+            $(this).append(`<input type="hidden" name="bank_name" value="${bankName}">`)
+            $(this).append(`<input type="hidden" name="ifsc_code" value="${ifscCode}">`)
+            $(this).append(`<input type="hidden" name="account_number" value="${accountNumber}">`)
 
-            $(this).submit()
+            $(this).unbind('submit').submit();
+        })
+    </script>
+
+    {{-- Preview Invoice --}}
+    <script id="pv-items-template" type="text/template">
+        <tr class="">
+            <td>{sr_num}</td>
+            <td scope="row" style="white-space: normal;">
+                {description}
+            </td>
+            <td>${price}</td>
+            <td class="text-center">
+                {qty}
+            </td>
+            <td>${total}</td>
+
+        </tr>
+    </script>
+
+    <script>
+        $('#previewBtn').click(function() {
+            let invoice_id = $('input[name="invoice_id"]').val()
+            let invoice_from = $('textarea[name="invoice_from"]').val()
+            let invoice_to = $('textarea[name="invoice_to"]').val()
+            let acc_num = $('input[name="account_number"]').val()
+            let acc_name = $('input[name="account_holder_name"]').val()
+            let bank_name = $('input[name="bank_name"]').val()
+            let ifsc_code = $('input[name="ifsc_code"]').val()
+            let termsNConditions = $('textarea[name="terms_n_conditions"]').val()
+            let note = $('textarea[name="note"]').val()
+            let total = $('input[name="grand_total"]').val()
+
+            $('#pv-invoice-id').text(invoice_id)
+            $('#pv-invoice-from').text(invoice_from)
+            $('#pv-invoice-to').text(invoice_to)
+            $('#pv-acc-num').text(acc_num)
+            $('#pv-acc-name').text(acc_name)
+            $('#pv-bank-name').text(bank_name)
+            $('#pv-ifsc-code').text(ifsc_code)
+
+            if (termsNConditions.trim().length > 0) {
+                $('#pv-terms-conditions').css('display', 'block')
+                $('#pv-terms-conditions p').text(termsNConditions)
+            } else {
+                $('#pv-terms-conditions').css('display', 'none')
+            }
+
+            if (note.trim().length > 0) {
+                $('#pv-note').css('display', 'block')
+                $('#pv-note p').text(note)
+            } else {
+                $('#pv-note').css('display', 'none')
+            }
+
+            $('.pv-total').text('$' + total)
+
+            // Items
+            $('.item-add-box:not(.item-template)').each(function(index, element) {
+                var description = $(element).find('input[name="descriptions[]"]').val();
+                var price = $(element).find('input[name="prices[]"]').val();
+                var quantity = $(element).find('input[name="quantities[]"]').val();
+
+                var total = price * quantity;
+
+                var itemTemplate = $('#pv-items-template').html()
+                var item = itemTemplate.replace('{sr_num}', index + 1)
+                    .replace('{description}', description)
+                    .replace('{price}', price)
+                    .replace('{qty}', quantity)
+                    .replace('{total}', total)
+
+                $('#pv-items').append(item)
+            });
         })
     </script>
 @endsection
