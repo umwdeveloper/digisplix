@@ -32,16 +32,16 @@ body {
   --message-card-color: #fff;
 
   /* Dark theme variables */
-  --dark-primary-bg-color: #121212;
-  --dark-secondary-bg-color: #202020;
-  --dark-border-color: #202020;
-  --dark-messagingView-bg-color: #1b1b1b;
-  --dark-scrollbar-thumb-color: #212121;
+  --dark-primary-bg-color: #0c1a32;
+  --dark-secondary-bg-color: #15243e;
+  --dark-border-color: #434452;
+  --dark-messagingView-bg-color:  #102446b4;
+  --dark-scrollbar-thumb-color: #434452;;
   --dark-modal-bg-color: #1a1a1a;
   --dark-send-input-icons-color: #c8c8c8;
   --dark-message-hint-bg-color: #292929;
   --dark-message-hint-color: #ffffff;
-  --dark-message-card-color: #292929;
+  --dark-message-card-color: #969292;
 }
 
 /* NProgress background */
@@ -275,7 +275,7 @@ body {
 .m-list-active,
 .m-list-active:hover,
 .m-list-active:focus {
-  background: var(--primary-color) !important;
+  background: #15243e !important;
 }
 .m-list-active b {
   background: #fff !important;
@@ -408,6 +408,11 @@ body {
   overflow: auto;
   width: 40%;
   min-width: 200px;
+  max-width: 300px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
 }
 .messenger-infoView nav {
   display: flex;

@@ -45,7 +45,7 @@
     {{-- <link rel="stylesheet" id="theme-link"
         href="{{ asset($preferredMode && $preferredMode == 'dark' ? 'css/dark-theme.css' : 'css/light-theme.css') }}"> --}}
 
-    @vite(['resources/css/light-sass/main.scss'])
+    @vite(['resources/css/dark-sass/main.scss'])
 
     <title>DigiSplix | Admin</title>
 

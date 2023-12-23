@@ -1,9 +1,6 @@
 @include('Chatify::layouts.headLinks')
 
-<main class="content">
-    <div class="container-fluid px-lg-0">
-        <div class="row">
-            <div class="col-lg-12 ">
+
                 <div class="messenger box p-0">
                     {{-- ----------------------Users/Groups lists side---------------------- --}}
                     @php
@@ -27,10 +24,6 @@
                             {{-- Search input --}}
                             <input type="text" class="messenger-search" placeholder="Search" />
                             {{-- Tabs --}}
-                            {{-- <div class="messenger-listView-tabs">
-                <a href="#" class="active-tab" data-view="users">
-                    <span class="far fa-user"></span> Contacts</a>
-            </div> --}}
                         </div>
                         {{-- tabs and lists --}}
                         <div class="m-body contacts-container">
@@ -132,7 +125,7 @@
                         {!! view('Chatify::layouts.info')->render() !!}
                     </div>
                 </div>
-</main>
+           
 
 
 
