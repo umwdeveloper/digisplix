@@ -38,7 +38,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::domain('{subdomain}.digisplix.test')
+Route::domain('admin.digisplix.test')
     ->middleware(['auth', 'staff', '2fa', 'support_middleware'])
     ->name('staff.')
     ->group(function () {
@@ -97,7 +97,7 @@ Route::domain('{subdomain}.digisplix.test')
             ->name('staff.fetch_staff');
 
         // Support
-        Route::resource('support', SupportController::class);
+        Route::resource('support', SupportController::class)->except(['create', 'store', 'edit', 'update']);;
         Route::post('/support/uploadAttachment', [SupportController::class, 'uploadAttachment'])
             ->name('support.upload_attachment');
         Route::post('/support/store_reply', [SupportController::class, 'storeReply'])
@@ -106,15 +106,15 @@ Route::domain('{subdomain}.digisplix.test')
             ->name('support.update_status');
 
         // Invoice
-        Route::resource('invoices', InvoiceController::class);
-        Route::patch('/invoices/update-invoice-status/{invoice_id}', [InvoiceController::class, 'updateInvoiceStatus'])
-            ->name('invoices.update_invoice_status');
-        Route::patch('/invoices/mark-as-sent/{invoice_id}', [InvoiceController::class, 'markAsSent'])
-            ->name('invoices.mark_as_sent');
-        Route::patch('/invoices/send-invoice/{invoice_id}', [InvoiceController::class, 'sendInvoice'])
-            ->name('invoices.send_invoice');
-        Route::post('invoices/filtered', [InvoiceController::class, 'filtered'])
-            ->name('invoices.filtered');
+        // Route::resource('invoices', InvoiceController::class);
+        // Route::patch('/invoices/update-invoice-status/{invoice_id}', [InvoiceController::class, 'updateInvoiceStatus'])
+        //     ->name('invoices.update_invoice_status');
+        // Route::patch('/invoices/mark-as-sent/{invoice_id}', [InvoiceController::class, 'markAsSent'])
+        //     ->name('invoices.mark_as_sent');
+        // Route::patch('/invoices/send-invoice/{invoice_id}', [InvoiceController::class, 'sendInvoice'])
+        //     ->name('invoices.send_invoice');
+        // Route::post('invoices/filtered', [InvoiceController::class, 'filtered'])
+        //     ->name('invoices.filtered');
 
         // If route not found
         Route::fallback(function () {
@@ -175,7 +175,7 @@ Route::domain('client.digisplix.test')
             ->name('projects.index');
 
         // Support
-        Route::resource('support', ClientSupportController::class);
+        Route::resource('support', ClientSupportController::class)->except(['edit', 'update']);
         Route::post('/support/uploadAttachment', [ClientSupportController::class, 'uploadAttachment'])
             ->name('support.upload_attachment');
         Route::post('/support/uploadAttachmentReply', [ClientSupportController::class, 'uploadAttachmentReply'])
@@ -186,7 +186,7 @@ Route::domain('client.digisplix.test')
             ->name('support.update_status');
 
         // Invoices
-        Route::resource('invoices', ClientInvoiceController::class);
+        // Route::resource('invoices', ClientInvoiceController::class);
 
         // Services
         Route::get('/services', [ServiceController::class, 'index'])->name('services.index');

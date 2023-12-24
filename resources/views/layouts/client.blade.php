@@ -376,7 +376,9 @@
             lightThemeURL: "{{ Vite::asset('resources/css/light-sass/light.scss') }}",
             darkThemeURL: "{{ Vite::asset('resources/css/dark-sass/dark.scss') }}",
             lightLogoURL: "{{ asset('images/DigiSplix-Logo-for-Light-Mode.png') }}",
-            darkLogoURL: "{{ asset('images/DigiSplix-logo-for-dark-mode.png') }}"
+            darkLogoURL: "{{ asset('images/DigiSplix-logo-for-dark-mode.png') }}",
+            lightThemeURLChat: "{{ asset('css/chatify/light.mode.css') }}",
+            darkThemeURLChat: "{{ asset('css/chatify/dark.mode.css') }}",
         };
     </script>
 

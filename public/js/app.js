@@ -31,13 +31,17 @@ $(document).ready(function () {
     const darkThemeURL = assetUrls.darkThemeURL;
     const lightLogoURL = assetUrls.lightLogoURL;
     const darkLogoURL = assetUrls.darkLogoURL;
+    const lightThemeURLChat = assetUrls.lightThemeURLChat;
+    const darkThemeURLChat = assetUrls.darkThemeURLChat;
 
     if (currentMode === "dark") {
         $("#theme-link").attr("href", darkThemeURL);
+        $("#theme-link-chat").attr("href", darkThemeURLChat);
         $("#logo-image").attr("src", darkLogoURL);
         $("#logo-image-sm").attr("src", darkLogoURL);
     } else {
         $("#theme-link").attr("href", lightThemeURL);
+        $("#theme-link-chat").attr("href", lightThemeURLChat);
         $("#logo-image").attr("src", lightLogoURL);
         $("#logo-image-sm").attr("src", lightLogoURL);
     }
@@ -54,10 +58,12 @@ $(document).ready(function () {
 
         if (mode === "dark") {
             $("#theme-link").attr("href", darkThemeURL);
+            $("#theme-link-chat").attr("href", darkThemeURLChat);
             $("#logo-image").attr("src", darkLogoURL);
             $("#logo-image-sm").attr("src", darkLogoURL);
         } else {
             $("#theme-link").attr("href", lightThemeURL);
+            $("#theme-link-chat").attr("href", lightThemeURLChat);
             $("#logo-image").attr("src", lightLogoURL);
             $("#logo-image-sm").attr("src", lightLogoURL);
         }
