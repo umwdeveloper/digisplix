@@ -21,7 +21,7 @@
                                 </div>
                                 <!-- pay -->
                                 <div class="d-flex justify-content-center align-items-center">
-                                    <button class="table-btn px-2" type="button">Pay Now <i
+                                    <button class="table-btn px-2" type="button" id="payment-button">Pay Now <i
                                             class="bi bi-check-circle ms-1"></i></button>
                                 </div>
                             </div>
@@ -67,7 +67,7 @@
                             <div class="row mt-4 ">
                                 <div class="col-lg-12">
                                     <div class=" dasboard-table h-auto"
-                                        style="height: fit-content !important; border: 1px solid #ece9e9; border-bottom: none;">
+                                        style="height: fit-content !important; border: 1px solid #ece9e9; border-bottom: none; overflow-x: auto">
                                         <table class="table data-table-style mb-0">
                                             <thead>
                                                 <tr>
@@ -188,5 +188,27 @@
     </main>
 
 @section('script')
+    <script>
+        $(document).ready(function() {
+            $('#payment-button').click(function() {
+                $('.loading').removeClass('d-none')
+                $.ajax({
+                    url: '{{ route('payment.create') }}',
+                    type: 'GET',
+                    data: {
+                        'amount': 10
+                    },
+                    success: function(response) {
+                        $('.loading').addClass('d-none')
+                        window.open(response.session.url, '_self')
+                        // window.location.href = response.url;
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+        });
+    </script>
 @endsection
 @endsection

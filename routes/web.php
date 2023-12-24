@@ -3,11 +3,13 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Client\InvoiceController as ClientInvoiceController;
 use App\Http\Controllers\Client\ProjectController as ClientProjectController;
+use App\Http\Controllers\Client\ServiceController;
 use App\Http\Controllers\Client\SupportController as ClientSupportController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\Partner\ClientController as PartnerClientController;
 use App\Http\Controllers\Partner\LeadController as PartnerLeadController;
 use App\Http\Controllers\PartnerController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Staff\PartnerController as StaffPartnerController;
 use App\Http\Controllers\Staff\ClientController as StaffClientController;
 use App\Http\Controllers\Staff\InvoiceController;
@@ -36,7 +38,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::domain('admin.digisplix.test')
+Route::domain('{subdomain}.digisplix.test')
     ->middleware(['auth', 'staff', '2fa', 'support_middleware'])
     ->name('staff.')
     ->group(function () {
@@ -130,6 +132,8 @@ Route::domain('partner.digisplix.test')
             ->name('profile');
         Route::get('/settings', [PartnerController::class, 'settings'])
             ->name('settings');
+        Route::get('/notifications', [PartnerController::class, 'notifications'])
+            ->name('notifications');
         Route::patch('/reset_password', [PartnerController::class, 'resetPassword'])
             ->name('reset_password');
 
@@ -160,6 +164,8 @@ Route::domain('client.digisplix.test')
             ->name('profile');
         Route::get('/settings', [ClientController::class, 'settings'])
             ->name('settings');
+        Route::get('/notifications', [ClientController::class, 'notifications'])
+            ->name('notifications');
         Route::patch('/reset_password', [ClientController::class, 'resetPassword'])
             ->name('reset_password');
 
@@ -179,8 +185,11 @@ Route::domain('client.digisplix.test')
         Route::patch('/support/update_status/{id}', [ClientSupportController::class, 'updateStatus'])
             ->name('support.update_status');
 
-        // Invoice
+        // Invoices
         Route::resource('invoices', ClientInvoiceController::class);
+
+        // Services
+        Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
     });
 
 Route::resource('users', UsersController::class);
@@ -196,3 +205,9 @@ Route::post('/confirmCode', [TwoFAController::class, 'confirmCode'])
     ->name('2fa.confirmCode');
 Route::post('/disable2FA', [TwoFAController::class, 'disable2FA'])
     ->name('2fa.disable2FA');
+
+
+// Payment
+Route::get('/checkout', [PaymentController::class, 'createCheckoutSession'])->name('payment.create');
+Route::get('/success', [PaymentController::class, 'success'])->name('payment.success');
+Route::get('/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');

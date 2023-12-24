@@ -120,6 +120,10 @@ class ClientController extends Controller {
         return view('clients.settings');
     }
 
+    public function notifications() {
+        return view('clients.notifications');
+    }
+
     public function resetPassword(Request $request) {
         $validatedData = $request->validate([
             'old_password' => ['required', function ($attribute, $value, $fail) {

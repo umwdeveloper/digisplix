@@ -47,6 +47,8 @@ class InvoiceController extends Controller {
             ->where('status', '!=', Invoice::DRAFT)
             ->findOrFail($id);
 
+        $this->authorize('client.invoices', $invoice);
+
         return view('clients.invoices.show', [
             'invoice' => $invoice,
         ]);

@@ -122,6 +122,10 @@ class PartnerController extends Controller {
         return view('partners.settings');
     }
 
+    public function notifications() {
+        return view('partners.notifications');
+    }
+
     public function resetPassword(Request $request) {
         $validatedData = $request->validate([
             'old_password' => ['required', function ($attribute, $value, $fail) {

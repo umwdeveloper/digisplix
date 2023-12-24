@@ -217,7 +217,7 @@
                                 @endforelse
 
                                 <li>
-                                    <a href="notifications.html" class="text-center">
+                                    <a href="{{ route('partner.notifications') }}" class="text-center">
                                         <div class="see-all w-100 text-center">
                                             View All
                                         </div>

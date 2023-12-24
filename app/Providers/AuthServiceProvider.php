@@ -5,6 +5,7 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 
 use App\Models\Client;
+use App\Models\Invoice;
 use App\Models\Project;
 use App\Models\Support;
 use App\Models\User;
@@ -78,6 +79,11 @@ class AuthServiceProvider extends ServiceProvider {
         // SupportController
         Gate::define('client.support', function (User $user, Support $support) {
             return $support->user->id === $user->id;
+        });
+
+        // InvoiceController
+        Gate::define('client.invoices', function (User $user, Invoice $invoice) {
+            return $invoice->client->id === $user->userable->id;
         });
 
         // Admin has all rights

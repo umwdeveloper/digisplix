@@ -155,7 +155,7 @@
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="/services">
+                                <a href="{{ route('client.services.index') }}">
                                     <span class="menu-icon">
                                         <i class="fa-duotone fa-chart-line-up"></i>
                                     </span>
@@ -221,7 +221,7 @@
                                     <li class="text-muted text-center pt-3">No new notifications</li>
                                 @endforelse
                                 <li>
-                                    <a href="notifications.html" class="text-center">
+                                    <a href="{{ route('client.notifications') }}" class="text-center">
                                         <div class="see-all w-100 text-center">
                                             View All
                                         </div>
@@ -312,13 +312,13 @@
             </a>
         </div>
         <div class="footer-menu-link">
-            <a href="/services">
+            <a href="{{ route('client.services.index') }}">
                 <i class="fa-duotone fa-chart-line-up"></i>
                 Growth
             </a>
         </div>
         <div class="footer-menu-link">
-            <a href="/billing">
+            <a href="{{ route('client.invoices.index') }}">
                 <i class="fa-duotone fa-credit-card"></i>
                 Billing
             </a>
@@ -359,6 +359,9 @@
     <div id="overlay-all" class="overlay"></div>
 
     <div id="overlay-sidebar"></div>
+
+    {{-- Loader/Spinner --}}
+    <div class="loading d-none"></div>
 
     {{-- Show toast after an operation --}}
     @if (session('status'))

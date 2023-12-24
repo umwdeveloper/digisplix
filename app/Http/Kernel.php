@@ -39,7 +39,7 @@ class Kernel extends HttpKernel {
             \App\Http\Middleware\LayoutMiddleware::class,
             \App\Http\Middleware\SetAdminIdForStaffChat::class,
             \App\Http\Middleware\SupportMiddleware::class,
-
+            // \App\Http\Middleware\SubdomainValidationMiddleware::class,
         ],
 
         'api' => [
@@ -72,5 +72,6 @@ class Kernel extends HttpKernel {
         '2fa' => \App\Http\Middleware\TwoFA::class,
         'SetAdminIdForStaffChat' => \App\Http\Middleware\SetAdminIdForStaffChat::class,
         'support_middleware' => \App\Http\Middleware\SupportMiddleware::class,
+        // 'subdomain_validation_middleware' => \App\Http\Middleware\SubdomainValidationMiddleware::class,
     ];
 }
