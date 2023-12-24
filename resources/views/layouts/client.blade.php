@@ -146,6 +146,24 @@
                                 </a>
                             </li>
                             <li class="menu-item">
+                                <a href="{{ route('client.invoices.index') }}">
+                                    <span class="menu-icon">
+                                        <i class="fa-duotone fa-credit-card"></i>
+                                    </span>
+                                    <span class="menu-title">Billing
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="/services">
+                                    <span class="menu-icon">
+                                        <i class="fa-duotone fa-chart-line-up"></i>
+                                    </span>
+                                    <span class="menu-title">Business Growth
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
                                 <a href="{{ route('client.support.index') }}">
                                     <span class="menu-icon">
                                         <i class="fa-duotone fa-user-headset"></i>

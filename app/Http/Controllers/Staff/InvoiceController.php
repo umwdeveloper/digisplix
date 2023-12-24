@@ -7,6 +7,7 @@ use App\Http\Requests\StoreInvoice;
 use App\Models\Category;
 use App\Models\Client;
 use App\Models\Invoice;
+use App\Models\InvoiceItem;
 use App\Models\User;
 use App\Notifications\InvoiceStatusUpdated;
 use App\Notifications\SendInvoice;
@@ -22,7 +23,9 @@ class InvoiceController extends Controller {
     public function index() {
 
         $invoices = Invoice::with(['category', 'client', 'items'])
-            ->withSum('items', 'price')
+            ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
+                ->whereColumn('invoice_id', 'invoices.id')
+                ->limit(1)])
             ->get();
 
         $clients = Client::with(['user', 'partner', 'partner.user'])
@@ -51,7 +54,9 @@ class InvoiceController extends Controller {
 
     public function filtered(Request $request) {
         $invoices = Invoice::with(['category', 'client', 'items'])
-            ->withSum('items', 'price');
+            ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
+                ->whereColumn('invoice_id', 'invoices.id')
+                ->limit(1)]);
 
         if ($request->input('clients')) {
             $invoices = $invoices->whereIn('invoices.client_id', $request->input('clients'));

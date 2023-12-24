@@ -39,6 +39,10 @@ class Invoice extends Model {
         return $this->hasMany(InvoiceItem::class);
     }
 
+    public function getTotalPriceAttribute() {
+        return $this->items->sum('total_price');
+    }
+
     const PENDING = 'pending';
     const PAID = 'paid';
     const OVERDUE = 'overdue';

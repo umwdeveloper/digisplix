@@ -772,7 +772,7 @@
 
     <script>
         $('#client').on('change', function() {
-            $('#invoice_to').val($(this).find(':selected').text())
+            $('#invoice_to').val($(this).find(':selected').text().trim())
         })
     </script>
 

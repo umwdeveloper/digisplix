@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Client\InvoiceController as ClientInvoiceController;
 use App\Http\Controllers\Client\ProjectController as ClientProjectController;
 use App\Http\Controllers\Client\SupportController as ClientSupportController;
 use App\Http\Controllers\ClientController;
@@ -177,6 +178,9 @@ Route::domain('client.digisplix.test')
             ->name('support.store_reply');
         Route::patch('/support/update_status/{id}', [ClientSupportController::class, 'updateStatus'])
             ->name('support.update_status');
+
+        // Invoice
+        Route::resource('invoices', ClientInvoiceController::class);
     });
 
 Route::resource('users', UsersController::class);
