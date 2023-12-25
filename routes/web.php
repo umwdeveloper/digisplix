@@ -8,6 +8,7 @@ use App\Http\Controllers\Client\SupportController as ClientSupportController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\Partner\ClientController as PartnerClientController;
 use App\Http\Controllers\Partner\LeadController as PartnerLeadController;
+use App\Http\Controllers\Partner\SaleController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Staff\PartnerController as StaffPartnerController;
@@ -38,7 +39,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::domain('admin.digisplix.test')
+Route::domain('admin.digisplix.com')
     ->middleware(['auth', 'staff', '2fa', 'support_middleware'])
     ->name('staff.')
     ->group(function () {
@@ -122,7 +123,7 @@ Route::domain('admin.digisplix.test')
         });
     });
 
-Route::domain('partner.digisplix.test')
+Route::domain('partner.digisplix.com')
     ->name('partner.')
     ->middleware(['auth', '2fa', 'support_middleware'])
     ->group(function () {
@@ -152,9 +153,13 @@ Route::domain('partner.digisplix.test')
             ->name('clients.update_client_status');
         Route::get('/clients/fetch_client/{client_id}', [PartnerClientController::class, 'fetchClient'])
             ->name('clients.fetch_client');
+
+        // Sales
+        Route::get('/sales', [SaleController::class, 'index'])->name('sales.index');
+        Route::get('/total_sales', [SaleController::class, 'totalSales'])->name('sales.total_sales');
     });
 
-Route::domain('client.digisplix.test')
+Route::domain('client.digisplix.com')
     ->name('client.')
     ->middleware(['auth', '2fa', 'support_middleware'])
     ->group(function () {
