@@ -1,0 +1,16 @@
+{
+  "public/images/walling-XFwnAACel-o-unsplash.jpg": {
+    "file": "walling-XFwnAACel-o-unsplash.jpg",
+    "src": "public/images/walling-XFwnAACel-o-unsplash.jpg"
+  },
+  "resources/css/dark-sass/dark.scss": {
+    "file": "dark.css",
+    "isEntry": true,
+    "src": "resources/css/dark-sass/dark.scss"
+  },
+  "resources/css/light-sass/light.scss": {
+    "file": "light.css",
+    "isEntry": true,
+    "src": "resources/css/light-sass/light.scss"
+  }
+}
