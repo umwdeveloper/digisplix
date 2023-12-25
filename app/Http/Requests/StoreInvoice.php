@@ -19,7 +19,7 @@ class StoreInvoice extends FormRequest {
      */
     public function rules(): array {
         return [
-            'invoice_id' => 'string|required|unique:invoices,invoice_id',
+            'invoice_id' => 'string|required',
             'client_id' => 'integer|required',
             'category_id' => 'integer|required',
             'invoice_from' => 'string|required',
@@ -36,7 +36,7 @@ class StoreInvoice extends FormRequest {
             'ifsc_code' => 'string|required',
             'account_number' => 'string|required',
             'descriptions.*' => 'string|required',
-            'prices.*' => 'integer|required',
+            'prices.*' => 'numeric|required',
             'quantities.*' => 'integer|required'
         ];
     }

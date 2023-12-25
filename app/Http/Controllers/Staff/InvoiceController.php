@@ -140,7 +140,7 @@ class InvoiceController extends Controller {
             ]);
         }
 
-        return redirect()->back()->with('status', 'Invoice created successfully!');
+        return redirect()->route('staff.invoices.index')->with('status', 'Invoice created successfully!');
     }
 
     /**
@@ -154,15 +154,86 @@ class InvoiceController extends Controller {
      * Show the form for editing the specified resource.
      */
     public function edit(string $id) {
-        //
+        $invoice = Invoice::with(['category', 'client', 'items'])
+            ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
+                ->whereColumn('invoice_id', 'invoices.id')
+                ->limit(1)])
+            ->findOrFail($id);
+        $clients = Client::with('user')->where('status', Client::QUALIFIED)->get();
+        $categories = Category::all();
+        $admin = User::getAdmin();
+        return view('staff.invoices.edit', [
+            'clients' => $clients,
+            'categories' => $categories,
+            'admin' => $admin,
+            'invoice' => $invoice,
+        ]);
+    }
+
+    /**
+     * Show the form for cloning the specified resource.
+     */
+    public function clone(string $id) {
+        $invoice = Invoice::with(['category', 'client', 'items'])
+            ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
+                ->whereColumn('invoice_id', 'invoices.id')
+                ->limit(1)])
+            ->findOrFail($id);
+        $clients = Client::with('user')->where('status', Client::QUALIFIED)->get();
+        $categories = Category::all();
+        $admin = User::getAdmin();
+        return view('staff.invoices.clone', [
+            'clients' => $clients,
+            'categories' => $categories,
+            'admin' => $admin,
+            'invoice' => $invoice,
+            'invoice_number' => $this->generateInvoiceNumber(),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id) {
-        //
+    public function update(StoreInvoice $request, string $id) {
+        $validatedData = $request->validated();
+
+        $invoice = Invoice::findOrFail($id);
+
+        if (!isset($validatedData['recurring'])) {
+            $validatedData['recurring'] = 0;
+            $validatedData['start_from'] = null;
+            $validatedData['duration'] = null;
+        }
+
+        $invoice->update($validatedData);
+
+        $invoiceItems = $invoice->items;
+
+        $descriptions = $validatedData['descriptions'];
+        $prices = $validatedData['prices'];
+        $quantities = $validatedData['quantities'];
+
+        foreach ($descriptions as $key => $description) {
+            if (isset($invoiceItems[$key])) {
+                // If the item already exists, update it
+                $invoiceItems[$key]->update([
+                    'description' => $description,
+                    'price' => $prices[$key],
+                    'quantity' => $quantities[$key],
+                ]);
+            } else {
+                // If the item doesn't exist, create a new one
+                $invoice->items()->create([
+                    'description' => $description,
+                    'price' => $prices[$key],
+                    'quantity' => $quantities[$key],
+                ]);
+            }
+        }
+
+        return redirect()->back()->with('status', 'Invoice updated successfully!');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -224,6 +295,10 @@ class InvoiceController extends Controller {
 
         try {
             $invoice = Invoice::withSum('items', 'price')->findOrFail($id);
+
+            $invoice->sent = 1;
+
+            $invoice->save();
 
             Notification::send($invoice->client->user, new SendInvoice($invoice, $invoice->items_sum_price));
 

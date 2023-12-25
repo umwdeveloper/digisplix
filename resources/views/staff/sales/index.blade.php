@@ -1,98 +1,60 @@
 @extends('layouts.app')
 
 @section('content')
-    <main class="content">
+    <main class="content ">
         <div class="container-fluid px-lg-0">
             <div class="row justify-content-center">
                 <div class="col-xl-9 ">
                     <div class="row">
-                        <div class="col-xl-4 col-md-6 mb-3">
+                        <div class="col-xl-6 col-md-6 mb-3">
                             <div class="box">
-                                <h1 class="box-heading">Total Clients</h1>
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <h1 class="box-heading">Total Sales</h1>
+                                    <select class="form-select select-duration mb-1 filter"
+                                        aria-label="Default select example" data-filter="sales">
+                                        <option selected value="weekly">Weekly</option>
+                                        <option value="monthly">Monthly</option>
+                                        <option value="months_6">6 Months</option>
+                                        <option value="yearly">Yearly</option>
+                                        <option value="lifetime">Lifetime</option>
+                                    </select>
+                                </div>
                                 <div class="d-flex align-items-center">
                                     <div class=" flex-grow-1  box-text d-flex align-items-center">
 
-                                        <span class="box-value">{{ $totalClients }}</span>
+                                        <span class="box-value" id="sales">{{ $sales }}</span>
 
                                     </div>
                                     <div class="box-icon">
-                                        <i class="fa-duotone fa-user-group "></i>
+                                        <i class="fa-solid fa-chart-mixed-up-circle-currency"></i>
                                     </div>
 
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-4 col-md-6 mb-3">
+                        <div class="col-xl-6 col-md-6 mb-3">
                             <div class="box">
-                                <h1 class="box-heading">Active Clients</h1>
-                                <div class="d-flex align-items-center">
-                                    <div class=" flex-grow-1  box-text d-flex align-items-center">
-
-                                        <span class="box-value">{{ $activeClients }}</span>
-
-                                    </div>
-                                    <div class="box-icon">
-                                        <i class="fa-duotone fa-chart-network"></i>
-                                    </div>
-
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <h1 class="box-heading">Total Revenue</h1>
+                                    <select class="form-select select-duration mb-1 filter"
+                                        aria-label="Default select example" data-filter="revenue">
+                                        <option selected value="weekly">Weekly</option>
+                                        <option value="monthly">Monthly</option>
+                                        <option value="months_6">6 Months</option>
+                                        <option value="yearly">Yearly</option>
+                                        <option value="lifetime">Lifetime</option>
+                                    </select>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-md-6 mb-3">
-                            <div class="box">
-                                <h1 class="box-heading">Total Projects</h1>
                                 <div class="d-flex align-items-center">
                                     <div class=" flex-grow-1  box-text d-flex align-items-center">
-                                        <span class="box-value">{{ $totalProjects }}</span>
+
+                                        <span class="box-value">$<span id="revenue">{{ round($revenue) }}</span></span>
 
                                     </div>
                                     <div class="box-icon">
-                                        <i class="fa-duotone fa-rectangle-history"></i>
+                                        <i class="fa-solid fa-chart-line-up"></i>
                                     </div>
 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-md-6 mb-3">
-                            <div class="box">
-                                <h1 class="box-heading">Overdue Projects</h1>
-                                <div class="d-flex align-items-center">
-                                    <div class=" flex-grow-1  box-text d-flex align-items-center">
-                                        <span class="box-value">{{ $overdueProjects }}</span>
-
-                                    </div>
-                                    <div class="box-icon">
-                                        <i class="fa-duotone fa-calendar-days "></i>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-md-6 mb-3">
-                            <div class="box">
-                                <h1 class="box-heading">Ongoing Projects</h1>
-                                <div class="d-flex align-items-center">
-                                    <div class=" flex-grow-1  box-text d-flex align-items-center">
-                                        <span class="box-value">{{ $onGoingProjects }}</span>
-
-                                    </div>
-                                    <div class="box-icon">
-                                        <i class="fa-duotone fa-circle-quarter"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-md-6 mb-3">
-                            <div class="box">
-                                <h1 class="box-heading">Completed Projects</h1>
-                                <div class="d-flex align-items-center">
-                                    <div class=" flex-grow-1  box-text d-flex align-items-center">
-                                        <span class="box-value">{{ $completedProjects }}</span>
-
-                                    </div>
-                                    <div class="box-icon">
-                                        <i class="fa-duotone fa-award"></i>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -145,7 +107,7 @@
                 <div class="col-xl-3 ">
                     <div class="box ticket-links mb-3">
                         <h1 class="f-20 w-500 mb-3 text-dark-clr">Recent Activity</h1>
-                        <div class="recent-activities">
+                        <div class="recent-activities2">
                             @forelse (auth()->user()->notifications as $notification)
                                 <a class="ticket-notify px-0  mb-3"
                                     href="{{ !empty($notification->data['link']) ? $notification->data['link'] : '#' }}">
@@ -230,5 +192,29 @@
         <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
         <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
         <script src="{{ asset('js/charts.js') }}"></script>
+
+        <script>
+            $('.filter').change(function() {
+                var duration = $(this).val();
+                var filter = $(this).data('filter');
+
+                // Make an AJAX request to fetch data based on the selected duration
+                $.ajax({
+                    url: '{{ route('staff.sales.total_sales') }}',
+                    type: 'GET',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        duration,
+                        filter
+                    },
+                    success: function(data) {
+                        $('#' + filter).text(data.total);
+                    },
+                    error: function(error) {
+                        console.error('Error fetching data:', error);
+                    }
+                });
+            });
+        </script>
     @endsection
 @endsection

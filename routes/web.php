@@ -18,6 +18,7 @@ use App\Http\Controllers\Staff\StaffController as StaffStaffController;
 use App\Http\Controllers\Staff\PhaseController;
 use App\Http\Controllers\Staff\LeadController;
 use App\Http\Controllers\Staff\ProjectController;
+use App\Http\Controllers\Staff\SaleController as StaffSaleController;
 use App\Http\Controllers\Staff\TaskController;
 use App\Http\Controllers\Staff\SupportController;
 use App\Http\Controllers\StaffController;
@@ -39,7 +40,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::domain('admin.digisplix.com')
+Route::domain(config('custom.staff_alias'))
     ->middleware(['auth', 'staff', '2fa', 'support_middleware'])
     ->name('staff.')
     ->group(function () {
@@ -107,15 +108,21 @@ Route::domain('admin.digisplix.com')
             ->name('support.update_status');
 
         // Invoice
-        // Route::resource('invoices', InvoiceController::class);
-        // Route::patch('/invoices/update-invoice-status/{invoice_id}', [InvoiceController::class, 'updateInvoiceStatus'])
-        //     ->name('invoices.update_invoice_status');
-        // Route::patch('/invoices/mark-as-sent/{invoice_id}', [InvoiceController::class, 'markAsSent'])
-        //     ->name('invoices.mark_as_sent');
-        // Route::patch('/invoices/send-invoice/{invoice_id}', [InvoiceController::class, 'sendInvoice'])
-        //     ->name('invoices.send_invoice');
-        // Route::post('invoices/filtered', [InvoiceController::class, 'filtered'])
-        //     ->name('invoices.filtered');
+        Route::resource('invoices', InvoiceController::class);
+        Route::patch('/invoices/update-invoice-status/{invoice_id}', [InvoiceController::class, 'updateInvoiceStatus'])
+            ->name('invoices.update_invoice_status');
+        Route::patch('/invoices/mark-as-sent/{invoice_id}', [InvoiceController::class, 'markAsSent'])
+            ->name('invoices.mark_as_sent');
+        Route::patch('/invoices/send-invoice/{invoice_id}', [InvoiceController::class, 'sendInvoice'])
+            ->name('invoices.send_invoice');
+        Route::post('invoices/filtered', [InvoiceController::class, 'filtered'])
+            ->name('invoices.filtered');
+        Route::get('invoices/{invoice_id}/clone', [InvoiceController::class, 'clone'])
+            ->name('invoices.clone');
+
+        // Sales
+        Route::get('/sales', [StaffSaleController::class, 'index'])->name('sales.index');
+        Route::get('/total_sales', [StaffSaleController::class, 'totalSales'])->name('sales.total_sales');
 
         // If route not found
         Route::fallback(function () {
@@ -123,7 +130,7 @@ Route::domain('admin.digisplix.com')
         });
     });
 
-Route::domain('partner.digisplix.com')
+Route::domain(config('custom.partner_alias'))
     ->name('partner.')
     ->middleware(['auth', '2fa', 'support_middleware'])
     ->group(function () {
@@ -157,9 +164,14 @@ Route::domain('partner.digisplix.com')
         // Sales
         Route::get('/sales', [SaleController::class, 'index'])->name('sales.index');
         Route::get('/total_sales', [SaleController::class, 'totalSales'])->name('sales.total_sales');
+
+        // If route not found
+        Route::fallback(function () {
+            abort(404);
+        });
     });
 
-Route::domain('client.digisplix.com')
+Route::domain(config('custom.client_alias'))
     ->name('client.')
     ->middleware(['auth', '2fa', 'support_middleware'])
     ->group(function () {
@@ -191,10 +203,15 @@ Route::domain('client.digisplix.com')
             ->name('support.update_status');
 
         // Invoices
-        // Route::resource('invoices', ClientInvoiceController::class);
+        Route::resource('invoices', ClientInvoiceController::class);
 
         // Services
         Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
+
+        // If route not found
+        Route::fallback(function () {
+            abort(404);
+        });
     });
 
 Route::resource('users', UsersController::class);

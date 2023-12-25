@@ -157,7 +157,7 @@
                             </li>
 
                             <li class="menu-item">
-                                <a href="sales.html">
+                                <a href="{{ route('staff.sales.index') }}">
                                     <span class="menu-icon">
                                         <i class="fa-duotone fa-chart-mixed-up-circle-dollar"></i>
                                     </span>
@@ -522,7 +522,7 @@
         <h3>More Menus</h3>
         <div class="menu-footer-padding"></div>
         <div class="d-flex align-items-center more-footer-link">
-            <a href="sales.html" class="d-flex align-items-center">
+            <a href="{{ route('staff.sales.index') }}" class="d-flex align-items-center">
                 <div class="more-icon">
                     <i class="fa-duotone fa-chart-mixed-up-circle-dollar"></i>
                 </div>

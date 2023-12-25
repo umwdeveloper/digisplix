@@ -16,8 +16,8 @@ class InvoiceItemFactory extends Factory {
     public function definition(): array {
         return [
             'description' => fake()->text(50),
-            'price' => fake()->randomFloat(2, 10, 1000),
-            'quantity' => fake()->numberBetween(1, 10)
+            'price' => fake()->randomFloat(2, 10, 100),
+            'quantity' => fake()->numberBetween(1, 5)
         ];
     }
 }

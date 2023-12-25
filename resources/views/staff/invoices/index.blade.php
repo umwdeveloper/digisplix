@@ -423,9 +423,10 @@
                                                             data-invoice-id="{{ $invoice->id }}" href="#"><i
                                                                 class="bi bi-receipt me-2"></i>Send
                                                             Invoice</a></td>
-                                                    <td><button class="edit"><i
+                                                    <td><a class="edit"
+                                                            href="{{ route('staff.invoices.clone', $invoice->id) }}"><i
                                                                 class="bi bi-clipboard-plus-fill me-2"></i>Clone
-                                                            Invoice</button></td>
+                                                            Invoice</a></td>
                                                     <td> <button class="delete ms-0"><i
                                                                 class="fa-solid fa-trash me-2"></i>
                                                             Delete</button></td>
@@ -1019,6 +1020,7 @@
             $('.loading').removeClass('d-none');
             let invoiceID = $(this).data('invoice-id');
 
+            let that = $(this)
             $.ajax({
                 url: '{{ route('staff.invoices.send_invoice', 'invoice_id') }}'.replace(
                     'invoice_id',
@@ -1031,6 +1033,8 @@
                     console.log(response);
                     if (response.status == 'success') {
                         $('.loading').addClass('d-none');
+                        that.closest('tr').find('.mark-as-sent').data('sent', 1)
+                        that.closest('tr').find('.mark-as-sent').find('span').text('Mark as Unsent')
                         alert("Invoice has been sent")
                     } else {
                         alert(response.message)

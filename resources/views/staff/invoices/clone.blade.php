@@ -54,7 +54,7 @@
                                                                 class="form-select form-select-sm mt-2">
                                                                 @foreach ($clients as $client)
                                                                     <option
-                                                                        {{ $client->id == old('client_id') ? 'selected' : '' }}
+                                                                        {{ $client->id == $invoice->client->id ? 'selected' : '' }}
                                                                         value="{{ $client->id }}">
                                                                         {{ $client->user->name }}
                                                                     </option>
@@ -71,7 +71,7 @@
                                                             class="form-select form-select-sm mt-2">
                                                             @foreach ($categories as $category)
                                                                 <option
-                                                                    {{ $category->id == old('category_id') ? 'selected' : '' }}
+                                                                    {{ $category->id == $invoice->category_id ? 'selected' : '' }}
                                                                     value="{{ $category->id }}">{{ $category->name }}
                                                                 </option>
                                                             @endforeach
@@ -82,7 +82,7 @@
                                                     <div class="mb-lg-0 mb-4">
                                                         <label for="" class="invoice-label">Select</label>
                                                         <div class="form-check mt-2">
-                                                            <input {{ old('recurring') == '1' ? 'checked' : '' }}
+                                                            <input {{ $invoice->recurring == '1' ? 'checked' : '' }}
                                                                 class="form-check-input" type="checkbox"
                                                                 id="flexCheckChecked" value="1" name="recurring">
                                                             <label class="form-check-label" for="flexCheckChecked">
@@ -99,7 +99,8 @@
                                                             <div class="multipleSelection mt-4">
                                                                 <div class="selectBox bg-white">
                                                                     <input type="date" name="start_from" class="w-100"
-                                                                        placeholder="Enter references No.">
+                                                                        placeholder="Enter references No."
+                                                                        value="{{ $invoice->start_from }}">
                                                                 </div>
                                                                 @error('start_from')
                                                                     <small class="invalid-feedback " style="font-size: 11px">
@@ -114,7 +115,8 @@
                                                             <div class="multipleSelection mt-4">
                                                                 <div class="selectBox bg-white">
                                                                     <input type="number" name="duration" min="1"
-                                                                        class="w-100" placeholder="Enter Months">
+                                                                        class="w-100" placeholder="Enter Months"
+                                                                        value="{{ $invoice->duration }}">
                                                                 </div>
                                                                 @error('duration')
                                                                     <small class="invalid-feedback " style="font-size: 11px">
@@ -142,15 +144,19 @@
                                     <div class="col-lg-12">
                                         <div class="box-gray mb-4 pb-0 pt-0  item-add-box-div box-p">
                                             @php
-                                                $invoiceItems = old('descriptions', ['']); // Set the desired number of items
+                                                $total_price = 0;
                                             @endphp
-
-                                            @for ($i = 0; $i < count($invoiceItems); $i++)
+                                            @foreach ($invoice->items as $i => $item)
+                                                @php
+                                                    $total_price += $item->price * $item->quantity;
+                                                @endphp
                                                 <div class="row item-add-box mt-4">
                                                     <div class="col-lg-12 ">
-                                                        <div class="d-flex align-items-center justify-content-between mb-3">
+                                                        <div
+                                                            class="d-flex align-items-center justify-content-between mb-3">
                                                             <h2 class="f-16 w-500 text-primary">Item
-                                                                ({{ $i + 1 }}):
+                                                                ({{ $i + 1 }})
+                                                                :
                                                             </h2>
                                                             <div>
                                                                 <i
@@ -162,9 +168,9 @@
                                                         <label for="" class="invoice-label">Item
                                                             Description</label>
                                                         <div class="selectBox bg-white">
-                                                            <input type="text" required name="descriptions[]"
-                                                                class="w-100" value="{{ old('descriptions.' . $i) }}"
-                                                                placeholder="">
+                                                            <input type="text" required
+                                                                name="descriptions[{{ $i }}]" class="w-100"
+                                                                value="{{ $item->description }}" placeholder="">
                                                         </div>
                                                         @error('descriptions.' . $i)
                                                             <small class="invalid-feedback " style="font-size: 11px">
@@ -175,10 +181,11 @@
                                                     <div class="col-lg-2 col-md-6 mb-lg-0 mb-3">
                                                         <label for="" class="invoice-label">Price</label>
                                                         <div class="selectBox bg-white">
-                                                            <input type="text" required name="prices[]"
+                                                            <input type="text" required
+                                                                name="prices[{{ $i }}]"
                                                                 pattern="[0-9]+(\.[0-9]+)?"
                                                                 oninput="validateNumbers(this)" class="w-100"
-                                                                value="{{ old('prices.' . $i) }}" placeholder="">
+                                                                value="{{ $item->price }}" placeholder="">
                                                         </div>
                                                         @error('prices.' . $i)
                                                             <small class="invalid-feedback " style="font-size: 11px">
@@ -189,10 +196,11 @@
                                                     <div class="col-lg-2 col-md-6 mb-lg-0 mb-3">
                                                         <label for="" class="invoice-label">Quantity</label>
                                                         <div class="selectBox bg-white">
-                                                            <input type="text" required name="quantities[]"
+                                                            <input type="text" required
+                                                                name="quantities[{{ $i }}]"
                                                                 pattern="[0-9]+(\.[0-9]+)?"
                                                                 oninput="validateNumbers(this)" class="w-100"
-                                                                value="{{ old('quantities.' . $i) }}" placeholder="">
+                                                                value="{{ $item->quantity }}" placeholder="">
                                                         </div>
                                                         @error('quantities.' . $i)
                                                             <small class="invalid-feedback " style="font-size: 11px">
@@ -204,11 +212,12 @@
                                                         <label for="" class="invoice-label">Total</label>
                                                         <div class="selectBox bg-white">
                                                             <input type="text" required readonly class="w-100 total"
-                                                                placeholder="">
+                                                                placeholder=""
+                                                                value="{{ round($item->price * $item->quantity) }}">
                                                         </div>
                                                     </div>
                                                 </div>
-                                            @endfor
+                                            @endforeach
                                         </div>
 
                                     </div>
@@ -231,7 +240,7 @@
                                                 <div class="d-flex align-items-center">
                                                     <div class="invoice-label">Due Date&nbsp;:&nbsp;</div>
                                                     <div class="invoice-value"><input type="date" required
-                                                            name="due_date" value="{{ old('due_date') }}"
+                                                            name="due_date" value="{{ $invoice->due_date }}"
                                                             class="border-0 bg-transparent text-primary invoice-date"
                                                             style="outline: none;"></div>
                                                 </div>
@@ -253,7 +262,7 @@
                                                 </small>
                                             @enderror
                                             <textarea name="invoice_from" required id="invoice_from" rows="3" class="border-0 f-14 w-400 bg-transparent"
-                                                style="width: 100%; outline: none;">{{ $admin->name }}</textarea>
+                                                style="width: 100%; outline: none;">{{ $invoice->invoice_from }}</textarea>
 
                                         </div>
                                     </div>
@@ -266,7 +275,7 @@
                                                 </small>
                                             @enderror
                                             <textarea name="invoice_to" required id="invoice_to" rows="3" class="border-0 f-14 w-400 bg-transparent"
-                                                style="width: 100%; outline: none;">{{ $clients->first()->user->name }}</textarea>
+                                                style="width: 100%; outline: none;">{{ $invoice->invoice_to }}</textarea>
 
 
 
@@ -275,11 +284,7 @@
                                     <div class="col-lg-6 mt-4 ">
                                         <h1 class="invoice-heading text-primary mb-4">More Fields</h1>
                                         <div class="box-gray h-auto box-p text-center ">
-                                            @if (
-                                                $errors->has('account_holder_name') ||
-                                                    $errors->has('bank_name') ||
-                                                    $errors->has('account_number') ||
-                                                    $errors->has('ifsc_code'))
+                                            @if ($errors->any(['account_holder_name', 'bank_name', 'ifsc_code', 'account_number']))
                                                 <small class="invalid-feedback " style="font-size: 11px">
                                                     Bank details are not correct
                                                 </small>
@@ -305,7 +310,7 @@
                                                         aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                                         <div class="accordion-body">
                                                             <textarea name="terms_n_conditions" rows="5" class="border-0 " style="width: 100%; outline: none;"
-                                                                placeholder="Add Details..."></textarea>
+                                                                placeholder="Add Details...">{{ $invoice->terms_n_conditions }}</textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -315,14 +320,15 @@
                                                             type="button" data-bs-toggle="collapse"
                                                             data-bs-target="#collapseTwo" aria-expanded="false"
                                                             aria-controls="collapseTwo">
-                                                            <i class="fa-solid fa-circle-plus me-2"></i>Add Notes
+                                                            <i class="fa-solid fa-circle-plus me-2"></i>Add
+                                                            Notes
                                                         </button>
                                                     </h2>
                                                     <div id="collapseTwo" class="accordion-collapse collapse"
                                                         aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                                         <div class="accordion-body">
                                                             <textarea name="note" rows="5" class="border-0 " style="width: 100%; outline: none;"
-                                                                placeholder="Add Details..."></textarea>
+                                                                placeholder="Add Details...">{{ $invoice->note }}</textarea>
 
                                                         </div>
                                                     </div>
@@ -344,7 +350,7 @@
                                                     value="0">
 
                                                 <p class="f-20 w-500 text-primary mb-0 pb-0">$<span
-                                                        class="grand-total">0</span></p>
+                                                        class="grand-total">{{ $total_price }}</span></p>
                                             </div>
                                         </div>
                                         <button class="ticket-fill ms-auto mt-3" id="save-invoice">Save Invoice</button>
@@ -427,7 +433,7 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
-                                        <input type="text" required value="{{ old('account_holder_name') }}"
+                                        <input type="text" required value="{{ $invoice->account_holder_name }}"
                                             name="account_holder_name" class="form-control crm-input" id="name"
                                             placeholder="Mickel">
                                         <label class="crm-label form-label" for="name">Account Holder Name<span
@@ -441,8 +447,9 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
-                                        <input type="text" required value="{{ old('bank_name') }}" name="bank_name"
-                                            class="form-control crm-input" id="bank-name" placeholder="Mickel">
+                                        <input type="text" required value="{{ $invoice->bank_name }}"
+                                            name="bank_name" class="form-control crm-input" id="bank-name"
+                                            placeholder="Mickel">
                                         <label class="crm-label form-label" for="bank-name">Bank name<span
                                                 class="text-danger">*</span></label>
                                         @error('bank_name')
@@ -456,8 +463,9 @@
 
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
-                                        <input type="text" required value="{{ old('ifsc_code') }}" name="ifsc_code"
-                                            class="form-control crm-input" id="code" placeholder="ABC">
+                                        <input type="text" required value="{{ $invoice->ifsc_code }}"
+                                            name="ifsc_code" class="form-control crm-input" id="code"
+                                            placeholder="ABC">
                                         <label class="crm-label form-label" for="code">IFSC Code<span
                                                 class="text-danger">*</span></label>
                                         @error('ifsc_code')
@@ -470,7 +478,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
-                                        <input type="text" required value="{{ old('account_number') }}"
+                                        <input type="text" required value="{{ $invoice->account_number }}"
                                             name="account_number" class="form-control crm-input" id="acc-num"
                                             placeholder="ABC">
                                         <label class="crm-label form-label" for="acc-num">Account Number<span
@@ -714,47 +722,69 @@
     </script>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const addItemButton = document.querySelector(".add-item");
-            const itemAddBoxDiv = document.querySelector(".item-add-box-div");
-            const itemAddBoxTemplate = document.querySelector(".item-add-box-template");
+        $(document).ready(function() {
+            const addItemButton = $(".add-item");
+            const itemAddBoxDiv = $(".item-add-box-div");
+            const itemAddBoxTemplate = $(".item-add-box-template");
 
             // Counter to keep track of the number of items added
-            let itemCount = 1;
+            let itemCount = $(".item-add-box-div .item-add-box").length;
 
-            addItemButton.addEventListener("click", function() {
+            addItemButton.on("click", function() {
                 // Clone the item-add-box template
-                const newItemAddBox = itemAddBoxTemplate.cloneNode(true);
-                newItemAddBox.style.display = "block"; // Show the cloned item
-                newItemAddBox.querySelector('.item-add-box').classList.remove('item-template')
+                const newItemAddBox = itemAddBoxTemplate.clone().appendTo(itemAddBoxDiv);
+                newItemAddBox.show(); // Show the cloned item
+                newItemAddBox.find('.item-add-box').removeClass('item-template');
 
                 // Update the title for the new item
-                const itemTitle = newItemAddBox.querySelector(".f-16.w-500.text-primary");
-                itemTitle.textContent = `Item (${++itemCount}):`;
+                const itemTitle = newItemAddBox.find(".f-16.w-500.text-primary");
+                itemTitle.text(`Item (${++itemCount}):`);
 
-                // Add the cloned item-add-box to the item-add-box-div
-                itemAddBoxDiv.appendChild(newItemAddBox);
+                updateNames();
 
                 // Add event listener to the trash icon for removal
-                const trashIcon = newItemAddBox.querySelector(".fa-trash-xmark");
-                trashIcon.addEventListener("click", function() {
-                    // Remove the parent .item-add-box when the trash icon is clicked
-                    itemAddBoxDiv.removeChild(newItemAddBox);
-                });
+                // const trashIcon = newItemAddBox.find(".fa-trash-xmark");
+                // trashIcon.on("click", function() {
+                //     // Remove the parent .item-add-box when the trash icon is clicked
+                //     newItemAddBox.remove();
+                //     itemCount--;
+
+                //     // Update input names after removal
+                //     updateNames();
+                // });
             });
 
             // Add event listener to the item-add-box-div for trash icon click (event delegation)
-            itemAddBoxDiv.addEventListener("click", function(event) {
-                if (event.target.classList.contains("fa-trash-xmark")) {
-                    // Find the closest .item-add-box and remove it
-                    const itemAddBox = event.target.closest(".item-add-box");
-                    if (itemAddBox) {
-                        itemAddBoxDiv.removeChild(itemAddBox);
-                    }
+            itemAddBoxDiv.on("click", ".fa-trash-xmark", function() {
+                // Find the closest .item-add-box and remove it
+                const itemAddBox = $(this).closest(".item-add-box");
+                if (itemAddBox) {
+                    itemAddBox.remove();
+                    itemCount--;
+
+                    // Update input names after removal
+                    updateNames();
                 }
             });
+
+            // Function to update input names based on their index
+            function updateNames() {
+                $(".item-add-box").each(function(index) {
+                    $(this).find("input[name^='descriptions']").attr("name", `descriptions[${index}]`);
+                    $(this).find("input[name^='prices']").attr("name", `prices[${index}]`);
+                    $(this).find("input[name^='quantities']").attr("name", `quantities[${index}]`);
+                    $(this).find(".f-16.w-500.text-primary").text(`Item (${index+1}):`);;
+                });
+            }
+
+            // Function to reindex input fields when needed
+            function reindexInputFields() {
+                itemCount = $(".item-add-box-div .item-add-box").length;
+                updateNames();
+            }
         });
     </script>
+
     <!-- recurring checked -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -795,8 +825,8 @@
     {{-- Calculate total prices --}}
     <script>
         function calculateTotal(input) {
-            var price = parseFloat($(input).closest('.row').find('input[name="prices[]"]').val()) || 0;
-            var quantity = parseFloat($(input).closest('.row').find('input[name="quantities[]"]').val()) || 0;
+            var price = parseFloat($(input).closest('.row').find('input[name^="prices"]').val()) || 0;
+            var quantity = parseFloat($(input).closest('.row').find('input[name^="quantities"]').val()) || 0;
             var total = price * quantity;
 
             console.log(price);
@@ -849,7 +879,7 @@
 
     {{-- Preview Invoice --}}
     <script id="pv-items-template" type="text/template">
-        <tr class="">
+    <tr class="">
             <td>{sr_num}</td>
             <td scope="row" style="white-space: normal;">
                 {description}

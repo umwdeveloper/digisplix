@@ -147,7 +147,7 @@
                             </li>
 
                             <li class="menu-item">
-                                <a href="/commission">
+                                <a href="{{ route('partner.sales.index') }}">
                                     <span class="menu-icon">
                                         <i class="fa-duotone fa-chart-mixed-up-circle-dollar"></i>
                                     </span>
@@ -269,7 +269,7 @@
             </a>
         </div>
         <div class="footer-menu-link">
-            <a href="/commission">
+            <a href="{{ route('partner.sales.index') }}">
                 <i class="fa-duotone fa-chart-mixed-up-circle-dollar"></i>
                 Commission
             </a>

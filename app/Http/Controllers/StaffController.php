@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateProfile;
 use App\Models\Client;
+use App\Models\Invoice;
 use App\Models\Project;
 use App\Models\Staff;
 use App\Models\User;
@@ -33,6 +34,16 @@ class StaffController extends Controller {
 
         $deliveries = Project::with('client.user')->orderBy('deadline')->take(5)->get();
 
+        $regionalSales = Invoice::join('clients', 'invoices.client_id', '=', 'clients.id')
+            ->join('users', function ($join) {
+                $join->on('users.userable_id', '=', 'clients.id')
+                    ->where('users.userable_type', '=', Client::class);
+            })
+            ->where('invoices.status', Invoice::PAID)
+            ->selectRaw('users.country as region, users.country_code AS region_code, COUNT(DISTINCT invoices.id) as sales_count')
+            ->groupBy('users.country')
+            ->get();
+
         return view('staff.index', [
             'totalClients' => count($clients),
             'activeClients' => $clients->where('status', 1)->count(),
@@ -40,7 +51,8 @@ class StaffController extends Controller {
             'overdueProjects' => $clients->pluck('projects')->flatten()->where('billing_status', 0)->count(),
             'onGoingProjects' => $clients->pluck('projects')->flatten()->where('current_status', 0)->count(),
             'completedProjects' => $clients->pluck('projects')->flatten()->where('current_status', 1)->count(),
-            'deliveries' => $deliveries
+            'deliveries' => $deliveries,
+            'regional_sales' => $regionalSales,
         ]);
     }
 
