@@ -17,7 +17,12 @@ class ClientsTableSeeder extends Seeder {
         $clientsCount = $this->command->ask('How many clients should be added?', 20);
         $partners = Partner::all();
 
-        $clients = Client::factory()->count($clientsCount)->make()->each(function ($client) use ($partners) {
+        $clients = Client::factory()->count($clientsCount)->make()->each(function ($client, $index) use ($partners) {
+            // Make at least 5 clients active
+            if ($index > 2 && $index < 8) {
+                $client->active = 1;
+                $client->status = Client::QUALIFIED;
+            }
             $client->partner_id = $partners->random()->id;
             $client->save();
         });
