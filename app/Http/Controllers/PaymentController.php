@@ -171,7 +171,7 @@ class PaymentController extends Controller {
     }
 
     public function success() {
-        //
+        return view('clients.invoices.success');
     }
 
     public function cancel() {
