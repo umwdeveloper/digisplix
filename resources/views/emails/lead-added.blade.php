@@ -9,7 +9,7 @@ Email: **{{ $email }}**
 
 Password: **{{ $password }}**
 
-<x-mail::button :url="env('CLIENT_SUBDOMAIN')">
+<x-mail::button :url="config('custom.client_subdomain')">
 Login
 </x-mail::button>
 

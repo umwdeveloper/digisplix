@@ -2,37 +2,167 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
+use App\Models\Invoice;
+use App\Models\Plan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Stripe\Checkout\Session;
+use Stripe\Customer;
 use Stripe\Exception\ApiErrorException;
+use Stripe\PaymentIntent;
 use Stripe\Stripe;
 
 class PaymentController extends Controller {
     public function createCheckoutSession(Request $request) {
-        Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        $invoice = Invoice::findOrFail($request->invoice_id);
+
+        $client = Client::findOrFail(auth()->user()->userable_id);
+
+        Stripe::setApiKey(config('custom.stripe_secret'));
+
+        $customer_id = null;
+        if (!empty($client->customer_id)) {
+            $customer_id = $client->customer_id;
+        } else {
+            $customer = Customer::create([
+                'name' => $client->user->name,
+                'email' => $client->user->email,
+            ]);
+
+            if (!empty($customer)) {
+                $customer_id = $customer->id;
+
+                $client->customer_id = $customer_id;
+                $client->save();
+            }
+        }
+
+        $data = [];
+        $data['ui_mode'] = 'embedded';
+        $data['currency'] = 'usd';
+        $data['return_url'] = route('payment.success');
+        $data['metadata'] = [
+            'invoice_id' => $request->invoice_id,
+            'invoice_number' => $request->invoice_number
+        ];
+
+        if ($invoice->recurring) {
+            $start_from = Carbon::parse($invoice->start_from)->startOfDay();
+            $cancel_at = $start_from->addMonths($invoice->duration)->endOfDay();
+
+            $data['mode'] = 'subscription';
+            $data['line_items'] = [
+                [
+                    'price_data' => [
+                        "currency" => 'usd',
+                        "product_data" => ["name" => "Invoice# " . $request->invoice_number],
+                        "unit_amount" => floatval($request->amount) * 100,
+                        'recurring' => [
+                            'interval' => 'month'
+                        ]
+                    ],
+                    'quantity' => 1
+                ]
+            ];
+        } else {
+            $data['mode'] = 'payment';
+            $data['line_items'] = [
+                [
+                    'price_data' => [
+                        "currency" => 'usd',
+                        "product_data" => ["name" => "Invoice# " . $request->invoice_number],
+                        "unit_amount" => floatval($request->amount) * 100
+                    ],
+                    'quantity' => 1
+                ]
+            ];
+        }
 
         try {
-            $session = Session::create([
-                'line_items' => [
-                    [
-                        'price_data' => [
-                            "currency" => 'usd',
-                            "product_data" => ["name" => "Item 1"],
-                            "unit_amount" => intval($request->amount) * 100
-                        ],
-                        'quantity' => 1
-                    ]
-                ],
-                'mode' => 'payment',
+            $session = Session::create($data);
+            return response()->json(['session' => $session]);
+        } catch (ApiErrorException $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+            ], 400);
+        }
+    }
+
+    public function createPaymentIntent(Request $request) {
+        Stripe::setApiKey(config('custom.stripe_secret'));
+
+        try {
+            $paymentIntent = PaymentIntent::create([
+                'amount' => 1000, // Amount in cents
                 'currency' => 'usd',
-                // 'payment_method_types' => ['card', 'alipay'],
-                'success_url' => route('payment.success'),
-                'cancel_url' => route('payment.cancel'),
+                'payment_method_types' => ['card'],
+                'confirm' => true, // Confirm immediately
             ]);
 
             return response()->json([
-                'session' => $session
+                'clientSecret' => $paymentIntent->client_secret,
             ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function subscribe(Request $request) {
+
+        $client = Client::findOrFail(auth()->user()->userable_id);
+
+        Stripe::setApiKey(config('custom.stripe_secret'));
+
+        $customer_id = null;
+        if (!empty($client->customer_id)) {
+            $customer_id = $client->customer_id;
+        } else {
+            $customer = Customer::create([
+                'name' => $client->user->name,
+                'email' => $client->user->email,
+            ]);
+
+            if (!empty($customer)) {
+                $customer_id = $customer->id;
+
+                $client->customer_id = $customer_id;
+                $client->save();
+            }
+        }
+
+        $plansDb = Plan::all();
+
+        foreach ($plansDb as $plan) {
+            $plans[$plan->name] = $plan->price_id;
+        }
+
+        $plans = [
+            'silver' => 'price_1ORSXPHymsUfbx7xSvZRkySS',
+            'gold' => 'price_1ORSXeHymsUfbx7xbjJupdB7',
+            'platinum' => 'price_1ORSXsHymsUfbx7xZI00QCVp',
+            'diamond' => 'price_1ORSY4HymsUfbx7xlZQO4cNQ'
+        ];
+
+        $data = [];
+        $data['ui_mode'] = 'embedded';
+        $data['currency'] = 'usd';
+        $data['return_url'] = route('payment.success');
+
+        $data['mode'] = 'subscription';
+        $data['line_items'] = [
+            [
+                'price' => $plans[$request->plan],
+                'quantity' => 1
+            ]
+        ];
+
+        try {
+            $session = Session::create($data);
+            return response()->json(['session' => $session]);
         } catch (ApiErrorException $e) {
             return response()->json([
                 'error' => $e->getMessage(),

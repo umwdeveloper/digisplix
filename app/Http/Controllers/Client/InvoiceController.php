@@ -14,7 +14,7 @@ class InvoiceController extends Controller {
     public function index() {
         $invoices = Invoice::with(['items', 'category'])
             ->where('client_id', Auth::user()->userable->id)
-            ->where('sent', 0)
+            ->where('sent', 1)
             ->where('status', '!=', Invoice::DRAFT)
             ->get();
         return view('clients.invoices.index', [
@@ -43,7 +43,7 @@ class InvoiceController extends Controller {
     public function show(string $id) {
         $invoice = Invoice::with(['items', 'category'])
             ->where('client_id', Auth::user()->userable->id)
-            ->where('sent', 0)
+            ->where('sent', 1)
             ->where('status', '!=', Invoice::DRAFT)
             ->findOrFail($id);
 

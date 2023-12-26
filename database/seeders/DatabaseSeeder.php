@@ -31,7 +31,8 @@ class DatabaseSeeder extends Seeder {
                 SupportRepliesSeeder::class,
                 CategorySeeder::class,
                 InvoiceSeeder::class,
-                InvoiceItemSeeder::class
+                InvoiceItemSeeder::class,
+                PlansSeeder::class,
             ]
         );
     }

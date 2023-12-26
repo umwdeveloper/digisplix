@@ -74,7 +74,7 @@
                                 </ul>
                                 <div class="d-flex justify-content-center ">
                                     <div class="buy-button-box mx-auto">
-                                        <a href="#" class="buy-now">BUY NOW</a>
+                                        <a href="#" class="buy-now" data-plan="silver">BUY NOW</a>
                                     </div>
                                 </div>
                             </div>
@@ -149,7 +149,7 @@
                                 </ul>
                                 <div class="d-flex justify-content-center">
                                     <div class="buy-button-box mx-auto">
-                                        <a href="#" class="buy-now">BUY NOW</a>
+                                        <a href="#" class="buy-now" data-plan="gold">BUY NOW</a>
                                     </div>
                                 </div>
                             </div>
@@ -245,7 +245,7 @@
                                 </ul>
                                 <div class="d-flex justify-content-center">
                                     <div class="buy-button-box">
-                                        <a href="#" class="buy-now">BUY NOW</a>
+                                        <a href="#" class="buy-now" data-plan="platinum">BUY NOW</a>
                                     </div>
                                 </div>
                             </div>
@@ -350,7 +350,7 @@
                                 </ul>
                                 <div class="d-flex justify-content-center">
                                     <div class="buy-button-box">
-                                        <a href="#" class="buy-now">BUY NOW</a>
+                                        <a href="#" class="buy-now" data-plan="diamond">BUY NOW</a>
                                     </div>
                                 </div>
                             </div>
@@ -370,6 +370,77 @@
         </div>
     </main>
 
+    <!-- Modal -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="paymentModalLabel">Pay Now</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="text-center" id="spinner">
+                            <img width="20px" src="{{ asset('images/spinner.gif') }}">
+                        </div>
+                        <div id="checkout"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @section('script')
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <script>
+        $(document).ready(function() {
+            const stripe = Stripe('{{ config('custom.stripe_key') }}');
+            let plan = '';
+
+            async function initialize() {
+
+                const response = await fetch('{{ route('payment.subscribe') }}', {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}', // Include CSRF token if required
+                    },
+                    body: JSON.stringify({
+                        plan,
+                    }),
+                });
+
+                const session = await response.json();
+
+                const clientSecret = session.session.client_secret
+
+                const checkout = await stripe.initEmbeddedCheckout({
+                    clientSecret,
+                });
+
+                $('#spinner').addClass('d-none')
+
+                // Mount Checkout
+                checkout.mount('#checkout');
+            }
+
+            $('.buy-now').click(function(e) {
+                e.preventDefault()
+
+                $('#paymentModal').modal('show')
+
+                plan = $(this).data('plan')
+                initialize();
+            })
+
+            $('#paymentModal').on('hidden.bs.modal', function() {
+                location.reload()
+            })
+        });
+    </script>
 @endsection
 @endsection
