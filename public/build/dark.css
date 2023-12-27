@@ -4789,6 +4789,7 @@ span.plus {
   align-items: center;
   padding-top: 0px;
   padding: 20px 0px;
+  background: url("/build/bg-img.jpg");
 }
 @media only screen and (max-width: 425px) {
   .log-theme {
@@ -4798,7 +4799,7 @@ span.plus {
 .log-theme .log-screen {
   width: 400px;
   background: rgb(49, 212, 240);
-  background: linear-gradient(0deg, rgba(49, 211, 240, 0.899) 0%, rgba(9, 98, 206, 0.899) 100%), url("/build/bg-img.jpg");
+  background: linear-gradient(0deg, rgba(49, 211, 240, 0.899) 0%, rgba(9, 98, 206, 0.899) 100%), url("/build/walling-XFwnAACel-o-unsplash.jpg");
   min-height: 80vh;
   height: fit-content;
   background-position: center;
