@@ -105,7 +105,6 @@ class ClientController extends Controller {
         $this->authorize('staff.clients');
 
         $client = Client::findOrFail($id);
-        $client->user()->delete();
         $client->delete();
 
         return redirect()->back()->with('status', 'Client deleted successfully!');

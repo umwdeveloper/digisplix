@@ -1,7 +1,7 @@
 @extends('auth.layouts.app')
 
 @section('name')
-    Login
+    {{ $title }}
 @endsection
 
 @section('content')
@@ -40,11 +40,6 @@
                     <div class="my-5 mx-auto d-flex justify-content-center">
                         <a href="{{ route('password.request') }}" class="forgot-btn text-center">
                             Forget
-                        </a>
-                    </div>
-                    <div class=" mx-auto d-flex justify-content-center">
-                        <a href="index.html" class="join-btn text-center">
-                            Join Us
                         </a>
                     </div>
                 </form>

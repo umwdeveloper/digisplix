@@ -76,7 +76,7 @@ class LeadController extends Controller {
 
             DB::commit();
 
-            Mail::to($lead->user->email)->send(new LeadAddedMail($lead->user->name, $lead->user->email, $validatedData['original_password']));
+            // Mail::to($lead->user->email)->send(new LeadAddedMail($lead->user->name, $lead->user->email, $validatedData['original_password']));
 
             return redirect()->back()->with('status', 'Lead created successfully!');
         } catch (QueryException $e) {
@@ -166,11 +166,15 @@ class LeadController extends Controller {
             $lead = Client::findOrFail($id);
             $lead->status = $request->status;
 
+            $password = generateRandomPassword();
+            $lead->user->password = Hash::make($password);
+
             if ($lead->status == Client::QUALIFIED) {
-                $lead->active = 1;
+                Mail::to($lead->user->email)->send(new LeadAddedMail($lead->user->name, $lead->user->email, $password));
             }
 
             $lead->save();
+            $lead->user->save();
 
             // Send notification
             Notification::send($lead->user, new LeadStatusUpdated($lead->user->name, Client::getStatusLabel($lead->status)));

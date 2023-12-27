@@ -47,6 +47,27 @@ class LoginController extends Controller {
         // Session::flush();
     }
 
+
+    /**
+     * Show the application's login form.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showLoginForm() {
+        $subdomain = $this->getSubdomain();
+        $title = "";
+
+        if ($subdomain === 'admin') {
+            $title = "Admin Login";
+        } elseif ($subdomain === 'partner') {
+            $title = "Partner Login";
+        } elseif ($subdomain === 'client') {
+            $title = "Client Login";
+        }
+
+        return view('auth.login', ['title' => $title]);
+    }
+
     /**
      * Handle a login request to the application.
      *

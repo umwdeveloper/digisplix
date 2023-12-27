@@ -113,7 +113,7 @@
                                                         {{ $client->title }}
                                                     </td>
                                                     <td class="bussiness-name">{{ $client->business_name }}</td>
-                                                    <td>{{ $client->business_email }}</td>
+                                                    <td>{{ $client->user->email }}</td>
                                                     <td>{{ $client->partner->user->name }}</td>
 
                                                     <td>
@@ -361,8 +361,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                    <label class="country-label form-label mb-2" for="country2">Country<span
-                                                                class="text-danger">*</span></label><br>
+                                        <label class="country-label form-label mb-2" for="country2">Country<span
+                                                class="text-danger">*</span></label><br>
                                         <input type="text"
                                             class=" {{ $errors->updateClient->has('country') ? 'is-invalid' : '' }}"
                                             id="country2" name="country" required
@@ -370,7 +370,7 @@
                                             placeholder="Pakistan">
                                         <input type="hidden" id="country2_code" name="country_code">
                                         <!-- <label class="crm-label form-label" for="country2">Country<span
-                                                class="text-danger">*</span></label> -->
+                                                    class="text-danger">*</span></label> -->
                                         @if ($errors->updateClient->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updateClient->first('country') }}

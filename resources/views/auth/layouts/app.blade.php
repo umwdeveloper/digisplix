@@ -43,7 +43,7 @@
 
     {{-- @vite(['resources/css/light-sass/light.scss']) --}}
 
-    <title>DigiSplix | @yield('name')</title>
+    <title>@yield('name') | DigiSplix</title>
 </head>
 
 <body class="theme log-theme">

@@ -243,7 +243,7 @@
                             @endcan
 
                             <li class="menu-item">
-                                <a href="{{ config('custom.staff_subdomain') . '/webmail' }}">
+                                <a href="{{ config('custom.staff_subdomain') . '/webmail' }}" target="_blank">
                                     <span class="menu-icon">
                                         <i class="fa-duotone fa-envelopes"></i>
                                     </span>
@@ -575,7 +575,7 @@
             </a>
         </div>
         <div class="d-flex align-items-center more-footer-link">
-            <a href="{{ config('custom.staff_subdomain') . '/webmail' }}">
+            <a href="{{ config('custom.staff_subdomain') . '/webmail' }}" target="_blank">
                 <div class="more-icon">
                     <i class="fa-duotone fa-envelopes"></i>
                 </div>

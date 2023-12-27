@@ -144,7 +144,7 @@
                                                             {{ $lead->title }}
                                                         </td>
                                                         <td class="bussiness-name">{{ $lead->business_name }}</td>
-                                                        <td>{{ $lead->business_email }}</td>
+                                                        <td>{{ $lead->user->email }}</td>
                                                         <td>
                                                             <div class="dropdown table-dropdown">
                                                                 <a class="btn  dropdown-toggle table-dropdown-btn {{ $lead->status }}"
@@ -247,7 +247,7 @@
                                                             </td>
                                                             <td class="bussiness-name">{{ $lead->business_name }}
                                                             </td>
-                                                            <td>{{ $lead->business_email }}</td>
+                                                            <td>{{ $lead->user->email }}</td>
                                                             <td>
                                                                 <div class="dropdown table-dropdown">
                                                                     <a class="btn  dropdown-toggle table-dropdown-btn {{ $lead->status }}"
@@ -352,7 +352,7 @@
                                                             {{ $lead->title }}
                                                         </td>
                                                         <td class="bussiness-name">{{ $lead->business_name }}</td>
-                                                        <td>{{ $lead->business_email }}</td>
+                                                        <td>{{ $lead->user->email }}</td>
                                                         <td>
                                                             <div class="dropdown table-dropdown">
                                                                 <a class="btn  dropdown-toggle table-dropdown-btn {{ $lead->status }}"
@@ -454,7 +454,7 @@
                                                             {{ $lead->title }}
                                                         </td>
                                                         <td class="bussiness-name">{{ $lead->business_name }}</td>
-                                                        <td>{{ $lead->business_email }}</td>
+                                                        <td>{{ $lead->user->email }}</td>
                                                         <td>
                                                             <div class="dropdown table-dropdown">
                                                                 <a class="btn  dropdown-toggle table-dropdown-btn {{ $lead->status }}"
@@ -642,6 +642,10 @@
                                             id="email" name="email" required
                                             value="{{ $errors->hasBag('createLead') ? old('email') : '' }}"
                                             placeholder="ABC">
+                                        <input type="hidden"
+                                            class="form-control crm-input {{ $errors->createLead->has('password') ? 'is-invalid' : '' }}"
+                                            id="password" name="password" required
+                                            value="{{ generateRandomPassword() }}" placeholder="ABC">
                                         <label class="crm-label form-label" for="email">Email Address<span
                                                 class="text-danger">*</span></label>
                                         @if ($errors->createLead->has('email'))
@@ -651,7 +655,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->createLead->has('password') ? 'is-invalid' : '' }}"
@@ -665,7 +669,7 @@
                                             </small>
                                         @endif
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
                                         <input type="text"
@@ -750,41 +754,6 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class=" mb-3">
-                                    <label class="country-label form-label mb-2" for="country">Country<span
-                                                                class="text-danger">*</span></label><br>
-                                        <input type="text"
-                                            class=" {{ $errors->createLead->has('country') ? 'is-invalid' : '' }}"
-                                            id="country" name="country" required
-                                            value="{{ $errors->hasBag('createLead') ? old('country') : '' }}"
-                                            placeholder="Pakistan">
-                                        <input type="hidden" id="country_code" name="country_code">
-                                        <!-- <label class="crm-label form-label" for="country">Country<span
-                                                class="text-danger">*</span></label> -->
-                                        @if ($errors->createLead->has('country'))
-                                            <small class="invalid-feedback " style="font-size: 11px">
-                                                {{ $errors->createLead->first('country') }}
-                                            </small>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text"
-                                            class="form-control crm-input {{ $errors->createLead->has('address') ? 'is-invalid' : '' }}"
-                                            id="address" name="address" required
-                                            value="{{ $errors->hasBag('createLead') ? old('address') : '' }}"
-                                            placeholder="ABC">
-                                        <label class="crm-label form-label" for="address">Address<span
-                                                class="text-danger">*</span></label>
-                                        @if ($errors->createLead->has('address'))
-                                            <small class="invalid-feedback " style="font-size: 11px">
-                                                {{ $errors->createLead->first('address') }}
-                                            </small>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->createLead->has('phone') ? 'is-invalid' : '' }}"
@@ -796,6 +765,41 @@
                                         @if ($errors->createLead->has('phone'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->createLead->first('phone') }}
+                                            </small>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class=" mb-3">
+                                        <label class="country-label form-label mb-2" for="country">Country<span
+                                                class="text-danger">*</span></label><br>
+                                        <input type="text"
+                                            class=" {{ $errors->createLead->has('country') ? 'is-invalid' : '' }}"
+                                            id="country" name="country" required
+                                            value="{{ $errors->hasBag('createLead') ? old('country') : '' }}"
+                                            placeholder="Pakistan">
+                                        <input type="hidden" id="country_code" name="country_code">
+                                        <!-- <label class="crm-label form-label" for="country">Country<span
+                                                                                    class="text-danger">*</span></label> -->
+                                        @if ($errors->createLead->has('country'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->createLead->first('country') }}
+                                            </small>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-floating mb-3">
+                                        <input type="text"
+                                            class="form-control crm-input {{ $errors->createLead->has('address') ? 'is-invalid' : '' }}"
+                                            id="address" name="address" required
+                                            value="{{ $errors->hasBag('createLead') ? old('address') : '' }}"
+                                            placeholder="ABC">
+                                        <label class="crm-label form-label" for="address">Address<span
+                                                class="text-danger">*</span></label>
+                                        @if ($errors->createLead->has('address'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->createLead->first('address') }}
                                             </small>
                                         @endif
                                     </div>
@@ -1061,7 +1065,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class=" mb-3">
-                                    <label class="country-label form-label mb-2" for="country2">Country<span
+                                        <label class="country-label form-label mb-2" for="country2">Country<span
                                                 class="text-danger">*</span></label><br>
                                         <input type="text"
                                             class=" {{ $errors->updateLead->has('country') ? 'is-invalid' : '' }}"
@@ -1069,7 +1073,7 @@
                                             value="{{ $errors->hasBag('updateLead') ? old('country') : '' }}"
                                             placeholder="Pakistan">
                                         <input type="hidden" id="country2_code" name="country_code">
-                                        
+
                                         @if ($errors->updateLead->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updateLead->first('country') }}
