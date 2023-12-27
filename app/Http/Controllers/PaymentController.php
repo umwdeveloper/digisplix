@@ -187,6 +187,8 @@ class PaymentController extends Controller {
         $payload = $request->getContent();
         $sig_header = $request->header('Stripe-Signature');
 
+        Stripe::setApiKey(config('custom.stripe_secret'));
+
         try {
             $event = Webhook::constructEvent(
                 $payload,
