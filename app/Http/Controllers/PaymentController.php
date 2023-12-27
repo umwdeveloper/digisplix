@@ -88,32 +88,6 @@ class PaymentController extends Controller {
             $session = Session::create($data);
 
             return response()->json(['session' => $session]);
-
-            if ($invoice->recurring) {
-                // Update subscription and add $invoice->id and $invoice->invoice_id in metadata
-                Subscription::update(
-                    $session->subscription,
-                    [
-                        'metadata' => [
-                            'invoice_id' => $invoice->id,
-                            'invoice_number' => $invoice->invoice_id
-                        ]
-                    ],
-                );
-            } else {
-                // Update payment intent and add $invoice->id in metadata
-                PaymentIntent::update(
-                    $session->payment_intent,
-                    [
-                        'metadata' => [
-                            'invoice_id' => $invoice->id,
-                            'invoice_number' => $invoice->invoice_id
-                        ]
-                    ],
-                );
-            }
-
-            return response()->json(['session' => $session]);
         } catch (ApiErrorException $e) {
             return response()->json([
                 'error' => $e->getMessage(),
@@ -241,6 +215,35 @@ class PaymentController extends Controller {
                     $invoice->save();
                 }
 
+                break;
+            case 'checkout.session.completed':
+                $session = $event->data->object;
+                $metadata = $session->metadata;
+
+                Log::info("Session: ", ['session' => $event->data]);
+                if ($session->mode == 'subscription') {
+                    Log::info("Subscription: ", ['subscription' => $session->subscription]);
+                    Subscription::update(
+                        $session->subscription,
+                        [
+                            'metadata' => [
+                                'invoice_id' => $metadata->invoice_id,
+                                'invoice_number' => $metadata->invoice_number
+                            ]
+                        ],
+                    );
+                } else {
+                    Log::info("Payment Intent: ", ['payment_intent' => $session->payment_intent]);
+                    PaymentIntent::update(
+                        $session->payment_intent,
+                        [
+                            'metadata' => [
+                                'invoice_id' => $metadata->invoice_id,
+                                'invoice_number' => $metadata->invoice_number
+                            ]
+                        ],
+                    );
+                }
                 break;
         }
 
