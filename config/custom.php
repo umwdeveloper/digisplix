@@ -8,5 +8,6 @@ return [
     'partner_alias' => env('PARTNER_ALIAS'),
     'client_alias' => env('CLIENT_ALIAS'),
     'stripe_key' => env('STRIPE_KEY'),
-    'stripe_secret' => env('STRIPE_SECRET')
+    'stripe_secret' => env('STRIPE_SECRET'),
+    'stripe_webhook_payment' => env('STRIPE_WEBHOOK_PAYMENT')
 ];

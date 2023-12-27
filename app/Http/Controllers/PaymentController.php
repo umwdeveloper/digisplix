@@ -7,11 +7,14 @@ use App\Models\Invoice;
 use App\Models\Plan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Stripe\Checkout\Session;
 use Stripe\Customer;
 use Stripe\Exception\ApiErrorException;
+use Stripe\Exception\SignatureVerificationException;
 use Stripe\PaymentIntent;
 use Stripe\Stripe;
+use Stripe\Webhook;
 
 class PaymentController extends Controller {
     public function createCheckoutSession(Request $request) {
@@ -176,5 +179,45 @@ class PaymentController extends Controller {
 
     public function cancel() {
         //
+    }
+
+    // Webhooks
+    public function webhookPayment(Request $request) {
+        $endpoint_secret = config('custom.stripe_webhook_payment');
+        $payload = $request->getContent();
+        $sig_header = $request->header('Stripe-Signature');
+
+        try {
+            $event = Webhook::constructEvent(
+                $payload,
+                $sig_header,
+                $endpoint_secret
+            );
+        } catch (SignatureVerificationException $e) {
+            // Invalid signature
+            Log::info('Stripe Webhook Failed Data:', ['error' => $e]);
+            return response()->json(['error' => 'Invalid signature'], 400);
+        }
+
+        Log::info('Stripe Webhook Event Data:', ['data' => $event->data]);
+
+        // Handle the specific event type
+        switch ($event->type) {
+            case 'payment_intent.succeeded':
+                $paymentIntent = $event->data->object; // contains a StripePaymentIntent
+                // Handle successful payment_intent.succeeded event here
+                break;
+
+            case 'checkout.session.async_payment_succeeded':
+                $checkoutSession = $event->data->object; // contains a Checkout Session
+                // Handle successful checkout.session.completed event here
+                // You may want to retrieve the relevant information from $checkoutSession
+                Log::info('Session Event Data Object:', ['data' => $event->data->object]);
+                break;
+
+                // Add more cases for other events if needed
+        }
+
+        return response()->json(['success' => true]);
     }
 }

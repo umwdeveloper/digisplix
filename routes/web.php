@@ -235,3 +235,4 @@ Route::post('/subscribe', [PaymentController::class, 'subscribe'])->name('paymen
 Route::get('/create_payment_intent', [PaymentController::class, 'createPaymentIntent'])->name('payment.create_payment_intent');
 Route::get('/success', [PaymentController::class, 'success'])->name('payment.success');
 Route::get('/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
+Route::post('/webhook/payment', [PaymentController::class, 'webhookPayment'])->name('payment.webhook.payment');
