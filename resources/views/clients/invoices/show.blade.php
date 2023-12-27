@@ -22,7 +22,8 @@
                                 <!-- pay -->
                                 @if ($invoice->status == 'paid')
                                     <div class="d-flex justify-content-center align-items-center">
-                                        <button class="btn btn-success  px-2" type="button">Paid <i
+                                        <button class="table-btn btn-success  px-2" type="button"
+                                            style="background-color: #198754 !important">Paid <i
                                                 class="bi bi-check-circle ms-1"></i></button>
                                     </div>
                                 @else
