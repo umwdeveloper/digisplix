@@ -199,23 +199,27 @@ class PaymentController extends Controller {
             return response()->json(['error' => 'Invalid signature'], 400);
         }
 
-        Log::info('Stripe Webhook Event Data:', ['data' => $event->data]);
-
-        // Handle the specific event type
         switch ($event->type) {
             case 'payment_intent.succeeded':
-                $paymentIntent = $event->data->object; // contains a StripePaymentIntent
-                // Handle successful payment_intent.succeeded event here
-                break;
+                $paymentIntent = $event->data->object;
 
-            case 'checkout.session.async_payment_succeeded':
-                $checkoutSession = $event->data->object; // contains a Checkout Session
-                // Handle successful checkout.session.completed event here
-                // You may want to retrieve the relevant information from $checkoutSession
-                Log::info('Session Event Data Object:', ['data' => $event->data->object]);
-                break;
+                $paymentIntentId = $paymentIntent->id;
 
-                // Add more cases for other events if needed
+                try {
+                    $session = Session::retrieve($paymentIntentId);
+                    $metadata = $session->metadata;
+
+                    if (isset($metadata->invoice_id)) {
+                        $invoice = Invoice::findOrFail($metadata->invoice_id);
+                        $invoice->status = Invoice::PAID;
+                        $invoice->save();
+                    }
+                } catch (ApiErrorException $e) {
+                    // Handle error
+                    Log::info('Stripe Webhook Failed Data:', ['error' => $e]);
+                }
+
+                break;
         }
 
         return response()->json(['success' => true]);
