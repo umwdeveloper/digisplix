@@ -20,11 +20,18 @@
                                         style="color: #0963ce; cursor: pointer"></i>
                                 </div>
                                 <!-- pay -->
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <button class="table-btn px-2" type="button" id="payment-button" data-bs-toggle="modal"
-                                        data-bs-target="#paymentModal">Pay Now <i
-                                            class="bi bi-check-circle ms-1"></i></button>
-                                </div>
+                                @if ($invoice->status == 'paid')
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <button class="btn btn-success  px-2" type="button">Paid <i
+                                                class="bi bi-check-circle ms-1"></i></button>
+                                    </div>
+                                @else
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <button class="table-btn px-2" type="button" id="payment-button"
+                                            data-bs-toggle="modal" data-bs-target="#paymentModal">Pay Now <i
+                                                class="bi bi-check-circle ms-1"></i></button>
+                                    </div>
+                                @endif
                             </div>
 
                         </div>
