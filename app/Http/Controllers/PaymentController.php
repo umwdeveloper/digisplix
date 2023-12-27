@@ -204,45 +204,15 @@ class PaymentController extends Controller {
         }
 
         switch ($event->type) {
-            case 'payment_intent.succeeded':
-                $paymentIntent = $event->data->object;
-                $metadata = $paymentIntent->metadata;
-
-                if (isset($metadata->invoice_id)) {
-                    $invoiceId = $metadata->invoice_id;
-                    $invoice = Invoice::findOrFail($invoiceId);
-                    $invoice->status = Invoice::PAID;
-                    $invoice->save();
-                }
-
-                break;
             case 'checkout.session.completed':
                 $session = $event->data->object;
                 $metadata = $session->metadata;
 
-                Log::info("Session: ", ['session' => $event->data]);
-                if ($session->mode == 'subscription') {
-                    Log::info("Subscription: ", ['subscription' => $session->subscription]);
-                    Subscription::update(
-                        $session->subscription,
-                        [
-                            'metadata' => [
-                                'invoice_id' => $metadata->invoice_id,
-                                'invoice_number' => $metadata->invoice_number
-                            ]
-                        ],
-                    );
-                } else {
-                    Log::info("Payment Intent: ", ['payment_intent' => $session->payment_intent]);
-                    PaymentIntent::update(
-                        $session->payment_intent,
-                        [
-                            'metadata' => [
-                                'invoice_id' => $metadata->invoice_id,
-                                'invoice_number' => $metadata->invoice_number
-                            ]
-                        ],
-                    );
+                if ($session->payment_status == "paid") {
+                    $invoiceId = $metadata->invoice_id;
+                    $invoice = Invoice::findOrFail($invoiceId);
+                    $invoice->status = Invoice::PAID;
+                    $invoice->save();
                 }
                 break;
         }
