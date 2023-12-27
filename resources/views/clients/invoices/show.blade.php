@@ -241,6 +241,8 @@
 
                 const session = await response.json();
 
+                console.log(session);
+
                 const clientSecret = session.session.client_secret
 
                 const checkout = await stripe.initEmbeddedCheckout({

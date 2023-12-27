@@ -87,6 +87,8 @@ class PaymentController extends Controller {
         try {
             $session = Session::create($data);
 
+            return response()->json(['session' => $session]);
+
             if ($invoice->recurring) {
                 // Update subscription and add $invoice->id and $invoice->invoice_id in metadata
                 Subscription::update(
