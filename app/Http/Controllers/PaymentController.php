@@ -14,6 +14,7 @@ use Stripe\Exception\ApiErrorException;
 use Stripe\Exception\SignatureVerificationException;
 use Stripe\PaymentIntent;
 use Stripe\Stripe;
+use Stripe\Subscription;
 use Stripe\Webhook;
 
 class PaymentController extends Controller {
@@ -85,6 +86,31 @@ class PaymentController extends Controller {
 
         try {
             $session = Session::create($data);
+
+            if ($invoice->recurring) {
+                // Update subscription and add $invoice->id and $invoice->invoice_id in metadata
+                Subscription::update(
+                    $session->subscription,
+                    [
+                        'metadata' => [
+                            'invoice_id' => $invoice->id,
+                            'invoice_number' => $invoice->invoice_id
+                        ]
+                    ],
+                );
+            } else {
+                // Update payment intent and add $invoice->id in metadata
+                PaymentIntent::update(
+                    $session->payment_intent,
+                    [
+                        'metadata' => [
+                            'invoice_id' => $invoice->id,
+                            'invoice_number' => $invoice->invoice_id
+                        ]
+                    ],
+                );
+            }
+
             return response()->json(['session' => $session]);
         } catch (ApiErrorException $e) {
             return response()->json([
@@ -204,21 +230,13 @@ class PaymentController extends Controller {
         switch ($event->type) {
             case 'payment_intent.succeeded':
                 $paymentIntent = $event->data->object;
+                $metadata = $paymentIntent->metadata;
 
-                $paymentIntentId = $paymentIntent->id;
-
-                try {
-                    $session = Session::retrieve($paymentIntentId);
-                    $metadata = $session->metadata;
-
-                    if (isset($metadata->invoice_id)) {
-                        $invoice = Invoice::findOrFail($metadata->invoice_id);
-                        $invoice->status = Invoice::PAID;
-                        $invoice->save();
-                    }
-                } catch (ApiErrorException $e) {
-                    // Handle error
-                    Log::info('Stripe Webhook Failed Data:', ['error' => $e]);
+                if (isset($metadata->invoice_id)) {
+                    $invoiceId = $metadata->invoice_id;
+                    $invoice = Invoice::findOrFail($invoiceId);
+                    $invoice->status = Invoice::PAID;
+                    $invoice->save();
                 }
 
                 break;
