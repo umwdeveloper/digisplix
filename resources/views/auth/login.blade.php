@@ -42,12 +42,16 @@
                             Forget
                         </a>
                     </div>
+                    <div class="mt-sm-0 mt-5 pt-3 d-sm-none d-block text-center text-white mt-2 f-14"
+                        style="letter-spacing: 1px;">
+                        <p>Copyright © {{ now()->year }} DigiSplix, LLC</p>
+                    </div>
                 </form>
 
             </div>
 
         </div>
-        <div class="text-center text-white mt-2" style="letter-spacing: 1px">
+        <div class="text-center text-white mt-2 f-14 d-sm-block d-none" style="letter-spacing: 1px;">
             <p>Copyright © {{ now()->year }} DigiSplix, LLC</p>
         </div>
     </div>
