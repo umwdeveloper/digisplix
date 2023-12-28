@@ -14,29 +14,7 @@
                             </div>
 
                             <div class="ms-auto d-flex">
-                                <!-- download -->
-                                <div class="header-option align-self-center me-0 hide-sm me-3 ms-2">
-                                    <i class="fa-duotone fa-download header-icon"
-                                        style="color: #0963ce; cursor: pointer"></i>
-                                </div>
-                                <!-- pay -->
-                                @if ($invoice->status == 'paid')
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        <button class="table-btn btn-success  px-2" type="button"
-                                            style="background-color: #198754 !important">Paid <i
-                                                class="bi bi-check-circle ms-1"></i></button>
-                                    </div>
-                                @else
-                                    <div class="d-flex justify-content-center me-3 align-items-center">
-                                        <button class="table-btn px-2" type="button" id="payment-button"
-                                            data-bs-toggle="modal" data-bs-target="#paymentModal">Pay Now <i
-                                                class="bi bi-coin ms-1"></i></button>
-                                    </div>
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        <button class="table-btn px-2" type="button" id="fetch-details">Pay via Bank <i
-                                                class="bi bi-bank ms-1"></i></button>
-                                    </div>
-                                @endif
+
                             </div>
 
                         </div>
@@ -269,28 +247,6 @@
 
             initialize();
         });
-    </script>
-
-    <script>
-        $('#fetch-details').click(function() {
-            let amount = $('#grand-total').val();
-            let client_id = $('#client').val()
-
-            location.href = "{{ route('client.invoices.bank', $invoice->id) }}"
-
-            // $.ajax({
-            //     url: "{{ route('payment.create_payment_intent') }}",
-            //     method: 'POST',
-            //     data: {
-            //         _token: '{{ csrf_token() }}',
-            //         amount,
-            //         client_id
-            //     },
-            //     success: function(response) {
-            //         console.log(response);
-            //     }
-            // })
-        })
     </script>
 @endsection
 @endsection

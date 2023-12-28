@@ -204,6 +204,8 @@ Route::domain(config('custom.client_alias'))
 
         // Invoices
         Route::resource('invoices', ClientInvoiceController::class);
+        Route::get('/invoices/{id}/bank', [ClientInvoiceController::class, 'bank'])
+            ->name('invoices.bank');
 
         // Services
         Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
@@ -232,7 +234,7 @@ Route::post('/disable2FA', [TwoFAController::class, 'disable2FA'])
 // Payment
 Route::post('/checkout', [PaymentController::class, 'createCheckoutSession'])->name('payment.create');
 Route::post('/subscribe', [PaymentController::class, 'subscribe'])->name('payment.subscribe');
-Route::get('/create_payment_intent', [PaymentController::class, 'createPaymentIntent'])->name('payment.create_payment_intent');
+Route::post('/create_payment_intent', [PaymentController::class, 'createPaymentIntent'])->name('payment.create_payment_intent');
 Route::get('/success', [PaymentController::class, 'success'])->name('payment.success');
 Route::get('/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
 Route::post('/webhook/payment', [PaymentController::class, 'webhookPayment'])->name('payment.webhook.payment');

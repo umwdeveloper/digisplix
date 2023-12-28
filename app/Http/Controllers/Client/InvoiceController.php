@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\PaymentController;
 use App\Models\Invoice;
+use App\Models\InvoiceItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -51,6 +53,18 @@ class InvoiceController extends Controller {
 
         return view('clients.invoices.show', [
             'invoice' => $invoice,
+        ]);
+    }
+
+    public function bank(string $id) {
+        $invoice = Invoice::with(['category', 'client', 'items'])
+            ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
+                ->whereColumn('invoice_id', 'invoices.id')
+                ->limit(1)])
+            ->findOrFail($id);
+
+        return view('clients.invoices.bank', [
+            'invoice' => $invoice
         ]);
     }
 

@@ -25,10 +25,10 @@ return new class extends Migration {
             $table->date('start_from')->nullable();
             $table->unsignedInteger('duration')->nullable();
 
-            $table->string('account_holder_name');
-            $table->string('bank_name');
-            $table->string('ifsc_code');
-            $table->string('account_number');
+            // $table->string('account_holder_name')->nullable();
+            // $table->string('bank_name')->nullable();
+            // $table->string('ifsc_code')->nullable();
+            // $table->string('account_number')->nullable();
 
             $table->timestamps();
 

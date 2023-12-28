@@ -175,7 +175,11 @@ class StaffController extends Controller {
         $this->authorize('staff.staff');
 
         $staff = Staff::findOrFail($id);
-        Storage::disk('public')->delete($staff->user->img);
+
+        if (!empty($staff->user->img)) {
+            Storage::disk('public')->delete($staff->user->img);
+        }
+
         $staff->user()->delete();
         $staff->delete();
 

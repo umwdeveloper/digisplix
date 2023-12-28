@@ -95,27 +95,6 @@ class PaymentController extends Controller {
         }
     }
 
-    public function createPaymentIntent(Request $request) {
-        Stripe::setApiKey(config('custom.stripe_secret'));
-
-        try {
-            $paymentIntent = PaymentIntent::create([
-                'amount' => 1000, // Amount in cents
-                'currency' => 'usd',
-                'payment_method_types' => ['card'],
-                'confirm' => true, // Confirm immediately
-            ]);
-
-            return response()->json([
-                'clientSecret' => $paymentIntent->client_secret,
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => $e->getMessage(),
-            ], 500);
-        }
-    }
-
     public function subscribe(Request $request) {
 
         $client = Client::findOrFail(auth()->user()->userable_id);
@@ -172,6 +151,54 @@ class PaymentController extends Controller {
             return response()->json([
                 'error' => $e->getMessage(),
             ], 400);
+        }
+    }
+
+    public static function createPaymentIntent($amount, $client_id) {
+        Stripe::setApiKey(config('custom.stripe_secret'));
+
+        $client = Client::findOrFail($client_id);
+
+        $customer_id = null;
+        if (!empty($client->customer_id)) {
+            $customer_id = $client->customer_id;
+        } else {
+            $customer = Customer::create([
+                'name' => $client->user->name,
+                'email' => $client->user->email,
+            ]);
+
+            if (!empty($customer)) {
+                $customer_id = $customer->id;
+
+                $client->customer_id = $customer_id;
+                $client->save();
+            }
+        }
+
+        try {
+            $paymentIntent = PaymentIntent::create([
+                'amount' => $amount * 100,
+                'currency' => 'usd',
+                'customer' => $customer_id,
+                'payment_method_types' => ['customer_balance'],
+                'payment_method_data' => ['type' => 'customer_balance'],
+                'payment_method_options' => [
+                    'customer_balance' => [
+                        'funding_type' => 'bank_transfer',
+                        'bank_transfer' => ['type' => 'us_bank_transfer'],
+                    ],
+                ],
+                'confirm' => true,
+            ]);
+
+            return response()->json([
+                'paymentIntent' => $paymentIntent,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+            ], 500);
         }
     }
 

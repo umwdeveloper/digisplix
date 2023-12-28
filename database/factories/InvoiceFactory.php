@@ -29,10 +29,10 @@ class InvoiceFactory extends Factory {
             'recurring' => $recurring,
             'start_from' => $recurring ? now()->addDays(rand(5, 50)) : null,
             'duration' => $recurring ? rand(1, 36) : null,
-            'account_holder_name' => fake()->name(),
-            'bank_name' => fake()->text(10),
-            'ifsc_code' => fake()->swiftBicNumber(),
-            'account_number' => fake()->creditCardNumber()
+            // 'account_holder_name' => fake()->name(),
+            // 'bank_name' => fake()->text(10),
+            // 'ifsc_code' => fake()->swiftBicNumber(),
+            // 'account_number' => fake()->creditCardNumber()
         ];
     }
 }

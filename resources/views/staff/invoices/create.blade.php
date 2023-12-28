@@ -275,11 +275,7 @@
                                     <div class="col-lg-6 mt-4 ">
                                         <h1 class="invoice-heading text-primary mb-4">More Fields</h1>
                                         <div class="box-gray h-auto box-p text-center ">
-                                            @if (
-                                                $errors->has('account_holder_name') ||
-                                                    $errors->has('bank_name') ||
-                                                    $errors->has('account_number') ||
-                                                    $errors->has('ifsc_code'))
+                                            {{-- @if ($errors->has('account_holder_name') || $errors->has('bank_name') || $errors->has('account_number') || $errors->has('ifsc_code'))
                                                 <small class="invalid-feedback " style="font-size: 11px">
                                                     Bank details are not correct
                                                 </small>
@@ -288,7 +284,7 @@
                                             <button class="ticket-fill py-4 mb-3 w-100" type="button"
                                                 data-bs-toggle="modal" data-bs-target="#bankModal"><i
                                                     class="fa-solid fa-circle-plus me-2"></i> Add
-                                                Bank Details</button>
+                                                Bank Details</button> --}}
 
                                             <div class="accordion" id="accordionExample">
                                                 <div class="accordion-item">
@@ -413,7 +409,7 @@
     </div>
 
     <!-- Bank Modal -->
-    <div class="modal fade" id="bankModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    {{-- <div class="modal fade" id="bankModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-medium">
             <div class="modal-content">
                 <div class="modal-header">
@@ -458,7 +454,7 @@
                                     <div class="form-floating mb-3">
                                         <input type="text" required value="{{ old('ifsc_code') }}" name="ifsc_code"
                                             class="form-control crm-input" id="code" placeholder="ABC">
-                                        <label class="crm-label form-label" for="code">IFSC Code<span
+                                        <label class="crm-label form-label" for="code">Reference Code<span
                                                 class="text-danger">*</span></label>
                                         @error('ifsc_code')
                                             <small class="invalid-feedback " style="font-size: 11px">
@@ -484,12 +480,18 @@
                                 </div>
 
 
+                                <small class="f-12 text-danger">Please make sure all invoice items are added, details will
+                                    be fetched
+                                    based on total
+                                    amount.</small>
                                 <div class="col-lg-12">
                                     <div class="d-flex justify-content-lg-end justify-content-center mt-3 mb-3">
-                                        <button type="button" class="modal-btn-cancel me-3"
-                                            data-bs-dismiss="modal">Cancel</button>
+                                        <button type="button" id="fetch-details"
+                                            class="modal-btn-save save-bank me-2">Fetch
+                                            Details
+                                        </button>
                                         <button type="button" class="modal-btn-save save-bank"
-                                            data-bs-dismiss="modal">Save
+                                            data-bs-dismiss="modal">Done
                                         </button>
                                     </div>
                                 </div>
@@ -499,7 +501,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Preview Modal -->
     <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -579,7 +581,7 @@
                             <div class="ps-4">
                                 <h1 class="f-16 w-600 text-dark-clr">Thank you for your bussiness</h1>
 
-                                <div class="mt-3 mb-2 text-dark-clr">
+                                {{-- <div class="mt-3 mb-2 text-dark-clr">
                                     <h1 class="f-16 w-600">Payment Info:</h1>
                                     <p class="mb-0 pb-0 f-14 w-500">Account# : <span class="ms-3"
                                             id="pv-acc-num"></span></p>
@@ -589,7 +591,7 @@
                                             id="pv-bank-name"></span></p>
                                     <p class="mb-0 pb-0 f-14 w-500">IFSC Code : <span class="ms-3"
                                             id="pv-ifsc-code"></span></p>
-                                </div>
+                                </div> --}}
                                 <div class=" mt-3 text-dark-clr" id="pv-terms-conditions">
                                     <h1 class="f-16 w-600">Terms & Conditions:</h1>
                                     <p class="mb-0 pb-0 f-14 w-500"></p>
@@ -819,7 +821,7 @@
     </script>
 
     {{-- Save bank details --}}
-    <script>
+    {{-- <script>
         $('#invoice-form').on('submit', function(e) {
             let accountHolderName = $('#name').val()
             let bankName = $('#bank-name').val()
@@ -845,7 +847,7 @@
 
             $(this).unbind('submit').submit();
         })
-    </script>
+    </script> --}}
 
     {{-- Preview Invoice --}}
     <script id="pv-items-template" type="text/template">
@@ -868,10 +870,10 @@
             let invoice_id = $('input[name="invoice_id"]').val()
             let invoice_from = $('textarea[name="invoice_from"]').val()
             let invoice_to = $('textarea[name="invoice_to"]').val()
-            let acc_num = $('input[name="account_number"]').val()
-            let acc_name = $('input[name="account_holder_name"]').val()
-            let bank_name = $('input[name="bank_name"]').val()
-            let ifsc_code = $('input[name="ifsc_code"]').val()
+            // let acc_num = $('input[name="account_number"]').val()
+            // let acc_name = $('input[name="account_holder_name"]').val()
+            // let bank_name = $('input[name="bank_name"]').val()
+            // let ifsc_code = $('input[name="ifsc_code"]').val()
             let termsNConditions = $('textarea[name="terms_n_conditions"]').val()
             let note = $('textarea[name="note"]').val()
             let total = $('input[name="grand_total"]').val()
@@ -879,10 +881,10 @@
             $('#pv-invoice-id').text(invoice_id)
             $('#pv-invoice-from').text(invoice_from)
             $('#pv-invoice-to').text(invoice_to)
-            $('#pv-acc-num').text(acc_num)
-            $('#pv-acc-name').text(acc_name)
-            $('#pv-bank-name').text(bank_name)
-            $('#pv-ifsc-code').text(ifsc_code)
+            // $('#pv-acc-num').text(acc_num)
+            // $('#pv-acc-name').text(acc_name)
+            // $('#pv-bank-name').text(bank_name)
+            // $('#pv-ifsc-code').text(ifsc_code)
 
             if (termsNConditions.trim().length > 0) {
                 $('#pv-terms-conditions').css('display', 'block')
@@ -919,23 +921,5 @@
             });
         })
     </script>
-
-    {{-- <script>
-        let draftButtonClicked = false;
-
-        $('#draftBtn').on('click', function() {
-            draftButtonClicked = true;
-
-            $('#save-invoice').click()
-        })
-
-        $('#save-invoice').on('click', function() {
-            if (draftButtonClicked) {
-                $('#invoice-form').append('<input type="hidden" value="draft" name="status">');
-            }
-
-            draftButtonClicked = false;
-        });
-    </script> --}}
 @endsection
 @endsection
