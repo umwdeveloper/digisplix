@@ -166,6 +166,7 @@ class PartnerController extends Controller {
             Storage::disk('public')->delete($partner->user->img);
         }
         $partner->user()->delete();
+        // $partner->client()->delete();
         $partner->delete();
 
         return redirect()->back()->with('status', 'Partner deleted successfully!');

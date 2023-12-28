@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->date('deadline');
             $table->timestamps();
 
-            $table->foreign('client_id')->references('id')->on('clients');
+            $table->foreign('client_id')->references('id')->on('clients')->cascadeOnDelete();
         });
     }
 

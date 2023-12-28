@@ -10,6 +10,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class ClientController extends Controller {
 
@@ -105,6 +106,11 @@ class ClientController extends Controller {
         $this->authorize('staff.clients');
 
         $client = Client::findOrFail($id);
+
+        if (!empty($client->user->img)) {
+            Storage::disk('public')->delete($client->user->img);
+        }
+
         $client->delete();
 
         return redirect()->back()->with('status', 'Client deleted successfully!');

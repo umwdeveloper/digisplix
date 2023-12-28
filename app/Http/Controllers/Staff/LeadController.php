@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Storage;
 
 class LeadController extends Controller {
 
@@ -152,6 +153,11 @@ class LeadController extends Controller {
         $this->authorize('staff.leads');
 
         $lead = Client::findOrFail($id);
+
+        if (!empty($lead->user->img)) {
+            Storage::disk('public')->delete($lead->user->img);
+        }
+
         $lead->user()->delete();
         $lead->delete();
 
