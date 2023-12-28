@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Storage;
 
 class LeadController extends Controller {
     /**
@@ -149,7 +150,11 @@ class LeadController extends Controller {
      */
     public function destroy(string $id) {
         $lead = Client::findOrFail($id);
-        $lead->user()->delete();
+
+        if (!empty($lead->user->img)) {
+            Storage::disk('public')->delete($lead->user->img);
+        }
+
         $lead->delete();
 
         return redirect()->back()->with('status', 'Lead deleted successfully!');

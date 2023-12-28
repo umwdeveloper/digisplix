@@ -9,6 +9,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class ClientController extends Controller {
     /**
@@ -91,7 +92,11 @@ class ClientController extends Controller {
      */
     public function destroy(string $id) {
         $client = Client::findOrFail($id);
-        $client->user()->delete();
+
+        if (!empty($client->user->img)) {
+            Storage::disk('public')->delete($client->user->img);
+        }
+
         $client->delete();
 
         return redirect()->back()->with('status', 'Client deleted successfully!');
