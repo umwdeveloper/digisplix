@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class=" d-flex justify-content-center align-items-center w-100">
+    <div class=" d-flex flex-column  justify-content-center align-items-center w-100">
         <div class="log-screen">
             <h1>Log In</h1>
             @foreach ($errors->all() as $error)
@@ -37,7 +37,7 @@
                         </label>
                     </div>
 
-                    <div class="my-5 mx-auto d-flex justify-content-center">
+                    <div class="mt-5 mx-auto d-flex justify-content-center">
                         <a href="{{ route('password.request') }}" class="forgot-btn text-center">
                             Forget
                         </a>
@@ -46,6 +46,9 @@
 
             </div>
 
+        </div>
+        <div class="text-center text-white mt-2" style="letter-spacing: 1px">
+            <p>Copyright © {{ now()->year }} DigiSplix, LLC</p>
         </div>
     </div>
 @endsection
