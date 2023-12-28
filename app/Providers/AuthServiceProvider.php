@@ -68,6 +68,21 @@ class AuthServiceProvider extends ServiceProvider {
             return $user->staff()->permissions->contains('name', 'support');
         });
 
+        // InvoiceController
+        Gate::define('staff.invoices', function (User $user) {
+            return $user->staff()->permissions->contains('name', 'invoices');
+        });
+
+        // SaleController
+        Gate::define('staff.sales', function (User $user) {
+            return $user->staff()->permissions->contains('name', 'sales');
+        });
+
+        // Emails
+        Gate::define('staff.emails', function (User $user) {
+            return $user->staff()->permissions->contains('name', 'emails');
+        });
+
         // Partner
 
         // Client
@@ -87,10 +102,10 @@ class AuthServiceProvider extends ServiceProvider {
         });
 
         // Admin has all rights
-        // Gate::before(function (User $user, string $ability) {
-        //     if ($user->is_admin) {
-        //         return true;
-        //     }
-        // });
+        Gate::before(function (User $user, string $ability) {
+            if ($user->is_admin) {
+                return true;
+            }
+        });
     }
 }

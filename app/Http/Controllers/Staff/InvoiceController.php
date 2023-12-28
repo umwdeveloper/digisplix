@@ -21,6 +21,7 @@ class InvoiceController extends Controller {
      * Display a listing of the resource.
      */
     public function index() {
+        $this->authorize('staff.invoices');
 
         $invoices = Invoice::with(['category', 'client', 'items'])
             ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
@@ -53,6 +54,8 @@ class InvoiceController extends Controller {
     }
 
     public function filtered(Request $request) {
+        $this->authorize('staff.invoices');
+
         $invoices = Invoice::with(['category', 'client', 'items'])
             ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
                 ->whereColumn('invoice_id', 'invoices.id')
@@ -109,6 +112,8 @@ class InvoiceController extends Controller {
      * Show the form for creating a new resource.
      */
     public function create() {
+        $this->authorize('staff.invoices');
+
         $clients = Client::with('user')->where('status', Client::QUALIFIED)->get();
         $categories = Category::all();
         $admin = User::getAdmin();
@@ -124,6 +129,8 @@ class InvoiceController extends Controller {
      * Store a newly created resource in storage.
      */
     public function store(StoreInvoice $request) {
+        $this->authorize('staff.invoices');
+
         $validatedData = $request->validated();
 
         $invoice = Invoice::create($validatedData);
@@ -154,6 +161,8 @@ class InvoiceController extends Controller {
      * Show the form for editing the specified resource.
      */
     public function edit(string $id) {
+        $this->authorize('staff.invoices');
+
         $invoice = Invoice::with(['category', 'client', 'items'])
             ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
                 ->whereColumn('invoice_id', 'invoices.id')
@@ -174,6 +183,8 @@ class InvoiceController extends Controller {
      * Show the form for cloning the specified resource.
      */
     public function clone(string $id) {
+        $this->authorize('staff.invoices');
+
         $invoice = Invoice::with(['category', 'client', 'items'])
             ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
                 ->whereColumn('invoice_id', 'invoices.id')
@@ -195,6 +206,8 @@ class InvoiceController extends Controller {
      * Update the specified resource in storage.
      */
     public function update(StoreInvoice $request, string $id) {
+        $this->authorize('staff.invoices');
+
         $validatedData = $request->validated();
 
         $invoice = Invoice::findOrFail($id);
@@ -239,7 +252,13 @@ class InvoiceController extends Controller {
      * Remove the specified resource from storage.
      */
     public function destroy(string $id) {
-        //
+        $this->authorize('staff.invoices');
+
+        $invoice = Invoice::findOrFail($id);
+
+        $invoice->delete();
+
+        return redirect()->back()->with('status', 'Invoice deleted successfully!');
     }
 
     public function generateInvoiceNumber() {
@@ -256,6 +275,7 @@ class InvoiceController extends Controller {
 
     // Update invoice status
     public function updateInvoiceStatus(Request $request, string $id) {
+        $this->authorize('staff.invoices');
 
         try {
             $invoice = Invoice::findOrFail($id);
@@ -277,6 +297,7 @@ class InvoiceController extends Controller {
 
     // Mark invoice sent/unsent
     public function markAsSent(Request $request, string $id) {
+        $this->authorize('staff.invoices');
 
         try {
             $invoice = Invoice::findOrFail($id);
@@ -292,6 +313,7 @@ class InvoiceController extends Controller {
 
     // Send Invoice
     public function sendInvoice(Request $request, string $id) {
+        $this->authorize('staff.invoices');
 
         try {
             $invoice = Invoice::withSum('items', 'price')->findOrFail($id);

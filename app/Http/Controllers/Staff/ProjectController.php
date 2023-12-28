@@ -169,7 +169,9 @@ class ProjectController extends Controller {
         $this->authorize('staff.projects');
 
         $project = Project::findOrFail($id);
-        Storage::disk('public')->delete($project->img);
+        if (!empty($project->img)) {
+            Storage::disk('public')->delete($project->img);
+        }
         $project->delete();
         return redirect()->back()->with('status', 'Project deleted successfully!');
     }

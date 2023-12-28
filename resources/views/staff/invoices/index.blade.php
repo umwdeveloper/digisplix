@@ -427,9 +427,14 @@
                                                             href="{{ route('staff.invoices.clone', $invoice->id) }}"><i
                                                                 class="bi bi-clipboard-plus-fill me-2"></i>Clone
                                                             Invoice</a></td>
-                                                    <td> <button class="delete ms-0"><i
-                                                                class="fa-solid fa-trash me-2"></i>
-                                                            Delete</button></td>
+                                                    <td>
+                                                        <form action="{{ route('staff.invoices.destroy', $invoice->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="delete">Delete</button>
+                                                        </form>
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -508,9 +513,13 @@
                                                             <div class="d-flex align-items-center">
                                                                 <a href="edit-invoice.html" class="edit"><i
                                                                         class="fa-solid fa-pencil me-2"></i>Edit</a>
-                                                                <button class="delete ms-3"><i
-                                                                        class="fa-solid fa-trash me-2"></i>
-                                                                    Delete</button>
+                                                                <form
+                                                                    action="{{ route('staff.invoices.destroy', $invoice->id) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button class="delete">Delete</button>
+                                                                </form>
                                                             </div>
 
                                                         </td>
@@ -593,9 +602,13 @@
                                                         <div class="d-flex align-items-center">
                                                             <a href="edit-invoice.html" class="edit"><i
                                                                     class="fa-solid fa-pencil me-2"></i>Edit</a>
-                                                            <button class="delete ms-3"><i
-                                                                    class="fa-solid fa-trash me-2"></i>
-                                                                Delete</button>
+                                                            <form
+                                                                action="{{ route('staff.invoices.destroy', $invoice->id) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button class="delete">Delete</button>
+                                                            </form>
                                                         </div>
 
                                                     </td>
@@ -675,9 +688,13 @@
                                                         <div class="d-flex align-items-center">
                                                             <a href="edit-invoice.html" class="edit"><i
                                                                     class="fa-solid fa-pencil me-2"></i>Edit</a>
-                                                            <button class="delete ms-3"><i
-                                                                    class="fa-solid fa-trash me-2"></i>
-                                                                Delete</button>
+                                                            <form
+                                                                action="{{ route('staff.invoices.destroy', $invoice->id) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button class="delete">Delete</button>
+                                                            </form>
                                                         </div>
 
                                                     </td>
@@ -758,9 +775,13 @@
                                                         <div class="d-flex align-items-center">
                                                             <a href="edit-invoice.html" class="edit"><i
                                                                     class="fa-solid fa-pencil me-2"></i>Edit</a>
-                                                            <button class="delete ms-3"><i
-                                                                    class="fa-solid fa-trash me-2"></i>
-                                                                Delete</button>
+                                                            <form
+                                                                action="{{ route('staff.invoices.destroy', $invoice->id) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button class="delete">Delete</button>
+                                                            </form>
                                                         </div>
 
                                                     </td>
@@ -841,9 +862,13 @@
                                                         <div class="d-flex align-items-center">
                                                             <a href="edit-invoice.html" class="edit"><i
                                                                     class="fa-solid fa-pencil me-2"></i>Edit</a>
-                                                            <button class="delete ms-3"><i
-                                                                    class="fa-solid fa-trash me-2"></i>
-                                                                Delete</button>
+                                                            <form
+                                                                action="{{ route('staff.invoices.destroy', $invoice->id) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button class="delete">Delete</button>
+                                                            </form>
                                                         </div>
 
                                                     </td>

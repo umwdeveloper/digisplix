@@ -167,16 +167,18 @@
 
                             </li>
 
-                            <li class="menu-item">
-                                <a href="{{ route('staff.invoices.index') }}">
-                                    <span class="menu-icon">
-                                        <i class="fa-duotone fa-file-invoice-dollar"></i>
-                                    </span>
-                                    <span class="menu-title">Invoices
-                                    </span>
-                                </a>
+                            @can('staff.invoices')
+                                <li class="menu-item">
+                                    <a href="{{ route('staff.invoices.index') }}">
+                                        <span class="menu-icon">
+                                            <i class="fa-duotone fa-file-invoice-dollar"></i>
+                                        </span>
+                                        <span class="menu-title">Invoices
+                                        </span>
+                                    </a>
 
-                            </li>
+                                </li>
+                            @endcan
 
                             @can('staff.partners')
                                 <li class="menu-item">
@@ -242,15 +244,17 @@
                                 </li>
                             @endcan
 
-                            <li class="menu-item">
-                                <a href="{{ config('custom.staff_subdomain') . '/webmail' }}" target="_blank">
-                                    <span class="menu-icon">
-                                        <i class="fa-duotone fa-envelopes"></i>
-                                    </span>
-                                    <span class="menu-title">Email
-                                    </span>
-                                </a>
-                            </li>
+                            @can('staff.emails')
+                                <li class="menu-item">
+                                    <a href="{{ config('custom.staff_subdomain') . '/webmail' }}" target="_blank">
+                                        <span class="menu-icon">
+                                            <i class="fa-duotone fa-envelopes"></i>
+                                        </span>
+                                        <span class="menu-title">Email
+                                        </span>
+                                    </a>
+                                </li>
+                            @endcan
                         </ul>
                     </nav>
                 </div>
@@ -492,24 +496,30 @@
                 Dashboard
             </a>
         </div>
-        <div class="footer-menu-link">
-            <a href="{{ route('staff.leads.index') }}">
-                <i class="fa-duotone fa-people-group"></i>
-                Leads
-            </a>
-        </div>
-        <div class="footer-menu-link">
-            <a href="{{ route('staff.projects.index') }}">
-                <i class="fa-duotone fa-rectangle-history"></i>
-                Projects
-            </a>
-        </div>
-        <div class="footer-menu-link">
-            <a href="{{ route('chat') }}">
-                <i class="fa-duotone fa-messages"></i>
-                Chats
-            </a>
-        </div>
+        @can('staff.leads')
+            <div class="footer-menu-link">
+                <a href="{{ route('staff.leads.index') }}">
+                    <i class="fa-duotone fa-people-group"></i>
+                    Leads
+                </a>
+            </div>
+        @endcan
+        @can('staff.projects')
+            <div class="footer-menu-link">
+                <a href="{{ route('staff.projects.index') }}">
+                    <i class="fa-duotone fa-rectangle-history"></i>
+                    Projects
+                </a>
+            </div>
+        @endcan
+        @can('staff.chats')
+            <div class="footer-menu-link">
+                <a href="{{ route('chat') }}">
+                    <i class="fa-duotone fa-messages"></i>
+                    Chats
+                </a>
+            </div>
+        @endcan
         <div class="footer-menu-link" id="show-more-menu">
             <a>
                 <i class="fa-duotone fa-circle-ellipsis-vertical"></i>
@@ -521,67 +531,81 @@
     <div class="menu-footer-popup">
         <h3>More Menus</h3>
         <div class="menu-footer-padding"></div>
-        <div class="d-flex align-items-center more-footer-link">
-            <a href="{{ route('staff.sales.index') }}" class="d-flex align-items-center">
-                <div class="more-icon">
-                    <i class="fa-duotone fa-chart-mixed-up-circle-dollar"></i>
-                </div>
-                Sales
-            </a>
-        </div>
-        <div class="d-flex align-items-center more-footer-link ">
-            <a href="{{ route('staff.invoices.index') }}" class="d-flex align-items-center ">
-                <div class="more-icon">
-                    <i class="fa-duotone fa-file-invoice-dollar"></i>
-                </div>
-                Invoices
-            </a>
-        </div>
-        <div class="d-flex align-items-center more-footer-link">
-            <a href="{{ route('staff.clients.index') }}">
-                <div class="more-icon">
-                    <i class="fa-duotone fa-users-line"></i>
-                </div>
+        @can('staff.sales')
+            <div class="d-flex align-items-center more-footer-link">
+                <a href="{{ route('staff.sales.index') }}" class="d-flex align-items-center">
+                    <div class="more-icon">
+                        <i class="fa-duotone fa-chart-mixed-up-circle-dollar"></i>
+                    </div>
+                    Sales
+                </a>
+            </div>
+        @endcan
+        @can('staff.invoices')
+            <div class="d-flex align-items-center more-footer-link ">
+                <a href="{{ route('staff.invoices.index') }}" class="d-flex align-items-center ">
+                    <div class="more-icon">
+                        <i class="fa-duotone fa-file-invoice-dollar"></i>
+                    </div>
+                    Invoices
+                </a>
+            </div>
+        @endcan
+        @can('staff.clients')
+            <div class="d-flex align-items-center more-footer-link">
+                <a href="{{ route('staff.clients.index') }}">
+                    <div class="more-icon">
+                        <i class="fa-duotone fa-users-line"></i>
+                    </div>
 
-                Clients
-            </a>
-        </div>
-        <div class="d-flex align-items-center more-footer-link">
-            <a href="{{ route('staff.partners.index') }}">
-                <div class="more-icon">
-                    <i class="fa-duotone fa-user-group-simple"></i>
-                </div>
+                    Clients
+                </a>
+            </div>
+        @endcan
+        @can('staff.partners')
+            <div class="d-flex align-items-center more-footer-link">
+                <a href="{{ route('staff.partners.index') }}">
+                    <div class="more-icon">
+                        <i class="fa-duotone fa-user-group-simple"></i>
+                    </div>
 
-                Partners
-            </a>
-        </div>
+                    Partners
+                </a>
+            </div>
+        @endcan
 
-        <div class="d-flex align-items-center more-footer-link">
-            <a href="{{ route('staff.staff.index') }}">
-                <div class="more-icon">
-                    <i class="fa-duotone fa-user-tie"></i>
-                </div>
+        @can('staff.staff')
+            <div class="d-flex align-items-center more-footer-link">
+                <a href="{{ route('staff.staff.index') }}">
+                    <div class="more-icon">
+                        <i class="fa-duotone fa-user-tie"></i>
+                    </div>
 
-                Staff
-            </a>
-        </div>
-        <div class="d-flex align-items-center more-footer-link">
-            <a href="{{ route('staff.support.index') }}">
-                <div class="more-icon">
-                    <i class="fa-duotone fa-user-headset"></i>
-                </div>
+                    Staff
+                </a>
+            </div>
+        @endcan
+        @can('staff.support')
+            <div class="d-flex align-items-center more-footer-link">
+                <a href="{{ route('staff.support.index') }}">
+                    <div class="more-icon">
+                        <i class="fa-duotone fa-user-headset"></i>
+                    </div>
 
-                Support
-            </a>
-        </div>
-        <div class="d-flex align-items-center more-footer-link">
-            <a href="{{ config('custom.staff_subdomain') . '/webmail' }}" target="_blank">
-                <div class="more-icon">
-                    <i class="fa-duotone fa-envelopes"></i>
-                </div>
-                Email
-            </a>
-        </div>
+                    Support
+                </a>
+            </div>
+        @endcan
+        @can('staff.emails')
+            <div class="d-flex align-items-center more-footer-link">
+                <a href="{{ config('custom.staff_subdomain') . '/webmail' }}" target="_blank">
+                    <div class="more-icon">
+                        <i class="fa-duotone fa-envelopes"></i>
+                    </div>
+                    Email
+                </a>
+            </div>
+        @endcan
         <div class="d-flex align-items-center more-footer-link">
             <a href="logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit()">
                 <div class="more-icon">
