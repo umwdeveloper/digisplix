@@ -29,7 +29,7 @@ class Partner extends Model {
         parent::boot();
 
         static::deleting(function (Partner $partner) {
-            $partner->client()->delete();
+            $partner->clients()->delete();
         });
     }
 }
