@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Invoice;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class InvoiceStatusCommand extends Command {
     /**
@@ -24,8 +25,7 @@ class InvoiceStatusCommand extends Command {
      * Execute the console command.
      */
     public function handle() {
-
-        $this->info('Command running!');
+        Log::info("Status command running");
 
         $invoices = Invoice::where('due_date', '<', today())
             ->where('status', Invoice::PENDING)
@@ -35,6 +35,6 @@ class InvoiceStatusCommand extends Command {
             $invoice->update(['status' => Invoice::OVERDUE]);
         }
 
-        $this->info('Status updated!');
+        Log::info('Status updated!');
     }
 }

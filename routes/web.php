@@ -80,9 +80,10 @@ Route::domain(config('custom.staff_alias'))
             ->name('tasks.updateAll');
 
         // Partners
-        Route::resource('partners', StaffPartnerController::class)->except(['create', 'show', 'edit']);
+        Route::resource('partners', StaffPartnerController::class)->except(['create', 'edit']);
         Route::get('/partners/fetch_partner/{partner_id}', [StaffPartnerController::class, 'fetchPartner'])
             ->name('partners.fetch_partner');
+        Route::post('/partners/total_sales', [StaffPartnerController::class, 'totalSales'])->name('partners.total_sales');
 
         // Clients
         Route::resource('clients', StaffClientController::class)->except(['create', 'store', 'show', 'edit']);

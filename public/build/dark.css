@@ -4083,7 +4083,7 @@ input:-webkit-autofill:active {
   align-items: center;
 }
 .ticket-blank:hover {
-  background-color: #0963ce;
+  background-color: #0963ce !important;
   color: white;
 }
 .ticket-chat {
@@ -4243,11 +4243,16 @@ input:-webkit-autofill:active {
 }
 @media only screen and (max-width: 350px) {
   .screenshot a {
-    display: inline-block; /* Ensure the text is treated as a block element */
-    max-width: 200px; /* Set the maximum width of the anchor tag */
-    overflow: hidden; /* Hide any overflowing text */
-    text-overflow: ellipsis; /* Display ellipsis for overflowing text */
-    white-space: nowrap; /* Prevent text from wrapping to the next line */
+    display: inline-block;
+    /* Ensure the text is treated as a block element */
+    max-width: 200px;
+    /* Set the maximum width of the anchor tag */
+    overflow: hidden;
+    /* Hide any overflowing text */
+    text-overflow: ellipsis;
+    /* Display ellipsis for overflowing text */
+    white-space: nowrap;
+    /* Prevent text from wrapping to the next line */
   }
 }
 .ticket-support {
@@ -4309,6 +4314,12 @@ input:-webkit-autofill:active {
 .ck.ck-toolbar {
   background-color: #e6effa !important;
   border: 1px solid #e6effa;
+}
+#editor {
+  color: #ffffff !important;
+}
+.no-recent-activity {
+  color: #ffffff !important;
 }
 /* Setting a background color and font-family for the body */
 /* Styling for the dropzone */

@@ -18,7 +18,7 @@
                         </div>
                         @forelse ($partners as $partner)
                             <div class="col-xl-4 col-md-6 mb-3">
-                                <a href="partner-detail.html">
+                                <a href="{{ route('staff.partners.show', $partner->id) }}">
                                     <div class="person-card">
                                         <div class="ribbon-two ribbon-two-success"><span
                                                 style="background-color: {{ getRandomColor() }}">{{ $partner->commission }}%</span>
@@ -189,8 +189,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class=" mb-3">
-                                    <label class="country-label form-label mb-2" for="country">Country<span
-                                                                class="text-danger">*</span></label><br>
+                                        <label class="country-label form-label mb-2" for="country">Country<span
+                                                class="text-danger">*</span></label><br>
                                         <input type="text"
                                             class=" {{ $errors->createPartner->has('country') ? 'is-invalid' : '' }}"
                                             id="country" name="country" required
@@ -200,7 +200,7 @@
                                             value="{{ $errors->hasBag('createPartner') ? old('country_code') : '' }}"
                                             name="country_code">
                                         <!-- <label class="crm-label form-label" for="country">Country<span
-                                                class="text-danger">*</span></label> -->
+                                                            class="text-danger">*</span></label> -->
                                         @if ($errors->createPartner->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->createPartner->first('country') }}
@@ -411,8 +411,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class=" mb-3">
-                                    <label class="country-label form-label mb-2" for="country2">Country<span
-                                                                class="text-danger">*</span></label><br>
+                                        <label class="country-label form-label mb-2" for="country2">Country<span
+                                                class="text-danger">*</span></label><br>
                                         <input type="text"
                                             class=" {{ $errors->updatePartner->has('country') ? 'is-invalid' : '' }}"
                                             id="country2" name="country" required
@@ -421,7 +421,7 @@
                                         <input type="hidden" id="country2_code" value="{{ old('country_code') }}"
                                             name="country_code">
                                         <!-- <label class="crm-label form-label" for="country2">Country<span
-                                                class="text-danger">*</span></label> -->
+                                                            class="text-danger">*</span></label> -->
                                         @if ($errors->updatePartner->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updatePartner->first('country') }}

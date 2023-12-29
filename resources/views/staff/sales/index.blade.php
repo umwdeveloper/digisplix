@@ -118,7 +118,7 @@
                                     </div>
                                 </a>
                             @empty
-                                <p>No recent activity</p>
+                                <p class="no-recent-activity">No recent activity</p>
                             @endforelse
                         </div>
                     </div>

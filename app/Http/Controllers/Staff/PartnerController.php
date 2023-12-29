@@ -5,9 +5,13 @@ namespace App\Http\Controllers\Staff;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePartner;
 use App\Http\Requests\UpdatePartner;
+use App\Models\Client;
+use App\Models\Invoice;
+use App\Models\InvoiceItem;
 use App\Models\Partner;
 use App\Models\User;
 use App\Notifications\PartnerCreated;
+use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -94,7 +98,62 @@ class PartnerController extends Controller {
      * Display the specified resource.
      */
     public function show(string $id) {
-        //
+        $this->authorize('staff.partners');
+
+        $partner = Partner::findOrFail($id);
+
+        $leads = Client::with(['user', 'partner', 'partner.user'])
+            ->where('partner_id', $id)
+            ->get();
+
+        $partners = Partner::with('user')->get();
+
+        $startDate = Carbon::now()->startOfWeek();
+        $endDate = Carbon::now()->endOfWeek();
+
+        $invoices = Invoice::with(['category', 'client', 'items', 'client.partner', 'client.user'])
+            ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
+                ->whereColumn('invoice_id', 'invoices.id')
+                ->limit(1)])
+            ->where('status', Invoice::PAID)
+            ->whereHas('client', function ($query) use ($partner) {
+                $query->where('partner_id', $partner->id);
+            })
+            ->get();
+
+        $regionalSales = Invoice::join('clients', 'invoices.client_id', '=', 'clients.id')
+            ->join('users', function ($join) {
+                $join->on('users.userable_id', '=', 'clients.id')
+                    ->where('users.userable_type', '=', Client::class);
+            })
+            ->where('invoices.status', Invoice::PAID)
+            ->whereHas('client', function ($query) use ($partner) {
+                $query->where('partner_id', $partner->id);
+            })
+            ->selectRaw('users.country as region, users.country_code AS region_code, COUNT(DISTINCT invoices.id) as sales_count')
+            ->groupBy('users.country')
+            ->get();
+
+        return view('staff.partners.show', [
+            'leads' => $leads,
+            'partners' => $partners,
+            'new_leads_count' => $leads->where('status', Client::NEW_LEAD)->count(),
+            'new_leads' => $leads->whereIn('status', [Client::NEW_LEAD, Client::CONTACTED, Client::FOLLOW_UP]),
+            'contacted_leads' => $leads->where('status', Client::CONTACTED),
+            'follow_up_leads' => $leads->where('status', Client::FOLLOW_UP),
+            'in_progress_leads' => $leads->where('status', Client::IN_PROGRESS),
+            'failed_leads' => $leads->where('status', Client::FAILED),
+            'qualified_leads' => $leads->where('status', Client::QUALIFIED),
+            'statuses' => Client::getStatuses(),
+            'status_labels' => Client::getStatusLabels(),
+            'status_colors' => Client::getStatusColors(),
+            'invoices' => $invoices,
+            'sales' => $invoices->whereBetween('created_at', [$startDate, $endDate])->count(),
+            'revenue' => $invoices->whereBetween('created_at', [$startDate, $endDate])->sum('items_sum_price'),
+            'commission' => $invoices->whereBetween('created_at', [$startDate, $endDate])->sum('items_sum_price') * ($partner->commission / 100),
+            'regional_sales' => $regionalSales,
+            'currentPartner' => $partner
+        ]);
     }
 
     /**
@@ -180,5 +239,60 @@ class PartnerController extends Controller {
             'status' => 'success',
             'partner' => $partner
         ]);
+    }
+
+    public function totalSales(Request $request) {
+
+        $duration = $request->input('duration');
+        $filter = $request->input('filter');
+        $partner_id = $request->partner_id;
+
+        $partner = Partner::findOrFail($partner_id);
+
+        $startDate = null;
+        $endDate = null;
+
+        // Define date ranges based on the selected duration
+        switch ($duration) {
+            case 'weekly':
+                $startDate = now()->startOfWeek();
+                $endDate = now()->endOfWeek();
+                break;
+            case 'monthly':
+                $startDate = now()->startOfMonth();
+                $endDate = now()->endOfMonth();
+                break;
+            case 'months_6':
+                $startDate = now()->subMonths(6)->startOfDay();
+                $endDate = now()->endOfDay();
+                break;
+            case 'yearly':
+                $startDate = now()->startOfYear();
+                $endDate = now()->endOfYear();
+                break;
+            case 'lifetime':
+                break;
+            default:
+                break;
+        }
+
+        $invoices = Invoice::with(['client'])
+            ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
+                ->whereColumn('invoice_id', 'invoices.id')
+                ->limit(1)])
+            ->where('status', Invoice::PAID)
+            ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('created_at', [$startDate, $endDate]);
+            })
+            ->whereHas('client', function ($query) use ($partner) {
+                $query->where('partner_id', $partner->id);
+            })
+            ->get();
+
+        $sales = $invoices->count();
+        $revenue = round($invoices->sum('items_sum_price'));
+        $commission = round($invoices->sum('items_sum_price') * ($partner->commission / 100));
+
+        return response()->json(['total' => $filter == 'sales' ? $sales : ($filter == 'revenue' ? $revenue : $commission)]);
     }
 }

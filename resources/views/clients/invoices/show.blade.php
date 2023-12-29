@@ -33,7 +33,8 @@
                                                 class="bi bi-coin ms-1"></i></button>
                                     </div>
                                     <div class="d-flex justify-content-center align-items-center">
-                                        <button class="table-btn px-2" type="button" id="fetch-details">Pay via Bank <i
+                                        <button class="table-btn px-2" type="button" id="fetch-details"
+                                            data-bs-toggle="modal" data-bs-target="#bankModal">Pay via Bank <i
                                                 class="bi bi-bank ms-1"></i></button>
                                     </div>
                                 @endif
@@ -184,8 +185,6 @@
                                     <p class="mb-0 pb-0 f-14 w-500 text-gray"><span><i
                                                 class="bi bi-telephone-fill text-primary me-1"></i></span>
                                         +17373388038</p>
-
-
                                 </div>
                             </div>
                         </div>
@@ -220,7 +219,29 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="modal-btn-cancel me-2" style="padding: 7px 20px"
+                        data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="bankModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <strong>Note: </strong>
+                        <p class="f-14">If your current balance is high enough then the amount will be deducted from your
+                            balance
+                            otherwise you will get the bank details. If you
+                            want to proceed please click Continue</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="modal-btn-cancel me-2" style="padding: 7px 20px"
+                        data-bs-dismiss="modal">Close</button>
+                    <button class="modal-btn-save" type="button">Continue</button>
                 </div>
             </div>
         </div>
@@ -273,10 +294,10 @@
 
     <script>
         $('#fetch-details').click(function() {
-            let amount = $('#grand-total').val();
-            let client_id = $('#client').val()
+            // let amount = $('#grand-total').val();
+            // let client_id = $('#client').val()
 
-            location.href = "{{ route('client.invoices.bank', $invoice->id) }}"
+            // location.href = "{{ route('client.invoices.bank', $invoice->id) }}"
 
             // $.ajax({
             //     url: "{{ route('payment.create_payment_intent') }}",
