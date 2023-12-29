@@ -43,7 +43,7 @@ class InvoiceController extends Controller {
      * Display the specified resource.
      */
     public function show(string $id) {
-        $invoice = Invoice::with(['items', 'category'])
+        $invoice = Invoice::with(['items', 'category', 'client'])
             ->where('client_id', Auth::user()->userable->id)
             ->where('sent', 1)
             ->where('status', '!=', Invoice::DRAFT)

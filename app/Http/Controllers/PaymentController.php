@@ -154,10 +154,11 @@ class PaymentController extends Controller {
         }
     }
 
-    public static function createPaymentIntent($amount, $client_id) {
+    public static function createPaymentIntent(Request $request) {
         Stripe::setApiKey(config('custom.stripe_secret'));
 
-        $client = Client::findOrFail($client_id);
+        $client = Client::findOrFail($request->client_id);
+        $amount = $request->amount;
 
         $customer_id = null;
         if (!empty($client->customer_id)) {
@@ -190,7 +191,17 @@ class PaymentController extends Controller {
                     ],
                 ],
                 'confirm' => true,
+                'metadata' => [
+                    'invoice_id' => $request->invoice_id
+                ]
             ]);
+
+            if ($paymentIntent->status == 'succeeded') {
+                $invoice = Invoice::findOrFail($request->invoice_id);
+
+                $invoice->status = Invoice::PAID;
+                $invoice->save();
+            }
 
             return response()->json([
                 'paymentIntent' => $paymentIntent,

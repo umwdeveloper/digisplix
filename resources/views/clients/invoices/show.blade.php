@@ -241,7 +241,7 @@
                 <div class="modal-footer">
                     <button type="button" class="modal-btn-cancel me-2" style="padding: 7px 20px"
                         data-bs-dismiss="modal">Close</button>
-                    <button class="modal-btn-save" type="button">Continue</button>
+                    <button class="modal-btn-save" id="pay-bank" type="button">Continue</button>
                 </div>
             </div>
         </div>
@@ -293,24 +293,35 @@
     </script>
 
     <script>
-        $('#fetch-details').click(function() {
-            // let amount = $('#grand-total').val();
-            // let client_id = $('#client').val()
+        $('#pay-bank').click(function() {
+            let amount = '{{ $invoice->total_price }}';
+            let client_id = '{{ $invoice->client->id }}';
+            let invoice_id = '{{ $invoice->id }}';
 
-            // location.href = "{{ route('client.invoices.bank', $invoice->id) }}"
+            $('.loading').removeClass('d-none')
+            $('#bankModal').modal('hide')
 
-            // $.ajax({
-            //     url: "{{ route('payment.create_payment_intent') }}",
-            //     method: 'POST',
-            //     data: {
-            //         _token: '{{ csrf_token() }}',
-            //         amount,
-            //         client_id
-            //     },
-            //     success: function(response) {
-            //         console.log(response);
-            //     }
-            // })
+            $.ajax({
+                url: "{{ route('payment.create_payment_intent') }}",
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    amount,
+                    client_id,
+                    invoice_id
+                },
+                success: function(response) {
+                    console.log(response);
+
+                    $('.loading').addClass('d-none')
+
+                    if (response.paymentIntent.status == 'requires_action') {
+
+                    } else if (response.paymentIntent.status == "succeeded") {
+                        location.href = '{{ route('payment.success') }}'
+                    }
+                }
+            })
         })
     </script>
 @endsection

@@ -4631,6 +4631,12 @@ span.plus {
   display: flex;
   justify-content: space-between;
 }
+.bank-details {
+  background-color: #f7f7f7;
+  border: 1px solid #dfdfdf;
+  border-radius: 6px;
+  padding: 10px 25px;
+}
 .log-theme {
   min-height: 100vh;
   display: flex;

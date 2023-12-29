@@ -451,3 +451,18 @@
 .accordion-body textarea {
     background-color: transparent !important;
 }
+
+.bank-details {
+    background-color: $dark-skin;
+    border: 1px solid $gray;
+    border-radius: 6px;
+    padding: 10px 25px
+}
+
+.bank-detail-heading {
+    color: $white-light;
+}
+
+#bankModal {
+    color: $white-light;
+}

@@ -4793,6 +4793,18 @@ span.plus {
 .accordion-body textarea {
   background-color: transparent !important;
 }
+.bank-details {
+  background-color: #15243e;
+  border: 1px solid #5c607b;
+  border-radius: 6px;
+  padding: 10px 25px;
+}
+.bank-detail-heading {
+  color: rgba(255, 255, 255, 0.85);
+}
+#bankModal {
+  color: rgba(255, 255, 255, 0.85);
+}
 .log-theme {
   min-height: 100vh;
   display: flex;
