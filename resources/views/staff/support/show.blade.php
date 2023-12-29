@@ -53,7 +53,7 @@
                                             <div class="mt-3">
                                                 <h3 class="ticket-heading mb-0">Submitted</h3>
                                                 <p class="ticket-text mb-0 pb-2">
-                                                    {{ Timezone::convertToLocal($ticket->created_at) }}
+                                                    {{ $ticket->created_at->format('M j, Y h:iA') }}
                                                 </p>
                                             </div>
                                             <div class="mt-3">

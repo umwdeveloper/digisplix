@@ -39,6 +39,7 @@ class Kernel extends HttpKernel {
             \App\Http\Middleware\LayoutMiddleware::class,
             \App\Http\Middleware\SetAdminIdForStaffChat::class,
             \App\Http\Middleware\SupportMiddleware::class,
+            \App\Http\Middleware\TimezoneMiddleware::class,
             // \App\Http\Middleware\SubdomainValidationMiddleware::class,
         ],
 
