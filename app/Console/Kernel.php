@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel {
 
         Log::info("Queue command running");
         $schedule->command('queue:work --max-time=120')
-            ->everyMinute()
+            ->everySecond()
             ->withoutOverlapping();
     }
 
