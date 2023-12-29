@@ -14,8 +14,7 @@ class Kernel extends ConsoleKernel {
         // $schedule->command('inspire')->hourly();
         $schedule->command('app:invoice-status-command')->everyFiveMinutes();
 
-        Log::info("Queue command running");
-        $schedule->command('queue:work --daemon')
+        $schedule->command('app:process-queue')
             ->everyMinute()
             ->withoutOverlapping()
             ->appendOutputTo(storage_path('logs/queue-work.log'));
