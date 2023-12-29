@@ -80,4 +80,9 @@ class Support extends Model {
     public static function getStatusColor($status) {
         return self::$statusColors[$status];
     }
+
+    public function getCreatedAtAttribute($value) {
+        return Carbon::createFromTimestamp(strtotime($value))
+            ->timezone(config('app.timezone'));
+    }
 }
