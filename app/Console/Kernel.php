@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel {
         $schedule->command('app:invoice-status-command')->everyFiveMinutes();
 
         $schedule->command('app:process-queue')
-            ->everyMinute()
+            ->everySecond()
             ->withoutOverlapping()
             ->appendOutputTo(storage_path('logs/queue-work.log'));
     }
