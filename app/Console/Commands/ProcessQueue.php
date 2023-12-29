@@ -27,7 +27,7 @@ class ProcessQueue extends Command {
         Log::info('Queue command running');
 
         // Run the queue worker with the --max-time option
-        $this->call('queue:work', ['--max-time' => 120]);
+        $this->call('queue:work', ['--max-time' => 300]);
 
         $this->info('Queue processing completed.');
     }
