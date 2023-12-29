@@ -33,8 +33,8 @@ class InvoiceStatusCommand extends Command {
 
         foreach ($invoices as $invoice) {
             $invoice->update(['status' => Invoice::OVERDUE]);
-        }
 
-        Log::info('Status updated!');
+            Log::info('Status updated for the invoice#' . $invoice->invoice_id);
+        }
     }
 }

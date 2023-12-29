@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel {
         $schedule->command('app:invoice-status-command')->everyFiveMinutes();
 
         Log::info("Queue command running");
-        $schedule->command('queue:work')
+        $schedule->command('queue:work --stop-when-empty')
             ->everyMinute()
             ->withoutOverlapping();
     }
