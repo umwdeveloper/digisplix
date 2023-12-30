@@ -11,6 +11,7 @@ use App\Http\Controllers\Partner\LeadController as PartnerLeadController;
 use App\Http\Controllers\Partner\SaleController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\Staff\PartnerController as StaffPartnerController;
 use App\Http\Controllers\Staff\ClientController as StaffClientController;
 use App\Http\Controllers\Staff\InvoiceController;

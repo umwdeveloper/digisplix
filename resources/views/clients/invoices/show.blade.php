@@ -16,7 +16,7 @@
                             <div class="ms-auto d-flex">
                                 <!-- download -->
                                 <div class="header-option align-self-center me-0 hide-sm me-3 ms-2">
-                                    <i class="fa-duotone fa-download header-icon"
+                                    <i class="fa-duotone fa-download header-icon invoice-download-btn"
                                         style="color: #0963ce; cursor: pointer"></i>
                                 </div>
                                 <!-- pay -->
@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="col-xl-8 col-lg-10 mx-auto ">
-                    <div class="box mb-3 box-p" style="min-height: 80vh;">
+                    <div class="box mb-3 box-p invoice" style="min-height: 80vh;">
                         <div class="col-lg-12 mb-4 mt-2">
                             <div class="invoice-heading-row">
                                 <h1 class="invoice-heading mb-0 pb-0">INVOICE</h1>
@@ -345,6 +345,57 @@
                 }
             })
         })
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+        integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+        integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const downloadButton = document.querySelector(".invoice-download-btn");
+            downloadButton.addEventListener("click", function() {
+                const elementToCapture = document.querySelector('.invoice');
+
+                html2canvas(elementToCapture).then(canvas => {
+                    // Convert the canvas to a data URL
+                    const imageDataUrl = canvas.toDataURL('image/png');
+
+                    // Create a new jsPDF instance
+                    window.jsPDF = window.jspdf.jsPDF;
+                    const pdf = new jsPDF();
+
+                    // Calculate aspect ratio to maintain image proportions
+                    const aspectRatio = canvas.width / canvas.height;
+
+                    // Set the maximum width and height for the image
+                    const maxWidth = pdf.internal.pageSize.getWidth() - 20; // Adjust margin
+                    const maxHeight = pdf.internal.pageSize.getHeight() - 20; // Adjust margin
+
+                    // Calculate width and height based on the aspect ratio and maximum dimensions
+                    let imgWidth = maxWidth;
+                    let imgHeight = maxWidth / aspectRatio;
+
+                    if (imgHeight > maxHeight) {
+                        imgHeight = maxHeight;
+                        imgWidth = maxHeight * aspectRatio;
+                    }
+
+                    // Calculate center position
+                    const xPos = (pdf.internal.pageSize.getWidth() - imgWidth) / 2;
+                    const yPos = (pdf.internal.pageSize.getHeight() - imgHeight) / 2;
+
+                    // Add the image to the PDF
+                    pdf.addImage(imageDataUrl, 'PNG', xPos, yPos, imgWidth, imgHeight);
+
+                    // Save or download the PDF
+                    pdf.save('invoice.pdf');
+                });
+
+            });
+        });
     </script>
 @endsection
 @endsection

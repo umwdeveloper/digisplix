@@ -67,8 +67,8 @@
                                                     <div class="d-flex align-items-center">
                                                         <a href="{{ route('client.invoices.show', $invoice->id) }}"
                                                             class="edit"><i class="fa-solid fa-eye me-2"></i>View</a>
-                                                        <button class="edit ms-2 "><i
-                                                                class="fa-solid fa-download me-2"></i>Download</button>
+                                                        {{-- <button class="edit ms-2 "><i
+                                                                class="fa-solid fa-download me-2"></i>Download</button> --}}
                                                     </div>
                                                 </td>
 
