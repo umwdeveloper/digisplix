@@ -30,7 +30,9 @@ class StaffController extends Controller {
     public function index() {
         $this->authorize('staff.index');
 
-        $clients = Client::with('projects')->get();
+        $clients = Client::with('projects')
+            ->where('status', Client::QUALIFIED)
+            ->get();
 
         $deliveries = Project::with('client.user')->orderBy('deadline')->take(5)->get();
 
@@ -46,7 +48,7 @@ class StaffController extends Controller {
 
         return view('staff.index', [
             'totalClients' => count($clients),
-            'activeClients' => $clients->where('status', 1)->count(),
+            'activeClients' => $clients->where('active', 1)->count(),
             'totalProjects' => $clients->pluck('projects')->flatten()->count(),
             'overdueProjects' => $clients->pluck('projects')->flatten()->where('billing_status', 0)->count(),
             'onGoingProjects' => $clients->pluck('projects')->flatten()->where('current_status', 0)->count(),

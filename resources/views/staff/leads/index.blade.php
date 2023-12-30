@@ -783,7 +783,7 @@
                                             placeholder="Pakistan">
                                         <input type="hidden" id="country_code" name="country_code">
                                         <!-- <label class="crm-label form-label" for="country">Country<span
-                                                                                                class="text-danger">*</span></label> -->
+                                                                                                        class="text-danger">*</span></label> -->
                                         @if ($errors->createLead->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->createLead->first('country') }}

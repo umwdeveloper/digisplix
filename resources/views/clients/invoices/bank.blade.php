@@ -9,13 +9,14 @@
                         <div
                             class="d-flex align-items-lg-center justify-content-between flex-md-row flex-column align-items-start">
                             <div class="d-flex align-items-center">
-                                <a href="billing.html" class="text-gray"> <i class="fa-solid fa-circle-left me-2"></i> Back to
+                                <a href="billing.html" class="text-gray"> <i style="cursor: pointer"
+                                        class="fa-solid fa-circle-left me-2"></i> Back to
                                     Dashboard</a>
                             </div>
 
                             <div class="ms-auto d-flex align-items-center text-gray">
                                 Remaining Amount: <h5 class="text-primary ms-2 p-0 m-0">
-                                    $50
+                                    ${{ round($bank->amount_remaining / 100) }}
                                 </h5>
                             </div>
 
@@ -38,10 +39,14 @@
                                             <p class="mb-0 pb-0 f-16 w-500 text-gray">Bank Name</p>
                                         </div>
                                         <div>
-                                            <p class="mb-0 pb-0 f-16 w-600 text-gray">Bank Name</p>
+                                            <p class="mb-0 pb-0 f-16 w-600 text-gray to-copy">
+                                                {{ $bank->bank_name }}
+                                            </p>
                                         </div>
                                         <div>
-                                            <p class="mb-0 pb-0 f-18"><i class="bi bi-clipboard text-primary"></i></p>
+                                            <p class="mb-0 pb-0 f-18"><i data-toggle="tooltip" data-placement="top"
+                                                    title="Copy to Clipboard" style="cursor: pointer"
+                                                    class="bi bi-clipboard text-primary"></i></p>
                                         </div>
                                     </div>
 
@@ -49,49 +54,60 @@
 
                                     <div class="d-flex justify-content-between align-items-center mt-2">
                                         <div>
-                                            <p class="mb-0 pb-0 f-16 w-500 text-gray">Bank Name</p>
+                                            <p class="mb-0 pb-0 f-16 w-500 text-gray">Account Number</p>
                                         </div>
                                         <div>
-                                            <p class="mb-0 pb-0 f-16 w-600 text-gray">Bank Name</p>
+                                            <p class="mb-0 pb-0 f-16 w-600 text-gray to-copy">
+                                                {{ $bank->account_number }}</p>
                                         </div>
                                         <div>
-                                            <p class="mb-0 pb-0 f-18"><i class="bi bi-clipboard text-primary"></i></p>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex justify-content-between align-items-center mt-2">
-                                        <div>
-                                            <p class="mb-0 pb-0 f-16 w-500 text-gray">Bank Name</p>
-                                        </div>
-                                        <div>
-                                            <p class="mb-0 pb-0 f-16 w-600 text-gray">Bank Name</p>
-                                        </div>
-                                        <div>
-                                            <p class="mb-0 pb-0 f-18"><i class="bi bi-clipboard text-primary"></i></p>
+                                            <p class="mb-0 pb-0 f-18"><i data-toggle="tooltip" data-placement="top"
+                                                    title="Copy to Clipboard" style="cursor: pointer"
+                                                    class="bi bi-clipboard text-primary"></i></p>
                                         </div>
                                     </div>
 
                                     <div class="d-flex justify-content-between align-items-center mt-2">
                                         <div>
-                                            <p class="mb-0 pb-0 f-16 w-500 text-gray">Bank Name</p>
+                                            <p class="mb-0 pb-0 f-16 w-500 text-gray">Routing Number</p>
                                         </div>
                                         <div>
-                                            <p class="mb-0 pb-0 f-16 w-600 text-gray">Bank Name</p>
+                                            <p class="mb-0 pb-0 f-16 w-600 text-gray to-copy">
+                                                {{ $bank->routing_number }}</p>
                                         </div>
                                         <div>
-                                            <p class="mb-0 pb-0 f-18"><i class="bi bi-clipboard text-primary"></i></p>
+                                            <p class="mb-0 pb-0 f-18"><i data-toggle="tooltip" data-placement="top"
+                                                    title="Copy to Clipboard" style="cursor: pointer"
+                                                    class="bi bi-clipboard text-primary"></i></p>
                                         </div>
                                     </div>
 
                                     <div class="d-flex justify-content-between align-items-center mt-2">
                                         <div>
-                                            <p class="mb-0 pb-0 f-16 w-500 text-gray">Bank Name</p>
+                                            <p class="mb-0 pb-0 f-16 w-500 text-gray">SWIFT Code</p>
                                         </div>
                                         <div>
-                                            <p class="mb-0 pb-0 f-16 w-600 text-gray">Bank Name</p>
+                                            <p class="mb-0 pb-0 f-16 w-600 text-gray to-copy">
+                                                {{ $bank->swift_code }}</p>
                                         </div>
                                         <div>
-                                            <p class="mb-0 pb-0 f-18"><i class="bi bi-clipboard text-primary"></i></p>
+                                            <p class="mb-0 pb-0 f-18"><i data-toggle="tooltip" data-placement="top"
+                                                    title="Copy to Clipboard" style="cursor: pointer"
+                                                    class="bi bi-clipboard text-primary"></i></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between align-items-center mt-2">
+                                        <div>
+                                            <p class="mb-0 pb-0 f-16 w-500 text-gray">Reference</p>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0 pb-0 f-16 w-600 text-gray to-copy">{{ $bank->reference }}</p>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0 pb-0 f-18"><i data-toggle="tooltip" data-placement="top"
+                                                    title="Copy to Clipboard" style="cursor: pointer"
+                                                    class="bi bi-clipboard text-primary"></i></p>
                                         </div>
                                     </div>
 
@@ -116,71 +132,43 @@
         <!-- </div> -->
     </main>
 
-    <!-- Modal -->
-    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="paymentModalLabel">Pay Invoice</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="text-center" id="spinner">
-                            <img width="20px" src="{{ asset('images/spinner.gif') }}">
-                        </div>
-                        <div id="checkout"></div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 @section('script')
-    <script src="https://js.stripe.com/v3/"></script>
-
     <script>
         $(document).ready(function() {
-            const stripe = Stripe('{{ config('custom.stripe_key') }}');
-            let amount = $('#amount').val()
-            let invoice_id = $('#invoice_id').val()
-            let invoice_number = $('#invoice_number').val()
+            $(function() {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
 
-            async function initialize() {
+            $('.bi-clipboard').on('click', function() {
+                var targetSelector = $(this).closest('.d-flex').find('.to-copy');
+                var text = $(targetSelector).text();
 
-                const response = await fetch('{{ route('payment.create') }}', {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}', // Include CSRF token if required
-                    },
-                    body: JSON.stringify({
-                        amount,
-                        invoice_id,
-                        invoice_number
-                    }),
-                });
+                copyToClipboard(text, $(this))
+            });
 
-                const session = await response.json();
+            function copyToClipboard(text, el) {
+                var copyTest = document.queryCommandSupported('copy');
+                var elOriginalText = el.attr('data-bs-original-title');
 
-                console.log(session);
-
-                const clientSecret = session.session.client_secret
-
-                const checkout = await stripe.initEmbeddedCheckout({
-                    clientSecret,
-                });
-
-                $('#spinner').addClass('d-none')
-
-                // Mount Checkout
-                checkout.mount('#checkout');
+                if (copyTest === true) {
+                    var copyTextArea = document.createElement("textarea");
+                    copyTextArea.value = text;
+                    document.body.appendChild(copyTextArea);
+                    copyTextArea.select();
+                    try {
+                        var successful = document.execCommand('copy');
+                        var msg = successful ? 'Copied!' : 'Whoops, not copied!';
+                        el.attr('data-bs-original-title', msg).tooltip('show');
+                    } catch (err) {
+                        console.log('Oops, unable to copy');
+                    }
+                    document.body.removeChild(copyTextArea);
+                    el.attr('data-bs-original-title', elOriginalText);
+                } else {
+                    // Fallback if browser doesn't support .execCommand('copy')
+                    window.prompt("Copy to clipboard: Ctrl+C or Command+C, Enter", text);
+                }
             }
-
-            initialize();
         });
     </script>
 @endsection

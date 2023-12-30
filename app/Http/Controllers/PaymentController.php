@@ -67,7 +67,7 @@ class PaymentController extends Controller {
                             'interval' => 'month'
                         ]
                     ],
-                    'quantity' => 1
+                    'quantity' => 1,
                 ]
             ];
         } else {
@@ -203,9 +203,15 @@ class PaymentController extends Controller {
                 $invoice->save();
             }
 
-            return response()->json([
-                'paymentIntent' => $paymentIntent,
-            ]);
+            if ($paymentIntent->status !== 'requires_action' && $paymentIntent->status !== 'succeeded') {
+                return response()->json([
+                    'error' => "Sorry! Bank transfer is not supported for your country.",
+                ]);
+            } else {
+                return response()->json([
+                    'paymentIntent' => $paymentIntent,
+                ]);
+            }
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),
@@ -247,6 +253,17 @@ class PaymentController extends Controller {
                 $metadata = $session->metadata;
 
                 if ($session->payment_status == "paid") {
+                    $invoiceId = $metadata->invoice_id;
+                    $invoice = Invoice::findOrFail($invoiceId);
+                    $invoice->status = Invoice::PAID;
+                    $invoice->save();
+                }
+                break;
+            case 'payment_intent.succeeded':
+                $payment = $event->data->object;
+                $metadata = $payment->metadata;
+
+                if (!empty($metadata) && $payment->status == "succeeded") {
                     $invoiceId = $metadata->invoice_id;
                     $invoice = Invoice::findOrFail($invoiceId);
                     $invoice->status = Invoice::PAID;

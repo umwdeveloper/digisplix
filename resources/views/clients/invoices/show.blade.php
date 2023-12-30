@@ -4,7 +4,7 @@
     <main class="content">
         <div class="container-fluid px-lg-0">
             <div class="row justify-content-center">
-                <div class="col-xl-8 mx-auto  mb-3">
+                <div class="col-xl-8 col-lg-10 mx-auto  mb-3">
                     <div class="box box-p">
                         <div
                             class="d-flex align-items-lg-center justify-content-between flex-md-row flex-column align-items-start">
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-8 mx-auto ">
+                <div class="col-xl-8 col-lg-10 mx-auto ">
                     <div class="box mb-3 box-p" style="min-height: 80vh;">
                         <div class="col-lg-12 mb-4 mt-2">
                             <div class="invoice-heading-row">
@@ -232,7 +232,8 @@
                 <div class="modal-body">
                     <div class="row">
                         <strong>Note: </strong>
-                        <p class="f-14">If your current balance is high enough then the amount will be deducted from your
+                        <p class="f-14 note">If your current balance is high enough then the amount will be deducted from
+                            your
                             balance
                             otherwise you will get the bank details. If you
                             want to proceed please click Continue</p>
@@ -315,11 +316,32 @@
 
                     $('.loading').addClass('d-none')
 
-                    if (response.paymentIntent.status == 'requires_action') {
-
+                    if (response.error) {
+                        $('#bankModal .note').text(response.error)
+                        $('#bankModal #pay-bank').remove()
+                        $('#bankModal').modal('show')
+                    } else if (response.paymentIntent.status == 'requires_action') {
+                        var details = response.paymentIntent.next_action
+                            .display_bank_transfer_instructions
+                        var bank = {
+                            'amount_remaining': details.amount_remaining,
+                            'bank_name': details.financial_addresses[0].aba.bank_name,
+                            'account_number': details.financial_addresses[0].aba.account_number,
+                            'routing_number': details.financial_addresses[0].aba.routing_number,
+                            'swift_code': details.financial_addresses[1].swift.swift_code,
+                            'reference': details.reference,
+                        }
+                        var url = '{{ route('client.invoices.bank', 'invoice_id') }}' +
+                            '?bankDetails=' +
+                            encodeURIComponent(JSON.stringify(bank));
+                        url = url.replace("invoice_id", invoice_id)
+                        location.href = url
                     } else if (response.paymentIntent.status == "succeeded") {
                         location.href = '{{ route('payment.success') }}'
                     }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error: ', status, error);
                 }
             })
         })

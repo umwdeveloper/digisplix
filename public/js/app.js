@@ -310,3 +310,7 @@ $(".footer-menu-link, .more-footer-link").each(function () {
         $(this).removeClass("active-footer-menu");
     }
 });
+
+$('.dataTables_wrapper .dropdown-toggle').on('click', function () {
+    $(this).next('.dropdown-menu').appendTo('body');
+});
