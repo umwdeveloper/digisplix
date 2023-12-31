@@ -30,6 +30,8 @@ class StaffController extends Controller {
     public function index() {
         $this->authorize('staff.index');
 
+        Cache::put('name', 'awais', 60);
+
         $clients = Client::with('projects')
             ->where('status', Client::QUALIFIED)
             ->get();

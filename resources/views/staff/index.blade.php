@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    {{ cache('name') }}
     <main class="content">
         <div class="container-fluid px-lg-0">
             <div class="row justify-content-center">
