@@ -196,12 +196,12 @@ class PaymentController extends Controller {
                 ]
             ]);
 
-            // if ($paymentIntent->status == 'succeeded') {
-            //     $invoice = Invoice::findOrFail($request->invoice_id);
+            if ($paymentIntent->status == 'succeeded') {
+                $invoice = Invoice::findOrFail($request->invoice_id);
 
-            //     $invoice->status = Invoice::PAID;
-            //     $invoice->save();
-            // }
+                $invoice->status = Invoice::PAID;
+                $invoice->save();
+            }
 
             if ($paymentIntent->status !== 'requires_action' && $paymentIntent->status !== 'succeeded') {
                 return response()->json([
@@ -209,7 +209,78 @@ class PaymentController extends Controller {
                 ]);
             } else {
                 return response()->json([
-                    'paymentIntent' => $paymentIntent,
+                    'paymentDetails' => $paymentIntent,
+                ]);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public static function createSubscription(Request $request) {
+        Stripe::setApiKey(config('custom.stripe_secret'));
+
+        $client = Client::findOrFail($request->client_id);
+        $amount = $request->amount;
+
+        $customer_id = null;
+        if (!empty($client->customer_id)) {
+            $customer_id = $client->customer_id;
+        } else {
+            $customer = Customer::create([
+                'name' => $client->user->name,
+                'email' => $client->user->email,
+            ]);
+
+            if (!empty($customer)) {
+                $customer_id = $customer->id;
+
+                $client->customer_id = $customer_id;
+                $client->save();
+            }
+        }
+
+        try {
+            $subscription = Subscription::create([
+                'customer' => $customer_id,
+                'line_items' => [
+                    [
+                        'price_data' => [
+                            "currency" => 'usd',
+                            "product_data" => ["name" => "Invoice# " . $request->invoice_number],
+                            "unit_amount" => floatval($request->amount) * 100,
+                            'recurring' => [
+                                'interval' => 'month'
+                            ]
+                        ],
+                        'quantity' => 1,
+                    ]
+                ],
+                'collection_method' => 'send_invoice',
+                'payment_settings' => [
+                    'payment_method_types' => ['customer_balance'],
+                ],
+                'metadata' => [
+                    'invoice_id' => $request->invoice_id
+                ]
+            ]);
+
+            if ($subscription->status == 'succeeded') {
+                $invoice = Invoice::findOrFail($request->invoice_id);
+
+                $invoice->status = Invoice::PAID;
+                $invoice->save();
+            }
+
+            if ($subscription->status !== 'requires_action' && $subscription->status !== 'succeeded') {
+                return response()->json([
+                    'error' => "Sorry! Bank transfer is not supported for your country.",
+                ]);
+            } else {
+                return response()->json([
+                    'paymentDetails' => $subscription,
                 ]);
             }
         } catch (\Exception $e) {

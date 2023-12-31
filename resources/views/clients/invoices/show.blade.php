@@ -298,18 +298,29 @@
             let amount = '{{ $invoice->total_price }}';
             let client_id = '{{ $invoice->client->id }}';
             let invoice_id = '{{ $invoice->id }}';
+            let invoice_number = '{{ $invoice->invoice_id }}';
+            let recurring = '{{ $invoice->recurring }}';
 
             $('.loading').removeClass('d-none')
             $('#bankModal').modal('hide')
 
+            let url = '';
+
+            if (recurring == 1) {
+                url = "{{ route('payment.create_subscription') }}"
+            } else {
+                url = "{{ route('payment.create_payment_intent') }}"
+            }
+
             $.ajax({
-                url: "{{ route('payment.create_payment_intent') }}",
+                url: url,
                 method: 'POST',
                 data: {
                     _token: '{{ csrf_token() }}',
                     amount,
                     client_id,
-                    invoice_id
+                    invoice_id,
+                    invoice_number
                 },
                 success: function(response) {
                     console.log(response);
@@ -320,8 +331,8 @@
                         $('#bankModal .note').text(response.error)
                         $('#bankModal #pay-bank').remove()
                         $('#bankModal').modal('show')
-                    } else if (response.paymentIntent.status == 'requires_action') {
-                        var details = response.paymentIntent.next_action
+                    } else if (response.paymentDetails.status == 'requires_action') {
+                        var details = response.paymentDetails.next_action
                             .display_bank_transfer_instructions
                         var bank = {
                             'amount_remaining': details.amount_remaining,
@@ -336,7 +347,7 @@
                             encodeURIComponent(JSON.stringify(bank));
                         url = url.replace("invoice_id", invoice_id)
                         location.href = url
-                    } else if (response.paymentIntent.status == "succeeded") {
+                    } else if (response.paymentDetails.status == "succeeded") {
                         location.href = '{{ route('payment.success') }}'
                     }
                 },

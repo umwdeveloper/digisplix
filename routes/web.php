@@ -237,6 +237,7 @@ Route::post('/disable2FA', [TwoFAController::class, 'disable2FA'])
 Route::post('/checkout', [PaymentController::class, 'createCheckoutSession'])->name('payment.create');
 Route::post('/subscribe', [PaymentController::class, 'subscribe'])->name('payment.subscribe');
 Route::post('/create_payment_intent', [PaymentController::class, 'createPaymentIntent'])->name('payment.create_payment_intent');
+Route::post('/create_subscription', [PaymentController::class, 'createSubscription'])->name('payment.create_subscription');
 Route::get('/success', [PaymentController::class, 'success'])->name('payment.success');
 Route::get('/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
 Route::post('/webhook/payment', [PaymentController::class, 'webhookPayment'])->name('payment.webhook.payment');
