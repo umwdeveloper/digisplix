@@ -346,7 +346,7 @@
                             '?bankDetails=' +
                             encodeURIComponent(JSON.stringify(bank));
                         url = url.replace("invoice_id", invoice_id)
-                        location.href = url
+                        // location.href = url
                     } else if (response.paymentDetails.status == "succeeded") {
                         location.href = '{{ route('payment.success') }}'
                     }
