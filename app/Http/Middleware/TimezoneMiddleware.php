@@ -15,25 +15,25 @@ class TimezoneMiddleware {
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response {
-        // if (auth()->check()) {
-        //     $timezone = $request->cookie('timezone');
+        if (auth()->check()) {
+            $timezone = $request->cookie('timezone');
 
-        //     if ($timezone) {
-        //         config(['app.timezone' => $timezone]);
-        //     } else {
-        //         $userIp = $request->ip();
-        //         $response = Http::get('http://ip-api.com/json/' . $userIp);
-        //         $userData = $response->json();
+            if ($timezone) {
+                config(['app.timezone' => $timezone]);
+            } else {
+                $userIp = $request->ip();
+                $response = Http::get('http://ip-api.com/json/' . $userIp);
+                $userData = $response->json();
 
-        //         if ($userData['status'] == 'success') {
-        //             $timezone = $userData['timezone'];
+                if ($userData['status'] == 'success') {
+                    $timezone = $userData['timezone'];
 
-        //             config(['app.timezone' => $timezone]);
+                    config(['app.timezone' => $timezone]);
 
-        //             Cookie::queue('timezone', $timezone, 60 * 24 * 7);
-        //         }
-        //     }
-        // }
+                    Cookie::queue('timezone', $timezone, 60 * 24 * 7);
+                }
+            }
+        }
         return $next($request);
     }
 }
