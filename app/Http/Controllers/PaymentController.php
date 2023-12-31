@@ -196,12 +196,12 @@ class PaymentController extends Controller {
                 ]
             ]);
 
-            if ($paymentIntent->status == 'succeeded') {
-                $invoice = Invoice::findOrFail($request->invoice_id);
+            // if ($paymentIntent->status == 'succeeded') {
+            //     $invoice = Invoice::findOrFail($request->invoice_id);
 
-                $invoice->status = Invoice::PAID;
-                $invoice->save();
-            }
+            //     $invoice->status = Invoice::PAID;
+            //     $invoice->save();
+            // }
 
             if ($paymentIntent->status !== 'requires_action' && $paymentIntent->status !== 'succeeded') {
                 return response()->json([
