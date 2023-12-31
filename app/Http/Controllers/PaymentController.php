@@ -245,7 +245,7 @@ class PaymentController extends Controller {
         try {
             $subscription = Subscription::create([
                 'customer' => $customer_id,
-                'line_items' => [
+                'items' => [
                     [
                         'price_data' => [
                             "currency" => 'usd',
