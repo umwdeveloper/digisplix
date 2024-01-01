@@ -387,7 +387,7 @@
                                 <div class="actions-card">
                                     <i class="fa-duotone fa-users-line"></i>
                                     <p class="mb-0 pb-0">
-                                        clients
+                                        Clients
                                     </p>
                                 </div>
                             </a>

@@ -1,5 +1,6 @@
 <x-mail::message>
-# Status update
+
+#
 
 Hi **{{ $name }}**,
 

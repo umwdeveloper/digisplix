@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model {
     use HasFactory;
 
-    public $timestamps = false;
+    // public $timestamps = false;
 
     protected $fillable = [
         'title',
@@ -111,6 +111,10 @@ class Client extends Model {
         static::deleting(function (Client $client) {
             $client->user()->delete();
             $client->projects()->delete();
+        });
+
+        static::addGlobalScope('order', function ($builder) {
+            $builder->orderBy('created_at', 'desc');
         });
     }
 }

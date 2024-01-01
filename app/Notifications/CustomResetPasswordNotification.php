@@ -23,7 +23,7 @@ class CustomResetPasswordNotification extends ResetPassword {
         $mailMessage = parent::toMail($notifiable);
 
         // Customize the subject
-        $mailMessage->subject('Reset password');
+        $mailMessage->subject('Reset Password');
 
         // Return the customized mail message
         return $mailMessage;

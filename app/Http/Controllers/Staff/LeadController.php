@@ -30,7 +30,8 @@ class LeadController extends Controller {
         $this->authorize('staff.leads');
 
         // $leads = Client::with(['user', 'partner', 'partner.user'])->where('active', 0)->where('status', '!=', Client::QUALIFIED)->get();
-        $leads = Client::with(['user', 'partner', 'partner.user'])->get();
+        $leads = Client::with(['user', 'partner', 'partner.user'])
+            ->get();
 
         $partners = Partner::with('user')->get();
 

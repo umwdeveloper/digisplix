@@ -125,8 +125,8 @@
 
 
                                                     <div class="tab2">
-                                                        <button class="tablink2 active2" data-tab="Tab1"
-                                                            id="defaultOpen">New</button>
+                                                        <button class="tablink2" data-tab="Tab1"
+                                                            id="defaultOpen3">New</button>
                                                         <button class="tablink2" data-tab="Tab2">In-progress</button>
                                                         <button class="tablink2" data-tab="Tab3">Failed</button>
                                                         <button class="tablink2" data-tab="Tab4">Qualified</button>
@@ -237,7 +237,7 @@
                                                         </table>
                                                     </div>
 
-                                                    <div id="Tab2" class="tabcontent-lead2" style="display: none">
+                                                    <div id="Tab2" class="tabcontent-lead2">
                                                         <div id="In-Progress">
                                                             <table id="example-inprogress"
                                                                 class="table data-table-style ">
@@ -349,7 +349,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div id="Tab3" class="tabcontent-lead2" style="display: none">
+                                                    <div id="Tab3" class="tabcontent-lead2">
 
                                                         <table id="example-failed" class="table data-table-style ">
                                                             <thead>
@@ -457,7 +457,7 @@
 
                                                     </div>
 
-                                                    <div id="Tab4" class="tabcontent-lead2" style="display: none">
+                                                    <div id="Tab4" class="tabcontent-lead2">
                                                         <table id="example-qualify" class="table data-table-style ">
                                                             <thead>
                                                                 <tr>
@@ -790,12 +790,12 @@
                                 </div>
 
                                 <!-- <div class="col-lg-6">
-                                                                                                                        <div class="form-floating mb-3">
-                                                                                                                            <input type="email" class="form-control crm-input" id="email" placeholder="ABC">
-                                                                                                                            <label class="crm-label form-label" for="email">Email Address<span
-                                                                                                                                    class="text-danger">*</span></label>
-                                                                                                                        </div>
-                                                                                                                    </div> -->
+                                                                                                                                        <div class="form-floating mb-3">
+                                                                                                                                            <input type="email" class="form-control crm-input" id="email" placeholder="ABC">
+                                                                                                                                            <label class="crm-label form-label" for="email">Email Address<span
+                                                                                                                                                    class="text-danger">*</span></label>
+                                                                                                                                        </div>
+                                                                                                                                    </div> -->
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
                                         <input type="date" class="form-control crm-input" id="date"
