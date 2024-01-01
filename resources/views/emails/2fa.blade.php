@@ -1,6 +1,5 @@
 <x-mail::message>
-
-# 2FA
+# Two Factor Authentication
 
 Hi **{{ $name }}**,
 
