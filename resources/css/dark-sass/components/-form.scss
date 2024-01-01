@@ -113,15 +113,19 @@
     background-color: $dark !important;
 }
 
-input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 30px $dark inset !important;
-    box-shadow: 0 0 0 30px $dark inset !important;
-}
+// input:-webkit-autofill,
+// input:-webkit-autofill:hover,
+// input:-webkit-autofill:focus,
+// input:-webkit-autofill:active {
+//     -webkit-box-shadow: 0 0 0 30px $dark inset !important;
+//     box-shadow: 0 0 0 30px $dark inset !important;
+//     -webkit-text-fill-color: $white-light !important;
+// }
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 30px $dark inset !important;
-    box-shadow: 0 0 0 30px $dark inset !important;
+    transition: background-color 5000s ease-in-out 0s !important;
     -webkit-text-fill-color: $white-light !important;
 }

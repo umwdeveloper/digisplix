@@ -1619,10 +1619,10 @@ table.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control:before {
   box-shadow: none !important;
 }
 input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 30px white inset !important;
-  /* Change 'white' to your desired color */
-  box-shadow: 0 0 0 30px white inset !important;
-  /* Change 'white' to your desired color */
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+.log-screen input:-webkit-autofill {
+  -webkit-text-fill-color: #ffffff !important;
 }
 /* Style the tabs */
 .tab,
@@ -1811,6 +1811,9 @@ input:-webkit-autofill {
 .person-card .contact-icon .msg i {
   color: white;
   font-size: 18px;
+}
+.person-card .dropdown-item {
+  color: #808080 !important;
 }
 .dots-btn {
   position: relative;

@@ -146,26 +146,30 @@
                                 </li>
                             @endcan
 
-                            <li class="menu-item">
-                                <a href="{{ route('staff.projects.index') }}">
-                                    <span class="menu-icon">
-                                        <i class="fa-duotone fa-rectangle-history"></i>
+                            @can('staff.projects')
+                                <li class="menu-item">
+                                    <a href="{{ route('staff.projects.index') }}">
+                                        <span class="menu-icon">
+                                            <i class="fa-duotone fa-rectangle-history"></i>
 
-                                    </span>
-                                    <span class="menu-title">Projects</span>
-                                </a>
-                            </li>
+                                        </span>
+                                        <span class="menu-title">Projects</span>
+                                    </a>
+                                </li>
+                            @endcan
 
-                            <li class="menu-item">
-                                <a href="{{ route('staff.sales.index') }}">
-                                    <span class="menu-icon">
-                                        <i class="fa-duotone fa-chart-mixed-up-circle-dollar"></i>
-                                    </span>
-                                    <span class="menu-title">Sales
-                                    </span>
-                                </a>
+                            @can('staff.sales')
+                                <li class="menu-item">
+                                    <a href="{{ route('staff.sales.index') }}">
+                                        <span class="menu-icon">
+                                            <i class="fa-duotone fa-chart-mixed-up-circle-dollar"></i>
+                                        </span>
+                                        <span class="menu-title">Sales
+                                        </span>
+                                    </a>
 
-                            </li>
+                                </li>
+                            @endcan
 
                             @can('staff.invoices')
                                 <li class="menu-item">

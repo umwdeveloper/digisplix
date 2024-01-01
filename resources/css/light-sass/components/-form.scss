@@ -91,8 +91,14 @@
 }
 
 input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 30px white inset !important;
-    /* Change 'white' to your desired color */
-    box-shadow: 0 0 0 30px white inset !important;
-    /* Change 'white' to your desired color */
+    // -webkit-box-shadow: 0 0 0 30px white inset !important;
+    // /* Change 'white' to your desired color */
+    // box-shadow: 0 0 0 30px white inset !important;
+    // /* Change 'white' to your desired color */
+
+    transition: background-color 5000s ease-in-out 0s !important;
+}
+
+.log-screen input:-webkit-autofill {
+    -webkit-text-fill-color: #ffffff !important;
 }

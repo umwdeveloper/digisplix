@@ -8,7 +8,7 @@
 
     <div class=" d-flex justify-content-center align-items-center w-100">
         <div class="log-screen" style="min-height:fit-content !important; height:fit-content !important;">
-            <h1>2FA</h1>
+            <h4 class="text-center text-white ">Two Factor Authentication</h4>
             @foreach ($errors->all() as $error)
                 <x-toast type="error">
                     {{ $error }}
