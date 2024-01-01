@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\Plan;
+use App\Models\User;
+use App\Notifications\InvoicePaid;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 use Stripe\Checkout\Session;
 use Stripe\Customer;
 use Stripe\Exception\ApiErrorException;
@@ -268,7 +271,7 @@ class PaymentController extends Controller {
                         'price' => $price_id,
                     ]],
                     'collection_method' => 'send_invoice',
-                    'days_until_due' => 0,
+                    'days_until_due' => $days_until_due,
                     'payment_settings' => [
                         'payment_method_types' => ['customer_balance'],
                     ],
@@ -348,9 +351,14 @@ class PaymentController extends Controller {
 
                 if ($session->payment_status == "paid") {
                     $invoiceId = $metadata->invoice_id;
-                    $invoice = Invoice::findOrFail($invoiceId);
+                    $invoice = Invoice::with('client')
+                        ->withSum('items', 'price')
+                        ->findOrFail($invoiceId);
                     $invoice->status = Invoice::PAID;
                     $invoice->save();
+
+                    Notification::send($invoice->client->user, new InvoicePaid($invoice, $invoice->items_sum_price));
+                    Notification::send(User::getAdmin(), new InvoicePaid($invoice, $invoice->items_sum_price));
                 }
                 break;
             case 'payment_intent.succeeded':
@@ -359,9 +367,14 @@ class PaymentController extends Controller {
 
                 if (!empty($metadata) && $payment->status == "succeeded") {
                     $invoiceId = $metadata->invoice_id;
-                    $invoice = Invoice::findOrFail($invoiceId);
+                    $invoice = Invoice::with('client')
+                        ->withSum('items', 'price')
+                        ->findOrFail($invoiceId);
                     $invoice->status = Invoice::PAID;
                     $invoice->save();
+
+                    Notification::send($invoice->client->user, new InvoicePaid($invoice, $invoice->items_sum_price));
+                    Notification::send(User::getAdmin(), new InvoicePaid($invoice, $invoice->items_sum_price));
                 }
                 break;
             case 'invoice.paid':
@@ -371,9 +384,14 @@ class PaymentController extends Controller {
 
                     if (!empty($metadata)) {
                         $invoiceId = $metadata->invoice_id;
-                        $invoice = Invoice::findOrFail($invoiceId);
+                        $invoice = Invoice::with('client')
+                            ->withSum('items', 'price')
+                            ->findOrFail($invoiceId);
                         $invoice->status = Invoice::PAID;
                         $invoice->save();
+
+                        Notification::send($invoice->client->user, new InvoicePaid($invoice, $invoice->items_sum_price));
+                        Notification::send(User::getAdmin(), new InvoicePaid($invoice, $invoice->items_sum_price));
                     }
                 }
                 break;
