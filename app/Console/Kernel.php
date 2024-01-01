@@ -14,10 +14,10 @@ class Kernel extends ConsoleKernel {
         // $schedule->command('inspire')->hourly();
         $schedule->command('app:invoice-status-command')->everyFiveMinutes();
 
-        $schedule->command('app:process-queue')
-            ->everySecond()
-            ->withoutOverlapping()
-            ->appendOutputTo(storage_path('logs/queue-work.log'));
+        // $schedule->command('app:process-queue')
+        //     ->everySecond()
+        //     ->withoutOverlapping()
+        //     ->appendOutputTo(storage_path('logs/queue-work.log'));
     }
 
     /**

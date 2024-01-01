@@ -13,7 +13,7 @@
                                     class="d-flex align-items-lg-center justify-content-between flex-md-row flex-column align-items-start">
                                     <div>
                                         <h2 class="f-16 w-500 text-primary mb-0 pb-0">
-                                            {{ auth()->user()->name }}'s Detail
+                                            {{ $currentPartner->user->name }}'s Detail
                                         </h2>
                                     </div>
 
@@ -790,12 +790,12 @@
                                 </div>
 
                                 <!-- <div class="col-lg-6">
-                                                                                                                    <div class="form-floating mb-3">
-                                                                                                                        <input type="email" class="form-control crm-input" id="email" placeholder="ABC">
-                                                                                                                        <label class="crm-label form-label" for="email">Email Address<span
-                                                                                                                                class="text-danger">*</span></label>
-                                                                                                                    </div>
-                                                                                                                </div> -->
+                                                                                                                        <div class="form-floating mb-3">
+                                                                                                                            <input type="email" class="form-control crm-input" id="email" placeholder="ABC">
+                                                                                                                            <label class="crm-label form-label" for="email">Email Address<span
+                                                                                                                                    class="text-danger">*</span></label>
+                                                                                                                        </div>
+                                                                                                                    </div> -->
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
                                         <input type="date" class="form-control crm-input" id="date"
