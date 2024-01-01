@@ -37,7 +37,7 @@ class SendInvoice extends Notification implements ShouldQueue {
      */
     public function toMail(object $notifiable): MailMessage {
         return (new MailMessage)
-            ->subject("Digisplix Invoice")
+            ->subject("DigiSplix Invoice")
             ->greeting("Hi " . $notifiable->name . ",")
             ->line('Please pay the following invoice before the due date')
             ->line(new HtmlString("Invoice ID: <strong>" . $this->invoice->invoice_id . "</strong>"))

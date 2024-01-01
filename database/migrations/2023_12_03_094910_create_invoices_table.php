@@ -24,6 +24,7 @@ return new class extends Migration {
             $table->tinyInteger('recurring')->default(0)->comment('0=Recurring, 1=Non recurring');
             $table->date('start_from')->nullable();
             $table->unsignedInteger('duration')->nullable();
+            $table->tinyInteger('bank_subscription_active')->default(0)->comment('0=inactive, 1=active');
 
             // $table->string('account_holder_name')->nullable();
             // $table->string('bank_name')->nullable();

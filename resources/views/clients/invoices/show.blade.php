@@ -13,7 +13,7 @@
                                     Dashboard</a>
                             </div>
 
-                            <div class="ms-auto d-flex">
+                            <div class="ms-auto d-flex pay-btns">
                                 <!-- download -->
                                 <div class="header-option align-self-center me-0 hide-sm me-3 ms-2">
                                     <i class="fa-duotone fa-download header-icon invoice-download-btn"
@@ -26,13 +26,19 @@
                                             style="background-color: #198754 !important">Paid <i
                                                 class="bi bi-check-circle ms-1"></i></button>
                                     </div>
+                                @elseif ($invoice->bank_subscription_active == '1')
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <button class="table-btn btn-success  px-2" type="button"
+                                            style="background-color: #198754 !important">Active <i
+                                                class="bi bi-check-circle ms-1"></i></button>
+                                    </div>
                                 @else
-                                    <div class="d-flex justify-content-center me-3 align-items-center">
+                                    <div class="d-flex justify-content-center me-3 align-items-center pay-now">
                                         <button class="table-btn px-2" type="button" id="payment-button"
                                             data-bs-toggle="modal" data-bs-target="#paymentModal">Pay Now <i
                                                 class="bi bi-coin ms-1"></i></button>
                                     </div>
-                                    <div class="d-flex justify-content-center align-items-center">
+                                    <div class="d-flex justify-content-center align-items-center pay-via-bank">
                                         <button class="table-btn px-2" type="button" id="fetch-details"
                                             data-bs-toggle="modal" data-bs-target="#bankModal">Pay via Bank <i
                                                 class="bi bi-bank ms-1"></i></button>
@@ -301,6 +307,12 @@
             let invoice_number = '{{ $invoice->invoice_id }}';
             let recurring = '{{ $invoice->recurring }}';
 
+            let due_date = '';
+
+            if (recurring == 1) {
+                due_date = '{{ $invoice->due_date }}';
+            }
+
             $('.loading').removeClass('d-none')
             $('#bankModal').modal('hide')
 
@@ -320,17 +332,36 @@
                     amount,
                     client_id,
                     invoice_id,
-                    invoice_number
+                    invoice_number,
+                    due_date,
                 },
                 success: function(response) {
                     console.log(response);
 
                     $('.loading').addClass('d-none')
 
-                    if (response.error) {
+                    if (response.generalError) {
+                        $('#bankModal .note').text(response.generalError)
+                        $('#bankModal #pay-bank').remove()
+                        $('#bankModal').modal('show')
+                    } else if (response.error) {
                         $('#bankModal .note').text(response.error)
                         $('#bankModal #pay-bank').remove()
                         $('#bankModal').modal('show')
+                    } else if (response.paymentDetails.status == 'active') {
+                        $('#bankModal .note').text(
+                            "This subscription is active now and the bank details will be sent to you through email on due date."
+                        )
+                        $('#bankModal #pay-bank').remove()
+                        $('#bankModal').modal('show')
+
+                        $('.pay-now').remove()
+                        $('.pay-via-bank').remove()
+                        $('.pay-btns').append(`<div class="d-flex justify-content-center align-items-center">
+                                        <button class="table-btn btn-success  px-2" type="button"
+                                            style="background-color: #198754 !important">Active <i
+                                                class="bi bi-check-circle ms-1"></i></button>
+                                    </div>`)
                     } else if (response.paymentDetails.status == 'requires_action') {
                         var details = response.paymentDetails.next_action
                             .display_bank_transfer_instructions
