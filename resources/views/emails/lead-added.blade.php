@@ -1,6 +1,4 @@
 <x-mail::message>
-# Registration
-
 Hi **{{ $name }}**,
 
 You are registered successfully! Please use the following credentials to login to the website.

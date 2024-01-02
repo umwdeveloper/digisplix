@@ -1,6 +1,4 @@
 <x-mail::message>
-# Two Factor Authentication
-
 Hi **{{ $name }}**,
 
 Your confirmation code is **{{ $code }}**

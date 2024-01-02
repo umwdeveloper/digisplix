@@ -1,6 +1,4 @@
 <x-mail::message>
-# Status update
-
 Hi **{{ $name }}**,
 
 Status has been changed to **{{ $status }}**
