@@ -1,6 +1,5 @@
 <x-mail::message>
-
-#
+# Registration
 
 Hi **{{ $name }}**,
 
