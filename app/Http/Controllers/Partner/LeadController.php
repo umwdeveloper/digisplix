@@ -78,7 +78,7 @@ class LeadController extends Controller {
             DB::commit();
 
             Notification::send(User::getAdmin(), new LeadCreated($lead->partner->user->name));
-            Mail::to($lead->user->email)->send(new LeadAddedMail($lead->user->name, $lead->user->email, $validatedData['original_password']));
+            // Mail::to($lead->user->email)->send(new LeadAddedMail($lead->user->name, $lead->user->email, $validatedData['original_password']));
 
             return redirect()->back()->with('status', 'Lead created successfully!');
         } catch (QueryException $e) {

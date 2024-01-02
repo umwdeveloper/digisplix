@@ -22,8 +22,11 @@
                         <i class="bi bi-envelope email-icon"></i>
                     </div>
                     <div class="password-input mx-auto">
-                        <input type="password" required name="password" class="ms-auto" placeholder="******">
+                        <input type="password" required name="password" class="ms-auto" placeholder="******"
+                            style="width: 85%">
                         <i class="bi bi-lock pass-icon"></i>
+                        <i style="cursor: pointer; position: relative; z-index: 10"
+                            class="bi bi-eye text-white email-icon toggle-password"></i>
                     </div>
                     <div class="send-name-input ms-auto">
                         <input type="submit" name="submit" class="ms-auto">

@@ -222,6 +222,10 @@ Route::resource('users', UsersController::class);
 
 Auth::routes();
 
+// Messages
+Route::get('/messages/count', [UsersController::class, 'getMessagesCount'])
+    ->name('messages.count');
+
 // 2FA
 Route::get('/2fa/index', [TwoFAController::class, 'index'])
     ->name('2fa.index');

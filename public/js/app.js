@@ -25,38 +25,17 @@
 
 // Toggle theme
 $(document).ready(function () {
-    const currentMode = getMode();
 
-    const lightThemeURL = assetUrls.lightThemeURL;
-    const darkThemeURL = assetUrls.darkThemeURL;
-    const lightLogoURL = assetUrls.lightLogoURL;
-    const darkLogoURL = assetUrls.darkLogoURL;
-    const lightThemeURLChat = assetUrls.lightThemeURLChat;
-    const darkThemeURLChat = assetUrls.darkThemeURLChat;
-
-    if (currentMode === "dark") {
-        $("#theme-link").attr("href", darkThemeURL);
-        $("#theme-link-chat").attr("href", darkThemeURLChat);
-        $("#logo-image").attr("src", darkLogoURL);
-        $("#logo-image-sm").attr("src", darkLogoURL);
-    } else {
-        $("#theme-link").attr("href", lightThemeURL);
-        $("#theme-link-chat").attr("href", lightThemeURLChat);
-        $("#logo-image").attr("src", lightLogoURL);
-        $("#logo-image-sm").attr("src", lightLogoURL);
-    }
-
-    $("#toggleTheme").click(function () {
+    if (typeof assetUrls !== 'undefined') {
         const currentMode = getMode();
-        const newMode = currentMode === "dark" ? "light" : "dark";
-        toggleMode(newMode);
-    });
+        const lightThemeURL = assetUrls.lightThemeURL;
+        const darkThemeURL = assetUrls.darkThemeURL;
+        const lightLogoURL = assetUrls.lightLogoURL;
+        const darkLogoURL = assetUrls.darkLogoURL;
+        const lightThemeURLChat = assetUrls.lightThemeURLChat;
+        const darkThemeURLChat = assetUrls.darkThemeURLChat;
 
-    function setMode(mode) {
-        // Set a cookie named "preferredMode" with the mode value
-        Cookies.set("preferredMode", mode, { expires: 365 }); // Cookie expires in 365 days
-
-        if (mode === "dark") {
+        if (currentMode === "dark") {
             $("#theme-link").attr("href", darkThemeURL);
             $("#theme-link-chat").attr("href", darkThemeURLChat);
             $("#logo-image").attr("src", darkLogoURL);
@@ -67,15 +46,38 @@ $(document).ready(function () {
             $("#logo-image").attr("src", lightLogoURL);
             $("#logo-image-sm").attr("src", lightLogoURL);
         }
-    }
 
-    function getMode() {
-        // Get the value of the "preferredMode" cookie
-        return Cookies.get("preferredMode");
-    }
+        $("#toggleTheme").click(function () {
+            const currentMode = getMode();
+            const newMode = currentMode === "dark" ? "light" : "dark";
+            toggleMode(newMode);
+        });
 
-    function toggleMode(newMode) {
-        setMode(newMode);
+        function setMode(mode) {
+            // Set a cookie named "preferredMode" with the mode value
+            Cookies.set("preferredMode", mode, { expires: 365 }); // Cookie expires in 365 days
+
+            if (mode === "dark") {
+                $("#theme-link").attr("href", darkThemeURL);
+                $("#theme-link-chat").attr("href", darkThemeURLChat);
+                $("#logo-image").attr("src", darkLogoURL);
+                $("#logo-image-sm").attr("src", darkLogoURL);
+            } else {
+                $("#theme-link").attr("href", lightThemeURL);
+                $("#theme-link-chat").attr("href", lightThemeURLChat);
+                $("#logo-image").attr("src", lightLogoURL);
+                $("#logo-image-sm").attr("src", lightLogoURL);
+            }
+        }
+
+        function getMode() {
+            // Get the value of the "preferredMode" cookie
+            return Cookies.get("preferredMode");
+        }
+
+        function toggleMode(newMode) {
+            setMode(newMode);
+        }
     }
 });
 
@@ -314,3 +316,36 @@ $(".footer-menu-link, .more-footer-link").each(function () {
 $('.dataTables_wrapper .dropdown-toggle').on('click', function () {
     $(this).next('.dropdown-menu').appendTo('body');
 });
+
+// Toggle password hide/show
+$('.toggle-password').click(function () {
+    var passInput = $(this).siblings('input')
+    if (passInput.prop('type') == 'text') {
+        passInput.prop('type', 'password')
+    } else {
+        passInput.prop('type', 'text')
+    }
+})
+
+// Fetch unread messages from database
+if (typeof messagesRoute !== 'undefined') {
+    setInterval(() => {
+        $.ajax({
+            type: "GET",
+            url: messagesRoute,
+            success: data => {
+                if (data == 0) {
+                    $('.messages-count').remove()
+                    $('.messages-count-sm').remove()
+                } else if (data == 1) {
+                    $('.messages-count-container-sm').append(`<span class="messages-count-sm">${data}</span>`)
+                    $('.messages-count-container').append(`<span class="messages-count">${data}</span>`)
+                } else {
+                    $('.messages-count-sm').text(data);
+                    $('.messages-count').text(data);
+                }
+            },
+            error: err => console.log(err),
+        });
+    }, 1000);
+}

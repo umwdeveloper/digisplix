@@ -26,17 +26,7 @@ class LeadCreated extends Notification implements ShouldQueue {
      * @return array<int, string>
      */
     public function via(object $notifiable): array {
-        return ['mail', 'database'];
-    }
-
-    /**
-     * Get the mail representation of the notification.
-     */
-    public function toMail(object $notifiable): MailMessage {
-        return (new MailMessage)
-            ->subject("New Lead")
-            ->line(new HtmlString("<strong>" . $this->name . "</strong> created a new lead"))
-            ->action('View Lead', route('staff.leads.index'));
+        return ['database'];
     }
 
     /**

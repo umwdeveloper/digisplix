@@ -1,23 +1,29 @@
-.modal-medium{
+.modal-medium {
     max-width: 700px !important;
-    .modal-content{
+
+    .modal-content {
         width: 100% !important;
-        
+
     }
 }
-.modal-lg{
+
+.modal-lg {
     max-width: 700px !important;
-    .modal-content{
+
+    .modal-content {
         width: 100% !important;
     }
 }
-.modal-content{
+
+.modal-content {
     background-color: $dark;
 }
-.modal-title{
+
+.modal-title {
     color: $white-light;
 }
-.modal-btn-save{
+
+.modal-btn-save {
     background-color: $secondry;
     border: 1px solid $secondry;
     text-decoration: none;
@@ -29,13 +35,14 @@
     min-width: 100px;
     line-height: normal !important;
     transition: all .5s;
-    &:hover{
+
+    &:hover {
         transform: translateY(-3px);
     }
 }
 
-.modal-btn-cancel{
-    background-color:transparent;
+.modal-btn-cancel {
+    background-color: transparent;
     border: none;
     text-decoration: none;
     font-size: 14px;
@@ -45,15 +52,18 @@
     padding: 0px 20px;
     border: 1px solid $secondry;
     transition: all .5s;
-    &:hover{
+
+    &:hover {
         transform: translateY(-3px);
     }
 }
-.modal-body{
-    @media only screen and (max-width:600px){
+
+.modal-body {
+    @media only screen and (max-width:600px) {
         padding: 0px !important;
     }
-    h3{
+
+    h3 {
         font-size: 18px;
         font-weight: 500;
         margin-top: 20px;
@@ -61,25 +71,29 @@
 }
 
 
-.modal-logo{
+.modal-logo {
     height: 40px;
 }
-.invoice-detail-preview{
+
+.invoice-detail-preview {
     background-color: $secondry;
     padding: 20px;
-    margin:0px 20px;
+    margin: 0px 20px;
     border-radius: 16px;
 
 }
-.border-right{
+
+.border-right {
     border-right: 1px solid white;
-    @media only screen and (max-width:991px){
+
+    @media only screen and (max-width:991px) {
         border-right: none;
         border-bottom: 1px solid white;
         padding-bottom: 10px;
     }
 }
-.payment-box{
+
+.payment-box {
     padding: 20px;
     border: 1px dashed $secondry;
 }
@@ -88,7 +102,7 @@
 //  .invoice-date::-webkit-calendar-picker-indicator {
 //     display: none;
 //   }
-.invoice-download{
+.invoice-download {
     position: fixed;
     bottom: 30px;
     right: 30px;

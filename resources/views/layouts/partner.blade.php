@@ -228,10 +228,12 @@
                     </div>
 
                     <!-- chat -->
-                    <div class="header-option align-self-center hide-sm chat-btn"
-                        onclick="window.location.href = '{{ route('chat') }}'">
+                    <div class="header-option align-self-center hide-sm chat-btn messages-count-container-smmessages-count-container-sm"
+                        style="position: relative" onclick="window.location.href = '{{ route('chat') }}'">
                         <i class="fa-duotone fa-messages header-icon"></i>
-
+                        @if ($total_messages_count > 0)
+                            <span class="messages-count">{{ $total_messages_count }}</span>
+                        @endif
                     </div>
 
                     <!-- theme exchange -->
@@ -274,10 +276,13 @@
                 Commission
             </a>
         </div>
-        <div class="footer-menu-link">
-            <a href="{{ route('chat') }}">
+        <div class="footer-menu-link" style="position: relative">
+            <a href="{{ route('chat') }}" class="messages-count-container-sm">
                 <i class="fa-duotone fa-messages"></i>
                 Chats
+                @if ($total_messages_count > 0)
+                    <span class="messages-count-sm">{{ $total_messages_count }}</span>
+                @endif
             </a>
         </div>
         <div class="footer-menu-link">
@@ -314,6 +319,8 @@
             lightThemeURLChat: "{{ asset('css/chatify/light.mode.css') }}",
             darkThemeURLChat: "{{ asset('css/chatify/dark.mode.css') }}",
         };
+
+        const messagesRoute = '{{ route('messages.count') }}'
     </script>
 
 
