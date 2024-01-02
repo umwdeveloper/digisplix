@@ -3,7 +3,7 @@
     <td class="header">
         <a href="{{ $url }}" style="display: inline-block;">
             @if (trim($slot) === 'DigiSplix')
-                <img src="https://admin.digisplix.com/images/d-png.png" class="logo">
+                <img src="https://admin.digisplix.com/images/Logo-Png.png" class="logo">
             @else
                 {{ $slot }}
             @endif
