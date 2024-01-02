@@ -1,7 +1,7 @@
 <x-mail::message>
 Hi **{{ $name }}**,
 
-You are registered successfully! Please use the following credentials to login to the website.
+You have been registered successfully! Please use the following credentials to login to Client's Dashboard.
 
 Email: **{{ $email }}**
 

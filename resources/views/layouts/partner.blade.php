@@ -88,8 +88,8 @@
                 <div class="d-flex  user-account ">
 
                     <div class="user-icon">
-                        <img src="{{ getURL($user->img) }}" alt="" class="" height="50"
-                            width="50">
+                        <img src="{{ !empty($user->img) ? getURL($user->img) : asset('images/avatar.png') }}"
+                            alt="" class="" height="50" width="50">
                     </div>
                     <div class="dropdown profile-dropdown ms-auto">
                         <button class="dropdown-toggle d-flex align-items-center pe-3" type="button"
