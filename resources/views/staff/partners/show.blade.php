@@ -173,25 +173,13 @@
                                                                         <td>{{ $lead->user->email }}</td>
                                                                         <td>
                                                                             <div class="dropdown table-dropdown">
-                                                                                <a class="btn  dropdown-toggle table-dropdown-btn {{ $lead->status }}"
+                                                                                <a class="btn table-dropdown-btn {{ $lead->status }}"
                                                                                     href="#" role="button"
                                                                                     id="dropdownMenuLink"
                                                                                     data-bs-toggle="dropdown"
                                                                                     aria-expanded="false">
                                                                                     {{ $status_labels[$lead->status] }}
                                                                                 </a>
-
-                                                                                <ul class="dropdown-menu"
-                                                                                    data-lead-id="{{ $lead->id }}"
-                                                                                    aria-labelledby="dropdownMenuLink">
-                                                                                    @foreach ($statuses as $status)
-                                                                                        <li class="change-status"
-                                                                                            data-status="{{ $status }}">
-                                                                                            <a class="dropdown-item {{ $status }}"
-                                                                                                href="#">{{ $status_labels[$status] }}</a>
-                                                                                        </li>
-                                                                                    @endforeach
-                                                                                </ul>
                                                                             </div>
                                                                         </td>
                                                                         <td>{{ $lead->partner->user->name }}</td>
@@ -282,25 +270,13 @@
                                                                             <td>{{ $lead->user->email }}</td>
                                                                             <td>
                                                                                 <div class="dropdown table-dropdown">
-                                                                                    <a class="btn  dropdown-toggle table-dropdown-btn {{ $lead->status }}"
+                                                                                    <a class="btn table-dropdown-btn {{ $lead->status }}"
                                                                                         href="#" role="button"
                                                                                         id="dropdownMenuLink"
                                                                                         data-bs-toggle="dropdown"
                                                                                         aria-expanded="false">
                                                                                         {{ $status_labels[$lead->status] }}
                                                                                     </a>
-
-                                                                                    <ul class="dropdown-menu"
-                                                                                        data-lead-id="{{ $lead->id }}"
-                                                                                        aria-labelledby="dropdownMenuLink">
-                                                                                        @foreach ($statuses as $status)
-                                                                                            <li class="change-status"
-                                                                                                data-status="{{ $status }}">
-                                                                                                <a class="dropdown-item {{ $status }}"
-                                                                                                    href="#">{{ $status_labels[$status] }}</a>
-                                                                                            </li>
-                                                                                        @endforeach
-                                                                                    </ul>
                                                                                 </div>
                                                                             </td>
                                                                             <td>{{ $lead->partner->user->name }}</td>
@@ -392,25 +368,13 @@
                                                                         <td>{{ $lead->user->email }}</td>
                                                                         <td>
                                                                             <div class="dropdown table-dropdown">
-                                                                                <a class="btn  dropdown-toggle table-dropdown-btn {{ $lead->status }}"
+                                                                                <a class="btn table-dropdown-btn {{ $lead->status }}"
                                                                                     href="#" role="button"
                                                                                     id="dropdownMenuLink"
                                                                                     data-bs-toggle="dropdown"
                                                                                     aria-expanded="false">
                                                                                     {{ $status_labels[$lead->status] }}
                                                                                 </a>
-
-                                                                                <ul class="dropdown-menu"
-                                                                                    data-lead-id="{{ $lead->id }}"
-                                                                                    aria-labelledby="dropdownMenuLink">
-                                                                                    @foreach ($statuses as $status)
-                                                                                        <li class="change-status"
-                                                                                            data-status="{{ $status }}">
-                                                                                            <a class="dropdown-item {{ $status }}"
-                                                                                                href="#">{{ $status_labels[$status] }}</a>
-                                                                                        </li>
-                                                                                    @endforeach
-                                                                                </ul>
                                                                             </div>
                                                                         </td>
                                                                         <td>{{ $lead->partner->user->name }}</td>
@@ -499,25 +463,13 @@
                                                                         <td>{{ $lead->user->email }}</td>
                                                                         <td>
                                                                             <div class="dropdown table-dropdown">
-                                                                                <a class="btn  dropdown-toggle table-dropdown-btn {{ $lead->status }}"
+                                                                                <a class="btn table-dropdown-btn {{ $lead->status }}"
                                                                                     href="#" role="button"
                                                                                     id="dropdownMenuLink"
                                                                                     data-bs-toggle="dropdown"
                                                                                     aria-expanded="false">
                                                                                     {{ $status_labels[$lead->status] }}
                                                                                 </a>
-
-                                                                                <ul class="dropdown-menu"
-                                                                                    data-lead-id="{{ $lead->id }}"
-                                                                                    aria-labelledby="dropdownMenuLink">
-                                                                                    @foreach ($statuses as $status)
-                                                                                        <li class="change-status"
-                                                                                            data-status="{{ $status }}">
-                                                                                            <a class="dropdown-item {{ $status }}"
-                                                                                                href="#">{{ $status_labels[$status] }}</a>
-                                                                                        </li>
-                                                                                    @endforeach
-                                                                                </ul>
                                                                             </div>
                                                                         </td>
                                                                         <td>{{ $lead->partner->user->name }}</td>
@@ -790,12 +742,12 @@
                                 </div>
 
                                 <!-- <div class="col-lg-6">
-                                                                                                                                        <div class="form-floating mb-3">
-                                                                                                                                            <input type="email" class="form-control crm-input" id="email" placeholder="ABC">
-                                                                                                                                            <label class="crm-label form-label" for="email">Email Address<span
-                                                                                                                                                    class="text-danger">*</span></label>
-                                                                                                                                        </div>
-                                                                                                                                    </div> -->
+                                                                                                                                                        <div class="form-floating mb-3">
+                                                                                                                                                            <input type="email" class="form-control crm-input" id="email" placeholder="ABC">
+                                                                                                                                                            <label class="crm-label form-label" for="email">Email Address<span
+                                                                                                                                                                    class="text-danger">*</span></label>
+                                                                                                                                                        </div>
+                                                                                                                                                    </div> -->
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
                                         <input type="date" class="form-control crm-input" id="date"
