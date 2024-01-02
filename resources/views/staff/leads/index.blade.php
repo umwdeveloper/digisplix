@@ -739,11 +739,11 @@
                                             required id="partner_id" name="partner_id"
                                             aria-label="Floating label select example">
                                             <option selected disabled>Select</option>
-                                            <option
+                                            {{-- <option
                                                 {{ $errors->hasBag('createLead') && old('partner_id') == '0' ? 'selected' : '' }}
                                                 value="0">
                                                 DigiSplix
-                                            </option>
+                                            </option> --}}
                                             @foreach ($partners as $partner)
                                                 <option
                                                     {{ $errors->hasBag('createLead') && old('partner_id') == $partner->id ? 'selected' : '' }}
@@ -788,7 +788,7 @@
                                             placeholder="Pakistan">
                                         <input type="hidden" id="country_code" name="country_code">
                                         <!-- <label class="crm-label form-label" for="country">Country<span
-                                                                                                                        class="text-danger">*</span></label> -->
+                                                                                                                            class="text-danger">*</span></label> -->
                                         @if ($errors->createLead->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->createLead->first('country') }}
@@ -1038,11 +1038,11 @@
                                             required id="partner_id" name="partner_id"
                                             aria-label="Floating label select example">
                                             <option selected disabled>Select</option>
-                                            <option
+                                            {{-- <option
                                                 {{ $errors->hasBag('updateLead') && old('partner_id') == '0' ? 'selected' : '' }}
                                                 value="0">
                                                 DigiSplix
-                                            </option>
+                                            </option> --}}
                                             @foreach ($partners as $partner)
                                                 <option
                                                     {{ $errors->hasBag('updateLead') && old('partner_id') == $partner->id ? 'selected' : '' }}

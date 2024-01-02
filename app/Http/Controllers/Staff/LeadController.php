@@ -124,7 +124,10 @@ class LeadController extends Controller {
             DB::beginTransaction();
 
             if ($validatedData['status'] == Client::QUALIFIED) {
-                $validatedData['active'] = 1;
+                $password = generateRandomPassword();
+                $validatedData['password'] = Hash::make($password);
+
+                Mail::to($validatedData['email'])->send(new LeadAddedMail($validatedData['name'], $validatedData['email'], $password));
             }
 
             $lead->update($validatedData);
@@ -185,7 +188,7 @@ class LeadController extends Controller {
             $lead->save();
 
             // Send notification
-            Notification::send($lead->user, new LeadStatusUpdated($lead->user->name, Client::getStatusLabel($lead->status)));
+            // Notification::send($lead->user, new LeadStatusUpdated($lead->user->name, Client::getStatusLabel($lead->status)));
 
             // Send email
             // Mail::to($lead->user->email)->send(new LeadStatusChangedMail($lead->user->name, Client::getStatusLabel($lead->status)));

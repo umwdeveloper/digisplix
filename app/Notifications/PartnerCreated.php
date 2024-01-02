@@ -38,7 +38,7 @@ class PartnerCreated extends Notification implements ShouldQueue {
         return (new MailMessage)
             ->subject("Registration")
             ->greeting('Hi ' . $notifiable->name)
-            ->line('You are registered successfully! Please use the following credentials to login to the website.')
+            ->line("You have been registered as a Sales Partner successfully! Please use the following credentials to login to Partner's Dashboard.")
             ->line(new HtmlString("Email: <strong>" . $notifiable->email . "</strong>"))
             ->line(new HtmlString("Password: <strong>" . $this->password . "</strong>"))
             ->action('Login', $this->url);
