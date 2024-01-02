@@ -337,7 +337,6 @@
                         <div class="header-option align-self-center hide-sm"
                             onclick="window.location.href = '{{ route('chat') }}'">
                             <i class="fa-duotone fa-messages header-icon"></i>
-
                         </div>
                     @endcan
 

@@ -12,7 +12,8 @@ class Kernel extends ConsoleKernel {
      */
     protected function schedule(Schedule $schedule): void {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('app:invoice-status-command')->everyFiveMinutes();
+        $schedule->command('app:invoice-status-command')->everyFiveMinutes()
+            ->appendOutputTo(storage_path('logs/status-overdue.log'));
 
         // $schedule->command('app:process-queue')
         //     ->everySecond()
