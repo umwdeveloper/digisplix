@@ -25,9 +25,12 @@ class StaffController extends Controller {
     public function index() {
         $this->authorize('staff.staff');
 
+        // dd(auth()->user());
+
         $staff = Staff::with(['user', 'permissions'])
             ->whereHas('user', function ($query) {
-                $query->where('id', '!=', auth()->user()->id);
+                $query->where('id', '!=', auth()->user()->id)
+                    ->where('is_admin', 0);
             })->get();
 
         $permissions = Permission::all();

@@ -37,7 +37,7 @@ class Kernel extends HttpKernel {
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\SubdomainMiddleware::class,
             \App\Http\Middleware\LayoutMiddleware::class,
-            \App\Http\Middleware\SetAdminIdForStaffChat::class,
+            // \App\Http\Middleware\SetAdminIdForStaffChat::class,
             \App\Http\Middleware\SupportMiddleware::class,
             \App\Http\Middleware\TimezoneMiddleware::class,
             // \App\Http\Middleware\SubdomainValidationMiddleware::class,
