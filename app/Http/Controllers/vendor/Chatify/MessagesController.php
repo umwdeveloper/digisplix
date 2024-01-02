@@ -80,13 +80,15 @@ class MessagesController extends Controller {
         $favorite = Chatify::inFavorite($request['id']);
         $fetch = User::where('id', $request['id'])->first();
 
+        $admin_id = User::getAdmin()->id;
+
         // Client or partner cannot access any user except admin
         if (
             ($fetch->userable_type === Partner::class
                 ||
                 $fetch->userable_type === Client::class
                 ||
-                $fetch->id !== User::getAdmin()->id)
+                $fetch->id !== $admin_id)
             &&
             Auth::user()->userable_type !== Staff::class
         ) {
@@ -103,11 +105,17 @@ class MessagesController extends Controller {
         }
         if ($fetch) {
             $userAvatar = Chatify::getUserWithAvatar($fetch)->avatar;
+
+            if ($fetch->id == $admin_id) {
+                $fetch->name = 'Support | DigiSplix';
+                $userAvatar = '../images/d-png.png';
+            }
         }
         return Response::json([
             'favorite' => $favorite,
             'fetch' => $fetch ?? null,
-            'user_avatar' => getURL($userAvatar) ?? null,
+            'user_avatar' => $fetch->id == $admin_id ? $userAvatar : (!empty($userAvatar) ? getURL($userAvatar) : '../images/avatar.png')
+            // 'user_avatar' => getURL($userAvatar) ?? null,
         ]);
     }
 

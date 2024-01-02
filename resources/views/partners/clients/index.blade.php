@@ -93,21 +93,9 @@
 
                                                     <td>{{ $client->user->name }}</td>
                                                     <td class="">
-                                                        <div class="custom-select">
-                                                            <select class="form-select  select-active"
-                                                                aria-label=" label select example"
-                                                                data-client-id="{{ $client->id }}">
-                                                                <option {{ $client->active == 1 ? 'selected' : '' }}
-                                                                    value="1"
-                                                                    style="color:white; background-color: green">Active
-                                                                </option>
-                                                                <option {{ $client->active == 0 ? 'selected' : '' }}
-                                                                    value="0"
-                                                                    style="color:white; background-color: rgb(143, 141, 141);">
-                                                                    Inactive</option>
-                                                            </select>
-                                                            <div class="custom-select-arrow"></div>
-                                                        </div>
+                                                        <div
+                                                            class="{{ $client->active == 1 ? 'active-now' : 'in-active' }} text-center py-1 rounded-2">
+                                                            {{ $client->active == 1 ? 'Active' : 'Inactive' }}</div>
                                                     </td>
                                                     <td class="">
                                                         {{ $client->title }}
@@ -133,13 +121,6 @@
                                                         <div class="table-actions d-flex align-items-center">
                                                             <button class="edit"
                                                                 data-client-id="{{ $client->id }}">Edit</button>
-                                                            <form
-                                                                action="{{ route('partner.clients.destroy', $client->id) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button class="delete">Delete</button>
-                                                            </form>
                                                         </div>
 
 
@@ -295,32 +276,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-
-                                    <div class="form-floating">
-                                        <select
-                                            class="form-select crm-input {{ $errors->updateClient->has('active') ? 'is-invalid' : '' }}"
-                                            required id="select-status2" name="active"
-                                            aria-label="Floating label select example">
-                                            <option
-                                                {{ $errors->hasBag('updateClient') && old('active') == 1 ? 'selected' : '' }}
-                                                value="1">Active
-                                            </option>
-                                            <option
-                                                {{ $errors->hasBag('updateClient') && old('active') == 0 ? 'selected' : '' }}
-                                                value="0">Inactive
-                                            </option>
-                                        </select>
-                                        <label class="crm-label form-label" for="select-status2">Status<span
-                                                class="text-danger">*</span></label>
-                                        @if ($errors->updateClient->has('active'))
-                                            <small class="invalid-feedback " style="font-size: 11px">
-                                                {{ $errors->updateClient->first('active') }}
-                                            </small>
-                                        @endif
-                                    </div>
-
-                                </div>
+                                <input type="hidden" name="active" id="active" value="">
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
                                         <input type="text"
@@ -340,8 +296,8 @@
                                 <input type="hidden" name="partner_id" value="{{ auth()->user()->partner()->id }}">
                                 <div class="col-lg-6">
                                     <div class=" mb-3">
-                                    <label class="country-label form-label mb-2" for="country">Country<span
-                                                                class="text-danger">*</span></label><br>
+                                        <label class="country-label form-label mb-2" for="country">Country<span
+                                                class="text-danger">*</span></label><br>
                                         <input type="text"
                                             class=" {{ $errors->updateClient->has('country') ? 'is-invalid' : '' }}"
                                             id="country2" name="country" required
@@ -349,7 +305,7 @@
                                             placeholder="Pakistan">
                                         <input type="hidden" id="country2_code" name="country_code">
                                         <!-- <label class="crm-label form-label" for="country2">Country<span
-                                                class="text-danger">*</span></label> -->
+                                                                                        class="text-danger">*</span></label> -->
                                         @if ($errors->updateClient->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updateClient->first('country') }}
@@ -373,7 +329,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->updateClient->has('address') ? 'is-invalid' : '' }}"
@@ -504,6 +460,7 @@
     {{-- Fetch client on Edit click --}}
     <script>
         $('body').on('click', '.edit', function() {
+            $('.loading').removeClass('d-none')
             // Remove validation errors
             $('.is-invalid').removeClass('is-invalid')
             $('.invalid-feedback').remove()
@@ -517,6 +474,7 @@
                     .replace('client_id', clientID),
                 method: 'GET',
                 success: function(response) {
+                    $('.loading').addClass('d-none')
                     if (response.status == 'success') {
                         $("#editClientModal #name").val(response.client.user.name)
                         $("#editClientModal #business-name").val(response.client.business_name)
@@ -525,7 +483,7 @@
                         $("#editClientModal #Title").val(response.client.title)
                         $("#editClientModal #email").val(response.client.user.email)
                         $("#editClientModal #designation").val(response.client.user.designation)
-                        $("#editClientModal #select-status2").val(response.client.active)
+                        $("#editClientModal #active").val(response.client.active)
                         $("#editClientModal #url").val(response.client.url)
                         $("#editClientModal #partner_id").val(response.client.partner.id)
                         $("#editClientModal #address").val(response.client.user.address)

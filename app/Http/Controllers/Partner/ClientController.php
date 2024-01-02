@@ -91,15 +91,15 @@ class ClientController extends Controller {
      * Remove the specified resource from storage.
      */
     public function destroy(string $id) {
-        $client = Client::findOrFail($id);
+        // $client = Client::findOrFail($id);
 
-        if (!empty($client->user->img)) {
-            Storage::disk('public')->delete($client->user->img);
-        }
+        // if (!empty($client->user->img)) {
+        //     Storage::disk('public')->delete($client->user->img);
+        // }
 
-        $client->delete();
+        // $client->delete();
 
-        return redirect()->back()->with('status', 'Client deleted successfully!');
+        // return redirect()->back()->with('status', 'Client deleted successfully!');
     }
 
     // Update client status

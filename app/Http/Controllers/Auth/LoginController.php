@@ -211,9 +211,11 @@ class LoginController extends Controller {
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
     public function logout(Request $request) {
-        $user = User::findOrFail(auth()->user()->id);
-        $user->two_fa_completed = false;
-        $user->save();
+        if (auth()->check()) {
+            $user = User::findOrFail(auth()->user()->id);
+            $user->two_fa_completed = false;
+            $user->save();
+        }
 
         $this->guard()->logout();
 
