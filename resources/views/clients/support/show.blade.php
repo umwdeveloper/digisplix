@@ -10,7 +10,7 @@
             <div class="row justify-content-center" style="position: relative;">
                 <div class="col-xl-12 " style="position: relative;">
                     <div class="row " style="position: relative;">
-                        <div class="col-xl-4 col-md-4 mb-3 order-md-2 order-1 " style="height: 500px;">
+                        <div class="col-xl-4 col-md-4 mb-3 order-md-2 order-1 ">
                             <div class="box ticket-info-div">
                                 @php
                                     use App\Models\Support;
@@ -82,7 +82,7 @@
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <h1 class="heading-ticket">
+                            <h1 class="heading-ticket" style="font-size: 40px">
                                 {{ $ticket->subject }}
                             </h1>
                         </div>

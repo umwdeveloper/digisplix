@@ -972,3 +972,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>th.dtr-control:before {
 .accordion-item {
     height: 100% !important;
 }
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    color: white !important;
+}
