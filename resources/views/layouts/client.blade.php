@@ -131,7 +131,7 @@
                                         <i class="fa-duotone fa-rectangle-history"></i>
 
                                     </span>
-                                    <span class="menu-title">Projects</span>
+                                    <span class="menu-title">My Projects</span>
                                 </a>
                             </li>
 
@@ -306,7 +306,7 @@
         <div class="footer-menu-link dashboard-link">
             <a href="{{ route('client.projects.index') }}">
                 <i class="fa-duotone fa-rectangle-history"></i>
-                Projects
+                My Projects
             </a>
         </div>
         <div class="footer-menu-link" style="position: relative">

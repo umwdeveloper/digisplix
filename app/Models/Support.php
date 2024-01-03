@@ -85,4 +85,12 @@ class Support extends Model {
     //     return Carbon::createFromTimestamp(strtotime($value))
     //         ->timezone(config('app.timezone'));
     // }
+
+    public static function boot() {
+        parent::boot();
+
+        static::addGlobalScope('order_support', function ($builder) {
+            $builder->orderBy('updated_at', 'desc');
+        });
+    }
 }
