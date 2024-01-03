@@ -104,8 +104,8 @@
                                         <div class="d-flex justify-content-between align-items-center w-100">
                                             <div class="d-flex align-items-center ticket-text">
                                                 <div class="user-logo me-2">
-                                                    <img src="{{ getURL($ticket->user->img) }}" alt=""
-                                                        class="">
+                                                    <img src="{{ !empty($ticket->user->img) ? getURL($ticket->user->img) : asset('images/avatar.png') }}"
+                                                        alt="" class="">
                                                 </div>
                                                 {{ $ticket->user->name }}
                                             </div>
@@ -142,10 +142,15 @@
                                             <div class="d-flex justify-content-between align-items-center w-100">
                                                 <div class="d-flex align-items-center ticket-text">
                                                     <div class="user-logo me-2">
-                                                        <img src="{{ getURL($reply->user->img) }}" alt=""
-                                                            class="">
+                                                        @if ($reply->user->userable_type == App\Models\Staff::class)
+                                                            <img src="{{ asset('images/d-png.png') }}" alt=""
+                                                                class="">
+                                                        @else
+                                                            <img src="{{ !empty($reply->user->img) ? getURL($reply->user->img) : asset('images/avatar.png') }}"
+                                                                alt="" class="">
+                                                        @endif
                                                     </div>
-                                                    {{ $reply->user->name }}
+                                                    {{ $reply->user->userable_type == App\Models\Staff::class ? 'Support | DigiSplix' : $reply->user->name }}
                                                 </div>
 
                                                 <div class="ticket-heading">

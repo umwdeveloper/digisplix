@@ -328,24 +328,26 @@ $('.toggle-password').click(function () {
 })
 
 // Fetch unread messages from database
-if (typeof messagesRoute !== 'undefined') {
-    setInterval(() => {
-        $.ajax({
-            type: "GET",
-            url: messagesRoute,
-            success: data => {
-                if (data == 0) {
-                    $('.messages-count').remove()
-                    $('.messages-count-sm').remove()
-                } else if (data == 1) {
-                    $('.messages-count-container-sm').append(`<span class="messages-count-sm">${data}</span>`)
-                    $('.messages-count-container').append(`<span class="messages-count">${data}</span>`)
-                } else {
-                    $('.messages-count-sm').text(data);
-                    $('.messages-count').text(data);
-                }
-            },
-            error: err => console.log(err),
-        });
-    }, 1000);
+window.onload = function () {
+    if (typeof messagesRoute !== 'undefined') {
+        setInterval(() => {
+            $.ajax({
+                type: "GET",
+                url: messagesRoute,
+                success: data => {
+                    if (data == 0) {
+                        $('.messages-count').remove()
+                        $('.messages-count-sm').remove()
+                    } else if (data == 1) {
+                        $('.messages-count-container-sm').append(`<span class="messages-count-sm">${data}</span>`)
+                        $('.messages-count-container').append(`<span class="messages-count">${data}</span>`)
+                    } else {
+                        $('.messages-count-sm').text(data);
+                        $('.messages-count').text(data);
+                    }
+                },
+                error: err => console.log(err),
+            });
+        }, 1000);
+    }
 }

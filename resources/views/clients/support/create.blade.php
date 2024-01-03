@@ -93,7 +93,7 @@
                                         </div>
                                         <div class="col-lg-12 mt-4 ">
                                             <label class="crm-label form-label px-lg-3 px-2"
-                                                for="select-status">Description</label>
+                                                for="select-status">Description<span class="text-danger">*</span></label>
                                             <textarea name="" id="description" rows="3" class="px-lg-3 crm-input" style="width: 100%; outline: none;"></textarea>
                                         </div>
                                         <div class="col-lg-12">
@@ -291,7 +291,7 @@
             var description = $('#description').val()
             var priority = $('#select-status').val()
 
-            if (subject.trim() == "") {
+            if (subject.trim() == "" || description.trim() == "") {
                 alert("Please fill the required fields!");
                 return;
             }
