@@ -112,10 +112,10 @@
                                                 <tr>
                                                     <th class="no-sort"></th>
                                                     <th>Client Name</th>
-                                                    <th>Title</th>
+                                                    <th>Status</th>
+                                                    <th>Designation</th>
                                                     <th>Bussiness Name</th>
                                                     <th>Email</th>
-                                                    <th>Status</th>
                                                     <th>Partner</th>
                                                     <th>Country</th>
                                                     <th>Phone Number</th>
@@ -138,11 +138,6 @@
                                                         </td>
 
                                                         <td>{{ $lead->user->name }}</td>
-                                                        <td class="">
-                                                            {{ $lead->title }}
-                                                        </td>
-                                                        <td class="bussiness-name">{{ $lead->business_name }}</td>
-                                                        <td>{{ $lead->business_email }}</td>
                                                         <td>
                                                             <div class="dropdown table-dropdown">
                                                                 <a class="btn  dropdown-toggle table-dropdown-btn {{ $lead->status }}"
@@ -151,8 +146,7 @@
                                                                     {{ $status_labels[$lead->status] }}
                                                                 </a>
 
-                                                                <ul class="dropdown-menu"
-                                                                    data-lead-id="{{ $lead->id }}"
+                                                                <ul class="dropdown-menu" data-lead-id="{{ $lead->id }}"
                                                                     aria-labelledby="dropdownMenuLink">
                                                                     @foreach ($statuses as $status)
                                                                         <li class="change-status"
@@ -164,6 +158,12 @@
                                                                 </ul>
                                                             </div>
                                                         </td>
+                                                        <td class="">
+                                                            {{ $lead->user->designation }}
+                                                        </td>
+                                                        <td class="bussiness-name">{{ $lead->business_name }}</td>
+                                                        <td>{{ $lead->user->email }}</td>
+
                                                         <td>{{ $lead->partner->user->name }}</td>
 
                                                         <td>
@@ -174,15 +174,19 @@
                                                             {{ $lead->user->phone }}
                                                         </td>
                                                         <td>
-                                                            {{ \Carbon\Carbon::parse($lead->joined_at)->format('F j, Y') }}
+                                                            {{ !empty($lead->joined_at) ? \Carbon\Carbon::parse($lead->joined_at)->format('F j, Y') : 'None' }}
                                                         </td>
-                                                        <td>{{ \Carbon\Carbon::parse($lead->followup_date)->format('F j, Y') }}
-                                                        </td>
-                                                        <td>
-                                                            <a href="{{ $lead->url }}">{{ $lead->url }}</a>
+                                                        <td>{{ !empty($lead->followup_date) ? \Carbon\Carbon::parse($lead->followup_date)->format('F j, Y') : 'None' }}
                                                         </td>
                                                         <td>
-                                                            {{ $lead->user->address }}
+                                                            @if (!empty($lead->url))
+                                                                <a href="{{ $lead->url }}">{{ $lead->url }}</a>
+                                                            @else
+                                                                None
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            {{ $lead->user->address ?? 'None' }}
                                                         </td>
                                                         <td>
                                                             <div class="table-actions d-flex align-items-center">
@@ -212,10 +216,10 @@
                                                     <tr>
                                                         <th class="no-sort"></th>
                                                         <th>Client Name</th>
-                                                        <th>Title</th>
+                                                        <th>Status</th>
+                                                        <th>Desgination</th>
                                                         <th>Bussiness Name</th>
                                                         <th>Email</th>
-                                                        <th>Status</th>
                                                         <th>Partner</th>
                                                         <th>Country</th>
                                                         <th>Phone Number</th>
@@ -240,12 +244,6 @@
                                                             </td>
 
                                                             <td>{{ $lead->user->name }}</td>
-                                                            <td class="">
-                                                                {{ $lead->title }}
-                                                            </td>
-                                                            <td class="bussiness-name">{{ $lead->business_name }}
-                                                            </td>
-                                                            <td>{{ $lead->business_email }}</td>
                                                             <td>
                                                                 <div class="dropdown table-dropdown">
                                                                     <a class="btn  dropdown-toggle table-dropdown-btn {{ $lead->status }}"
@@ -268,6 +266,13 @@
                                                                     </ul>
                                                                 </div>
                                                             </td>
+                                                            <td class="">
+                                                                {{ $lead->user->designation }}
+                                                            </td>
+                                                            <td class="bussiness-name">{{ $lead->business_name }}
+                                                            </td>
+                                                            <td>{{ $lead->user->email }}</td>
+
                                                             <td>{{ $lead->partner->user->name }}</td>
 
                                                             <td>
@@ -278,15 +283,19 @@
                                                                 {{ $lead->user->phone }}
                                                             </td>
                                                             <td>
-                                                                {{ \Carbon\Carbon::parse($lead->joined_at)->format('F j, Y') }}
+                                                                {{ !empty($lead->joined_at) ? \Carbon\Carbon::parse($lead->joined_at)->format('F j, Y') : 'None' }}
                                                             </td>
-                                                            <td>{{ \Carbon\Carbon::parse($lead->followup_date)->format('F j, Y') }}
-                                                            </td>
-                                                            <td>
-                                                                <a href="{{ $lead->url }}">{{ $lead->url }}</a>
+                                                            <td>{{ !empty($lead->followup_date) ? \Carbon\Carbon::parse($lead->followup_date)->format('F j, Y') : 'None' }}
                                                             </td>
                                                             <td>
-                                                                {{ $lead->user->address }}
+                                                                @if (!empty($lead->url))
+                                                                    <a href="{{ $lead->url }}">{{ $lead->url }}</a>
+                                                                @else
+                                                                    None
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                {{ $lead->user->address ?? 'None' }}
                                                             </td>
                                                             <td>
                                                                 <div class="table-actions d-flex align-items-center">
@@ -318,10 +327,10 @@
                                                 <tr>
                                                     <th class="no-sort"></th>
                                                     <th>Client Name</th>
-                                                    <th>Title</th>
+                                                    <th>Status</th>
+                                                    <th>Designation</th>
                                                     <th>Bussiness Name</th>
                                                     <th>Email</th>
-                                                    <th>Status</th>
                                                     <th>Partner</th>
                                                     <th>Country</th>
                                                     <th>Phone Number</th>
@@ -346,11 +355,6 @@
                                                         </td>
 
                                                         <td>{{ $lead->user->name }}</td>
-                                                        <td class="">
-                                                            {{ $lead->title }}
-                                                        </td>
-                                                        <td class="bussiness-name">{{ $lead->business_name }}</td>
-                                                        <td>{{ $lead->business_email }}</td>
                                                         <td>
                                                             <div class="dropdown table-dropdown">
                                                                 <a class="btn  dropdown-toggle table-dropdown-btn {{ $lead->status }}"
@@ -372,6 +376,12 @@
                                                                 </ul>
                                                             </div>
                                                         </td>
+                                                        <td class="">
+                                                            {{ $lead->user->designation }}
+                                                        </td>
+                                                        <td class="bussiness-name">{{ $lead->business_name }}</td>
+                                                        <td>{{ $lead->user->email }}</td>
+
                                                         <td>{{ $lead->partner->user->name }}</td>
 
                                                         <td>
@@ -382,15 +392,19 @@
                                                             {{ $lead->user->phone }}
                                                         </td>
                                                         <td>
-                                                            {{ \Carbon\Carbon::parse($lead->joined_at)->format('F j, Y') }}
+                                                            {{ !empty($lead->joined_at) ? \Carbon\Carbon::parse($lead->joined_at)->format('F j, Y') : 'None' }}
                                                         </td>
-                                                        <td>{{ \Carbon\Carbon::parse($lead->followup_date)->format('F j, Y') }}
-                                                        </td>
-                                                        <td>
-                                                            <a href="{{ $lead->url }}">{{ $lead->url }}</a>
+                                                        <td>{{ !empty($lead->followup_date) ? \Carbon\Carbon::parse($lead->followup_date)->format('F j, Y') : 'None' }}
                                                         </td>
                                                         <td>
-                                                            {{ $lead->user->address }}
+                                                            @if (!empty($lead->url))
+                                                                <a href="{{ $lead->url }}">{{ $lead->url }}</a>
+                                                            @else
+                                                                None
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            {{ $lead->user->address ?? 'None' }}
                                                         </td>
                                                         <td>
                                                             <div class="table-actions d-flex align-items-center">
@@ -420,10 +434,10 @@
                                                 <tr>
                                                     <th class="no-sort"></th>
                                                     <th>Client Name</th>
-                                                    <th>Title</th>
+                                                    <th>Status</th>
+                                                    <th>Designation</th>
                                                     <th>Bussiness Name</th>
                                                     <th>Email</th>
-                                                    <th>Status</th>
                                                     <th>Partner</th>
                                                     <th>Country</th>
                                                     <th>Phone Number</th>
@@ -448,11 +462,6 @@
                                                         </td>
 
                                                         <td>{{ $lead->user->name }}</td>
-                                                        <td class="">
-                                                            {{ $lead->title }}
-                                                        </td>
-                                                        <td class="bussiness-name">{{ $lead->business_name }}</td>
-                                                        <td>{{ $lead->business_email }}</td>
                                                         <td>
                                                             <div class="dropdown table-dropdown">
                                                                 <a class="btn  dropdown-toggle table-dropdown-btn {{ $lead->status }}"
@@ -474,6 +483,12 @@
                                                                 </ul>
                                                             </div>
                                                         </td>
+                                                        <td class="">
+                                                            {{ $lead->user->designation }}
+                                                        </td>
+                                                        <td class="bussiness-name">{{ $lead->business_name }}</td>
+                                                        <td>{{ $lead->user->email }}</td>
+
                                                         <td>{{ $lead->partner->user->name }}</td>
 
                                                         <td>
@@ -484,15 +499,19 @@
                                                             {{ $lead->user->phone }}
                                                         </td>
                                                         <td>
-                                                            {{ \Carbon\Carbon::parse($lead->joined_at)->format('F j, Y') }}
+                                                            {{ !empty($lead->joined_at) ? \Carbon\Carbon::parse($lead->joined_at)->format('F j, Y') : 'None' }}
                                                         </td>
-                                                        <td>{{ \Carbon\Carbon::parse($lead->followup_date)->format('F j, Y') }}
-                                                        </td>
-                                                        <td>
-                                                            <a href="{{ $lead->url }}">{{ $lead->url }}</a>
+                                                        <td>{{ !empty($lead->followup_date) ? \Carbon\Carbon::parse($lead->followup_date)->format('F j, Y') : 'None' }}
                                                         </td>
                                                         <td>
-                                                            {{ $lead->user->address }}
+                                                            @if (!empty($lead->url))
+                                                                <a href="{{ $lead->url }}">{{ $lead->url }}</a>
+                                                            @else
+                                                                None
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            {{ $lead->user->address ?? 'None' }}
                                                         </td>
                                                         <td>
                                                             <div class="table-actions d-flex align-items-center">
@@ -587,47 +606,15 @@
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
                                         <input type="text"
-                                            class="form-control crm-input {{ $errors->createLead->has('business_email') ? 'is-invalid' : '' }}"
-                                            id="business-email" name="business_email" required
-                                            value="{{ $errors->hasBag('createLead') ? old('business_email') : '' }}"
-                                            placeholder="Mickel">
-                                        <label class="crm-label form-label" for="business-email">Business
-                                            Email<span class="text-danger">*</span></label>
-                                        @if ($errors->createLead->has('business_email'))
-                                            <small class="invalid-feedback " style="font-size: 11px">
-                                                {{ $errors->createLead->first('business_email') }}
-                                            </small>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text"
                                             class="form-control crm-input {{ $errors->createLead->has('business_phone') ? 'is-invalid' : '' }}"
-                                            id="business-phone" name="business_phone" required
+                                            id="business-phone" name="business_phone"
                                             value="{{ $errors->hasBag('createLead') ? old('business_phone') : '' }}"
                                             placeholder="Mickel">
                                         <label class="crm-label form-label" for="business-phone">Business
-                                            Phone<span class="text-danger">*</span></label>
+                                            Phone</label>
                                         @if ($errors->createLead->has('business_phone'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->createLead->first('business_phone') }}
-                                            </small>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text"
-                                            class="form-control crm-input {{ $errors->createLead->has('title') ? 'is-invalid' : '' }}"
-                                            id="Title" name="title" required
-                                            value="{{ $errors->hasBag('createLead') ? old('title') : '' }}"
-                                            placeholder="ABC">
-                                        <label class="crm-label form-label" for="Title">Title<span
-                                                class="text-danger">*</span></label>
-                                        @if ($errors->createLead->has('title'))
-                                            <small class="invalid-feedback " style="font-size: 11px">
-                                                {{ $errors->createLead->first('title') }}
                                             </small>
                                         @endif
                                     </div>
@@ -649,21 +636,10 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text"
-                                            class="form-control crm-input {{ $errors->createLead->has('password') ? 'is-invalid' : '' }}"
-                                            id="password" name="password" required
-                                            value="{{ generateRandomPassword() }}" placeholder="ABC">
-                                        <label class="crm-label form-label" for="email">Password<span
-                                                class="text-danger">*</span></label>
-                                        @if ($errors->createLead->has('password'))
-                                            <small class="invalid-feedback " style="font-size: 11px">
-                                                {{ $errors->createLead->first('password') }}
-                                            </small>
-                                        @endif
-                                    </div>
-                                </div>
+                                <input type="hidden"
+                                    class="form-control crm-input {{ $errors->createLead->has('password') ? 'is-invalid' : '' }}"
+                                    id="password" name="password" required value="{{ generateRandomPassword() }}"
+                                    placeholder="ABC">
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
                                         <input type="text"
@@ -710,15 +686,14 @@
                                     </div>
 
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->createLead->has('url') ? 'is-invalid' : '' }}"
-                                            id="url" name="url" required
+                                            id="url" name="url"
                                             value="{{ $errors->hasBag('createLead') ? old('url') : '' }}"
                                             placeholder="ABC">
-                                        <label class="crm-label form-label" for="url">URL<span
-                                                class="text-danger">*</span></label>
+                                        <label class="crm-label form-label" for="url">URL</label>
                                         @if ($errors->createLead->has('url'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->createLead->first('url') }}
@@ -754,7 +729,7 @@
                                             placeholder="Pakistan">
                                         <input type="hidden" id="country_code" name="country_code">
                                         <!-- <label class="crm-label form-label" for="country">Country<span
-                                                    class="text-danger">*</span></label> -->
+                                                                                                                                                                            class="text-danger">*</span></label> -->
                                         @if ($errors->createLead->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->createLead->first('country') }}
@@ -766,11 +741,10 @@
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->createLead->has('address') ? 'is-invalid' : '' }}"
-                                            id="address" name="address" required
+                                            id="address" name="address"
                                             value="{{ $errors->hasBag('createLead') ? old('address') : '' }}"
                                             placeholder="ABC">
-                                        <label class="crm-label form-label" for="address">Address<span
-                                                class="text-danger">*</span></label>
+                                        <label class="crm-label form-label" for="address">Address</label>
                                         @if ($errors->createLead->has('address'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->createLead->first('address') }}
@@ -782,11 +756,10 @@
                                     <div class="form-floating mb-3">
                                         <input type="date"
                                             class="form-control crm-input {{ $errors->createLead->has('joined_date') ? 'is-invalid' : '' }}"
-                                            id="date" name="joined_date" required
+                                            id="date" name="joined_date"
                                             value="{{ $errors->hasBag('createLead') ? old('joined_date') : '' }}"
                                             placeholder="ABC">
-                                        <label class="crm-label form-label" for="date">Joined Date<span
-                                                class="text-danger">*</span></label>
+                                        <label class="crm-label form-label" for="date">Joined Date</label>
                                         @if ($errors->createLead->has('joined_date'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->createLead->first('joined_date') }}
@@ -798,11 +771,10 @@
                                     <div class="form-floating mb-3">
                                         <input type="date"
                                             class="form-control crm-input {{ $errors->createLead->has('followup_date') ? 'is-invalid' : '' }}"
-                                            id="follow-date" name="followup_date" required
+                                            id="follow-date" name="followup_date"
                                             value="{{ $errors->hasBag('createLead') ? old('followup_date') : '' }}"
                                             placeholder="ABC">
-                                        <label class="crm-label form-label" for="follow-date">Follow-up Date<span
-                                                class="text-danger">*</span></label>
+                                        <label class="crm-label form-label" for="follow-date">Follow-up Date</label>
                                         @if ($errors->createLead->has('followup_date'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->createLead->first('followup_date') }}
@@ -877,47 +849,15 @@
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
                                         <input type="text"
-                                            class="form-control crm-input {{ $errors->updateLead->has('business_email') ? 'is-invalid' : '' }}"
-                                            id="business-email" name="business_email" required
-                                            value="{{ $errors->hasBag('updateLead') ? old('business_email') : '' }}"
-                                            placeholder="Mickel">
-                                        <label class="crm-label form-label" for="business-email">Business
-                                            Email<span class="text-danger">*</span></label>
-                                        @if ($errors->updateLead->has('business_email'))
-                                            <small class="invalid-feedback " style="font-size: 11px">
-                                                {{ $errors->updateLead->first('business_email') }}
-                                            </small>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text"
                                             class="form-control crm-input {{ $errors->updateLead->has('business_phone') ? 'is-invalid' : '' }}"
-                                            id="business-phone" name="business_phone" required
+                                            id="business-phone" name="business_phone"
                                             value="{{ $errors->hasBag('updateLead') ? old('business_phone') : '' }}"
                                             placeholder="Mickel">
                                         <label class="crm-label form-label" for="business-phone">Business
-                                            Phone<span class="text-danger">*</span></label>
+                                            Phone</label>
                                         @if ($errors->updateLead->has('business_phone'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updateLead->first('business_phone') }}
-                                            </small>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text"
-                                            class="form-control crm-input {{ $errors->updateLead->has('title') ? 'is-invalid' : '' }}"
-                                            id="Title" name="title" required
-                                            value="{{ $errors->hasBag('updateLead') ? old('title') : '' }}"
-                                            placeholder="ABC">
-                                        <label class="crm-label form-label" for="Title">Title<span
-                                                class="text-danger">*</span></label>
-                                        @if ($errors->updateLead->has('title'))
-                                            <small class="invalid-feedback " style="font-size: 11px">
-                                                {{ $errors->updateLead->first('title') }}
                                             </small>
                                         @endif
                                     </div>
@@ -985,11 +925,10 @@
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->updateLead->has('url') ? 'is-invalid' : '' }}"
-                                            id="url" name="url" required
+                                            id="url" name="url"
                                             value="{{ $errors->hasBag('updateLead') ? old('url') : '' }}"
                                             placeholder="ABC">
-                                        <label class="crm-label form-label" for="url">URL<span
-                                                class="text-danger">*</span></label>
+                                        <label class="crm-label form-label" for="url">URL</label>
                                         @if ($errors->updateLead->has('url'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updateLead->first('url') }}
@@ -1009,7 +948,7 @@
                                             placeholder="Pakistan">
                                         <input type="hidden" id="country2_code" name="country_code">
                                         <!-- <label class="crm-label form-label" for="country2">Country<span
-                                                    class="text-danger">*</span></label> -->
+                                                                                                                                                                            class="text-danger">*</span></label> -->
                                         @if ($errors->updateLead->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updateLead->first('country') }}
@@ -1021,11 +960,10 @@
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->updateLead->has('address') ? 'is-invalid' : '' }}"
-                                            id="address" name="address" required
+                                            id="address" name="address"
                                             value="{{ $errors->hasBag('updateLead') ? old('address') : '' }}"
                                             placeholder="ABC">
-                                        <label class="crm-label form-label" for="address">Address<span
-                                                class="text-danger">*</span></label>
+                                        <label class="crm-label form-label" for="address">Address</label>
                                         @if ($errors->updateLead->has('address'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updateLead->first('address') }}
@@ -1053,11 +991,10 @@
                                     <div class="form-floating mb-3">
                                         <input type="date"
                                             class="form-control crm-input {{ $errors->updateLead->has('joined_date') ? 'is-invalid' : '' }}"
-                                            id="date" name="joined_date" required
+                                            id="date" name="joined_date"
                                             value="{{ $errors->hasBag('updateLead') ? old('joined_date') : '' }}"
                                             placeholder="ABC">
-                                        <label class="crm-label form-label" for="date">Joined Date<span
-                                                class="text-danger">*</span></label>
+                                        <label class="crm-label form-label" for="date">Joined Date</label>
                                         @if ($errors->updateLead->has('joined_date'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updateLead->first('joined_date') }}
@@ -1069,11 +1006,10 @@
                                     <div class="form-floating mb-3">
                                         <input type="date"
                                             class="form-control crm-input {{ $errors->updateLead->has('followup_date') ? 'is-invalid' : '' }}"
-                                            id="follow-date" name="followup_date" required
+                                            id="follow-date" name="followup_date"
                                             value="{{ $errors->hasBag('updateLead') ? old('followup_date') : '' }}"
                                             placeholder="ABC">
-                                        <label class="crm-label form-label" for="follow-date">Follow-up Date<span
-                                                class="text-danger">*</span></label>
+                                        <label class="crm-label form-label" for="follow-date">Follow-up Date</label>
                                         @if ($errors->updateLead->has('followup_date'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updateLead->first('followup_date') }}
@@ -1224,9 +1160,7 @@
                     if (response.status == 'success') {
                         $("#editLeadModal #name").val(response.lead.user.name)
                         $("#editLeadModal #business-name").val(response.lead.business_name)
-                        $("#editLeadModal #business-email").val(response.lead.business_email)
                         $("#editLeadModal #business-phone").val(response.lead.business_phone)
-                        $("#editLeadModal #Title").val(response.lead.title)
                         $("#editLeadModal #email").val(response.lead.user.email)
                         $("#editLeadModal #designation").val(response.lead.user.designation)
                         $("#editLeadModal #select-status2").val(response.lead.status)
@@ -1234,8 +1168,10 @@
                         $("#editLeadModal #partner_id").val(response.lead.partner.id)
                         $("#editLeadModal #address").val(response.lead.user.address)
                         $("#editLeadModal #p-number").val(response.lead.user.phone)
-                        $("#editLeadModal #date").val(response.lead.joined_at.split(" ")[0])
-                        $("#editLeadModal #follow-date").val(response.lead.followup_date.split(" ")[0])
+                        $("#editLeadModal #date").val(response.lead.joined_at != null ? response.lead
+                            .joined_at.split(" ")[0] : null)
+                        $("#editLeadModal #follow-date").val(response.lead.followup_date != null ?
+                            response.lead.followup_date.split(" ")[0] : null)
 
                         $("#country2").countrySelect({
                             defaultCountry: response.lead.user.country

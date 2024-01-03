@@ -105,8 +105,10 @@
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn p-0"><i
-                                                        class="fa-duotone fa-trash me-3"></i></button>
+                                                <div class="me-3">
+                                                    <button type="submit" class="btn p-0"><a class="p-0">
+                                                            <i class="fa-duotone fa-trash"></i></a></button>
+                                                </div>
                                             </form>
                                             <a type="button" data-project-id="{{ $project->id }}" data-bs-toggle="modal"
                                                 data-bs-target="#settingModal" class="settingModal"><i

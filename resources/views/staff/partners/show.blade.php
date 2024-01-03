@@ -139,10 +139,10 @@
                                                                 <tr>
                                                                     <th class="no-sort"></th>
                                                                     <th>Client Name</th>
-                                                                    <th>Title</th>
+                                                                    <th>Status</th>
+                                                                    <th>Designation</th>
                                                                     <th>Bussiness Name</th>
                                                                     <th>Email</th>
-                                                                    <th>Status</th>
                                                                     <th>Partner</th>
                                                                     <th>Country</th>
                                                                     <th>Phone Number</th>
@@ -165,12 +165,6 @@
                                                                         </td>
 
                                                                         <td>{{ $lead->user->name }}</td>
-                                                                        <td class="">
-                                                                            {{ $lead->title }}
-                                                                        </td>
-                                                                        <td class="bussiness-name">
-                                                                            {{ $lead->business_name }}</td>
-                                                                        <td>{{ $lead->user->email }}</td>
                                                                         <td>
                                                                             <div class="dropdown table-dropdown">
                                                                                 <a class="btn table-dropdown-btn {{ $lead->status }}"
@@ -182,6 +176,13 @@
                                                                                 </a>
                                                                             </div>
                                                                         </td>
+                                                                        <td class="">
+                                                                            {{ $lead->user->designation }}
+                                                                        </td>
+                                                                        <td class="bussiness-name">
+                                                                            {{ $lead->business_name }}</td>
+                                                                        <td>{{ $lead->user->email }}</td>
+
                                                                         <td>{{ $lead->partner->user->name }}</td>
 
                                                                         <td>
@@ -192,16 +193,20 @@
                                                                             {{ $lead->user->phone }}
                                                                         </td>
                                                                         <td>
-                                                                            {{ \Carbon\Carbon::parse($lead->joined_at)->format('F j, Y') }}
+                                                                            {{ !empty($lead->joined_at) ? \Carbon\Carbon::parse($lead->joined_at)->format('F j, Y') : 'None' }}
                                                                         </td>
-                                                                        <td>{{ \Carbon\Carbon::parse($lead->followup_date)->format('F j, Y') }}
-                                                                        </td>
-                                                                        <td>
-                                                                            <a
-                                                                                href="{{ $lead->url }}">{{ $lead->url }}</a>
+                                                                        <td>{{ !empty($lead->followup_date) ? \Carbon\Carbon::parse($lead->followup_date)->format('F j, Y') : 'None' }}
                                                                         </td>
                                                                         <td>
-                                                                            {{ $lead->user->address }}
+                                                                            @if (!empty($lead->url))
+                                                                                <a
+                                                                                    href="{{ $lead->url }}">{{ $lead->url }}</a>
+                                                                            @else
+                                                                                None
+                                                                            @endif
+                                                                        </td>
+                                                                        <td>
+                                                                            {{ $lead->user->address ?? 'None' }}
                                                                         </td>
                                                                         <td>
                                                                             <div
@@ -233,10 +238,10 @@
                                                                     <tr>
                                                                         <th class="no-sort"></th>
                                                                         <th>Client Name</th>
-                                                                        <th>Title</th>
+                                                                        <th>Status</th>
+                                                                        <th>Designation</th>
                                                                         <th>Bussiness Name</th>
                                                                         <th>Email</th>
-                                                                        <th>Status</th>
                                                                         <th>Partner</th>
                                                                         <th>Country</th>
                                                                         <th>Phone Number</th>
@@ -261,13 +266,6 @@
                                                                             </td>
 
                                                                             <td>{{ $lead->user->name }}</td>
-                                                                            <td class="">
-                                                                                {{ $lead->title }}
-                                                                            </td>
-                                                                            <td class="bussiness-name">
-                                                                                {{ $lead->business_name }}
-                                                                            </td>
-                                                                            <td>{{ $lead->user->email }}</td>
                                                                             <td>
                                                                                 <div class="dropdown table-dropdown">
                                                                                     <a class="btn table-dropdown-btn {{ $lead->status }}"
@@ -279,6 +277,14 @@
                                                                                     </a>
                                                                                 </div>
                                                                             </td>
+                                                                            <td class="">
+                                                                                {{ $lead->user->designation }}
+                                                                            </td>
+                                                                            <td class="bussiness-name">
+                                                                                {{ $lead->business_name }}
+                                                                            </td>
+                                                                            <td>{{ $lead->user->email }}</td>
+
                                                                             <td>{{ $lead->partner->user->name }}</td>
 
                                                                             <td>
@@ -289,16 +295,20 @@
                                                                                 {{ $lead->user->phone }}
                                                                             </td>
                                                                             <td>
-                                                                                {{ \Carbon\Carbon::parse($lead->joined_at)->format('F j, Y') }}
+                                                                                {{ !empty($lead->joined_at) ? \Carbon\Carbon::parse($lead->joined_at)->format('F j, Y') : 'None' }}
                                                                             </td>
-                                                                            <td>{{ \Carbon\Carbon::parse($lead->followup_date)->format('F j, Y') }}
-                                                                            </td>
-                                                                            <td>
-                                                                                <a
-                                                                                    href="{{ $lead->url }}">{{ $lead->url }}</a>
+                                                                            <td>{{ !empty($lead->followup_date) ? \Carbon\Carbon::parse($lead->followup_date)->format('F j, Y') : 'None' }}
                                                                             </td>
                                                                             <td>
-                                                                                {{ $lead->user->address }}
+                                                                                @if (!empty($lead->url))
+                                                                                    <a
+                                                                                        href="{{ $lead->url }}">{{ $lead->url }}</a>
+                                                                                @else
+                                                                                    None
+                                                                                @endif
+                                                                            </td>
+                                                                            <td>
+                                                                                {{ $lead->user->address ?? 'None' }}
                                                                             </td>
                                                                             <td>
                                                                                 <div
@@ -332,10 +342,10 @@
                                                                 <tr>
                                                                     <th class="no-sort"></th>
                                                                     <th>Client Name</th>
-                                                                    <th>Title</th>
+                                                                    <th>Status</th>
+                                                                    <th>Designation</th>
                                                                     <th>Bussiness Name</th>
                                                                     <th>Email</th>
-                                                                    <th>Status</th>
                                                                     <th>Partner</th>
                                                                     <th>Country</th>
                                                                     <th>Phone Number</th>
@@ -360,12 +370,6 @@
                                                                         </td>
 
                                                                         <td>{{ $lead->user->name }}</td>
-                                                                        <td class="">
-                                                                            {{ $lead->title }}
-                                                                        </td>
-                                                                        <td class="bussiness-name">
-                                                                            {{ $lead->business_name }}</td>
-                                                                        <td>{{ $lead->user->email }}</td>
                                                                         <td>
                                                                             <div class="dropdown table-dropdown">
                                                                                 <a class="btn table-dropdown-btn {{ $lead->status }}"
@@ -377,6 +381,13 @@
                                                                                 </a>
                                                                             </div>
                                                                         </td>
+                                                                        <td class="">
+                                                                            {{ $lead->user->designation }}
+                                                                        </td>
+                                                                        <td class="bussiness-name">
+                                                                            {{ $lead->business_name }}</td>
+                                                                        <td>{{ $lead->user->email }}</td>
+
                                                                         <td>{{ $lead->partner->user->name }}</td>
 
                                                                         <td>
@@ -387,16 +398,20 @@
                                                                             {{ $lead->user->phone }}
                                                                         </td>
                                                                         <td>
-                                                                            {{ \Carbon\Carbon::parse($lead->joined_at)->format('F j, Y') }}
+                                                                            {{ !empty($lead->joined_at) ? \Carbon\Carbon::parse($lead->joined_at)->format('F j, Y') : 'None' }}
                                                                         </td>
-                                                                        <td>{{ \Carbon\Carbon::parse($lead->followup_date)->format('F j, Y') }}
-                                                                        </td>
-                                                                        <td>
-                                                                            <a
-                                                                                href="{{ $lead->url }}">{{ $lead->url }}</a>
+                                                                        <td>{{ !empty($lead->followup_date) ? \Carbon\Carbon::parse($lead->followup_date)->format('F j, Y') : 'None' }}
                                                                         </td>
                                                                         <td>
-                                                                            {{ $lead->user->address }}
+                                                                            @if (!empty($lead->url))
+                                                                                <a
+                                                                                    href="{{ $lead->url }}">{{ $lead->url }}</a>
+                                                                            @else
+                                                                                None
+                                                                            @endif
+                                                                        </td>
+                                                                        <td>
+                                                                            {{ $lead->user->address ?? 'None' }}
                                                                         </td>
                                                                         <td>
                                                                             <div
@@ -427,10 +442,10 @@
                                                                 <tr>
                                                                     <th class="no-sort"></th>
                                                                     <th>Client Name</th>
-                                                                    <th>Title</th>
+                                                                    <th>Status</th>
+                                                                    <th>Designation</th>
                                                                     <th>Bussiness Name</th>
                                                                     <th>Email</th>
-                                                                    <th>Status</th>
                                                                     <th>Partner</th>
                                                                     <th>Country</th>
                                                                     <th>Phone Number</th>
@@ -455,12 +470,6 @@
                                                                         </td>
 
                                                                         <td>{{ $lead->user->name }}</td>
-                                                                        <td class="">
-                                                                            {{ $lead->title }}
-                                                                        </td>
-                                                                        <td class="bussiness-name">
-                                                                            {{ $lead->business_name }}</td>
-                                                                        <td>{{ $lead->user->email }}</td>
                                                                         <td>
                                                                             <div class="dropdown table-dropdown">
                                                                                 <a class="btn table-dropdown-btn {{ $lead->status }}"
@@ -472,6 +481,13 @@
                                                                                 </a>
                                                                             </div>
                                                                         </td>
+                                                                        <td class="">
+                                                                            {{ $lead->user->designation }}
+                                                                        </td>
+                                                                        <td class="bussiness-name">
+                                                                            {{ $lead->business_name }}</td>
+                                                                        <td>{{ $lead->user->email }}</td>
+
                                                                         <td>{{ $lead->partner->user->name }}</td>
 
                                                                         <td>
@@ -482,16 +498,20 @@
                                                                             {{ $lead->user->phone }}
                                                                         </td>
                                                                         <td>
-                                                                            {{ \Carbon\Carbon::parse($lead->joined_at)->format('F j, Y') }}
+                                                                            {{ !empty($lead->joined_at) ? \Carbon\Carbon::parse($lead->joined_at)->format('F j, Y') : 'None' }}
                                                                         </td>
-                                                                        <td>{{ \Carbon\Carbon::parse($lead->followup_date)->format('F j, Y') }}
-                                                                        </td>
-                                                                        <td>
-                                                                            <a
-                                                                                href="{{ $lead->url }}">{{ $lead->url }}</a>
+                                                                        <td>{{ !empty($lead->followup_date) ? \Carbon\Carbon::parse($lead->followup_date)->format('F j, Y') : 'None' }}
                                                                         </td>
                                                                         <td>
-                                                                            {{ $lead->user->address }}
+                                                                            @if ($lead->url)
+                                                                                <a
+                                                                                    href="{{ $lead->url }}">{{ $lead->url }}</a>
+                                                                            @else
+                                                                                None
+                                                                            @endif
+                                                                        </td>
+                                                                        <td>
+                                                                            {{ $lead->user->address ?? 'None' }}
                                                                         </td>
                                                                         <td>
                                                                             <div
@@ -742,12 +762,12 @@
                                 </div>
 
                                 <!-- <div class="col-lg-6">
-                                                                                                                                                        <div class="form-floating mb-3">
-                                                                                                                                                            <input type="email" class="form-control crm-input" id="email" placeholder="ABC">
-                                                                                                                                                            <label class="crm-label form-label" for="email">Email Address<span
-                                                                                                                                                                    class="text-danger">*</span></label>
-                                                                                                                                                        </div>
-                                                                                                                                                    </div> -->
+                                                                                                                                                                                                                                    <div class="form-floating mb-3">
+                                                                                                                                                                                                                                        <input type="email" class="form-control crm-input" id="email" placeholder="ABC">
+                                                                                                                                                                                                                                        <label class="crm-label form-label" for="email">Email Address<span
+                                                                                                                                                                                                                                                class="text-danger">*</span></label>
+                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                </div> -->
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
                                         <input type="date" class="form-control crm-input" id="date"

@@ -21,21 +21,19 @@ class StoreLead extends FormRequest {
         return [
             'name' => 'string|min:3|required',
             'business_name' => 'string|required',
-            'business_email' => 'email|required',
-            'business_phone' => 'string|required',
-            'title' => 'string|required',
+            'business_phone' => 'string|nullable',
             'email' => 'email|required',
             'password' => 'string|min:8|required',
             'designation' => 'string|required',
             'status' => 'string|required',
-            'url' => 'url|required',
+            'url' => 'url|nullable',
             'partner_id' => 'integer|required',
             'country' => 'string|required',
             'country_code' => 'string|required',
-            'address' => 'string|required',
+            'address' => 'string|nullable',
             'phone' => 'string|required',
-            'joined_date' => 'date|required',
-            'followup_date' => 'date|required',
+            'joined_date' => 'date|nullable',
+            'followup_date' => 'date|nullable',
         ];
     }
 

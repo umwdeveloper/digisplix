@@ -17,16 +17,20 @@
                             <div class="pricing-card basic">
                                 <div class="pricing-header">
                                     <span class="plan-title">SILVER</span>
-                                    <div class="price-circle">
-                                        <span class="price-title">
-                                            <small>$</small><span>2499</span>
-                                        </span>
-                                        <span class="info">/ Month</span>
-                                    </div>
+                                    <a href="#" class="text-white buy-now-btn" data-plan="silver">
+                                        <div class="price-circle">
+                                            <span class="price-title">
+                                                <small>$</small><span>2499</span>
+                                            </span>
+                                            <span class="info">/ Month</span>
+                                        </div>
+                                    </a>
                                 </div>
                                 <div class="d-flex justify-content-center text-center">
                                     <div class="badge-box">
-                                        <span>Save 89%</span>
+                                        <a href="#" class="text-white buy-now-btn" data-plan="silver">
+                                            <span>Save 89%</span>
+                                        </a>
                                     </div>
                                 </div>
                                 <ul>
@@ -74,7 +78,7 @@
                                 </ul>
                                 <div class="d-flex justify-content-center ">
                                     <div class="buy-button-box mx-auto">
-                                        <a href="#" class="buy-now" data-plan="silver">BUY NOW</a>
+                                        <a href="#" class="buy-now buy-now-btn" data-plan="silver">BUY NOW</a>
                                     </div>
                                 </div>
                             </div>
@@ -83,16 +87,20 @@
                             <div class="pricing-card eco">
                                 <div class="pricing-header">
                                     <span class="plan-title">GOLD</span>
-                                    <div class="price-circle">
-                                        <span class="price-title">
-                                            <small>$</small><span>4999</span>
-                                        </span>
-                                        <span class="info">/ Month</span>
-                                    </div>
+                                    <a href="#" class="text-white buy-now-btn" data-plan="gold">
+                                        <div class="price-circle">
+                                            <span class="price-title">
+                                                <small>$</small><span>4999</span>
+                                            </span>
+                                            <span class="info">/ Month</span>
+                                        </div>
+                                    </a>
                                 </div>
                                 <div class="d-flex justify-content-center text-center">
                                     <div class="badge-box">
-                                        <span>Save 85%</span>
+                                        <a href="#" class="text-white buy-now-btn" data-plan="gold">
+                                            <span>Save 85%</span>
+                                        </a>
                                     </div>
                                 </div>
                                 <ul>
@@ -149,7 +157,7 @@
                                 </ul>
                                 <div class="d-flex justify-content-center">
                                     <div class="buy-button-box mx-auto">
-                                        <a href="#" class="buy-now" data-plan="gold">BUY NOW</a>
+                                        <a href="#" class="buy-now buy-now-btn" data-plan="gold">BUY NOW</a>
                                     </div>
                                 </div>
                             </div>
@@ -159,16 +167,20 @@
                                 <div class="popular">BEST SELLING</div>
                                 <div class="pricing-header">
                                     <span class="plan-title">PLATINUM</span>
-                                    <div class="price-circle">
-                                        <span class="price-title">
-                                            <small>$</small><span>7499</span>
-                                        </span>
-                                        <span class="info">/ Month</span>
-                                    </div>
+                                    <a href="#" class="text-white buy-now-btn" data-plan="platinum">
+                                        <div class="price-circle">
+                                            <span class="price-title">
+                                                <small>$</small><span>7499</span>
+                                            </span>
+                                            <span class="info">/ Month</span>
+                                        </div>
+                                    </a>
                                 </div>
                                 <div class="d-flex justify-content-center text-center">
                                     <div class="badge-box">
-                                        <span>Save 84%</span>
+                                        <a href="#" class="text-white buy-now-btn" data-plan="platinum">
+                                            <span>Save 84%</span>
+                                        </a>
                                     </div>
                                 </div>
                                 <ul>
@@ -245,7 +257,7 @@
                                 </ul>
                                 <div class="d-flex justify-content-center">
                                     <div class="buy-button-box">
-                                        <a href="#" class="buy-now" data-plan="platinum">BUY NOW</a>
+                                        <a href="#" class="buy-now buy-now-btn" data-plan="platinum">BUY NOW</a>
                                     </div>
                                 </div>
                             </div>
@@ -254,16 +266,20 @@
                             <div class="pricing-card business">
                                 <div class="pricing-header">
                                     <span class="plan-title">DIAMOND</span>
-                                    <div class="price-circle">
-                                        <span class="price-title">
-                                            <small>$</small><span>9499</span>
-                                        </span>
-                                        <span class="info">/ Month</span>
-                                    </div>
+                                    <a href="#" class="text-white buy-now-btn" data-plan="diamond">
+                                        <div class="price-circle">
+                                            <span class="price-title">
+                                                <small>$</small><span>9499</span>
+                                            </span>
+                                            <span class="info">/ Month</span>
+                                        </div>
+                                    </a>
                                 </div>
                                 <div class="d-flex justify-content-center text-center">
                                     <div class="badge-box">
-                                        <span>Save 84%</span>
+                                        <a href="#" class="text-decoration-none buy-now-btn" data-plan="diamond">
+                                            <span>Save 84%</span>
+                                        </a>
                                     </div>
                                 </div>
                                 <ul>
@@ -350,7 +366,7 @@
                                 </ul>
                                 <div class="d-flex justify-content-center">
                                     <div class="buy-button-box">
-                                        <a href="#" class="buy-now" data-plan="diamond">BUY NOW</a>
+                                        <a href="#" class="buy-now buy-now-btn" data-plan="diamond">BUY NOW</a>
                                     </div>
                                 </div>
                             </div>
@@ -429,7 +445,7 @@
                 checkout.mount('#checkout');
             }
 
-            $('.buy-now').click(function(e) {
+            $('.buy-now-btn').click(function(e) {
                 e.preventDefault()
 
                 $('#paymentModal').modal('show')

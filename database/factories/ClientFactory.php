@@ -16,10 +16,8 @@ class ClientFactory extends Factory {
      */
     public function definition(): array {
         return [
-            'title' => fake()->title(),
             'url' => fake()->url(),
             'business_name' => fake()->name(),
-            'business_email' => fake()->unique()->safeEmail(),
             'business_phone' => fake()->phoneNumber(),
             'status' => Client::getStatuses()[array_rand(Client::getStatuses())],
             'active' => rand(0, 1),

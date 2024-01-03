@@ -12,15 +12,13 @@ return new class extends Migration {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->string('customer_id')->nullable();
-            $table->string('title');
             $table->string('url')->nullable();
             $table->string('business_name')->nullable();
-            $table->string('business_email')->nullable();
             $table->string('business_phone')->nullable();
             $table->tinyInteger('active')->default(0)->comment('0=inactive, 1=active');
             $table->enum('status', ['new_lead', 'contacted', 'follow_up', 'in_progress', 'failed', 'qualified'])->default('new_lead');
-            $table->timestamp('joined_at')->default(now());
-            $table->timestamp('followup_date')->default(now());
+            $table->timestamp('joined_at')->default(now())->nullable();
+            $table->timestamp('followup_date')->default(now())->nullable();
         });
     }
 

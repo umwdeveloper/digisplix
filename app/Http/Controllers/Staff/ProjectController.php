@@ -145,7 +145,11 @@ class ProjectController extends Controller {
             $validatedData['img'] = $thumbnailPath;
         }
 
-        $statusUpdated = $project->current_status != $validatedData['current_status'];
+        $statusUpdated = false;
+
+        if (isset($validatedData['current_status'])) {
+            $statusUpdated = $project->current_status != $validatedData['current_status'];
+        }
 
         $project->update($validatedData);
 

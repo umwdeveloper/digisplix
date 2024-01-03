@@ -69,7 +69,7 @@
                                                 <th class="no-sort"></th>
                                                 <th>Client Name</th>
                                                 <th>Status</th>
-                                                <th>Title</th>
+                                                <th>Designation</th>
                                                 <th>Bussiness Name</th>
                                                 <th>Email</th>
                                                 <th>Partner</th>
@@ -94,11 +94,11 @@
                                                     <td>{{ $client->user->name }}</td>
                                                     <td class="">
                                                         <div
-                                                            class="{{ $client->active == 1 ? 'active-now' : 'in-active' }} text-center py-1 rounded-2">
+                                                            class="{{ $client->active == 1 ? 'active-now' : 'in-active' }} text-center p-1 rounded-2">
                                                             {{ $client->active == 1 ? 'Active' : 'Inactive' }}</div>
                                                     </td>
                                                     <td class="">
-                                                        {{ $client->title }}
+                                                        {{ $client->user->designation }}
                                                     </td>
                                                     <td class="bussiness-name">{{ $client->business_name }}</td>
                                                     <td>{{ $client->business_email }}</td>
@@ -112,10 +112,14 @@
                                                         {{ $client->user->phone }}
                                                     </td>
                                                     <td>
-                                                        <a href="{{ $client->url }}">{{ $client->url }}</a>
+                                                        @if (!empty($client->url))
+                                                            <a href="{{ $client->url }}">{{ $client->url }}</a>
+                                                        @else
+                                                            None
+                                                        @endif
                                                     </td>
                                                     <td>
-                                                        {{ $client->user->address }}
+                                                        {{ $client->user->address ?? 'None' }}
                                                     </td>
                                                     <td>
                                                         <div class="table-actions d-flex align-items-center">
@@ -198,47 +202,15 @@
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
                                         <input type="text"
-                                            class="form-control crm-input {{ $errors->updateClient->has('business_email') ? 'is-invalid' : '' }}"
-                                            id="business-email" name="business_email" required
-                                            value="{{ $errors->hasBag('updateClient') ? old('business_email') : '' }}"
-                                            placeholder="Mickel">
-                                        <label class="crm-label form-label" for="business-email">Business
-                                            Email<span class="text-danger">*</span></label>
-                                        @if ($errors->updateClient->has('business_email'))
-                                            <small class="invalid-feedback " style="font-size: 11px">
-                                                {{ $errors->updateClient->first('business_email') }}
-                                            </small>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text"
                                             class="form-control crm-input {{ $errors->updateClient->has('business_phone') ? 'is-invalid' : '' }}"
-                                            id="business-phone" name="business_phone" required
+                                            id="business-phone" name="business_phone"
                                             value="{{ $errors->hasBag('updateClient') ? old('business_phone') : '' }}"
                                             placeholder="Mickel">
                                         <label class="crm-label form-label" for="business-phone">Business
-                                            Phone<span class="text-danger">*</span></label>
+                                            Phone</label>
                                         @if ($errors->updateClient->has('business_phone'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updateClient->first('business_phone') }}
-                                            </small>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text"
-                                            class="form-control crm-input {{ $errors->updateClient->has('title') ? 'is-invalid' : '' }}"
-                                            id="Title" name="title" required
-                                            value="{{ $errors->hasBag('updateClient') ? old('title') : '' }}"
-                                            placeholder="ABC">
-                                        <label class="crm-label form-label" for="Title">Title<span
-                                                class="text-danger">*</span></label>
-                                        @if ($errors->updateClient->has('title'))
-                                            <small class="invalid-feedback " style="font-size: 11px">
-                                                {{ $errors->updateClient->first('title') }}
                                             </small>
                                         @endif
                                     </div>
@@ -281,11 +253,10 @@
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->updateClient->has('url') ? 'is-invalid' : '' }}"
-                                            id="url" name="url" required
+                                            id="url" name="url"
                                             value="{{ $errors->hasBag('updateClient') ? old('url') : '' }}"
                                             placeholder="ABC">
-                                        <label class="crm-label form-label" for="url">URL<span
-                                                class="text-danger">*</span></label>
+                                        <label class="crm-label form-label" for="url">URL</label>
                                         @if ($errors->updateClient->has('url'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updateClient->first('url') }}
@@ -305,7 +276,7 @@
                                             placeholder="Pakistan">
                                         <input type="hidden" id="country2_code" name="country_code">
                                         <!-- <label class="crm-label form-label" for="country2">Country<span
-                                                                                        class="text-danger">*</span></label> -->
+                                                                                                                    class="text-danger">*</span></label> -->
                                         @if ($errors->updateClient->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updateClient->first('country') }}
@@ -333,11 +304,10 @@
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->updateClient->has('address') ? 'is-invalid' : '' }}"
-                                            id="address" name="address" required
+                                            id="address" name="address"
                                             value="{{ $errors->hasBag('updateClient') ? old('address') : '' }}"
                                             placeholder="ABC">
-                                        <label class="crm-label form-label" for="address">Address<span
-                                                class="text-danger">*</span></label>
+                                        <label class="crm-label form-label" for="address">Address</label>
                                         @if ($errors->updateClient->has('address'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updateClient->first('address') }}
@@ -478,9 +448,7 @@
                     if (response.status == 'success') {
                         $("#editClientModal #name").val(response.client.user.name)
                         $("#editClientModal #business-name").val(response.client.business_name)
-                        $("#editClientModal #business-email").val(response.client.business_email)
                         $("#editClientModal #business-phone").val(response.client.business_phone)
-                        $("#editClientModal #Title").val(response.client.title)
                         $("#editClientModal #email").val(response.client.user.email)
                         $("#editClientModal #designation").val(response.client.user.designation)
                         $("#editClientModal #active").val(response.client.active)

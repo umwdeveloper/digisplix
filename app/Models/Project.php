@@ -57,4 +57,12 @@ class Project extends Model {
     //         ]);
     //     });
     // }
+
+    public static function boot() {
+        parent::boot();
+
+        static::addGlobalScope('order_project', function ($builder) {
+            $builder->orderBy('created_at', 'desc');
+        });
+    }
 }
