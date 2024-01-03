@@ -9,7 +9,8 @@
                         <div
                             class="d-flex align-items-lg-center justify-content-between flex-md-row flex-column align-items-start">
                             <div class="d-flex align-items-center">
-                                <a href="billing.html" class="text-gray"> <i class="fa-solid fa-circle-left me-2"></i> Back to
+                                <a href="{{ route('client.invoices.index') }}" class="text-gray"> <i
+                                        class="fa-solid fa-circle-left me-2"></i> Back to
                                     Dashboard</a>
                             </div>
 
