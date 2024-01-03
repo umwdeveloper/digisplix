@@ -5367,6 +5367,9 @@ span.plus {
   background-image: linear-gradient(to left, #a55eea, #45aaf2);
   margin-top: 20px;
 }
+.pricing-card .buy-now-btn {
+  text-decoration: none !important;
+}
 .progress-c {
   width: 48px;
   height: 48px;

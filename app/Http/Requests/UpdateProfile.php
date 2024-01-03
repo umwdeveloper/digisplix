@@ -26,7 +26,7 @@ class UpdateProfile extends FormRequest {
             'designation' => 'string|required',
             'country' => 'string|required',
             'country_code' => 'string|required',
-            'address' => 'string|required',
+            'address' => 'string|nullable',
             'phone' => 'string|required',
             'img' => 'nullable|image|mimes:jpg,jpeg,png,gif,svg|max:1024'
         ];
@@ -38,11 +38,9 @@ class UpdateProfile extends FormRequest {
         }
 
         if ($this->user() && $this->user()->userable_type === Client::class) {
-            $rules['title'] = 'string|required';
-            $rules['url'] = 'url|required';
+            $rules['url'] = 'url|nullable';
             $rules['business_name'] = 'string|required';
-            $rules['business_email'] = 'email|required';
-            $rules['business_phone'] = 'string|required';
+            $rules['business_phone'] = 'string|nullable';
         }
 
         return $rules;
