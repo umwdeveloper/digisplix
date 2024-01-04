@@ -200,7 +200,7 @@
                                             value="{{ $errors->hasBag('createPartner') ? old('country_code') : '' }}"
                                             name="country_code">
                                         <!-- <label class="crm-label form-label" for="country">Country<span
-                                                                class="text-danger">*</span></label> -->
+                                                                    class="text-danger">*</span></label> -->
                                         @if ($errors->createPartner->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->createPartner->first('country') }}
@@ -420,7 +420,7 @@
                                         <input type="hidden" id="country2_code" value="{{ old('country_code') }}"
                                             name="country_code">
                                         <!-- <label class="crm-label form-label" for="country2">Country<span
-                                                                class="text-danger">*</span></label> -->
+                                                                    class="text-danger">*</span></label> -->
                                         @if ($errors->updatePartner->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updatePartner->first('country') }}
@@ -432,11 +432,10 @@
                                     <div class="form-floating mb-3">
                                         <input type="text"
                                             class="form-control crm-input {{ $errors->updatePartner->has('address') ? 'is-invalid' : '' }}"
-                                            id="edit_address" name="address" required
+                                            id="edit_address" name="address"
                                             value="{{ $errors->hasBag('updatePartner') ? old('address') : '' }}"
                                             placeholder="ABC">
-                                        <label class="crm-label form-label" for="address">Address<span
-                                                class="text-danger">*</span></label>
+                                        <label class="crm-label form-label" for="address">Address</label>
                                         @if ($errors->updatePartner->has('address'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updatePartner->first('address') }}

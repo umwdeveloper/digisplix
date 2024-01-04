@@ -98,7 +98,7 @@
                                                     <th scope="col">#</th>
                                                     <th scope="col">Client Name</th>
                                                     <th scope="col">Status</th>
-                                                    <th scope="col">Bussiness Name</th>
+                                                    <th scope="col">Business Name</th>
                                                     <th scope="col">Project Name</th>
                                                     <th scope="col">Deal Size</th>
                                                     <th scope="col">Commission</th>

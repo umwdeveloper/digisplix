@@ -141,7 +141,7 @@
                                                                     <th>Client Name</th>
                                                                     <th>Status</th>
                                                                     <th>Designation</th>
-                                                                    <th>Bussiness Name</th>
+                                                                    <th>Business Name</th>
                                                                     <th>Email</th>
                                                                     <th>Partner</th>
                                                                     <th>Country</th>
@@ -240,7 +240,7 @@
                                                                         <th>Client Name</th>
                                                                         <th>Status</th>
                                                                         <th>Designation</th>
-                                                                        <th>Bussiness Name</th>
+                                                                        <th>Business Name</th>
                                                                         <th>Email</th>
                                                                         <th>Partner</th>
                                                                         <th>Country</th>
@@ -344,7 +344,7 @@
                                                                     <th>Client Name</th>
                                                                     <th>Status</th>
                                                                     <th>Designation</th>
-                                                                    <th>Bussiness Name</th>
+                                                                    <th>Business Name</th>
                                                                     <th>Email</th>
                                                                     <th>Partner</th>
                                                                     <th>Country</th>
@@ -444,7 +444,7 @@
                                                                     <th>Client Name</th>
                                                                     <th>Status</th>
                                                                     <th>Designation</th>
-                                                                    <th>Bussiness Name</th>
+                                                                    <th>Business Name</th>
                                                                     <th>Email</th>
                                                                     <th>Partner</th>
                                                                     <th>Country</th>
@@ -656,10 +656,10 @@
                                                                             <th scope="col">#</th>
                                                                             <th scope="col">Client Name</th>
                                                                             <th scope="col">Status</th>
-                                                                            <th scope="col">Bussiness Name</th>
-                                                                            <th scope="col">Project Name</th>
                                                                             <th scope="col">Deal Size</th>
                                                                             <th scope="col">Commission</th>
+                                                                            <th scope="col">Business Name</th>
+                                                                            <th scope="col">Project Name</th>
                                                                             <th scope="col">Action</th>
                                                                         </tr>
                                                                     </thead>
@@ -705,16 +705,16 @@
                                                                                         </ul>
                                                                                     </div>
                                                                                 </td>
+                                                                                <td>${{ round($commission->deal_size) }}
+                                                                                </td>
+                                                                                <td>${{ round($commission->deal_size * ($commission->commission / 100)) }}
+                                                                                </td>
                                                                                 <td>{{ $commission->client->business_name }}
                                                                                 </td>
                                                                                 <td class="">
                                                                                     <p class="project-name mb-0 pb-0">
                                                                                         {{ $commission->project->name }}
                                                                                     </p>
-                                                                                </td>
-                                                                                <td>${{ round($commission->deal_size) }}
-                                                                                </td>
-                                                                                <td>${{ round($commission->deal_size * ($commission->commission / 100)) }}
                                                                                 </td>
                                                                                 <td>
                                                                                     <div

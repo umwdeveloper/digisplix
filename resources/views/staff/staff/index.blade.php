@@ -166,8 +166,8 @@
                                     </div>
                                     <div class="">
                                         <div class=" mb-3">
-                                        <label class="country-label form-label mb-2" for="country">Country<span
-                                                                class="text-danger">*</span></label><br>
+                                            <label class="country-label form-label mb-2" for="country">Country<span
+                                                    class="text-danger">*</span></label><br>
                                             <input type="text"
                                                 class=" {{ $errors->createStaff->has('country') ? 'is-invalid' : '' }}"
                                                 id="country" name="country" required
@@ -177,7 +177,7 @@
                                                 value="{{ $errors->hasBag('createStaff') ? old('country_code') : '' }}"
                                                 name="country_code">
                                             <!-- <label class="crm-label form-label" for="country">Country<span
-                                                    class="text-danger">*</span></label> -->
+                                                            class="text-danger">*</span></label> -->
                                             @if ($errors->createStaff->has('country'))
                                                 <small class="invalid-feedback " style="font-size: 11px">
                                                     {{ $errors->createStaff->first('country') }}
@@ -189,11 +189,10 @@
                                         <div class="form-floating mb-3">
                                             <input type="text"
                                                 class="form-control crm-input {{ $errors->createStaff->has('address') ? 'is-invalid' : '' }}"
-                                                id="address" name="address" required
+                                                id="address" name="address"
                                                 value="{{ $errors->hasBag('createStaff') ? old('address') : '' }}"
                                                 placeholder="ABC">
-                                            <label class="crm-label form-label" for="address">Address<span
-                                                    class="text-danger">*</span></label>
+                                            <label class="crm-label form-label" for="address">Address</label>
                                             @if ($errors->createStaff->has('address'))
                                                 <small class="invalid-feedback " style="font-size: 11px">
                                                     {{ $errors->createStaff->first('address') }}
@@ -341,8 +340,8 @@
                                     </div>
                                     <div class="">
                                         <div class="mb-3">
-                                        <label class="country-label form-label mb-2" for="country2">Country<span
-                                                                class="text-danger">*</span></label><br>
+                                            <label class="country-label form-label mb-2" for="country2">Country<span
+                                                    class="text-danger">*</span></label><br>
                                             <input type="text"
                                                 class=" {{ $errors->updateStaff->has('country') ? 'is-invalid' : '' }}"
                                                 id="country2" name="country" required
@@ -352,7 +351,7 @@
                                                 value="{{ $errors->hasBag('updateStaff') ? old('country_code') : '' }}"
                                                 name="country_code">
                                             <!-- <label class="crm-label form-label" for="country2">Country<span
-                                                    class="text-danger">*</span></label> -->
+                                                            class="text-danger">*</span></label> -->
                                             @if ($errors->updateStaff->has('country'))
                                                 <small class="invalid-feedback " style="font-size: 11px">
                                                     {{ $errors->updateStaff->first('country') }}
@@ -364,11 +363,10 @@
                                         <div class="form-floating mb-3">
                                             <input type="text"
                                                 class="form-control crm-input {{ $errors->updateStaff->has('address') ? 'is-invalid' : '' }}"
-                                                id="address" name="address" required
+                                                id="address" name="address"
                                                 value="{{ $errors->hasBag('updateStaff') ? old('address') : '' }}"
                                                 placeholder="ABC">
-                                            <label class="crm-label form-label" for="address">Address<span
-                                                    class="text-danger">*</span></label>
+                                            <label class="crm-label form-label" for="address">Address</label>
                                             @if ($errors->updateStaff->has('address'))
                                                 <small class="invalid-feedback " style="font-size: 11px">
                                                     {{ $errors->updateStaff->first('address') }}

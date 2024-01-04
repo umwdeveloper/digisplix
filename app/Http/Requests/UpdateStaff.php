@@ -24,7 +24,7 @@ class UpdateStaff extends FormRequest {
             'designation' => 'string|required',
             'country' => 'string|required',
             'country_code' => 'string|required',
-            'address' => 'string|required',
+            'address' => 'string|nullable',
             'phone' => 'string|required',
             'img' => 'nullable|image|mimes:jpg,jpeg,png,gif,svg|max:1024'
         ];

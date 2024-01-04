@@ -57,7 +57,7 @@ class SaleController extends Controller {
         return view('partners.sales.index', [
             'invoices' => $invoices,
             'sales' => $invoices->whereBetween('created_at', [$startDate, $endDate])->count(),
-            'revenue' => $commissions->where('status', Commission::EARNED)->whereBetween('created_at', [$startDate, $endDate])->sum('deal_size'),
+            'revenue' => $commissions->whereBetween('created_at', [$startDate, $endDate])->sum('deal_size'),
             'commission' => $totalCommission,
             'status_labels' => Invoice::getStatusLabels(),
             'regional_sales' => $regionalSales,
@@ -152,7 +152,6 @@ class SaleController extends Controller {
             ->whereHas('client', function ($query) {
                 $query->where('partner_id', auth()->user()->userable->id);
             })
-            ->where('status', Commission::EARNED)
             ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
                 $query->whereBetween('created_at', [$startDate, $endDate]);
             })

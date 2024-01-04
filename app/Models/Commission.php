@@ -17,8 +17,9 @@ class Commission extends Model {
         'status'
     ];
 
-    const PROCESSING = 'processing';
     const EARNED = 'earned';
+    const PROCESSING = 'processing';
+    const PAID = 'paid';
 
     public function client() {
         return $this->belongsTo(Client::class);
@@ -29,8 +30,9 @@ class Commission extends Model {
     }
 
     private static $statuses = [
-        self::PROCESSING,
         self::EARNED,
+        self::PROCESSING,
+        self::PAID,
     ];
 
     public static function getStatuses() {
@@ -42,8 +44,9 @@ class Commission extends Model {
     }
 
     private static $statusLabels = [
-        self::PROCESSING => 'Processing',
         self::EARNED => 'Earned',
+        self::PROCESSING => 'Processing',
+        self::PAID => 'Paid',
     ];
 
     public static function getStatusLabels() {
@@ -55,8 +58,9 @@ class Commission extends Model {
     }
 
     private static $statusColors = [
-        self::PROCESSING => '#ffb22b',
         self::EARNED => '#00e200',
+        self::PROCESSING => '#ffb22b',
+        self::PAID => 'green',
     ];
 
     public static function getStatusColors() {

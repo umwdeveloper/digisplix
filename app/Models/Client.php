@@ -11,10 +11,8 @@ class Client extends Model {
     // public $timestamps = false;
 
     protected $fillable = [
-        'title',
         'url',
         'business_name',
-        'business_email',
         'business_phone',
         'joined_at',
         'followup_date',

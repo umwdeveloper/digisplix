@@ -94,7 +94,8 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
-                                                    <label class="country-label form-label mb-2" for="country">Country<span
+                                                        <label class="country-label form-label mb-2"
+                                                            for="country">Country<span
                                                                 class="text-danger">*</span></label><br>
                                                         <input type="text"
                                                             class=" {{ $errors->has('country') ? 'is-invalid' : '' }}"
@@ -103,7 +104,7 @@
                                                         <input type="hidden" id="country_code" value=""
                                                             name="country_code">
                                                         <!-- <label class="crm-label form-label" for="country">Country<span
-                                                                class="text-danger">*</span></label> -->
+                                                                    class="text-danger">*</span></label> -->
                                                         @if ($errors->has('country'))
                                                             <small class="invalid-feedback " style="font-size: 11px">
                                                                 {{ $errors->first('country') }}
@@ -115,10 +116,9 @@
                                                     <div class="form-floating mb-3">
                                                         <input type="text"
                                                             class="form-control crm-input {{ $errors->has('address') ? 'is-invalid' : '' }}"
-                                                            id="address" name="address" required
+                                                            id="address" name="address"
                                                             value="{{ $profile->user->address }}" placeholder="ABC">
-                                                        <label class="crm-label form-label" for="address">Address<span
-                                                                class="text-danger">*</span></label>
+                                                        <label class="crm-label form-label" for="address">Address</label>
                                                         @if ($errors->has('address'))
                                                             <small class="invalid-feedback " style="font-size: 11px">
                                                                 {{ $errors->first('address') }}
@@ -146,7 +146,7 @@
                                                     <div
                                                         class="d-flex justify-content-lg-end justify-content-center mt-3 mb-3">
                                                         <!-- <button type="button" class="modal-btn-cancel me-3"
-                                                                                                                                                                                                                        data-bs-dismiss="modal">Cancel</button> -->
+                                                                                                                                                                                                                            data-bs-dismiss="modal">Cancel</button> -->
                                                         <button class="modal-btn-save ">Save </button>
                                                     </div>
                                                 </div>

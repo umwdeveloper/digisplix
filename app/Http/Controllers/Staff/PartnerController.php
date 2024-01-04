@@ -115,7 +115,11 @@ class PartnerController extends Controller {
             ->where('status', Client::QUALIFIED)
             ->get();
 
-        $projects = Project::all();
+        $projects = Project::with('client')
+            ->whereHas('client', function ($query) use ($partner) {
+                $query->where('partner_id', $partner->id);
+            })
+            ->get();
 
         $startDate = Carbon::now()->startOfWeek();
         $endDate = Carbon::now()->endOfWeek();
@@ -172,7 +176,7 @@ class PartnerController extends Controller {
             'status_colors' => Client::getStatusColors(),
             'invoices' => $invoices,
             'sales' => $invoices->whereBetween('created_at', [$startDate, $endDate])->count(),
-            'revenue' => $commissions->where('status', Commission::EARNED)->whereBetween('created_at', [$startDate, $endDate])->sum('deal_size'),
+            'revenue' => $commissions->whereBetween('created_at', [$startDate, $endDate])->sum('deal_size'),
             'commission' => $totalCommission,
             'regional_sales' => $regionalSales,
             'currentPartner' => $partner,
@@ -362,7 +366,6 @@ class PartnerController extends Controller {
             ->whereHas('client', function ($query) use ($partner) {
                 $query->where('partner_id', $partner->id);
             })
-            ->where('status', Commission::EARNED)
             ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
                 $query->whereBetween('created_at', [$startDate, $endDate]);
             })

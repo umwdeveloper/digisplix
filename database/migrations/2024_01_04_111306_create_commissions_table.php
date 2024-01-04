@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->date('deal_date');
             $table->unsignedFloat('deal_size');
             $table->unsignedInteger('commission');
-            $table->enum('status', ['processing', 'earned'])->default('processing');
+            $table->enum('status', ['earned', 'processing', 'paid'])->default('earned');
             $table->timestamps();
 
             $table->foreign('client_id')->references('id')->on('clients')->cascadeOnDelete();

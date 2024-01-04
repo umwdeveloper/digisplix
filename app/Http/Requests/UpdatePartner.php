@@ -27,7 +27,7 @@ class UpdatePartner extends FormRequest {
             'linkedin' => 'nullable|url',
             'country' => 'string|required',
             'country_code' => 'string|required',
-            'address' => 'string|required',
+            'address' => 'string|nullable',
             'phone' => 'string|required',
             'commission' => 'string|required',
             'img' => 'nullable|image|mimes:jpg,jpeg,png,gif,svg|max:1024'
