@@ -36,7 +36,7 @@ class SupportReplied extends Notification implements ShouldQueue {
      */
     public function toDatabase(object $notifiable): array {
         return [
-            "message" => "User replied to " . $this->subject,
+            "message" => "Client replied to " . $this->subject,
             "link" => route('staff.support.show', $this->ticket_id)
         ];
     }

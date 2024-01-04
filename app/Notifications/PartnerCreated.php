@@ -36,7 +36,7 @@ class PartnerCreated extends Notification implements ShouldQueue {
      */
     public function toMail(object $notifiable): MailMessage {
         return (new MailMessage)
-            ->subject("Registration")
+            ->subject("Welcome to DigiSplix's Sales Team")
             ->greeting('Hi ' . $notifiable->name)
             ->line("You have been registered as a Sales Partner successfully! Please use the following credentials to login to Partner's Dashboard.")
             ->line(new HtmlString("Email: <strong>" . $notifiable->email . "</strong>"))

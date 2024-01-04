@@ -655,6 +655,40 @@ a {
     color: white;
 }
 
+.notifications-count {
+    position: absolute;
+    top: -6px;
+    left: 9px;
+    background-color: red;
+    border-radius: 100%;
+    height: 16px;
+    width: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 8px;
+    padding: 2px;
+    color: white;
+
+}
+
+.tickets-count {
+    position: absolute;
+    top: 3px;
+    right: 7px;
+    background-color: red;
+    border-radius: 100%;
+    height: 16px;
+    width: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 8px;
+    padding: 2px;
+    color: white;
+
+}
+
 .buy-now {
     text-decoration: none !important;
 }

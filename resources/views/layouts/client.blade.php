@@ -203,6 +203,9 @@
                                 <i class="fa-duotone fa-bell header-icon mt-1"></i>
 
                                 <div class="pulse-wave"></div>
+                                @if ($total_notifications_count > 0)
+                                    <span class="notifications-count">{{ $total_notifications_count }}</span>
+                                @endif
                             </div>
                         </button>
                         <div class="notification-dropdown-inner">
@@ -211,9 +214,14 @@
                                     <h1 class="mb-0 pb-0">Notifications</h1>
                                     {{-- <button>Clear All</button> --}}
                                 </div>
-                                @forelse (auth()->user()->unreadNotifications->take(5) as $notification)
-                                    <li><a
-                                            href="{{ !empty($notification->data['link']) ? $notification->data['link'] : '#' }}">
+                                @forelse (auth()->user()->notifications->take(5) as $notification)
+                                    <li class="{{ empty($notification->read_at) ? 'unread-notification' : '' }}">
+
+                                        <a
+                                            href="{{ !empty($notification->data['link']) ? route('notifications.mark_as_read') . '?url=' . $notification->data['link'] : '#' }}">
+                                            @if (empty($notification->read_at))
+                                                <i class="bi bi-dot"></i>
+                                            @endif
                                             <p class="mb-0 pb-0 ">{{ $notification->data['message'] }}</p>
                                         </a>
                                     </li>
@@ -232,9 +240,12 @@
                     </div>
 
                     <!-- ticker -->
-                    <div class="header-option align-self-center hide-sm side-menu-ticket-btn">
+                    <div class="header-option align-self-center hide-sm side-menu-ticket-btn position-relative ">
                         <!-- <i class="bi bi-app-indicator path-1"></i> -->
                         <i class="fa-duotone fa-life-ring header-icon"></i>
+                        @if ($total_client_tickets > 0)
+                            <span class="tickets-count">{{ $total_client_tickets }}</span>
+                        @endif
                     </div>
 
                     <!-- chat -->

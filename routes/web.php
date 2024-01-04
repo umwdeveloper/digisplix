@@ -6,6 +6,7 @@ use App\Http\Controllers\Client\ProjectController as ClientProjectController;
 use App\Http\Controllers\Client\ServiceController;
 use App\Http\Controllers\Client\SupportController as ClientSupportController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Partner\ClientController as PartnerClientController;
 use App\Http\Controllers\Partner\LeadController as PartnerLeadController;
 use App\Http\Controllers\Partner\SaleController;
@@ -245,3 +246,7 @@ Route::post('/create_subscription', [PaymentController::class, 'createSubscripti
 Route::get('/success', [PaymentController::class, 'success'])->name('payment.success');
 Route::get('/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
 Route::post('/webhook/payment', [PaymentController::class, 'webhookPayment'])->name('payment.webhook.payment');
+
+// Notifications
+Route::get('/mark-notification-as-read', [NotificationController::class, 'markAsRead'])
+    ->name('notifications.mark_as_read');

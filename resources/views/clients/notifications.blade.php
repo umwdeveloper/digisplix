@@ -17,7 +17,13 @@
                                     <div class="ticket-body ticket-{{ $colors[array_rand($colors)] }}">
                                         <h4 class="text-gray text-start justify-content-start mb-2">
                                             {{ \Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</h4>
-                                        <p class="mb-2 ellipsis-2">{{ $notification->data['message'] }}</p>
+                                        <p style="{{ empty($notification->read_at) ? 'font-weight: 600' : '' }}"
+                                            class="mb-2 ellipsis-2">
+                                            @if (empty($notification->read_at))
+                                                <i class="bi bi-dot"></i>
+                                            @endif
+                                            {{ $notification->data['message'] }}
+                                        </p>
                                     </div>
                                 </a>
                             @empty

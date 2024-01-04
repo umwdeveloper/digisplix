@@ -53,8 +53,8 @@ class Support extends Model {
 
     private static $statusLabels = [
         self::OPEN => 'Open',
-        self::AWAITING_USER_RESPONSE => 'Awaiting User Response',
-        self::USER_REPLIED => 'User Replied',
+        self::AWAITING_USER_RESPONSE => 'Awaiting Client Response',
+        self::USER_REPLIED => 'Client Replied',
         self::CLOSED => 'Closed',
     ];
 

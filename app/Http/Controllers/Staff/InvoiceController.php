@@ -284,7 +284,7 @@ class InvoiceController extends Controller {
             $invoice->save();
 
             // Send notification
-            Notification::send($invoice->client->user, new InvoiceStatusUpdated($invoice->client->user->name, Invoice::getStatusLabel($invoice->status)));
+            Notification::send($invoice->client->user, new InvoiceStatusUpdated($invoice->client->user->name, Invoice::getStatusLabel($invoice->status), $invoice->id));
 
             // Send email
             // Mail::to($lead->user->email)->send(new LeadStatusChangedMail($lead->user->name, Client::getStatusLabel($lead->status)));
