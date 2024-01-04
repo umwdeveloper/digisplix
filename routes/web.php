@@ -15,6 +15,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\Staff\PartnerController as StaffPartnerController;
 use App\Http\Controllers\Staff\ClientController as StaffClientController;
+use App\Http\Controllers\Staff\CommissionController;
 use App\Http\Controllers\Staff\InvoiceController;
 use App\Http\Controllers\Staff\StaffController as StaffStaffController;
 use App\Http\Controllers\Staff\PhaseController;
@@ -86,6 +87,8 @@ Route::domain(config('custom.staff_alias'))
         Route::get('/partners/fetch_partner/{partner_id}', [StaffPartnerController::class, 'fetchPartner'])
             ->name('partners.fetch_partner');
         Route::post('/partners/total_sales', [StaffPartnerController::class, 'totalSales'])->name('partners.total_sales');
+        Route::post('/partners/total_revenue', [StaffPartnerController::class, 'totalRevenue'])->name('partners.total_revenue');
+        Route::post('/partners/total_commission', [StaffPartnerController::class, 'totalCommission'])->name('partners.total_commission');
 
         // Clients
         Route::resource('clients', StaffClientController::class)->except(['create', 'store', 'show', 'edit']);
@@ -127,6 +130,13 @@ Route::domain(config('custom.staff_alias'))
         Route::get('/sales', [StaffSaleController::class, 'index'])->name('sales.index');
         Route::get('/total_sales', [StaffSaleController::class, 'totalSales'])->name('sales.total_sales');
 
+        // Commissions
+        Route::resource('commissions', CommissionController::class);
+        Route::patch('/commissions/update_commission_status/{commission_id}', [CommissionController::class, 'updateCommissionStatus'])
+            ->name('commissions.update_commission_status');
+        Route::get('/commissions/fetch_commission/{commission_id}', [CommissionController::class, 'fetchCommission'])
+            ->name('commissions.fetch_commission');
+
         // If route not found
         Route::fallback(function () {
             abort(404);
@@ -166,7 +176,9 @@ Route::domain(config('custom.partner_alias'))
 
         // Sales
         Route::get('/sales', [SaleController::class, 'index'])->name('sales.index');
-        Route::get('/total_sales', [SaleController::class, 'totalSales'])->name('sales.total_sales');
+        Route::post('/total_sales', [SaleController::class, 'totalSales'])->name('sales.total_sales');
+        Route::post('/total_revenue', [SaleController::class, 'totalRevenue'])->name('sales.total_revenue');
+        Route::post('/total_commission', [SaleController::class, 'totalCommission'])->name('sales.total_commission');
 
         // If route not found
         Route::fallback(function () {

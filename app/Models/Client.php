@@ -46,6 +46,10 @@ class Client extends Model {
         return $this->hasMany(Invoice::class);
     }
 
+    public function commissions() {
+        return $this->hasMany(Commission::class);
+    }
+
     private static $statuses = [
         self::NEW_LEAD,
         self::CONTACTED,

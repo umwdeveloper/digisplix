@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePartner;
 use App\Http\Requests\UpdatePartner;
 use App\Models\Client;
+use App\Models\Commission;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use App\Models\Partner;
+use App\Models\Project;
 use App\Models\User;
 use App\Notifications\PartnerCreated;
 use Carbon\Carbon;
@@ -108,10 +110,17 @@ class PartnerController extends Controller {
 
         $partners = Partner::with('user')->get();
 
+        $clients = Client::with(['user', 'partner'])
+            ->where('partner_id', $partner->id)
+            ->where('status', Client::QUALIFIED)
+            ->get();
+
+        $projects = Project::all();
+
         $startDate = Carbon::now()->startOfWeek();
         $endDate = Carbon::now()->endOfWeek();
 
-        $invoices = Invoice::with(['category', 'client', 'items', 'client.partner', 'client.user'])
+        $invoices = Invoice::with(['client', 'items', 'client.partner', 'client.user'])
             ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
                 ->whereColumn('invoice_id', 'invoices.id')
                 ->limit(1)])
@@ -134,6 +143,20 @@ class PartnerController extends Controller {
             ->groupBy('users.country')
             ->get();
 
+        $commissions = Commission::with(['client', 'client.user', 'client.partner', 'project'])
+            ->whereHas('client', function ($query) use ($partner) {
+                $query->where('partner_id', $partner->id);
+            })
+            ->get();
+
+        $totalCommission = Commission::with('client')
+            ->whereHas('client', function ($query) use ($partner) {
+                $query->where('partner_id', $partner->id);
+            })
+            ->where('status', Commission::EARNED)
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->sum(DB::raw('deal_size * (commission / 100)')) ?? 0;
+
         return view('staff.partners.show', [
             'leads' => $leads,
             'partners' => $partners,
@@ -149,10 +172,16 @@ class PartnerController extends Controller {
             'status_colors' => Client::getStatusColors(),
             'invoices' => $invoices,
             'sales' => $invoices->whereBetween('created_at', [$startDate, $endDate])->count(),
-            'revenue' => $invoices->whereBetween('created_at', [$startDate, $endDate])->sum('items_sum_price'),
-            'commission' => $invoices->whereBetween('created_at', [$startDate, $endDate])->sum('items_sum_price') * ($partner->commission / 100),
+            'revenue' => $commissions->where('status', Commission::EARNED)->whereBetween('created_at', [$startDate, $endDate])->sum('deal_size'),
+            'commission' => $totalCommission,
             'regional_sales' => $regionalSales,
-            'currentPartner' => $partner
+            'currentPartner' => $partner,
+            'clients' => $clients,
+            'projects' => $projects,
+            'commission_statuses' => Commission::getStatuses(),
+            'commission_status_labels' => Commission::getStatusLabels(),
+            'commission_status_colors' => Commission::getStatusColors(),
+            'commissions' => $commissions
         ]);
     }
 
@@ -244,7 +273,6 @@ class PartnerController extends Controller {
     public function totalSales(Request $request) {
 
         $duration = $request->input('duration');
-        $filter = $request->input('filter');
         $partner_id = $request->partner_id;
 
         $partner = Partner::findOrFail($partner_id);
@@ -290,9 +318,101 @@ class PartnerController extends Controller {
             ->get();
 
         $sales = $invoices->count();
-        $revenue = round($invoices->sum('items_sum_price'));
-        $commission = round($invoices->sum('items_sum_price') * ($partner->commission / 100));
 
-        return response()->json(['total' => $filter == 'sales' ? $sales : ($filter == 'revenue' ? $revenue : $commission)]);
+        return response()->json(['total' => $sales]);
+    }
+
+    public function totalRevenue(Request $request) {
+
+        $duration = $request->input('duration');
+        $partner_id = $request->partner_id;
+
+        $partner = Partner::findOrFail($partner_id);
+
+        $startDate = null;
+        $endDate = null;
+
+        // Define date ranges based on the selected duration
+        switch ($duration) {
+            case 'weekly':
+                $startDate = now()->startOfWeek();
+                $endDate = now()->endOfWeek();
+                break;
+            case 'monthly':
+                $startDate = now()->startOfMonth();
+                $endDate = now()->endOfMonth();
+                break;
+            case 'months_6':
+                $startDate = now()->subMonths(6)->startOfDay();
+                $endDate = now()->endOfDay();
+                break;
+            case 'yearly':
+                $startDate = now()->startOfYear();
+                $endDate = now()->endOfYear();
+                break;
+            case 'lifetime':
+                break;
+            default:
+                break;
+        }
+
+
+
+        $commissions = Commission::with(['client'])
+            ->whereHas('client', function ($query) use ($partner) {
+                $query->where('partner_id', $partner->id);
+            })
+            ->where('status', Commission::EARNED)
+            ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('created_at', [$startDate, $endDate]);
+            })
+            ->get();
+
+        return response()->json(['total' => $commissions->sum('deal_size')]);
+    }
+
+    public function totalCommission(Request $request) {
+
+        $duration = $request->input('duration');
+        $partner_id = $request->partner_id;
+
+        $partner = Partner::findOrFail($partner_id);
+
+        $startDate = null;
+        $endDate = null;
+
+        // Define date ranges based on the selected duration
+        switch ($duration) {
+            case 'weekly':
+                $startDate = now()->startOfWeek();
+                $endDate = now()->endOfWeek();
+                break;
+            case 'monthly':
+                $startDate = now()->startOfMonth();
+                $endDate = now()->endOfMonth();
+                break;
+            case 'months_6':
+                $startDate = now()->subMonths(6)->startOfDay();
+                $endDate = now()->endOfDay();
+                break;
+            case 'yearly':
+                $startDate = now()->startOfYear();
+                $endDate = now()->endOfYear();
+                break;
+            case 'lifetime':
+                break;
+            default:
+                break;
+        }
+
+        $totalCommission = Commission::with('client')
+            ->whereHas('client', function ($query) use ($partner) {
+                $query->where('partner_id', $partner->id);
+            })
+            ->where('status', Commission::EARNED)
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->sum(DB::raw('deal_size * (commission / 100)')) ?? 0;
+
+        return response()->json(['total' => $totalCommission]);
     }
 }

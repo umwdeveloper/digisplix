@@ -6,13 +6,18 @@ use Illuminate\Http\Request;
 
 class NotificationController extends Controller {
     public function markAsRead(Request $request) {
-        $link = $request->query('url');
-        $notification = auth()->user()->notifications()->where('data->link', $link)->first();
+        if (auth()->check()) {
+            $link = $request->query('url');
 
-        if ($notification) {
-            $notification->markAsRead();
+            /** @var \App\Models\User|null */
+            $user = auth()->user();
+            $notification = $user->notifications()->where('data->link', $link)->first();
+
+            if ($notification) {
+                $notification->markAsRead();
+            }
+
+            return redirect()->to($link);
         }
-
-        return redirect()->to($link);
     }
 }

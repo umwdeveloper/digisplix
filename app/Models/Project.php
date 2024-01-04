@@ -27,6 +27,10 @@ class Project extends Model {
         return $this->hasMany(Phase::class);
     }
 
+    public function commission() {
+        return $this->hasOne(Commission::class);
+    }
+
     private static $statusLabels = [
         "Ongoing",
         "Completed"

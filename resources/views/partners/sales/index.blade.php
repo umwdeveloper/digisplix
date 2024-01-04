@@ -36,7 +36,7 @@
                             <div class="box">
                                 <div class="d-flex justify-content-between align-items-start">
                                     <h1 class="box-heading">Total Revenue</h1>
-                                    <select class="form-select select-duration mb-1 filter"
+                                    <select class="form-select select-duration mb-1 filter-revenue"
                                         aria-label="Default select example" data-filter="revenue">
                                         <option selected value="weekly">Weekly</option>
                                         <option value="monthly">Monthly</option>
@@ -62,7 +62,7 @@
                             <div class="box">
                                 <div class="d-flex justify-content-between align-items-start">
                                     <h1 class="box-heading">Commission Earned</h1>
-                                    <select class="form-select select-duration mb-1 filter"
+                                    <select class="form-select select-duration mb-1 filter-commission"
                                         aria-label="Default select example" data-filter="commission">
                                         <option selected value="weekly">Weekly</option>
                                         <option value="monthly">Monthly</option>
@@ -97,14 +97,15 @@
                                                     <th class="no-sort"></th>
                                                     <th scope="col">#</th>
                                                     <th scope="col">Client Name</th>
-                                                    <th scope="col">Business Name</th>
+                                                    <th scope="col">Status</th>
+                                                    <th scope="col">Bussiness Name</th>
                                                     <th scope="col">Project Name</th>
                                                     <th scope="col">Deal Size</th>
                                                     <th scope="col">Commission</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($invoices as $key => $invoice)
+                                                @foreach ($commissions as $key => $commission)
                                                     <tr class="">
                                                         <td>
                                                             <div class="d-flex align-items-center">
@@ -114,15 +115,29 @@
                                                             </div>
                                                         </td>
                                                         <td>{{ ++$key }}</td>
-                                                        <td>{{ $invoice->client->user->name }}</td>
-                                                        <td>{{ $invoice->client->business_name }}</td>
-                                                        <td class="">
-                                                            <p title="Ecommerece Website lorem abscd"
-                                                                class="project-name mb-0 pb-0">
-                                                                {{ $invoice->category->name }}</p>
+                                                        <td>{{ $commission->client->user->name }}
                                                         </td>
-                                                        <td>${{ round($invoice->items_sum_price) }}</td>
-                                                        <td>${{ round($invoice->items_sum_price * ($invoice->client->partner->commission / 100)) }}
+                                                        <td>
+                                                            <div class="dropdown table-dropdown">
+                                                                <a style="background-color: {{ $commission_status_colors[$commission->status] }}"
+                                                                    class="btn table-dropdown-btn ticket-paid"
+                                                                    href="#" role="button" id="dropdownMenuLink"
+                                                                    data-bs-toggle="dropdown" aria-expanded="false"
+                                                                    data-commission-id="{{ $commission->id }}">
+                                                                    {{ $commission_status_labels[$commission->status] }}
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                        <td>{{ $commission->client->business_name }}
+                                                        </td>
+                                                        <td class="">
+                                                            <p class="project-name mb-0 pb-0">
+                                                                {{ $commission->project->name }}
+                                                            </p>
+                                                        </td>
+                                                        <td>${{ round($commission->deal_size) }}
+                                                        </td>
+                                                        <td>${{ round($commission->deal_size * ($commission->commission / 100)) }}
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -208,19 +223,55 @@
     <script>
         $('.filter').change(function() {
             var duration = $(this).val();
-            var filter = $(this).data('filter');
-
             // Make an AJAX request to fetch data based on the selected duration
             $.ajax({
                 url: '{{ route('partner.sales.total_sales') }}',
-                type: 'GET',
+                type: 'POST',
                 data: {
                     _token: '{{ csrf_token() }}',
                     duration,
-                    filter
                 },
                 success: function(data) {
-                    $('#' + filter).text(data.total);
+                    $('#sales').text(data.total);
+                },
+                error: function(error) {
+                    console.error('Error fetching data:', error);
+                }
+            });
+        });
+
+        $('.filter-revenue').change(function() {
+            var duration = $(this).val();
+            // Make an AJAX request to fetch data based on the selected duration
+            $.ajax({
+                url: '{{ route('partner.sales.total_revenue') }}',
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    duration,
+                },
+                success: function(data) {
+                    console.log(data);
+                    $('#revenue').text(data.total);
+                },
+                error: function(error) {
+                    console.error('Error fetching data:', error);
+                }
+            });
+        });
+
+        $('.filter-commission').change(function() {
+            var duration = $(this).val();
+            // Make an AJAX request to fetch data based on the selected duration
+            $.ajax({
+                url: '{{ route('partner.sales.total_commission') }}',
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    duration,
+                },
+                success: function(data) {
+                    $('#commission').text(data.total);
                 },
                 error: function(error) {
                     console.error('Error fetching data:', error);
