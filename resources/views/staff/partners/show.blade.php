@@ -718,7 +718,7 @@
                                                                                 <td>{{ \Carbon\Carbon::parse($commission->deal_date)->format('d-m-Y') }}
                                                                                 </td>
                                                                                 <td class="">
-                                                                                    <p class="project-name mb-0 pb-0">
+                                                                                    <p class="mb-0 pb-0">
                                                                                         {{ $commission->project->name }}
                                                                                     </p>
                                                                                 </td>

@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('client_id');
             $table->string('name');
             $table->text('description');
-            $table->tinyInteger('billing_status')->default(1)->comment('0=Unpaid, 1=Paid');
+            $table->tinyInteger('billing_status')->default(0)->comment('0=Unpaid, 1=Paid');
             $table->tinyInteger('current_status')->default(0)->comment('0=Ongoing, 1=Completed');
             $table->unsignedInteger('progress')->default(0);
             $table->text('img')->nullable();

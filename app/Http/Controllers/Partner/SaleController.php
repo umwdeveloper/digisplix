@@ -48,7 +48,6 @@ class SaleController extends Controller {
             ->whereHas('client', function ($query) {
                 $query->where('partner_id', auth()->user()->userable->id);
             })
-            ->where('status', Commission::EARNED)
             ->whereBetween('created_at', [$startDate, $endDate])
             ->sum(DB::raw('deal_size * (commission / 100)')) ?? 0;
 
@@ -185,7 +184,6 @@ class SaleController extends Controller {
             ->whereHas('client', function ($query) {
                 $query->where('partner_id', auth()->user()->userable->id);
             })
-            ->where('status', Commission::EARNED)
             ->whereBetween('created_at', [$startDate, $endDate])
             ->sum(DB::raw('deal_size * (commission / 100)')) ?? 0;
 
