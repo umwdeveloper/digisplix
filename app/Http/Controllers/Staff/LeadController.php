@@ -10,6 +10,7 @@ use App\Mail\LeadStatusChangedMail;
 use App\Models\Client;
 use App\Models\Partner;
 use App\Models\User;
+use App\Notifications\LeadAdded;
 use App\Notifications\LeadStatusUpdated;
 use Exception;
 use Illuminate\Database\QueryException;
@@ -77,6 +78,8 @@ class LeadController extends Controller {
             );
 
             DB::commit();
+
+            Notification::send($lead->partner->user, new LeadAdded());
 
             // Mail::to($lead->user->email)->send(new LeadAddedMail($lead->user->name, $lead->user->email, $validatedData['original_password']));
 
