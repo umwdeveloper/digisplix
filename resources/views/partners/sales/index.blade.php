@@ -97,11 +97,13 @@
                                                     <th class="no-sort"></th>
                                                     <th scope="col">#</th>
                                                     <th scope="col">Client Name</th>
-                                                    <th scope="col">Status</th>
                                                     <th scope="col">Business Name</th>
-                                                    <th scope="col">Project Name</th>
+                                                    <th scope="col">Status</th>
                                                     <th scope="col">Deal Size</th>
                                                     <th scope="col">Commission</th>
+                                                    <th scope="col">Type</th>
+                                                    <th scope="col">Cliend Paid On</th>
+                                                    <th scope="col">Project Name</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -117,6 +119,8 @@
                                                         <td>{{ ++$key }}</td>
                                                         <td>{{ $commission->client->user->name }}
                                                         </td>
+                                                        <td>{{ $commission->client->business_name }}
+                                                        </td>
                                                         <td>
                                                             <div class="dropdown table-dropdown">
                                                                 <a style="background-color: {{ $commission_status_colors[$commission->status] }}"
@@ -128,16 +132,17 @@
                                                                 </a>
                                                             </div>
                                                         </td>
-                                                        <td>{{ $commission->client->business_name }}
+                                                        <td>${{ round($commission->deal_size) }}
+                                                        </td>
+                                                        <td>${{ round($commission->deal_size * ($commission->commission / 100)) }}
+                                                        </td>
+                                                        <td>{{ $commission->type == 0 ? 'Straight' : 'Recurring' }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($commission->deal_date)->format('d-m-Y') }}
                                                         </td>
                                                         <td class="">
                                                             <p class="project-name mb-0 pb-0">
                                                                 {{ $commission->project->name }}
                                                             </p>
-                                                        </td>
-                                                        <td>${{ round($commission->deal_size) }}
-                                                        </td>
-                                                        <td>${{ round($commission->deal_size * ($commission->commission / 100)) }}
                                                         </td>
                                                     </tr>
                                                 @endforeach

@@ -655,10 +655,12 @@
                                                                             <th class="no-sort"></th>
                                                                             <th scope="col">#</th>
                                                                             <th scope="col">Client Name</th>
+                                                                            <th scope="col">Business Name</th>
                                                                             <th scope="col">Status</th>
                                                                             <th scope="col">Deal Size</th>
                                                                             <th scope="col">Commission</th>
-                                                                            <th scope="col">Business Name</th>
+                                                                            <th scope="col">Type</th>
+                                                                            <th scope="col">Cliend Paid On</th>
                                                                             <th scope="col">Project Name</th>
                                                                             <th scope="col">Action</th>
                                                                         </tr>
@@ -675,6 +677,8 @@
                                                                                 </td>
                                                                                 <td>{{ ++$key }}</td>
                                                                                 <td>{{ $commission->client->user->name }}
+                                                                                </td>
+                                                                                <td>{{ $commission->client->business_name }}
                                                                                 </td>
                                                                                 <td>
                                                                                     <div class="dropdown table-dropdown">
@@ -709,7 +713,9 @@
                                                                                 </td>
                                                                                 <td>${{ round($commission->deal_size * ($commission->commission / 100)) }}
                                                                                 </td>
-                                                                                <td>{{ $commission->client->business_name }}
+                                                                                <td>{{ $commission->type == 0 ? 'Straight' : 'Recurring' }}
+                                                                                </td>
+                                                                                <td>{{ \Carbon\Carbon::parse($commission->deal_date)->format('d-m-Y') }}
                                                                                 </td>
                                                                                 <td class="">
                                                                                     <p class="project-name mb-0 pb-0">
@@ -845,7 +851,7 @@
                                             type="date" name="deal_date" required
                                             class="form-control crm-input {{ $errors->createCommission->has('deal_date') ? 'is-invalid' : '' }}"
                                             id="date" placeholder="ABC">
-                                        <label class="crm-label form-label" for="date">Deal Close Date<span
+                                        <label class="crm-label form-label" for="date">Client Paid On<span
                                                 class="text-danger">*</span></label>
                                         @if ($errors->createCommission->has('deal_date'))
                                             <small class="invalid-feedback " style="font-size: 11px">
@@ -1012,7 +1018,7 @@
                                             name="deal_date" id="deal_date" required
                                             class="form-control crm-input {{ $errors->updateCommission->has('deal_date') ? 'is-invalid' : '' }}"
                                             id="date" placeholder="ABC">
-                                        <label class="crm-label form-label" for="date">Deal Close Date<span
+                                        <label class="crm-label form-label" for="date">Client Paid On<span
                                                 class="text-danger">*</span></label>
                                         @if ($errors->updateCommission->has('deal_date'))
                                             <small class="invalid-feedback " style="font-size: 11px">
