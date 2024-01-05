@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->unsignedFloat('deal_size');
             $table->unsignedInteger('commission');
             $table->enum('status', ['earned', 'processing', 'paid'])->default('earned');
+            $table->tinyInteger('type')->default(0)->comment('0=Straight, 1=Recurring');
             $table->timestamps();
 
             $table->foreign('client_id')->references('id')->on('clients')->cascadeOnDelete();

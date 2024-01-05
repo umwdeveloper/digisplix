@@ -804,7 +804,9 @@
                                             aria-label="Floating label select example">
                                             <option selected>Select</option>
                                             @foreach ($clients as $client)
-                                                <option value="{{ $client->id }}">{{ $client->user->name }}</option>
+                                                <option
+                                                    {{ $errors->hasBag('createCommission') && old('client_id') == $client->id ? 'selected' : '' }}
+                                                    value="{{ $client->id }}">{{ $client->user->name }}</option>
                                             @endforeach
                                         </select>
                                         <label class="crm-label form-label" for="select-status">Client<span
@@ -823,7 +825,9 @@
                                             aria-label="Floating label select example">
                                             <option selected>Select</option>
                                             @foreach ($projects as $project)
-                                                <option value="{{ $project->id }}">{{ $project->name }}</option>
+                                                <option
+                                                    {{ $errors->hasBag('createCommission') && old('project_id') == $project->id ? 'selected' : '' }}
+                                                    value="{{ $project->id }}">{{ $project->name }}</option>
                                             @endforeach
                                         </select>
                                         <label class="crm-label form-label" for="select-status">Project<span
@@ -837,7 +841,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
-                                        <input type="date" name="deal_date" required
+                                        <input value="{{ $errors->hasBag('createCommission') ? old('deal_date') : '' }}"
+                                            type="date" name="deal_date" required
                                             class="form-control crm-input {{ $errors->createCommission->has('deal_date') ? 'is-invalid' : '' }}"
                                             id="date" placeholder="ABC">
                                         <label class="crm-label form-label" for="date">Deal Close Date<span
@@ -851,7 +856,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
-                                        <input type="text" name="deal_size" required
+                                        <input value="{{ $errors->hasBag('createCommission') ? old('deal_size') : '' }}"
+                                            type="text" name="deal_size" required
                                             class="form-control crm-input {{ $errors->createCommission->has('deal_size') ? 'is-invalid' : '' }}"
                                             id="size" placeholder="ABC">
                                         <label class="crm-label form-label" for="size">Deal Size<span
@@ -865,7 +871,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
-                                        <input type="text" name="commission" required
+                                        <input value="{{ $errors->hasBag('createCommission') ? old('commission') : '' }}"
+                                            type="text" name="commission" required
                                             class="form-control crm-input {{ $errors->createCommission->has('commission') ? 'is-invalid' : '' }}"
                                             id="comission" placeholder="ABC">
                                         <label class="crm-label form-label" for="comission">Commission<span
@@ -884,7 +891,9 @@
                                             class="form-select crm-input {{ $errors->createCommission->has('status') ? 'is-invalid' : '' }}"
                                             aria-label="Floating label select example">
                                             @foreach ($commission_statuses as $status)
-                                                <option value="{{ $status }}">
+                                                <option
+                                                    {{ $errors->hasBag('createCommission') && old('status') == $status ? 'selected' : '' }}
+                                                    value="{{ $status }}">
                                                     {{ $commission_status_labels[$status] }}</option>
                                             @endforeach
                                         </select>
@@ -893,6 +902,28 @@
                                         @if ($errors->createCommission->has('status'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->createCommission->first('status') }}
+                                            </small>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="form-floating">
+                                        <select name="type" required id="type"
+                                            class="form-select crm-input {{ $errors->createCommission->has('type') ? 'is-invalid' : '' }}"
+                                            aria-label="Floating label select example">
+                                            <option
+                                                {{ $errors->hasBag('createCommission') && old('type') == 0 ? 'selected' : '' }}
+                                                value="0">Straight</option>
+                                            <option
+                                                {{ $errors->hasBag('createCommission') && old('type') == 1 ? 'selected' : '' }}
+                                                value="1">Recurring</option>
+                                        </select>
+                                        <label class="crm-label form-label" for="type">Type<span
+                                                class="text-danger">*</span></label>
+                                        @if ($errors->createCommission->has('type'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->createCommission->first('type') }}
                                             </small>
                                         @endif
                                     </div>
@@ -1044,6 +1075,27 @@
                                         @endif
                                     </div>
                                 </div>
+                                <div class="col-lg-12">
+                                    <div class="form-floating">
+                                        <select name="type" required id="type"
+                                            class="form-select crm-input {{ $errors->updateCommission->has('type') ? 'is-invalid' : '' }}"
+                                            aria-label="Floating label select example">
+                                            <option
+                                                {{ $errors->hasBag('updateCommission') && old('type') == 0 ? 'selected' : '' }}
+                                                value="0">Straight</option>
+                                            <option
+                                                {{ $errors->hasBag('updateCommission') && old('type') == 1 ? 'selected' : '' }}
+                                                value="1">Recurring</option>
+                                        </select>
+                                        <label class="crm-label form-label" for="type">Type<span
+                                                class="text-danger">*</span></label>
+                                        @if ($errors->updateCommission->has('type'))
+                                            <small class="invalid-feedback " style="font-size: 11px">
+                                                {{ $errors->updateCommission->first('type') }}
+                                            </small>
+                                        @endif
+                                    </div>
+                                </div>
 
                                 <div class="col-lg-12">
                                     <div class="d-flex justify-content-lg-end justify-content-center mt-3 mb-3">
@@ -1063,17 +1115,25 @@
     </div>
 
 @section('script')
-    @if ($errors->createCommission->any())
-        <script>
-            $('#leadModal-btn').click()
-        </script>
-    @endif
+    <script>
+        window.onload = function() {
+            @if ($errors->createCommission->any())
+                $('#leadModal').modal('show');
+            @endif
 
-    @if ($errors->updateCommission->any())
-        <script>
-            $('#updateCommissionModal-btn').click()
-        </script>
-    @endif
+            @if ($errors->updateCommission->any())
+                $('#updateCommissionModal').modal('show')
+            @endif
+
+            @if (!empty(old('commission')))
+                $('button[data-tab="Commission"]').click()
+            @endif
+
+            @if (session('submitted'))
+                $('button[data-tab="Commission"]').click()
+            @endif
+        }
+    </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -1326,6 +1386,7 @@
                         $("#updateCommissionModal #deal_size").val(response.commission.deal_size)
                         $("#updateCommissionModal #commission").val(response.commission.commission)
                         $("#updateCommissionModal #select-status2").val(response.commission.status)
+                        $("#updateCommissionModal #type").val(response.commission.type)
                         $('#updateCommissionModal-btn').click()
                     } else {}
                 }

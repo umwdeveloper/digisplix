@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->date('due_date');
             $table->text('terms_n_conditions')->nullable();
             $table->text('note')->nullable();
-            $table->tinyInteger('recurring')->default(0)->comment('0=Recurring, 1=Non recurring');
+            $table->tinyInteger('recurring')->default(0)->comment('0=Non recurring, 1=Recurring');
             $table->date('start_from')->nullable();
             $table->unsignedInteger('duration')->nullable();
             $table->tinyInteger('bank_subscription_active')->default(0)->comment('0=inactive, 1=active');

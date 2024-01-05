@@ -7,6 +7,7 @@ use App\Http\Requests\StoreCommission;
 use App\Http\Requests\UpdateCommission;
 use App\Models\Commission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class CommissionController extends Controller {
     /**
@@ -30,6 +31,8 @@ class CommissionController extends Controller {
         $validatedData = $request->validated();
 
         Commission::create($validatedData);
+
+        Session::flash('submitted');
 
         return redirect()->back()->with('status', 'Commission created successfully!');
     }
@@ -56,6 +59,8 @@ class CommissionController extends Controller {
 
         $commission = Commission::findOrFail($id);
         $commission->update($validatedData);
+
+        Session::flash('submitted');
 
         return redirect()->back()->with('status', 'Commission updated successfully!');
     }

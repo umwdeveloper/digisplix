@@ -124,26 +124,24 @@ class PartnerController extends Controller {
         $startDate = Carbon::now()->startOfWeek();
         $endDate = Carbon::now()->endOfWeek();
 
-        $invoices = Invoice::with(['client', 'items', 'client.partner', 'client.user'])
-            ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
-                ->whereColumn('invoice_id', 'invoices.id')
-                ->limit(1)])
-            ->where('status', Invoice::PAID)
+        $sales = Commission::with(['client', 'client.partner'])
+            ->where('type', 0)
             ->whereHas('client', function ($query) use ($partner) {
                 $query->where('partner_id', $partner->id);
             })
-            ->get();
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->count();
 
-        $regionalSales = Invoice::join('clients', 'invoices.client_id', '=', 'clients.id')
+        $regionalSales = Commission::join('clients', 'commissions.client_id', '=', 'clients.id')
             ->join('users', function ($join) {
                 $join->on('users.userable_id', '=', 'clients.id')
                     ->where('users.userable_type', '=', Client::class);
             })
-            ->where('invoices.status', Invoice::PAID)
+            ->where('commissions.type', 0)
             ->whereHas('client', function ($query) use ($partner) {
                 $query->where('partner_id', $partner->id);
             })
-            ->selectRaw('users.country as region, users.country_code AS region_code, COUNT(DISTINCT invoices.id) as sales_count')
+            ->selectRaw('users.country as region, users.country_code AS region_code, COUNT(DISTINCT commissions.id) as sales_count')
             ->groupBy('users.country')
             ->get();
 
@@ -174,8 +172,7 @@ class PartnerController extends Controller {
             'statuses' => Client::getStatuses(),
             'status_labels' => Client::getStatusLabels(),
             'status_colors' => Client::getStatusColors(),
-            'invoices' => $invoices,
-            'sales' => $invoices->whereBetween('created_at', [$startDate, $endDate])->count(),
+            'sales' => $sales,
             'revenue' => $commissions->whereBetween('created_at', [$startDate, $endDate])->sum('deal_size'),
             'commission' => $totalCommission,
             'regional_sales' => $regionalSales,
@@ -308,20 +305,13 @@ class PartnerController extends Controller {
                 break;
         }
 
-        $invoices = Invoice::with(['client'])
-            ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
-                ->whereColumn('invoice_id', 'invoices.id')
-                ->limit(1)])
-            ->where('status', Invoice::PAID)
-            ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
-                $query->whereBetween('created_at', [$startDate, $endDate]);
-            })
+        $sales = Commission::with(['client', 'client.partner'])
+            ->where('type', 0)
             ->whereHas('client', function ($query) use ($partner) {
                 $query->where('partner_id', $partner->id);
             })
-            ->get();
-
-        $sales = $invoices->count();
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->count();
 
         return response()->json(['total' => $sales]);
     }

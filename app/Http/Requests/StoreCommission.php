@@ -24,7 +24,8 @@ class StoreCommission extends FormRequest {
             'deal_date' => 'date|required',
             'deal_size' => 'numeric|required',
             'commission' => 'numeric|required',
-            'status' => 'string|required'
+            'status' => 'string|required',
+            'type' => 'numeric|required'
         ];
     }
 

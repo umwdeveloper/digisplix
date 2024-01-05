@@ -14,7 +14,8 @@ class Commission extends Model {
         'deal_date',
         'deal_size',
         'commission',
-        'status'
+        'status',
+        'type'
     ];
 
     const EARNED = 'earned';
