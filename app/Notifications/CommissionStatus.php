@@ -8,15 +8,16 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\HtmlString;
 
-class CommissionCreated extends Notification implements ShouldQueue {
+class CommissionStatus extends Notification implements ShouldQueue {
     use Queueable;
 
-    public $project;
+    public $status, $project;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($project) {
+    public function __construct($status, $project) {
+        $this->status = $status;
         $this->project = $project;
     }
 
@@ -34,19 +35,19 @@ class CommissionCreated extends Notification implements ShouldQueue {
      */
     public function toMail(object $notifiable): MailMessage {
         return (new MailMessage)
-            ->subject("Commission Created")
+            ->subject("Commission Status Updated")
             ->greeting("Hi " . $notifiable->name . ",")
-            ->line(new HtmlString('A new commission was created for the <strong>' . $this->project . '</strong> project'));
+            ->line(new HtmlString('Commission status for the project <strong>' . $this->project . '</strong> has been updated to <strong>' . $this->status . '</strong>'));
     }
 
     /**
-     * Get the database representation of the notification.
+     * Get the array representation of the notification.
      *
      * @return array<string, mixed>
      */
-    public function toDatabase(object $notifiable): array {
+    public function toArray(object $notifiable): array {
         return [
-            'message' => 'New commission created',
+            'message' => 'Commission status updated',
             "link" => route('partner.sales.index')
         ];
     }

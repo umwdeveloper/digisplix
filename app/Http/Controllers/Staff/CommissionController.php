@@ -5,8 +5,14 @@ namespace App\Http\Controllers\Staff;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCommission;
 use App\Http\Requests\UpdateCommission;
+use App\Models\Client;
 use App\Models\Commission;
+use App\Models\Partner;
+use App\Models\Project;
+use App\Notifications\CommissionCreated;
+use App\Notifications\CommissionStatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 
 class CommissionController extends Controller {
@@ -30,9 +36,15 @@ class CommissionController extends Controller {
     public function store(StoreCommission $request) {
         $validatedData = $request->validated();
 
+        $client = Client::findOrFail($validatedData['client_id']);
+        $project = Project::findOrFail($validatedData['project_id']);
+        $partner = Partner::findOrFail($client->partner_id);
+
         Commission::create($validatedData);
 
         Session::flash('submitted');
+
+        Notification::send($partner->user, new CommissionCreated($project->name));
 
         return redirect()->back()->with('status', 'Commission created successfully!');
     }
@@ -57,10 +69,17 @@ class CommissionController extends Controller {
     public function update(UpdateCommission $request, string $id) {
         $validatedData = $request->validated();
 
-        $commission = Commission::findOrFail($id);
+        $commission = Commission::with('client', 'client.partner', 'project', 'client.partner.user')->findOrFail($id);
+
+        $statusUpdated = $commission->status !== $validatedData['status'];
+
         $commission->update($validatedData);
 
         Session::flash('submitted');
+
+        if ($statusUpdated) {
+            Notification::send($commission->client->partner->user, new CommissionStatus(Commission::getStatusLabel($commission->status), $commission->project->name));
+        }
 
         return redirect()->back()->with('status', 'Commission updated successfully!');
     }
@@ -75,10 +94,12 @@ class CommissionController extends Controller {
     }
 
     public function updateCommissionStatus(Request $request, string $id) {
-        $commission = Commission::findOrFail($id);
+        $commission = Commission::with('client', 'client.partner', 'project', 'client.partner.user')->findOrFail($id);
         $commission->status = $request->status;
 
         $commission->save();
+
+        Notification::send($commission->client->partner->user, new CommissionStatus(Commission::getStatusLabel($commission->status), $commission->project->name));
 
         return response()->json(['status' => 'success']);
     }
