@@ -177,7 +177,7 @@
                                                 value="{{ $errors->hasBag('createStaff') ? old('country_code') : '' }}"
                                                 name="country_code">
                                             <!-- <label class="crm-label form-label" for="country">Country<span
-                                                            class="text-danger">*</span></label> -->
+                                                                class="text-danger">*</span></label> -->
                                             @if ($errors->createStaff->has('country'))
                                                 <small class="invalid-feedback " style="font-size: 11px">
                                                     {{ $errors->createStaff->first('country') }}
@@ -351,7 +351,7 @@
                                                 value="{{ $errors->hasBag('updateStaff') ? old('country_code') : '' }}"
                                                 name="country_code">
                                             <!-- <label class="crm-label form-label" for="country2">Country<span
-                                                            class="text-danger">*</span></label> -->
+                                                                class="text-danger">*</span></label> -->
                                             @if ($errors->updateStaff->has('country'))
                                                 <small class="invalid-feedback " style="font-size: 11px">
                                                     {{ $errors->updateStaff->first('country') }}
@@ -450,22 +450,23 @@
     </div>
 
     @section('script')
-        @if ($errors->createStaff->any())
-            <script>
-                $('#staffModal-btn').click()
-            </script>
-        @endif
+        <script>
+            window.onload = function() {
+                @if ($errors->createStaff->any())
+                    $('#staffModal-btn').click()
+                @endif
 
-        @if ($errors->updateStaff->any())
-            <script>
-                $("#country2").countrySelect({
-                    defaultCountry: "us"
-                });
-                $("#country2").countrySelect("setCountry", "{{ $errors->hasBag('updateStaff') ? old('country') : '' }}");
+                @if ($errors->updateStaff->any())
+                    $("#country2").countrySelect({
+                        defaultCountry: "us"
+                    });
+                    $("#country2").countrySelect("setCountry",
+                        "{{ $errors->hasBag('updateStaff') ? old('country') : '' }}");
 
-                $('#editStaffModal-btn').click()
-            </script>
-        @endif
+                    $('#editStaffModal-btn').click()
+                @endif
+            }
+        </script>
 
         <script>
             $('body').on('click', '.custom-file-upload', function() {

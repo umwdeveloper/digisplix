@@ -729,7 +729,7 @@
                                             placeholder="Pakistan">
                                         <input type="hidden" id="country_code" name="country_code">
                                         <!-- <label class="crm-label form-label" for="country">Country<span
-                                                                                                                                                                                    class="text-danger">*</span></label> -->
+                                                                                                                                                                                            class="text-danger">*</span></label> -->
                                         @if ($errors->createLead->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->createLead->first('country') }}
@@ -948,7 +948,7 @@
                                             placeholder="Pakistan">
                                         <input type="hidden" id="country2_code" name="country_code">
                                         <!-- <label class="crm-label form-label" for="country2">Country<span
-                                                                                                                                                                                    class="text-danger">*</span></label> -->
+                                                                                                                                                                                            class="text-danger">*</span></label> -->
                                         @if ($errors->updateLead->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updateLead->first('country') }}
@@ -1037,21 +1037,22 @@
 
 
 @section('script')
-    @if ($errors->createLead->any())
-        <script>
-            $('#leadModal-btn').click()
-        </script>
-    @endif
+    <script>
+        window.onload = function() {
+            @if ($errors->createLead->any())
+                $('#leadModal-btn').click()
+            @endif
 
-    @if ($errors->updateLead->any())
-        <script>
-            $("#country2").countrySelect({
-                defaultCountry: "us"
-            });
-            $("#country2").countrySelect("setCountry", "{{ $errors->hasBag('updateLead') ? old('country') : '' }}");
-            $('#editLeadModal-btn').click()
-        </script>
-    @endif
+            @if ($errors->updateLead->any())
+                $("#country2").countrySelect({
+                    defaultCountry: "us"
+                });
+                $("#country2").countrySelect("setCountry",
+                    "{{ $errors->hasBag('updateLead') ? old('country') : '' }}");
+                $('#editLeadModal-btn').click()
+            @endif
+        }
+    </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {

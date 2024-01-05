@@ -494,17 +494,17 @@
     </div>
 
     @section('script')
-        @if ($errors->createProject->any())
-            <script>
-                $('#projectModal-btn').click()
-            </script>
-        @endif
+        <script>
+            window.onload = function() {
+                @if ($errors->createProject->any())
+                    $('#projectModal-btn').click()
+                @endif
 
-        @if ($errors->updateProject->any())
-            <script>
-                $("#editProjectModal-btn").click();
-            </script>
-        @endif
+                @if ($errors->updateProject->any())
+                    $("#editProjectModal-btn").click();
+                @endif
+            }
+        </script>
 
         <script>
             $("#filter-select").on('change', function() {

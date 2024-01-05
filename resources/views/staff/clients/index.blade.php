@@ -341,7 +341,7 @@
                                             placeholder="Pakistan">
                                         <input type="hidden" id="country2_code" name="country_code">
                                         <!-- <label class="crm-label form-label" for="country2">Country<span
-                                                                                    class="text-danger">*</span></label> -->
+                                                                                        class="text-danger">*</span></label> -->
                                         @if ($errors->updateClient->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updateClient->first('country') }}
@@ -399,15 +399,18 @@
     </div>
 
 @section('script')
-    @if ($errors->updateClient->any())
-        <script>
-            $("#country2").countrySelect({
-                defaultCountry: "us"
-            });
-            $("#country2").countrySelect("setCountry", "{{ $errors->hasBag('updateClient') ? old('country') : '' }}");
-            $('#editClientModal-btn').click()
-        </script>
-    @endif
+    <script>
+        window.onload = function() {
+            @if ($errors->updateClient->any())
+                $("#country2").countrySelect({
+                    defaultCountry: "us"
+                });
+                $("#country2").countrySelect("setCountry",
+                    "{{ $errors->hasBag('updateClient') ? old('country') : '' }}");
+                $('#editClientModal-btn').click()
+            @endif
+        }
+    </script>
 
     <script>
         $(document).ready(function() {

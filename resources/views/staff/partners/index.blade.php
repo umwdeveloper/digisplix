@@ -200,7 +200,7 @@
                                             value="{{ $errors->hasBag('createPartner') ? old('country_code') : '' }}"
                                             name="country_code">
                                         <!-- <label class="crm-label form-label" for="country">Country<span
-                                                                    class="text-danger">*</span></label> -->
+                                                                            class="text-danger">*</span></label> -->
                                         @if ($errors->createPartner->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->createPartner->first('country') }}
@@ -420,7 +420,7 @@
                                         <input type="hidden" id="country2_code" value="{{ old('country_code') }}"
                                             name="country_code">
                                         <!-- <label class="crm-label form-label" for="country2">Country<span
-                                                                    class="text-danger">*</span></label> -->
+                                                                            class="text-danger">*</span></label> -->
                                         @if ($errors->updatePartner->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updatePartner->first('country') }}
@@ -566,22 +566,23 @@
     </div>
 
     @section('script')
-        @if ($errors->createPartner->any())
-            <script>
-                $('#partnerModal-btn').click()
-            </script>
-        @endif
+        <script>
+            window.onload = function() {
+                @if ($errors->createPartner->any())
+                    $('#partnerModal-btn').click()
+                @endif
 
-        @if ($errors->updatePartner->any())
-            <script>
-                $("#country2").countrySelect({
-                    defaultCountry: "us"
-                });
-                $("#country2").countrySelect("setCountry", "{{ $errors->hasBag('updatePartner') ? old('country') : '' }}");
+                @if ($errors->updatePartner->any())
+                    $("#country2").countrySelect({
+                        defaultCountry: "us"
+                    });
+                    $("#country2").countrySelect("setCountry",
+                        "{{ $errors->hasBag('updatePartner') ? old('country') : '' }}");
 
-                $('#editPartnerModal-btn').click()
-            </script>
-        @endif
+                    $('#editPartnerModal-btn').click()
+                @endif
+            }
+        </script>
 
         <script>
             $('body').on('click', '.custom-file-upload', function() {
