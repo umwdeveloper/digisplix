@@ -259,6 +259,18 @@
                                     </a>
                                 </li>
                             @endcan
+
+                            @can('staff.logs')
+                                <li class="menu-item">
+                                    <a href="{{ route('staff.logs') }}">
+                                        <span class="menu-icon">
+                                            <i class="fa-duotone fa-file"></i>
+                                        </span>
+                                        <span class="menu-title">Logs
+                                        </span>
+                                    </a>
+                                </li>
+                            @endcan
                         </ul>
                     </nav>
                 </div>

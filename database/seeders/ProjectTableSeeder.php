@@ -14,7 +14,7 @@ class ProjectTableSeeder extends Seeder {
     public function run(): void {
         $projectsCount = $this->command->ask('How many projects should be added?', 20);
 
-        $clients = Client::where('active', 1)->get();
+        $clients = Client::where('active', 1)->where('status', Client::QUALIFIED)->get();
 
         Project::factory()->count($projectsCount)->make()->each(function ($project) use ($clients) {
             $project->client_id = $clients->random()->id;

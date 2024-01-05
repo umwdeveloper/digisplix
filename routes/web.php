@@ -137,6 +137,10 @@ Route::domain(config('custom.staff_alias'))
         Route::get('/commissions/fetch_commission/{commission_id}', [CommissionController::class, 'fetchCommission'])
             ->name('commissions.fetch_commission');
 
+        // Logs
+        Route::get('/logs', [StaffController::class, 'logs'])->name('logs');
+        Route::get('/clear_logs', [StaffController::class, 'clearLogs'])->name('clear_logs');
+
         // If route not found
         Route::fallback(function () {
             abort(404);

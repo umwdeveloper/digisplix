@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -174,5 +175,24 @@ class StaffController extends Controller {
         Auth::setUser($user);
 
         return redirect()->back()->with(['status' => "Password has been reset!"]);
+    }
+
+    public function logs() {
+        $this->authorize('staff.logs');
+
+        $logFilePath = storage_path('logs/laravel.log');
+
+        // Read the log file content
+        $logContent = File::get($logFilePath);
+
+        return view('staff.logs', ['logContent' => $logContent]);
+    }
+
+    public function clearLogs() {
+        $this->authorize('staff.logs');
+
+        File::put(storage_path('logs/laravel.log'), '');
+
+        return redirect()->back()->with('success', 'Logs cleared successfully!');
     }
 }

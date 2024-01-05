@@ -83,6 +83,11 @@ class AuthServiceProvider extends ServiceProvider {
             return $user->staff()->permissions->contains('name', 'emails');
         });
 
+        // Logs
+        Gate::define('staff.logs', function (User $user) {
+            return $user->is_admin;
+        });
+
         // Partner
 
         // Client
