@@ -102,7 +102,7 @@
                                                     <th scope="col">Deal Size</th>
                                                     <th scope="col">Commission</th>
                                                     <th scope="col">Type</th>
-                                                    <th scope="col">Cliend Paid On</th>
+                                                    <th scope="col">Client Paid On</th>
                                                     <th scope="col">Project Name</th>
                                                 </tr>
                                             </thead>
