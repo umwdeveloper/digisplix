@@ -17,7 +17,7 @@
                             </form>
                         </div>
                         <div class="pt-2">
-                            <pre>{{ $logContent }}</pre>
+                            <pre class="text-dark-clr">{{ !empty($logContent) ? $logContent : 'No logs' }}</pre>
                         </div>
                     </div>
                 </div>
