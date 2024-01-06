@@ -41,7 +41,7 @@ class ProjectController extends Controller {
         if ($current_status !== null) {
             $projectsFilter = $projects->where('current_status', $current_status);
         }
-        $clients = Client::with('user')->where('active', 1)->where('status', Client::QUALIFIED)->get();
+        $clients = Client::with('user')->where('active', 1)->where('is_client', 1)->get();
 
         return view("staff.projects.index", [
             'projects' => $current_status === null ? $projects : $projectsFilter,

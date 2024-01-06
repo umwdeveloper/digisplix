@@ -17,14 +17,14 @@ class ClientController extends Controller {
      */
     public function index() {
         $clients = Client::with(['user', 'partner', 'partner.user'])
-            ->where('status', Client::QUALIFIED)
+            ->where('is_client', 1)
             ->where('partner_id', auth()->user()->userable->id)
             ->get();
 
         return view('partners.clients.index', [
             'clients' => $clients,
-            'active_clients' => $clients->where('active', 1)->where('status', Client::QUALIFIED),
-            'inactive_clients' => $clients->where('active', 0)->where('status', Client::QUALIFIED),
+            'active_clients' => $clients->where('active', 1),
+            'inactive_clients' => $clients->where('active', 0),
         ]);
     }
 

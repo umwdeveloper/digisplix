@@ -32,7 +32,7 @@ class StaffController extends Controller {
         $this->authorize('staff.index');
 
         $clients = Client::with('projects')
-            ->where('status', Client::QUALIFIED)
+            ->where('is_client', 1)
             ->get();
 
         $deliveries = Project::with('client.user')->orderBy('deadline')->take(5)->get();

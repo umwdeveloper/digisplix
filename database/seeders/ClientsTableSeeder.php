@@ -22,6 +22,7 @@ class ClientsTableSeeder extends Seeder {
             if ($index >= 0 && $index < 5) {
                 $client->active = 1;
                 $client->status = Client::QUALIFIED;
+                $client->is_client = 1;
             }
             $client->partner_id = $partners->random()->id;
             $client->save();

@@ -112,7 +112,7 @@ class PartnerController extends Controller {
 
         $clients = Client::with(['user', 'partner'])
             ->where('partner_id', $partner->id)
-            ->where('status', Client::QUALIFIED)
+            ->where('is_client', 1)
             ->get();
 
         $projects = Project::with('client')

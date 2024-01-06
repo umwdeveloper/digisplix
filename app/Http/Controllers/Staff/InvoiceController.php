@@ -30,7 +30,7 @@ class InvoiceController extends Controller {
             ->get();
 
         $clients = Client::with(['user', 'partner', 'partner.user'])
-            ->where('status', Client::QUALIFIED)
+            ->where('is_client', 1)
             ->get();
 
         $categories = Category::all();
@@ -85,7 +85,7 @@ class InvoiceController extends Controller {
         // dd($invoices);
 
         $clients = Client::with(['user', 'partner', 'partner.user'])
-            ->where('status', Client::QUALIFIED)
+            ->where('is_client', 1)
             ->get();
 
         $categories = Category::all();
@@ -114,7 +114,7 @@ class InvoiceController extends Controller {
     public function create() {
         $this->authorize('staff.invoices');
 
-        $clients = Client::with('user')->where('status', Client::QUALIFIED)->get();
+        $clients = Client::with('user')->where('is_client', 1)->get();
         $categories = Category::all();
         $admin = User::getAdmin();
         return view('staff.invoices.create', [
@@ -168,7 +168,7 @@ class InvoiceController extends Controller {
                 ->whereColumn('invoice_id', 'invoices.id')
                 ->limit(1)])
             ->findOrFail($id);
-        $clients = Client::with('user')->where('status', Client::QUALIFIED)->get();
+        $clients = Client::with('user')->where('is_client', 1)->get();
         $categories = Category::all();
         $admin = User::getAdmin();
         return view('staff.invoices.edit', [
@@ -190,7 +190,7 @@ class InvoiceController extends Controller {
                 ->whereColumn('invoice_id', 'invoices.id')
                 ->limit(1)])
             ->findOrFail($id);
-        $clients = Client::with('user')->where('status', Client::QUALIFIED)->get();
+        $clients = Client::with('user')->where('is_client', 1)->get();
         $categories = Category::all();
         $admin = User::getAdmin();
         return view('staff.invoices.clone', [

@@ -14,7 +14,7 @@ class InvoiceSeeder extends Seeder {
      */
     public function run(): void {
         $invoicesCount = $this->command->ask("How many invoices should be added?", 20);
-        $clients = Client::where('active', 1)->where('status', Client::QUALIFIED)->get();
+        $clients = Client::where('active', 1)->where('is_client', 1)->get();
         $categories = Category::all();
 
         if ($clients->count() > 0) {

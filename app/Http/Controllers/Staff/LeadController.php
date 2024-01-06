@@ -126,9 +126,11 @@ class LeadController extends Controller {
         try {
             DB::beginTransaction();
 
-            if ($validatedData['status'] == Client::QUALIFIED) {
+            if ($validatedData['status'] == Client::QUALIFIED && $lead->is_client == 0) {
                 $password = generateRandomPassword();
                 $validatedData['password'] = Hash::make($password);
+
+                $validatedData['is_client'] = 1;
 
                 Mail::to($validatedData['email'])->send(new LeadAddedMail($validatedData['name'], $validatedData['email'], $password));
             }
@@ -179,9 +181,11 @@ class LeadController extends Controller {
             $lead = Client::findOrFail($id);
             $lead->status = $request->status;
 
-            if ($lead->status == Client::QUALIFIED) {
+            if ($lead->status == Client::QUALIFIED && $lead->is_client == 0) {
                 $password = generateRandomPassword();
                 $lead->user->password = Hash::make($password);
+
+                $lead->is_client = 1;
 
                 $lead->user->save();
 

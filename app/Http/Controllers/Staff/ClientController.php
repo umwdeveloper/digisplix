@@ -24,15 +24,15 @@ class ClientController extends Controller {
         $this->authorize('staff.clients');
 
         $clients = Client::with(['user', 'partner', 'partner.user'])
-            ->where('status', Client::QUALIFIED)
+            ->where('is_client', 1)
             ->get();
 
         $partners = Partner::with('user')->get();
 
         return view('staff.clients.index', [
             'clients' => $clients,
-            'active_clients' => $clients->where('active', 1)->where('status', Client::QUALIFIED),
-            'inactive_clients' => $clients->where('active', 0)->where('status', Client::QUALIFIED),
+            'active_clients' => $clients->where('active', 1),
+            'inactive_clients' => $clients->where('active', 0),
             'partners' => $partners
         ]);
     }
