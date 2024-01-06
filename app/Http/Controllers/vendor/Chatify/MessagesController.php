@@ -108,7 +108,7 @@ class MessagesController extends Controller {
 
             if ($fetch->id == $admin_id) {
                 $fetch->name = 'Support | DigiSplix';
-                $userAvatar = '../images/d-png.png';
+                $userAvatar = '../images/Logo-for-Chat-icon.jpg';
             }
         }
         return Response::json([
