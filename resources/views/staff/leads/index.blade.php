@@ -773,7 +773,7 @@
                                             placeholder="Pakistan">
                                         <input type="hidden" id="country_code" name="country_code">
                                         <!-- <label class="crm-label form-label" for="country">Country<span
-                                                                                                                                                                                                                                                                                                                                    class="text-danger">*</span></label> -->
+                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span></label> -->
                                         @if ($errors->createLead->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->createLead->first('country') }}
@@ -799,14 +799,14 @@
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
                                         <input type="date"
-                                            class="form-control crm-input {{ $errors->createLead->has('joined_date') ? 'is-invalid' : '' }}"
-                                            id="date" name="joined_date"
-                                            value="{{ $errors->hasBag('createLead') ? old('joined_date') : '' }}"
+                                            class="form-control crm-input {{ $errors->createLead->has('joined_at') ? 'is-invalid' : '' }}"
+                                            id="date" name="joined_at"
+                                            value="{{ $errors->hasBag('createLead') ? old('joined_at') : '' }}"
                                             placeholder="ABC">
                                         <label class="crm-label form-label" for="date">Joined Date</label>
-                                        @if ($errors->createLead->has('joined_date'))
+                                        @if ($errors->createLead->has('joined_at'))
                                             <small class="invalid-feedback " style="font-size: 11px">
-                                                {{ $errors->createLead->first('joined_date') }}
+                                                {{ $errors->createLead->first('joined_at') }}
                                             </small>
                                         @endif
                                     </div>
@@ -1061,14 +1061,14 @@
                                 <div class="col-lg-6">
                                     <div class="form-floating mb-3">
                                         <input type="date"
-                                            class="form-control crm-input {{ $errors->updateLead->has('joined_date') ? 'is-invalid' : '' }}"
-                                            id="date" name="joined_date"
-                                            value="{{ $errors->hasBag('updateLead') ? old('joined_date') : '' }}"
+                                            class="form-control crm-input {{ $errors->updateLead->has('joined_at') ? 'is-invalid' : '' }}"
+                                            id="date" name="joined_at"
+                                            value="{{ $errors->hasBag('updateLead') ? old('joined_at') : '' }}"
                                             placeholder="ABC">
                                         <label class="crm-label form-label" for="date">Joined Date</label>
-                                        @if ($errors->updateLead->has('joined_date'))
+                                        @if ($errors->updateLead->has('joined_at'))
                                             <small class="invalid-feedback " style="font-size: 11px">
-                                                {{ $errors->updateLead->first('joined_date') }}
+                                                {{ $errors->updateLead->first('joined_at') }}
                                             </small>
                                         @endif
                                     </div>

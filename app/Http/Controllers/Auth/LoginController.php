@@ -223,6 +223,8 @@ class LoginController extends Controller {
 
         $request->session()->regenerateToken();
 
+        Cache::forget('preloader');
+
         if ($response = $this->loggedOut($request)) {
             return $response;
         }

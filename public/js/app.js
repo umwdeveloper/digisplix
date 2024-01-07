@@ -256,16 +256,16 @@ if (copyrightYear) {
 
 
 // Show preloader only once in 2 hours
-const twoHours = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
-const now = new Date();
-const twoHoursLater = new Date(now.getTime() + twoHours);
+// const twoHours = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
+// const now = new Date();
+// const twoHoursLater = new Date(now.getTime() + twoHours);
 
-Cookies.set('preloader', 'set', {
-    expires: twoHoursLater,
-    path: '/'
-});
+// Cookies.set('preloader', 'set', {
+//     expires: twoHoursLater,
+//     path: '/'
+// });
 
-// Cookies.remove("preloader", {path: '/'})
+// Cookies.remove("preloader", { path: '/' })
 
 // Active menu item
 $("nav li a").each(function () {

@@ -32,7 +32,7 @@ class StoreLead extends FormRequest {
             'country_code' => 'string|required',
             'address' => 'string|nullable',
             'phone' => 'string|required',
-            'joined_date' => 'date|nullable',
+            'joined_at' => 'date|nullable',
             'followup_date' => 'date|nullable',
         ];
     }
