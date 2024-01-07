@@ -35,6 +35,7 @@ class LeadController extends Controller {
 
         $leads = Client::with(['user', 'partner', 'partner.user'])
             ->where('partner_id', auth()->user()->userable->id)
+            ->where('is_lead', 1)
             ->get();
 
         return view('partners.leads.index', [
@@ -156,11 +157,17 @@ class LeadController extends Controller {
     public function destroy(string $id) {
         $lead = Client::findOrFail($id);
 
-        if (!empty($lead->user->img)) {
-            Storage::disk('public')->delete($lead->user->img);
-        }
+        if ($lead->is_client == 1) {
+            $lead->is_lead = 0;
+            $lead->save();
+        } else {
+            if (!empty($lead->user->img)) {
+                Storage::disk('public')->delete($lead->user->img);
+            }
 
-        $lead->delete();
+            $lead->user()->delete();
+            $lead->delete();
+        }
 
         return redirect()->back()->with('status', 'Lead deleted successfully!');
     }

@@ -107,11 +107,17 @@ class ClientController extends Controller {
 
         $client = Client::findOrFail($id);
 
-        if (!empty($client->user->img)) {
-            Storage::disk('public')->delete($client->user->img);
-        }
+        if ($client->is_lead == 1) {
+            $client->is_client = 0;
+            $client->projects()->delete();
+            $client->save();
+        } else {
+            if (!empty($client->user->img)) {
+                Storage::disk('public')->delete($client->user->img);
+            }
 
-        $client->delete();
+            $client->delete();
+        }
 
         return redirect()->back()->with('status', 'Client deleted successfully!');
     }

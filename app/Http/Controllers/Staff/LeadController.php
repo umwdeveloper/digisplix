@@ -32,6 +32,7 @@ class LeadController extends Controller {
 
         // $leads = Client::with(['user', 'partner', 'partner.user'])->where('active', 0)->where('status', '!=', Client::QUALIFIED)->get();
         $leads = Client::with(['user', 'partner', 'partner.user'])
+            ->where('is_lead', 1)
             ->get();
 
         $partners = Partner::with('user')->get();
@@ -163,12 +164,17 @@ class LeadController extends Controller {
 
         $lead = Client::findOrFail($id);
 
-        if (!empty($lead->user->img)) {
-            Storage::disk('public')->delete($lead->user->img);
-        }
+        if ($lead->is_client == 1) {
+            $lead->is_lead = 0;
+            $lead->save();
+        } else {
+            if (!empty($lead->user->img)) {
+                Storage::disk('public')->delete($lead->user->img);
+            }
 
-        $lead->user()->delete();
-        $lead->delete();
+            $lead->user()->delete();
+            $lead->delete();
+        }
 
         return redirect()->back()->with('status', 'Lead deleted successfully!');
     }

@@ -106,6 +106,7 @@ class PartnerController extends Controller {
 
         $leads = Client::with(['user', 'partner', 'partner.user'])
             ->where('partner_id', $id)
+            ->where('is_lead', 1)
             ->get();
 
         $partners = Partner::with('user')->get();
