@@ -161,7 +161,7 @@ class LoginController extends Controller {
                 }
                 $this->guard()->logout();
             } elseif ($subdomain === "client") {
-                if ($user->userable_type === Client::class) {
+                if ($user->userable_type === Client::class && $user->userable->is_client == 1) {
                     $user = User::findOrFail($user->id);
                     $user->two_fa_completed = false;
                     $user->save();

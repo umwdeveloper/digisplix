@@ -192,7 +192,7 @@ Route::domain(config('custom.partner_alias'))
 
 Route::domain(config('custom.client_alias'))
     ->name('client.')
-    ->middleware(['auth', '2fa', 'support_middleware'])
+    ->middleware(['auth', '2fa', 'support_middleware', 'is_client'])
     ->group(function () {
         Route::put('/update/{id}', [ClientController::class, 'update'])
             ->name('update');

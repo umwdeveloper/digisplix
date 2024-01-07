@@ -73,6 +73,7 @@ class Kernel extends HttpKernel {
         '2fa' => \App\Http\Middleware\TwoFA::class,
         'SetAdminIdForStaffChat' => \App\Http\Middleware\SetAdminIdForStaffChat::class,
         'support_middleware' => \App\Http\Middleware\SupportMiddleware::class,
+        'is_client' => \App\Http\Middleware\ClientIsClientMiddleware::class
         // 'subdomain_validation_middleware' => \App\Http\Middleware\SubdomainValidationMiddleware::class,
     ];
 }
