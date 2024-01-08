@@ -71,4 +71,12 @@ class Commission extends Model {
     public static function getStatusColor($status) {
         return self::$statusColors[$status];
     }
+
+    public static function boot() {
+        parent::boot();
+
+        static::addGlobalScope('orderCommission', function ($builder) {
+            $builder->orderBy('commissions.created_at', 'desc');
+        });
+    }
 }
