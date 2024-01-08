@@ -11,13 +11,17 @@ use Illuminate\Support\HtmlString;
 class CommissionCreated extends Notification implements ShouldQueue {
     use Queueable;
 
-    public $project;
+    public $status, $project, $commission, $commission_type, $business_name;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($project) {
+    public function __construct($status, $project, $commission, $commission_type, $business_name) {
+        $this->status = $status;
         $this->project = $project;
+        $this->commission = $commission;
+        $this->commission_type = $commission_type;
+        $this->business_name = $business_name;
     }
 
     /**
@@ -34,9 +38,15 @@ class CommissionCreated extends Notification implements ShouldQueue {
      */
     public function toMail(object $notifiable): MailMessage {
         return (new MailMessage)
-            ->subject("Commission Created")
+            ->subject("Great News! You've Earned a Commission")
             ->greeting("Hi " . $notifiable->name . ",")
-            ->line(new HtmlString('A new commission was created for the <strong>' . $this->project . '</strong> project'));
+            ->line(new HtmlString("We hope this email finds you well. We're thrilled to share the Great News that your hard work has Paid off, and you've Earned a well-deserved Commission. Congratulations! 🎉"))
+            ->line(new HtmlString('<strong>Commission: </strong>' . $this->commission . "%" . "<br>" .
+                '<strong>Commission Type: </strong>' . $this->commission_type . "<br>" .
+                '<strong>Project Name: </strong>' . $this->project . "<br>" .
+                '<strong>Business Name: </strong>' . $this->business_name))
+            ->line(new HtmlString("To ensure a swift Payment process, please reach out to our Support team through your dashboard or contact us at WhatsApp and share your Account details."))
+            ->line(new HtmlString("Thanks for your hard work!"));
     }
 
     /**
@@ -46,7 +56,7 @@ class CommissionCreated extends Notification implements ShouldQueue {
      */
     public function toDatabase(object $notifiable): array {
         return [
-            'message' => 'New commission created',
+            'message' => 'Commission Earned',
             "link" => route('partner.sales.index')
         ];
     }

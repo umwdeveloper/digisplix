@@ -11,10 +11,10 @@ class NotificationController extends Controller {
 
             /** @var \App\Models\User|null */
             $user = auth()->user();
-            $notification = $user->notifications()->where('data->link', $link)->first();
+            $notifications = $user->notifications()->where('data->link', $link)->get();
 
-            if ($notification) {
-                $notification->markAsRead();
+            if ($notifications->count() > 0) {
+                $notifications->markAsRead();
             }
 
             return redirect()->to($link);
