@@ -32,9 +32,10 @@ class LeadAdded extends Notification implements ShouldQueue {
      */
     public function toMail(object $notifiable): MailMessage {
         return (new MailMessage)
-            ->subject("New Lead")
+            ->subject("New Lead Received from DigiSplix")
             ->greeting("Hi " . $notifiable->name . ",")
-            ->line(new HtmlString('DigiSplix has given you a new lead'));
+            ->line(new HtmlString("DigiSplix has given you a New Lead. To get started on this lead, please log in to the Partner's dashboard."))
+            ->action('Login', config('custom.partner_subdomain'));;
     }
 
     /**
@@ -44,7 +45,7 @@ class LeadAdded extends Notification implements ShouldQueue {
      */
     public function toDatabase(object $notifiable): array {
         return [
-            'message' => "New lead added",
+            'message' => "New Lead Received",
             "link" => route('partner.leads.index')
         ];
     }

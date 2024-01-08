@@ -35,7 +35,7 @@ class QualifiedLead extends Notification implements ShouldQueue {
     public function toMail(object $notifiable): MailMessage {
         return (new MailMessage)
             ->subject('Lead Qualified')
-            ->line(new HtmlString('<strong>' . $this->name . '</strong> has Qualified the lead'));
+            ->line(new HtmlString('<strong>' . $this->name . '</strong> has Qualified the lead.'));
     }
 
     /**
