@@ -54,7 +54,7 @@ class UserFactory extends Factory {
 
         return $this->state(fn (array $attributes) => [
             'name' => 'Staff',
-            'email' => 'shoaibkhalid497@gmail.com',
+            'email' => 'umwdeveloper@gmail.com',
             'email_verified_at' => now(),
             'password' => Hash::make('123'),
             'remember_token' => Str::random(10),
