@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel {
             ->appendOutputTo(storage_path('logs/status-overdue.log'));
 
         // Check unread messages and send reminder to users
-        $schedule->command('app:check-unread-messages')->everySecond();
+        // $schedule->command('app:check-unread-messages')->everySecond();
 
         // $schedule->command('app:process-queue')
         //     ->everySecond()
