@@ -11,6 +11,8 @@ use App\Models\Partner;
 use App\Models\User;
 use App\Notifications\LeadCreated;
 use App\Notifications\LeadStatusUpdated;
+use App\Notifications\ProgressLead;
+use App\Notifications\QualifiedLead;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -122,13 +124,25 @@ class LeadController extends Controller {
         try {
             DB::beginTransaction();
 
-            if ($validatedData['status'] == Client::QUALIFIED && $lead->is_client == 0) {
+            if (
+                $validatedData['status'] == Client::QUALIFIED
+                && $validatedData['status'] != $lead->status
+                && $lead->is_client == 0
+            ) {
                 $password = generateRandomPassword();
                 $validatedData['password'] = Hash::make($password);
 
                 $validatedData['is_client'] = 1;
 
                 Mail::to($validatedData['email'])->send(new LeadAddedMail($validatedData['name'], $validatedData['email'], $password));
+            }
+
+            if ($validatedData['status'] == Client::QUALIFIED && $validatedData['status'] != $lead->status) {
+                Notification::send(User::getAdmin(), new QualifiedLead($lead->partner->user->name));
+            }
+
+            if ($validatedData['status'] == Client::IN_PROGRESS && $validatedData['status'] != $lead->status) {
+                Notification::send(User::getAdmin(), new ProgressLead($lead->partner->user->name));
             }
 
             $lead->update($validatedData);
@@ -187,6 +201,14 @@ class LeadController extends Controller {
                 $lead->user->save();
 
                 Mail::to($lead->user->email)->send(new LeadAddedMail($lead->user->name, $lead->user->email, $password));
+            }
+
+            if ($lead->status == Client::QUALIFIED) {
+                Notification::send(User::getAdmin(), new QualifiedLead($lead->partner->user->name));
+            }
+
+            if ($lead->status == Client::IN_PROGRESS) {
+                Notification::send(User::getAdmin(), new ProgressLead($lead->partner->user->name));
             }
 
             $lead->save();
