@@ -18,7 +18,7 @@ class SupportController extends Controller {
     public function index() {
         $this->authorize('staff.support');
 
-        $tickets = Support::with('user')->get();
+        $tickets = Support::with(['user', 'user.userable'])->get();
         $statusCounts = Support::groupBy('status')
             ->select('status', DB::raw('count(*) as count'))
             ->get();

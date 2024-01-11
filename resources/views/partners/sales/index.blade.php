@@ -22,7 +22,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class=" flex-grow-1  box-text d-flex align-items-center">
 
-                                        <span class="box-value" id="sales">{{ $sales }}</span>
+                                        <span class="box-value" id="sales">{{ number_format($sales, 0, ',') }}</span>
 
                                     </div>
                                     <div class="box-icon">
@@ -48,7 +48,8 @@
                                 <div class="d-flex align-items-center">
                                     <div class=" flex-grow-1  box-text d-flex align-items-center">
 
-                                        <span class="box-value">$<span id="revenue">{{ round($revenue) }}</span></span>
+                                        <span class="box-value">$<span
+                                                id="revenue">{{ number_format(round($revenue), 0, ',') }}</span></span>
 
                                     </div>
                                     <div class="box-icon">
@@ -75,7 +76,7 @@
                                     <div class=" flex-grow-1  box-text d-flex align-items-center">
 
                                         <span class="box-value">$<span
-                                                id="commission">{{ round($commission) }}</span></span>
+                                                id="commission">{{ number_format(round($commission), 0, ',') }}</span></span>
 
                                     </div>
                                     <div class="box-icon">
@@ -132,12 +133,12 @@
                                                                 </a>
                                                             </div>
                                                         </td>
-                                                        <td>${{ round($commission->deal_size) }}
+                                                        <td>${{ number_format(round($commission->deal_size), 0, ',') }}
                                                         </td>
-                                                        <td>${{ round($commission->deal_size * ($commission->commission / 100)) }}
+                                                        <td>${{ number_format(round($commission->deal_size * ($commission->commission / 100)), 0, ',') }}
                                                         </td>
                                                         <td>{{ $commission->type == 0 ? 'Straight' : 'Recurring' }}</td>
-                                                        <td>{{ \Carbon\Carbon::parse($commission->deal_date)->format('d-m-Y') }}
+                                                        <td>{{ \Carbon\Carbon::parse($commission->deal_date)->format('d M Y') }}
                                                         </td>
                                                         <td class="">
                                                             <p class=" mb-0 pb-0">

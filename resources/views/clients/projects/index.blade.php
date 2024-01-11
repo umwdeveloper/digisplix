@@ -13,7 +13,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class=" flex-grow-1  box-text d-flex align-items-center">
 
-                                        <span class="box-value">{{ $completed_projects }}</span>
+                                        <span class="box-value">{{ number_format($completed_projects, 0, ',') }}</span>
 
                                     </div>
                                     <div class="box-icon">
@@ -29,7 +29,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class=" flex-grow-1  box-text d-flex align-items-center">
 
-                                        <span class="box-value">{{ $ongoing_projects }}</span>
+                                        <span class="box-value">{{ number_format($ongoing_projects, 0, ',') }}</span>
 
                                     </div>
                                     <div class="box-icon">
@@ -44,7 +44,7 @@
                                 <h1 class="box-heading">Paid</h1>
                                 <div class="d-flex align-items-center">
                                     <div class=" flex-grow-1  box-text d-flex align-items-center">
-                                        <span class="box-value">{{ $paid_projects }}</span>
+                                        <span class="box-value">{{ number_format($paid_projects, 0, ',') }}</span>
 
                                     </div>
                                     <div class="box-icon">
@@ -59,7 +59,7 @@
                                 <h1 class="box-heading">Overdue</h1>
                                 <div class="d-flex align-items-center">
                                     <div class=" flex-grow-1  box-text d-flex align-items-center">
-                                        <span class="box-value">{{ $overdue_projects }}</span>
+                                        <span class="box-value">{{ number_format($overdue_projects, 0, ',') }}</span>
 
                                     </div>
                                     <div class="box-icon">
@@ -90,12 +90,14 @@
                                             alt="">
                                         <div class="ms-2">
                                             <h1 class="mb-0 pb-0">{{ $project->name }}</h1>
-                                            <h3 class="mb-0 pb-0">{{ $project->client->user->name }}</h3>
                                         </div>
                                     </a>
                                     <div class="project-card-details">
+                                        <p class="mb-0 pb-0" style="font-weight: 600">
+                                            {{ $project->client->business_name }}
+                                        </p>
                                         <p class="mb-0 pb-0">
-                                            {{ $project->description }}
+                                            {{ $project->client->user->name }}
                                         </p>
                                         <div class="d-flex justify-content-between align-items-end mt-4">
                                             <button disabled
@@ -103,7 +105,8 @@
                                             <div>
                                                 <div class="completed">
                                                     <i class="fa-duotone fa-calendar-days me-1"></i>
-                                                    <span class="mb-0 pb-0">{{ $project->deadline }}</span>
+                                                    <span
+                                                        class="mb-0 pb-0">{{ \Carbon\Carbon::parse($project->deadline)->format('d M Y') }}</span>
                                                 </div>
                                             </div>
                                         </div>

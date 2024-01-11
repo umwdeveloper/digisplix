@@ -13,7 +13,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class=" flex-grow-1  box-text d-flex align-items-center">
 
-                                        <span class="box-value">{{ $new_leads_count }}</span>
+                                        <span class="box-value">{{ number_format($new_leads_count, 0, ',') }}</span>
 
                                     </div>
                                     <div class="box-icon">
@@ -29,7 +29,8 @@
                                 <div class="d-flex align-items-center">
                                     <div class=" flex-grow-1  box-text d-flex align-items-center">
 
-                                        <span class="box-value">{{ $follow_up_leads->count() }}</span>
+                                        <span
+                                            class="box-value">{{ number_format($follow_up_leads->count(), 0, ',') }}</span>
 
                                     </div>
                                     <div class="box-icon">
@@ -44,7 +45,8 @@
                                 <h1 class="box-heading">Leads In Progress</h1>
                                 <div class="d-flex align-items-center">
                                     <div class=" flex-grow-1  box-text d-flex align-items-center">
-                                        <span class="box-value">{{ $in_progress_leads->count() }}</span>
+                                        <span
+                                            class="box-value">{{ number_format($in_progress_leads->count(), 0, ',') }}</span>
 
                                     </div>
                                     <div class="box-icon">
@@ -59,7 +61,7 @@
                                 <h1 class="box-heading">Failed Leads</h1>
                                 <div class="d-flex align-items-center">
                                     <div class=" flex-grow-1  box-text d-flex align-items-center">
-                                        <span class="box-value">{{ $failed_leads->count() }}</span>
+                                        <span class="box-value">{{ number_format($failed_leads->count(), 0, ',') }}</span>
 
                                     </div>
                                     <div class="box-icon">
@@ -74,7 +76,8 @@
                                 <h1 class="box-heading">Qualified Leads</h1>
                                 <div class="d-flex align-items-center">
                                     <div class=" flex-grow-1  box-text d-flex align-items-center">
-                                        <span class="box-value">{{ $qualified_leads->count() }}</span>
+                                        <span
+                                            class="box-value">{{ number_format($qualified_leads->count(), 0, ',') }}</span>
 
                                     </div>
                                     <div class="box-icon">
@@ -174,9 +177,9 @@
                                                             {{ $lead->user->phone }}
                                                         </td>
                                                         <td>
-                                                            {{ !empty($lead->joined_at) ? \Carbon\Carbon::parse($lead->joined_at)->format('F j, Y') : 'None' }}
+                                                            {{ !empty($lead->joined_at) ? \Carbon\Carbon::parse($lead->joined_at)->format('d M Y') : 'None' }}
                                                         </td>
-                                                        <td>{{ !empty($lead->followup_date) ? \Carbon\Carbon::parse($lead->followup_date)->format('F j, Y') : 'None' }}
+                                                        <td>{{ !empty($lead->followup_date) ? \Carbon\Carbon::parse($lead->followup_date)->format('d M Y') : 'None' }}
                                                         </td>
                                                         <td>
                                                             @if (!empty($lead->url))
@@ -283,9 +286,9 @@
                                                                 {{ $lead->user->phone }}
                                                             </td>
                                                             <td>
-                                                                {{ !empty($lead->joined_at) ? \Carbon\Carbon::parse($lead->joined_at)->format('F j, Y') : 'None' }}
+                                                                {{ !empty($lead->joined_at) ? \Carbon\Carbon::parse($lead->joined_at)->format('d M Y') : 'None' }}
                                                             </td>
-                                                            <td>{{ !empty($lead->followup_date) ? \Carbon\Carbon::parse($lead->followup_date)->format('F j, Y') : 'None' }}
+                                                            <td>{{ !empty($lead->followup_date) ? \Carbon\Carbon::parse($lead->followup_date)->format('d M Y') : 'None' }}
                                                             </td>
                                                             <td>
                                                                 @if (!empty($lead->url))
@@ -392,9 +395,9 @@
                                                             {{ $lead->user->phone }}
                                                         </td>
                                                         <td>
-                                                            {{ !empty($lead->joined_at) ? \Carbon\Carbon::parse($lead->joined_at)->format('F j, Y') : 'None' }}
+                                                            {{ !empty($lead->joined_at) ? \Carbon\Carbon::parse($lead->joined_at)->format('d M Y') : 'None' }}
                                                         </td>
-                                                        <td>{{ !empty($lead->followup_date) ? \Carbon\Carbon::parse($lead->followup_date)->format('F j, Y') : 'None' }}
+                                                        <td>{{ !empty($lead->followup_date) ? \Carbon\Carbon::parse($lead->followup_date)->format('d M Y') : 'None' }}
                                                         </td>
                                                         <td>
                                                             @if (!empty($lead->url))
@@ -499,9 +502,9 @@
                                                             {{ $lead->user->phone }}
                                                         </td>
                                                         <td>
-                                                            {{ !empty($lead->joined_at) ? \Carbon\Carbon::parse($lead->joined_at)->format('F j, Y') : 'None' }}
+                                                            {{ !empty($lead->joined_at) ? \Carbon\Carbon::parse($lead->joined_at)->format('d M Y') : 'None' }}
                                                         </td>
-                                                        <td>{{ !empty($lead->followup_date) ? \Carbon\Carbon::parse($lead->followup_date)->format('F j, Y') : 'None' }}
+                                                        <td>{{ !empty($lead->followup_date) ? \Carbon\Carbon::parse($lead->followup_date)->format('d M Y') : 'None' }}
                                                         </td>
                                                         <td>
                                                             @if (!empty($lead->url))
@@ -729,7 +732,7 @@
                                             placeholder="Pakistan">
                                         <input type="hidden" id="country_code" name="country_code">
                                         <!-- <label class="crm-label form-label" for="country">Country<span
-                                                                                                                                                                                                class="text-danger">*</span></label> -->
+                                                                                                                                                                                                                        class="text-danger">*</span></label> -->
                                         @if ($errors->createLead->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->createLead->first('country') }}
@@ -948,7 +951,7 @@
                                             placeholder="Pakistan">
                                         <input type="hidden" id="country2_code" name="country_code">
                                         <!-- <label class="crm-label form-label" for="country2">Country<span
-                                                                                                                                                                                                class="text-danger">*</span></label> -->
+                                                                                                                                                                                                                        class="text-danger">*</span></label> -->
                                         @if ($errors->updateLead->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updateLead->first('country') }}

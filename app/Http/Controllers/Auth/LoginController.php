@@ -217,13 +217,13 @@ class LoginController extends Controller {
             $user->save();
         }
 
+        Cache::forget('preloader' . auth()->user()->id);
+
         $this->guard()->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
-
-        Cache::forget('preloader');
 
         if ($response = $this->loggedOut($request)) {
             return $response;

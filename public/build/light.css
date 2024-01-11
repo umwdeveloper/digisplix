@@ -2124,11 +2124,6 @@ input:-webkit-autofill {
   margin: 0;
   color: #808080;
 }
-.notification-dropdown-div .unread-notification {
-  background-color: #f3f3f3 !important;
-  font-weight: 600 !important;
-  border-bottom: 1px solid #ffffff !important;
-}
 .unread-notification {
   background-color: #f3f3f3 !important;
   font-weight: 600 !important;
@@ -2849,7 +2844,7 @@ input:-webkit-autofill {
   color: #172b4c;
   display: block;
   display: -webkit-box;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;

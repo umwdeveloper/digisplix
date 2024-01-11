@@ -93,6 +93,6 @@ class SaleController extends Controller {
         $revenue = round($invoices->sum('items_sum_price'));
         $commission = round($invoices->sum('items_sum_price') * (auth()->user()->userable->commission / 100));
 
-        return response()->json(['total' => $filter == 'sales' ? $sales : ($filter == 'revenue' ? $revenue : $commission)]);
+        return response()->json(['total' => $filter == 'sales' ? number_format($sales, 0, ',') : ($filter == 'revenue' ? number_format($revenue, 0, ',') : number_format($commission, 0, ','))]);
     }
 }

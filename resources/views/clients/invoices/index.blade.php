@@ -52,7 +52,7 @@
                                                 <td class="bussiness-name">
                                                     ${{ round($invoice->total_price) }}
                                                 </td>
-                                                <td>{{ \Carbon\Carbon::parse($invoice->due_date)->format('d/m/y') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($invoice->due_date)->format('d M Y') }}</td>
 
                                                 <td>
                                                     <div class="invoice-{{ $invoice->status }}">

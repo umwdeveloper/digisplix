@@ -58,13 +58,13 @@
 </head>
 
 <body class="theme">
-    @if (!cache('preloader'))
+    @if (!cache('preloader' . auth()->user()->id))
         <div class="loader">
             <img src="{{ asset('images/d-png.png') }}" alt="">
         </div>
     @endif
     @php
-        Cache::put('preloader', true);
+        Cache::put('preloader' . auth()->user()->id, true);
     @endphp
     <div class="layout has-sidebar fixed-sidebar d-flex" style="width: fit-content !important;">
         <!-- ---------------------Side bar-------------- -->

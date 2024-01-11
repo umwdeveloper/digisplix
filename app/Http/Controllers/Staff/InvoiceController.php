@@ -329,4 +329,15 @@ class InvoiceController extends Controller {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
         }
     }
+
+    public function fetchInvoice(Request $request, string $id) {
+        $this->authorize('staff.invoices');
+
+        $invoice = Invoice::with(['items'])
+            ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
+                ->whereColumn('invoice_id', 'invoices.id')
+                ->limit(1)])
+            ->findOrFail($id);
+        return response()->json(['status' => 'success', 'invoice' => $invoice]);
+    }
 }

@@ -38,6 +38,9 @@
             <td>
                 <p data-id="{{ $user->id }}" data-type="user">
                     {{ strlen($user->name) > 12 ? trim(substr($user->name, 0, 12)) . '..' : $user->name }}
+                    @if ($user->userable_type == App\Models\Partner::class)
+                        <i class="fa-duotone fa-user-crown" style="font-size: 11px"></i>
+                    @endif
                     <span class="contact-item-time"
                         data-time="{{ $lastMessage->created_at }}">{{ $lastMessage->timeAgo }}</span>
                 </p>

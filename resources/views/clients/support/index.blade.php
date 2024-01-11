@@ -25,6 +25,7 @@
                                                     <th>Sr#</th>
                                                     <th>Subject</th>
                                                     <th>Status</th>
+                                                    <th>Business Name</th>
                                                     <th>Priority</th>
                                                     <th>Last Update Date</th>
                                                     <th>Opened Date</th>
@@ -64,6 +65,7 @@
                                                                 {{ $status_labels[$ticket->status] }}
                                                             </div>
                                                         </td>
+                                                        <td>{{ $ticket->user->userable->business_name }}</td>
 
                                                         <td>
                                                             <div class="{{ $ticketPriorityClasses[$ticket->priority] }}">
@@ -71,11 +73,11 @@
                                                         </td>
 
                                                         <td>
-                                                            {{ $ticket->updated_at->format('d M, Y') }}
+                                                            {{ $ticket->updated_at->format('d M Y') }}
                                                         </td>
 
                                                         <td>
-                                                            {{ $ticket->created_at->format('d M, Y') }}
+                                                            {{ $ticket->created_at->format('d M Y') }}
                                                         </td>
 
 

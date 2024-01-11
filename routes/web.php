@@ -125,6 +125,8 @@ Route::domain(config('custom.staff_alias'))
             ->name('invoices.filtered');
         Route::get('invoices/{invoice_id}/clone', [InvoiceController::class, 'clone'])
             ->name('invoices.clone');
+        Route::patch('/invoices/fetch-invoice/{invoice_id}', [InvoiceController::class, 'fetchInvoice'])
+            ->name('invoices.fetch_invoice');
 
         // Sales
         Route::get('/sales', [StaffSaleController::class, 'index'])->name('sales.index');

@@ -19,6 +19,10 @@ class Kernel extends ConsoleKernel {
         $schedule->command('app:check-unread-messages')->hourly();
         $schedule->command('app:check-unread-messages12')->cron('0 */12 * * *');
         $schedule->command('app:check-unread-messages24')->daily();
+
+        // $schedule->command('app:check-unread-messages')->everyMinute();
+        // $schedule->command('app:check-unread-messages12')->everyFiveMinutes();
+        // $schedule->command('app:check-unread-messages24')->everyTenMinutes();
     }
 
     /**

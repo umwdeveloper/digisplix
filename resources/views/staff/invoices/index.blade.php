@@ -13,7 +13,7 @@
                                 </h1>
                                 <div class="d-flex align-items-center">
                                     <div class="flex-grow-1 box-text d-flex align-items-center">
-                                        <span class="box-value">${{ $total_price }}</span>
+                                        <span class="box-value">${{ number_format($total_price, 0, ',') }}</span>
                                     </div>
                                     <div class="box-icon">
                                         <i class="fa-duotone fa-file-lines"></i>
@@ -28,7 +28,7 @@
                                 </h1>
                                 <div class="d-flex align-items-center">
                                     <div class="flex-grow-1 box-text d-flex align-items-center">
-                                        <span class="box-value">${{ $total_price_paid }}</span>
+                                        <span class="box-value">${{ number_format($total_price_paid, 0, ',') }}</span>
                                     </div>
                                     <div class="box-icon">
                                         <i class="fa-duotone fa-file-invoice-dollar"></i>
@@ -43,7 +43,7 @@
                                 </h1>
                                 <div class="d-flex align-items-center">
                                     <div class="flex-grow-1 box-text d-flex align-items-center">
-                                        <span class="box-value">${{ $total_price_overdue }}</span>
+                                        <span class="box-value">${{ number_format($total_price_overdue, 0, ',') }}</span>
                                     </div>
                                     <div class="box-icon">
                                         <i class="fa-duotone fa-receipt"></i>
@@ -59,7 +59,7 @@
                                 </h1>
                                 <div class="d-flex align-items-center">
                                     <div class="flex-grow-1 box-text d-flex align-items-center">
-                                        <span class="box-value">${{ $total_price_cancelled }}</span>
+                                        <span class="box-value">${{ number_format($total_price_cancelled, 0, ',') }}</span>
                                     </div>
                                     <div class="box-icon">
                                         <i class="fa-duotone fa-file-invoice"></i>
@@ -342,17 +342,14 @@
                                         <thead>
                                             <tr>
                                                 <th class="no-sort"></th>
-                                                <th class="">
-                                                    <div class="d-flex align-items-center">
-                                                        <input type="checkbox" class="table-checkbox ">Invoice ID
-                                                    </div>
-                                                </th>
+                                                <th class="">Invoice ID</th>
                                                 <th>Category</th>
                                                 <th>Created On</th>
                                                 <th>Invoice to</th>
                                                 <th>Amount</th>
                                                 <th>Due Date</th>
                                                 <th>Status</th>
+                                                <th>View</th>
                                                 <th>Edit</th>
                                                 <th>Mark as sent</th>
                                                 <th>Send Invoice</th>
@@ -372,18 +369,18 @@
                                                     </td>
 
                                                     <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <input type="checkbox"
-                                                                class="table-checkbox">#{{ $invoice->invoice_id }}
+                                                        <div class="d-flex align-items-center previewBtn"
+                                                            style="cursor: pointer" data-id="{{ $invoice->id }}">
+                                                            #{{ $invoice->invoice_id }}
                                                         </div>
                                                     </td>
                                                     <td class="">{{ $invoice->category->name }}</td>
                                                     <td>{{ $invoice->created_at->format('d M Y') }}</td>
                                                     <td class="bussiness-name">{{ $invoice->invoice_to }}</td>
                                                     <td class="bussiness-name">
-                                                        ${{ round($invoice->items_sum_price) }}
+                                                        ${{ number_format(round($invoice->items_sum_price), 0, ',') }}
                                                     </td>
-                                                    <td>{{ \Carbon\Carbon::parse($invoice->due_date)->format('d/m/y') }}
+                                                    <td>{{ \Carbon\Carbon::parse($invoice->due_date)->format('d M Y') }}
                                                     </td>
 
                                                     <td>
@@ -408,7 +405,8 @@
                                                         </div>
                                                     </td>
 
-                                                    </td>
+                                                    <td><a class="edit previewBtn" data-id="{{ $invoice->id }}"
+                                                            href="#"><i class="bi bi-eye me-2"></i>View</a></td>
                                                     <td><a href="{{ route('staff.invoices.edit', $invoice->id) }}"
                                                             class="edit"><i class="fa-solid fa-pencil me-2"></i>Edit</a>
 
@@ -447,18 +445,11 @@
                                             <thead>
                                                 <tr>
                                                     <th class="no-sort"></th>
-                                                    <th class="">
-                                                        <div class="d-flex align-items-center">
-                                                            <input type="checkbox" class="table-checkbox ">Invoice
-                                                            ID
-                                                        </div>
-                                                    </th>
+                                                    <th class="">Invoice ID</th>
 
                                                     <th>Created On</th>
                                                     <th>Invoice to</th>
                                                     <th>Amount</th>
-                                                    <th>Paid On</th>
-                                                    <th>Status</th>
                                                     <th>Actions</th>
 
                                                 </tr>
@@ -475,38 +466,15 @@
                                                         </td>
 
                                                         <td>
-                                                            <div class="d-flex align-items-center">
-                                                                <input type="checkbox"
-                                                                    class="table-checkbox">#{{ $invoice->invoice_id }}
+                                                            <div class="d-flex align-items-center previewBtn"
+                                                                style="cursor: pointer" data-id="{{ $invoice->id }}">
+                                                                #{{ $invoice->invoice_id }}
                                                             </div>
                                                         </td>
                                                         <td>{{ $invoice->created_at->format('d M Y') }}</td>
                                                         <td class="bussiness-name">{{ $invoice->invoice_to }}</td>
                                                         <td class="bussiness-name">
-                                                            ${{ round($invoice->items_sum_price) }}
-                                                        </td>
-                                                        <td>12/4/2034</td>
-
-                                                        <td>
-                                                            <div class="dropdown table-dropdown">
-                                                                <a class="btn  dropdown-toggle table-dropdown-btn {{ $invoice->status }}"
-                                                                    href="#" role="button" id="dropdownMenuLink"
-                                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                                    {{ $status_labels[$invoice->status] }}
-                                                                </a>
-
-                                                                <ul class="dropdown-menu"
-                                                                    data-invoice-id="{{ $invoice->id }}"
-                                                                    aria-labelledby="dropdownMenuLink">
-                                                                    @foreach ($statuses as $status)
-                                                                        <li class="change-status"
-                                                                            data-status="{{ $status }}"><a
-                                                                                class="dropdown-item {{ $status }}"
-                                                                                href="#">{{ $status_labels[$status] }}</a>
-                                                                        </li>
-                                                                    @endforeach
-                                                                </ul>
-                                                            </div>
+                                                            ${{ number_format(round($invoice->items_sum_price), 0, ',') }}
                                                         </td>
 
                                                         <td>
@@ -536,17 +504,12 @@
                                         <thead>
                                             <tr>
                                                 <th class="no-sort"></th>
-                                                <th class="">
-                                                    <div class="d-flex align-items-center">
-                                                        <input type="checkbox" class="table-checkbox ">Invoice ID
-                                                    </div>
-                                                </th>
+                                                <th class="">Invoice ID</th>
 
                                                 <th>Created On</th>
                                                 <th>Invoice to</th>
                                                 <th>Amount</th>
                                                 <th>Last Date</th>
-                                                <th>Status</th>
                                                 <th>Actions</th>
 
                                             </tr>
@@ -563,39 +526,17 @@
                                                     </td>
 
                                                     <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <input type="checkbox"
-                                                                class="table-checkbox">#{{ $invoice->invoice_id }}
+                                                        <div class="d-flex align-items-center previewBtn"
+                                                            style="cursor: pointer" data-id="{{ $invoice->id }}">
+                                                            #{{ $invoice->invoice_id }}
                                                         </div>
                                                     </td>
                                                     <td>{{ $invoice->created_at->format('d M Y') }}</td>
                                                     <td class="bussiness-name">{{ $invoice->invoice_to }}</td>
                                                     <td class="bussiness-name">
-                                                        ${{ round($invoice->items_sum_price) }}
+                                                        ${{ number_format(round($invoice->items_sum_price), 0, ',') }}
                                                     </td>
-                                                    <td>{{ \Carbon\Carbon::parse($invoice->due_date)->format('d/m/y') }}
-                                                    </td>
-
-                                                    <td>
-                                                        <div class="dropdown table-dropdown">
-                                                            <a class="btn  dropdown-toggle table-dropdown-btn {{ $invoice->status }}"
-                                                                href="#" role="button" id="dropdownMenuLink"
-                                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                                {{ $status_labels[$invoice->status] }}
-                                                            </a>
-
-                                                            <ul class="dropdown-menu"
-                                                                data-invoice-id="{{ $invoice->id }}"
-                                                                aria-labelledby="dropdownMenuLink">
-                                                                @foreach ($statuses as $status)
-                                                                    <li class="change-status"
-                                                                        data-status="{{ $status }}"><a
-                                                                            class="dropdown-item {{ $status }}"
-                                                                            href="#">{{ $status_labels[$status] }}</a>
-                                                                    </li>
-                                                                @endforeach
-                                                            </ul>
-                                                        </div>
+                                                    <td>{{ \Carbon\Carbon::parse($invoice->due_date)->format('d M Y') }}
                                                     </td>
 
                                                     <td>
@@ -624,17 +565,11 @@
                                         <thead>
                                             <tr>
                                                 <th class="no-sort"></th>
-                                                <th class="">
-                                                    <div class="d-flex align-items-center">
-                                                        <input type="checkbox" class="table-checkbox ">Invoice ID
-                                                    </div>
-                                                </th>
+                                                <th class="">Invoice ID</th>
 
                                                 <th>Created On</th>
                                                 <th>Invoice to</th>
                                                 <th>Amount</th>
-                                                <th>Status</th>
-
                                                 <th>Actions</th>
 
                                             </tr>
@@ -651,37 +586,15 @@
                                                     </td>
 
                                                     <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <input type="checkbox"
-                                                                class="table-checkbox">#{{ $invoice->invoice_id }}
+                                                        <div class="d-flex align-items-center previewBtn"
+                                                            style="cursor: pointer" data-id="{{ $invoice->id }}">
+                                                            #{{ $invoice->invoice_id }}
                                                         </div>
                                                     </td>
                                                     <td>{{ $invoice->created_at->format('d M Y') }}</td>
                                                     <td class="bussiness-name">{{ $invoice->invoice_to }}</td>
                                                     <td class="bussiness-name">
-                                                        ${{ round($invoice->items_sum_price) }}
-                                                    </td>
-
-                                                    <td>
-                                                        <div class="dropdown table-dropdown">
-                                                            <a class="btn  dropdown-toggle table-dropdown-btn {{ $invoice->status }}"
-                                                                href="#" role="button" id="dropdownMenuLink"
-                                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                                {{ $status_labels[$invoice->status] }}
-                                                            </a>
-
-                                                            <ul class="dropdown-menu"
-                                                                data-invoice-id="{{ $invoice->id }}"
-                                                                aria-labelledby="dropdownMenuLink">
-                                                                @foreach ($statuses as $status)
-                                                                    <li class="change-status"
-                                                                        data-status="{{ $status }}"><a
-                                                                            class="dropdown-item {{ $status }}"
-                                                                            href="#">{{ $status_labels[$status] }}</a>
-                                                                    </li>
-                                                                @endforeach
-                                                            </ul>
-                                                        </div>
+                                                        ${{ number_format(round($invoice->items_sum_price), 0, ',') }}
                                                     </td>
 
                                                     <td>
@@ -710,18 +623,10 @@
                                         <thead>
                                             <tr>
                                                 <th class="no-sort"></th>
-                                                <th class="">
-                                                    <div class="d-flex align-items-center">
-                                                        <input type="checkbox" class="table-checkbox ">Invoice ID
-                                                    </div>
-                                                </th>
+                                                <th class="">Invoice ID</th>
                                                 <th>Created On</th>
                                                 <th>Invoice to</th>
                                                 <th>Amount</th>
-                                                {{-- <th>Last Invoice</th>
-                                                <th>Next Invoice</th>
-                                                <th>Frequency</th> --}}
-                                                <th>Status</th>
                                                 <th>Action</th>
 
                                             </tr>
@@ -738,37 +643,15 @@
                                                     </td>
 
                                                     <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <input type="checkbox"
-                                                                class="table-checkbox">#{{ $invoice->invoice_id }}
+                                                        <div class="d-flex align-items-center previewBtn"
+                                                            style="cursor: pointer" data-id="{{ $invoice->id }}">
+                                                            #{{ $invoice->invoice_id }}
                                                         </div>
                                                     </td>
                                                     <td>{{ $invoice->created_at->format('d M Y') }}</td>
                                                     <td class="bussiness-name">{{ $invoice->invoice_to }}</td>
                                                     <td class="bussiness-name">
-                                                        ${{ round($invoice->items_sum_price) }}
-                                                    </td>
-
-                                                    <td>
-                                                        <div class="dropdown table-dropdown">
-                                                            <a class="btn  dropdown-toggle table-dropdown-btn {{ $invoice->status }}"
-                                                                href="#" role="button" id="dropdownMenuLink"
-                                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                                {{ $status_labels[$invoice->status] }}
-                                                            </a>
-
-                                                            <ul class="dropdown-menu"
-                                                                data-invoice-id="{{ $invoice->id }}"
-                                                                aria-labelledby="dropdownMenuLink">
-                                                                @foreach ($statuses as $status)
-                                                                    <li class="change-status"
-                                                                        data-status="{{ $status }}"><a
-                                                                            class="dropdown-item {{ $status }}"
-                                                                            href="#">{{ $status_labels[$status] }}</a>
-                                                                    </li>
-                                                                @endforeach
-                                                            </ul>
-                                                        </div>
+                                                        ${{ number_format(round($invoice->items_sum_price), 0, ',') }}
                                                     </td>
 
                                                     <td>
@@ -797,18 +680,10 @@
                                         <thead>
                                             <tr>
                                                 <th class="no-sort"></th>
-                                                <th class="">
-                                                    <div class="d-flex align-items-center">
-                                                        <input type="checkbox" class="table-checkbox ">Invoice ID
-                                                    </div>
-                                                </th>
+                                                <th class="">Invoice ID</th>
                                                 <th>Created On</th>
                                                 <th>Invoice to</th>
                                                 <th>Amount</th>
-                                                {{-- <th>Last Invoice</th>
-                                                <th>Next Invoice</th>
-                                                <th>Frequency</th> --}}
-                                                <th>Status</th>
                                                 <th>Action</th>
 
                                             </tr>
@@ -825,37 +700,15 @@
                                                     </td>
 
                                                     <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <input type="checkbox"
-                                                                class="table-checkbox">#{{ $invoice->invoice_id }}
+                                                        <div class="d-flex align-items-center previewBtn"
+                                                            style="cursor: pointer" data-id="{{ $invoice->id }}">
+                                                            #{{ $invoice->invoice_id }}
                                                         </div>
                                                     </td>
                                                     <td>{{ $invoice->created_at->format('d M Y') }}</td>
                                                     <td class="bussiness-name">{{ $invoice->invoice_to }}</td>
                                                     <td class="bussiness-name">
-                                                        ${{ round($invoice->items_sum_price) }}
-                                                    </td>
-
-                                                    <td>
-                                                        <div class="dropdown table-dropdown">
-                                                            <a class="btn  dropdown-toggle table-dropdown-btn {{ $invoice->status }}"
-                                                                href="#" role="button" id="dropdownMenuLink"
-                                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                                {{ $status_labels[$invoice->status] }}
-                                                            </a>
-
-                                                            <ul class="dropdown-menu"
-                                                                data-invoice-id="{{ $invoice->id }}"
-                                                                aria-labelledby="dropdownMenuLink">
-                                                                @foreach ($statuses as $status)
-                                                                    <li class="change-status"
-                                                                        data-status="{{ $status }}"><a
-                                                                            class="dropdown-item {{ $status }}"
-                                                                            href="#">{{ $status_labels[$status] }}</a>
-                                                                    </li>
-                                                                @endforeach
-                                                            </ul>
-                                                        </div>
+                                                        ${{ number_format(round($invoice->items_sum_price), 0, ',') }}
                                                     </td>
 
                                                     <td>
@@ -893,6 +746,149 @@
         </div>
         <!-- </div> -->
     </main>
+
+    {{-- View Invoice Modal --}}
+    <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+
+            <div class="modal-content invoice-content">
+                {{-- <button class="ticket-fill invoice-download"><i class="fa fa-download f-18 me-2"
+                        aria-hidden="true"></i>Download</button> --}}
+                <div
+                    class="modal-header d-flex flex-md-row flex-column align-items-md-center align-items-start border-bottom-0">
+                    <img src="{{ asset('images/DigiSplix-Logo-for-Light-Mode.png') }}" alt=""
+                        class="img-fluid modal-logo">
+                    <div class="mt-md-0 mt-3 pe-2 text-gray">
+                        <p class="mb-0 pb-0 f-16 w-500 d-flex justify-content-between">Invoice # : <span class="ms-3"
+                                id="pv-invoice-id"></span></p>
+                        <p class="mb-0 pb-0 f-16 w-500 d-flex justify-content-between">Date : <span class="ms-3"
+                                id="pv-date-created"></span></p>
+                    </div>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="col-lg-12 mb-4 mt-2">
+                        <div class="invoice-heading-row">
+                            <h1 class="invoice-heading mb-0 pb-0">INVOICE</h1>
+                        </div>
+                    </div>
+                    <div class="px-4 mt-md-0 mt-3">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6 mb-lg-0 mb-4 mx-auto">
+                                <div class="border-right">
+                                    <h1 class="invoice-heading text-dark-clr">Invoice From:</h1>
+                                    <div class="  w-500 f-16 text-dark-clr" id="pv-invoice-from"></div>
+                                    {{-- <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">5900 Balcones Dr #15419
+                                    </p>
+                                    <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">Austin, Texas 78731,
+                                    </p>
+                                    <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">United States
+                                    </p> --}}
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-lg-0 mb-4 mx-auto">
+                                <div class="border-right">
+                                    <h1 class="invoice-heading  text-dark-clr">Invoice To:</h1>
+                                    <div class="  w-500 f-16 text-dark-clr" id="pv-invoice-to"></div>
+                                    {{-- <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">45 Balcones STE 200,
+                                    </p>
+                                    <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">Los Anageles, Califronia</p>
+                                    <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">United States</p> --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-4">
+                        <div class="row mt-4 ">
+                            <div class="col-lg-12">
+                                <div class=" dasboard-table h-auto"
+                                    style="height: fit-content !important; border: 1px solid #ccc; border-bottom: none;">
+                                    <table class="table data-table-style mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">SL NO.</th>
+                                                <th scope="col">Item Description</th>
+                                                <th scope="col">Price</th>
+                                                <th scope="col">Qty.</th>
+                                                <th scope="col">Total
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="pv-items">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-4 ">
+                        <div class="col-lg-6 ">
+                            <div class="ps-4">
+                                <h1 class="f-16 w-600 text-dark-clr">Thank you for your bussiness</h1>
+
+                                {{-- <div class="mt-3 mb-2 text-dark-clr">
+                                    <h1 class="f-16 w-600">Payment Info:</h1>
+                                    <p class="mb-0 pb-0 f-14 w-500">Account# : <span class="ms-3"
+                                            id="pv-acc-num"></span></p>
+                                    <p class="mb-0 pb-0 f-14 w-500">A/C Name : <span class="ms-3"
+                                            id="pv-acc-name"></span></p>
+                                    <p class="mb-0 pb-0 f-14 w-500">Bank Name : <span class="ms-3"
+                                            id="pv-bank-name"></span></p>
+                                    <p class="mb-0 pb-0 f-14 w-500">IFSC Code : <span class="ms-3"
+                                            id="pv-ifsc-code"></span></p>
+                                </div> --}}
+                                <div class=" mt-3 text-dark-clr" id="pv-terms-conditions">
+                                    <h1 class="f-16 w-600">Terms & Conditions:</h1>
+                                    <p class="mb-0 pb-0 f-14 w-500"></p>
+                                </div>
+                                <div class=" mt-3 text-dark-clr" id="pv-note">
+                                    <h1 class="f-16 w-600">Note:</h1>
+                                    <p class="mb-0 pb-0 f-14 w-500"></p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-5 ms-auto ">
+                            <div class="box-gray h-auto box-p bg-white border-0 p-0 text-dark-clr"
+                                style="background-color: transparent !important;">
+                                <div class="summary-box pe-4 ps-3" style="background-color: transparent;">
+                                    <div class="summary-div d-flex justify-content-between mb-1">
+                                        <p class="f-14 w-400 text-gray mb-0 pb-0">Sub Total:</p>
+                                        <p class="f-14 w-400 text-gray mb-0 pb-0 pv-total"></p>
+                                    </div>
+                                    {{-- <div class="summary-div d-flex justify-content-between mt-1">
+                                        <p class="f-14 w-400 text-gray mb-0 pb-0">Discount:</p>
+                                        <p class="f-14 w-400 text-gray mb-0 pb-0">$22</p>
+                                    </div> --}}
+
+                                </div>
+
+                                <div class="summary-div-total d-flex justify-content-between  pe-4 mt-3 ps-3">
+                                    <p class="f-16 w-500   mb-0 pb-0">Total Amount
+                                    </p>
+                                    <p class="f-16 w-400   mb-0 pb-0 pv-total"></p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-12 mt-3 ">
+                            <div class="invoice-footer px-4">
+                                <p class="mb-0 pb-0 f-14 w-500 text-gray"><span><i
+                                            class="bi bi-envelope-fill text-primary me-1"></i></span> info@digisplix.com
+                                </p>
+                                <p class="mb-0 pb-0 f-14 w-500 text-gray "><span class="w-600"><i
+                                            class="bi bi-browser-chrome text-primary me-1"></i></span>
+                                    www.digisplix.com</p>
+                                <p class="mb-0 pb-0 f-14 w-500 text-gray"><span><i
+                                            class="bi bi-telephone-fill text-primary me-1"></i></span> +17373388038</p>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 @section('script')
     <script>
@@ -1079,6 +1075,106 @@
         $('.dates').on('change', function() {
             $('#start-date-value').val($('#start-date').val())
             $('#end-date-value').val($('#end-date').val())
+        })
+    </script>
+
+    {{-- View Invoice --}}
+    <script id="pv-items-template" type="text/template">
+        <tr class="">
+            <td>{sr_num}</td>
+            <td scope="row" style="white-space: normal;">
+                {description}
+            </td>
+            <td>${price}</td>
+            <td class="text-center">
+                {qty}
+            </td>
+            <td>${total}</td>
+
+        </tr>
+    </script>
+
+    <script>
+        $('body').on('click', '.previewBtn', function(e) {
+            $('.loading').removeClass('d-none')
+            let invoice_id = $(this).data('id')
+
+            $.ajax({
+                url: '{{ route('staff.invoices.fetch_invoice', 'invoice_id') }}'.replace(
+                    'invoice_id',
+                    invoice_id),
+                type: 'PATCH',
+                data: {
+                    '_token': '{{ csrf_token() }}',
+                },
+                success: function(response) {
+                    $('#pv-items').empty()
+                    if (response.status == 'success') {
+                        $('.loading').addClass('d-none')
+                        var invoice = response.invoice;
+                        var invoice_id = invoice.invoice_id
+                        var invoice_from = invoice.invoice_from
+                        var invoice_to = invoice.invoice_to
+                        var termsNConditions = invoice.terms_n_conditions;
+                        var note = invoice.note
+                        let total = invoice.items_sum_price
+
+                        const date = new Date();
+                        const year = date.getFullYear();
+                        const month = date.getMonth() + 1; // Months are 0-indexed
+                        const day = date.getDate().toString().padStart(2, '0');
+                        const monthName = date.toLocaleString('default', {
+                            month: 'short'
+                        }).toUpperCase(); // Get short month name in uppercase
+
+                        const formattedDate = `${day} ${monthName} ${year}`;
+
+                        $('#pv-invoice-id').text(invoice_id)
+                        $('#pv-date-created').text(formattedDate)
+                        $('#pv-invoice-from').text(invoice_from)
+                        $('#pv-invoice-to').text(invoice_to)
+
+                        if (termsNConditions.trim().length > 0) {
+                            $('#pv-terms-conditions').css('display', 'block')
+                            $('#pv-terms-conditions p').text(termsNConditions)
+                        } else {
+                            $('#pv-terms-conditions').css('display', 'none')
+                        }
+
+                        if (note.trim().length > 0) {
+                            $('#pv-note').css('display', 'block')
+                            $('#pv-note p').text(note)
+                        } else {
+                            $('#pv-note').css('display', 'none')
+                        }
+
+                        $('.pv-total').text('$' + Math.round(total))
+
+                        // Items
+                        $(invoice.items).each(function(index, item) {
+                            var description = item.description;
+                            var price = item.price;
+                            var quantity = item.quantity;
+
+                            var total = price * quantity;
+
+                            var itemTemplate = $('#pv-items-template').html()
+                            var item = itemTemplate.replace('{sr_num}', index + 1)
+                                .replace('{description}', description)
+                                .replace('{price}', price)
+                                .replace('{qty}', quantity)
+                                .replace('{total}', total)
+
+                            $('#pv-items').append(item)
+                        });
+
+                        $('#previewModal').modal('show')
+
+                    } else {
+                        alert(response.message)
+                    }
+                }
+            })
         })
     </script>
 @endsection

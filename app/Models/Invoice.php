@@ -66,7 +66,7 @@ class Invoice extends Model {
     }
 
     private static $statusLabels = [
-        self::PENDING => 'Pending',
+        self::PENDING => 'Unpaid',
         self::PAID => 'Paid',
         self::OVERDUE => 'Overdue',
         self::DRAFT => 'Draft',

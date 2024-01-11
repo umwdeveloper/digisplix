@@ -43,9 +43,16 @@
                                                 {{ $status_labels[$ticket->status] }}</div>
                                         </div>
                                         <div class="mt-3 pt-2">
-                                            <h3 class="ticket-heading mb-0">Email</h3>
+                                            <h3 class="ticket-heading mb-0">Business Name</h3>
                                             <p class="ticket-text mb-0 pb-2">
-                                                {{ $ticket->user->email }}
+                                                {{ $ticket->user->userable->business_name }}
+                                            </p>
+                                        </div>
+
+                                        <div class="mt-1 pt-2">
+                                            <h3 class="ticket-heading mb-0">Client Name</h3>
+                                            <p class="ticket-text mb-0 pb-2">
+                                                {{ $ticket->user->name }}
                                             </p>
                                         </div>
                                         <div

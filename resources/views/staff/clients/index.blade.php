@@ -12,7 +12,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class=" flex-grow-1  box-text d-flex align-items-center">
 
-                                        <span class="box-value">{{ $clients->count() }}</span>
+                                        <span class="box-value">{{ number_format($clients->count(), 0, ',') }}</span>
 
                                     </div>
                                     <div class="box-icon">
@@ -28,7 +28,8 @@
                                 <div class="d-flex align-items-center">
                                     <div class=" flex-grow-1  box-text d-flex align-items-center">
 
-                                        <span class="box-value active_clients">{{ $active_clients->count() }}</span>
+                                        <span
+                                            class="box-value active_clients">{{ number_format($active_clients->count(), 0, ',') }}</span>
 
                                     </div>
                                     <div class="box-icon">
@@ -43,7 +44,8 @@
                                 <h1 class="box-heading">Inactive Clients</h1>
                                 <div class="d-flex align-items-center">
                                     <div class=" flex-grow-1  box-text d-flex align-items-center">
-                                        <span class="box-value inactive_clients">{{ $inactive_clients->count() }}</span>
+                                        <span
+                                            class="box-value inactive_clients">{{ number_format($inactive_clients->count(), 0, ',') }}</span>
 
                                     </div>
                                     <div class="box-icon">
@@ -341,7 +343,7 @@
                                             placeholder="Pakistan">
                                         <input type="hidden" id="country2_code" name="country_code">
                                         <!-- <label class="crm-label form-label" for="country2">Country<span
-                                                                                        class="text-danger">*</span></label> -->
+                                                                                                class="text-danger">*</span></label> -->
                                         @if ($errors->updateClient->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updateClient->first('country') }}

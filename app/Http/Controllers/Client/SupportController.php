@@ -19,7 +19,7 @@ class SupportController extends Controller {
      * Display a listing of the resource.
      */
     public function index() {
-        $tickets = Support::with('user')->where('user_id', Auth::user()->id)->orderByDesc('updated_at')->get();
+        $tickets = Support::with(['user', 'user.userable'])->where('user_id', Auth::user()->id)->orderByDesc('updated_at')->get();
 
         return view('clients.support.index', [
             'tickets' => $tickets,

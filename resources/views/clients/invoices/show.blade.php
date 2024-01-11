@@ -160,7 +160,7 @@
                                         <div class="summary-div d-flex justify-content-between mb-1">
                                             <p class="f-14 w-400 text-gray mb-0 pb-0">Sub Total:</p>
                                             <p class="f-14 w-400 text-gray mb-0 pb-0">
-                                                ${{ round($invoice->total_price) }}</p>
+                                                ${{ number_format(round($invoice->total_price), 0, ',') }}</p>
                                         </div>
                                         <div class="summary-div d-flex justify-content-between mt-1">
                                             {{-- <p class="f-14 w-400 text-gray mb-0 pb-0">Discount:</p> --}}
@@ -172,7 +172,8 @@
                                     <div class="summary-div-total d-flex justify-content-between  pe-4 mt-3 ps-3">
                                         <p class="f-16 w-500   mb-0 pb-0">Total Amount
                                         </p>
-                                        <p class="f-16 w-400   mb-0 pb-0">${{ round($invoice->total_price) }}</p>
+                                        <p class="f-16 w-400   mb-0 pb-0">
+                                            ${{ number_format(round($invoice->total_price), 0, ',') }}</p>
                                         <input type="hidden" id="amount" value="{{ $invoice->total_price }}">
                                         <input type="hidden" id="invoice_id" value="{{ $invoice->id }}">
                                         <input type="hidden" id="invoice_number" value="{{ $invoice->invoice_id }}">

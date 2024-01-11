@@ -313,7 +313,7 @@ class PartnerController extends Controller {
             ->whereBetween('created_at', [$startDate, $endDate])
             ->count();
 
-        return response()->json(['total' => $sales]);
+        return response()->json(['total' => number_format($sales, 0, ',')]);
     }
 
     public function totalRevenue(Request $request) {
@@ -361,7 +361,7 @@ class PartnerController extends Controller {
             })
             ->get();
 
-        return response()->json(['total' => $commissions->sum('deal_size')]);
+        return response()->json(['total' => number_format($commissions->sum('deal_size'), 0, ',')]);
     }
 
     public function totalCommission(Request $request) {
@@ -405,6 +405,6 @@ class PartnerController extends Controller {
             ->whereBetween('created_at', [$startDate, $endDate])
             ->sum(DB::raw('deal_size * (commission / 100)')) ?? 0;
 
-        return response()->json(['total' => $totalCommission]);
+        return response()->json(['total' => number_format($totalCommission, 0, ',')]);
     }
 }

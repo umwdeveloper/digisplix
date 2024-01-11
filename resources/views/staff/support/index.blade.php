@@ -102,9 +102,9 @@
                                                 <tr>
                                                     <th class="no-sort"></th>
                                                     <th>ID</th>
-                                                    <th>Customer Email</th>
                                                     <th>Subject</th>
                                                     <th>Status</th>
+                                                    <th>Business Name</th>
                                                     <th>Priority</th>
                                                     <th>Last Update Date</th>
                                                     <th>Opened Date</th>
@@ -134,7 +134,6 @@
                                                             </div>
                                                         </td>
                                                         <td>{{ ++$key }}</td>
-                                                        <td>{{ $ticket->user->email }}</td>
 
                                                         <td>
                                                             <p onclick="window.location.href = '{{ route('staff.support.show', $ticket->id) }}'"
@@ -145,6 +144,7 @@
                                                                 {{ $status_labels[$ticket->status] }}
                                                             </div>
                                                         </td>
+                                                        <td>{{ $ticket->user->userable->business_name }}</td>
 
                                                         <td>
                                                             <div class="{{ $ticketPriorityClasses[$ticket->priority] }}">
@@ -152,11 +152,11 @@
                                                         </td>
 
                                                         <td>
-                                                            {{ $ticket->updated_at->format('d M, Y') }}
+                                                            {{ $ticket->updated_at->format('d M Y') }}
                                                         </td>
 
                                                         <td>
-                                                            {{ $ticket->created_at->format('d M, Y') }}
+                                                            {{ $ticket->created_at->format('d M Y') }}
                                                         </td>
 
 

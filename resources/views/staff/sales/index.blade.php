@@ -22,7 +22,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class=" flex-grow-1  box-text d-flex align-items-center">
 
-                                        <span class="box-value" id="sales">{{ $sales }}</span>
+                                        <span class="box-value" id="sales">{{ number_format($sales, 0, ',') }}</span>
 
                                     </div>
                                     <div class="box-icon">
@@ -48,7 +48,8 @@
                                 <div class="d-flex align-items-center">
                                     <div class=" flex-grow-1  box-text d-flex align-items-center">
 
-                                        <span class="box-value">$<span id="revenue">{{ round($revenue) }}</span></span>
+                                        <span class="box-value">$<span
+                                                id="revenue">{{ number_format(round($revenue), 0, ',') }}</span></span>
 
                                     </div>
                                     <div class="box-icon">
