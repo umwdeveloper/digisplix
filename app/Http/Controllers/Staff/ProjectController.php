@@ -84,10 +84,10 @@ class ProjectController extends Controller {
         $project = Project::create($validatedData);
 
         $project->phases()->createMany([
-            ['name' => 'Planning'],
-            ['name' => 'Designing'],
-            ['name' => 'Development'],
-            ['name' => 'Testing'],
+            ['name' => 'Phase 1'],
+            ['name' => 'Phase 2'],
+            ['name' => 'Phase 3'],
+            ['name' => 'Phase 4'],
         ]);
 
         Notification::send($project->client->user, new ProjectAdded($project->client->user->name, $project->id, $project->name));

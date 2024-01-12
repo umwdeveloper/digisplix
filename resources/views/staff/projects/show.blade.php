@@ -22,7 +22,7 @@
 
                                 <div id="ProjectOverview" class="tabcontentProjects">
                                     <div class="row ">
-                                        <div class="col-lg-4 mb-3">
+                                        <div class="col-lg-6 mb-3">
                                             <div class="form-floating ">
                                                 <input type="text" class="form-control crm-input" id="name"
                                                     placeholder="Mickel" value="{{ $project->client->user->name }}"
@@ -31,7 +31,7 @@
                                                         class="text-danger">*</span></label>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4 mb-3">
+                                        <div class="col-lg-6 mb-3">
                                             <div class="form-floating ">
                                                 <input type="text" class="form-control crm-input" id="name" readonly
                                                     placeholder="Mickel" value="{{ $project->client->business_name }}">
@@ -39,11 +39,20 @@
                                                         class="text-danger">*</span></label>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4 mb-3">
+                                        <div class="col-lg-6 mb-3">
                                             <div class="form-floating ">
                                                 <input type="text" class="form-control crm-input" id="name" readonly
                                                     placeholder="Mickel" value="{{ $project->name }}">
                                                 <label class="crm-label form-label" for="name">Project Name<span
+                                                        class="text-danger">*</span></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 mb-3">
+                                            <div class="form-floating ">
+                                                <input type="text" class="form-control crm-input" id="start_date"
+                                                    readonly placeholder="Mickel"
+                                                    value="{{ \Carbon\Carbon::parse($project->created_at)->format('d M Y') }}">
+                                                <label class="crm-label form-label" for="name">Start Date<span
                                                         class="text-danger">*</span></label>
                                             </div>
                                         </div>
@@ -124,7 +133,7 @@
                                         <div class="col-xl-3 col-lg-6 col-md-6 order-xl-3 order-2 mb-3">
                                             <div
                                                 class="box-gray d-flex flex-column justify-content-center align-items-center">
-                                                <div class="caption mb-3">Project Launch Date</div>
+                                                <div class="caption mb-3">Project Delivery Date</div>
                                                 <div class="d-flex align-items-center">
                                                     <img src="assets/images/31279_launch_rocket_spaceship_icon.png"
                                                         alt="" class="img-fluid launch-img me-3">
@@ -132,16 +141,19 @@
                                                         <h3 class="f-30 w-500 text-primary mb-0 pb-0">
                                                             @php
                                                                 // use Carbon\Carbon;
-                                                                $daysPassed = $project->created_at->startOfDay()->diffInDays(now()->startOfDay());
+                                                                $daysPassed = \Carbon\Carbon::parse($project->deadline)
+                                                                    ->endOfDay()
+                                                                    ->diffInDays(now()->startOfDay());
                                                             @endphp
                                                             {{ $daysPassed }}
                                                         </h3>
                                                         <span class="f-14 text-gray text-dark-clr">
-                                                            {{ $daysPassed > 1 || $daysPassed == 0 ? 'days' : 'day' }}</span>
+                                                            {{ $daysPassed > 1 || $daysPassed == 0 ? 'days' : 'day' }}
+                                                            left</span>
                                                     </div>
                                                 </div>
                                                 <p class="mb-0 pb-0 f-14 text-gray w-400 mt-3 text-dark-clr">
-                                                    {{ $project->created_at->format('d F, Y') }}
+                                                    {{ \Carbon\Carbon::parse($project->deadline)->format('d M Y') }}
                                                 </p>
                                             </div>
                                         </div>
