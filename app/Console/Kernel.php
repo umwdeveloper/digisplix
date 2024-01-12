@@ -16,11 +16,11 @@ class Kernel extends ConsoleKernel {
             ->appendOutputTo(storage_path('logs/status-overdue.log'));
 
         // Check unread messages and send reminder to users
-        $schedule->command('app:check-unread-messages')->hourly();
-        $schedule->command('app:check-unread-messages12')->cron('0 */12 * * *');
-        $schedule->command('app:check-unread-messages24')->daily();
+        // $schedule->command('app:check-unread-messages')->hourly();
+        // $schedule->command('app:check-unread-messages12')->cron('0 */12 * * *');
+        // $schedule->command('app:check-unread-messages24')->daily();
 
-        // $schedule->command('app:check-unread-messages')->everyMinute();
+        $schedule->command('app:check-unread-messages')->everyMinute();
         // $schedule->command('app:check-unread-messages12')->everyFiveMinutes();
         // $schedule->command('app:check-unread-messages24')->everyTenMinutes();
     }

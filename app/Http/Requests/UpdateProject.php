@@ -21,7 +21,6 @@ class UpdateProject extends FormRequest {
         return [
             'client_id' => 'string|required',
             'name' => 'string|required|min:3',
-            'description' => 'string|required|min:10',
             'deadline' => 'date|required',
             'progress' => 'string|required',
             'billing_status' => 'string',

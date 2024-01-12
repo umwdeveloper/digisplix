@@ -131,7 +131,7 @@
                                         </div>
                                     </a>
                                     <div class="project-card-details">
-                                        <p class="mb-0 pb-0" style="font-weight: 600">
+                                        <p class="mb-0 pb-0" style="font-weight: 600; font-size: 17px">
                                             {{ $project->client->business_name }}
                                         </p>
                                         <p class="mb-0 pb-0">
@@ -234,20 +234,6 @@
                                         @if ($errors->createProject->has('deadline'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->createProject->first('deadline') }}
-                                            </small>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-floating mb-3">
-                                        <textarea name="description" required
-                                            class="form-control crm-input {{ $errors->createProject->has('description') ? 'is-invalid' : '' }}"
-                                            placeholder="ABC" id="description" rows="10">{{ $errors->hasBag('createProject') ? old('description') : '' }}</textarea>
-                                        <label class="crm-label form-label" for="description">Description<span
-                                                class="text-danger">*</span></label>
-                                        @if ($errors->createProject->has('description'))
-                                            <small class="invalid-feedback " style="font-size: 11px">
-                                                {{ $errors->createProject->first('description') }}
                                             </small>
                                         @endif
                                     </div>
@@ -436,20 +422,6 @@
                                         @if ($errors->updateProject->has('progress'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updateProject->first('progress') }}
-                                            </small>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-floating mb-3">
-                                        <textarea name="description" required id="description"
-                                            class="form-control crm-input {{ $errors->updateProject->has('description') ? 'is-invalid' : '' }}"
-                                            placeholder="ABC" id="description" rows="10">{{ $errors->hasBag('updateProject') ? old('description') : '' }}</textarea>
-                                        <label class="crm-label form-label" for="description">Description<span
-                                                class="text-danger">*</span></label>
-                                        @if ($errors->updateProject->has('description'))
-                                            <small class="invalid-feedback " style="font-size: 11px">
-                                                {{ $errors->updateProject->first('description') }}
                                             </small>
                                         @endif
                                     </div>

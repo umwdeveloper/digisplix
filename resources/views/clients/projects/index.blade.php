@@ -93,7 +93,7 @@
                                         </div>
                                     </a>
                                     <div class="project-card-details">
-                                        <p class="mb-0 pb-0" style="font-weight: 600">
+                                        <p class="mb-0 pb-0" style="font-weight: 600; font-size: 17px">
                                             {{ $project->client->business_name }}
                                         </p>
                                         <p class="mb-0 pb-0">
