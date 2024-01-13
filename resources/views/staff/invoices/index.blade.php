@@ -823,7 +823,7 @@
                     <div class="row mt-4 ">
                         <div class="col-lg-6 ">
                             <div class="ps-4">
-                                <h1 class="f-16 w-600 text-dark-clr">Thank you for your bussiness</h1>
+                                <h1 class="f-16 w-600 text-dark-clr">Thank you for your business</h1>
 
                                 {{-- <div class="mt-3 mb-2 text-dark-clr">
                                     <h1 class="f-16 w-600">Payment Info:</h1>
@@ -1134,14 +1134,14 @@
                         $('#pv-invoice-from').text(invoice_from)
                         $('#pv-invoice-to').text(invoice_to)
 
-                        if (termsNConditions.trim().length > 0) {
+                        if (termsNConditions != null) {
                             $('#pv-terms-conditions').css('display', 'block')
                             $('#pv-terms-conditions p').text(termsNConditions)
                         } else {
                             $('#pv-terms-conditions').css('display', 'none')
                         }
 
-                        if (note.trim().length > 0) {
+                        if (note != null) {
                             $('#pv-note').css('display', 'block')
                             $('#pv-note p').text(note)
                         } else {
