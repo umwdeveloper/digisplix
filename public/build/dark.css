@@ -1067,8 +1067,8 @@ tr {
   position: absolute !important;
   top: 30px !important;
   padding: 0px 5px 5px 5px !important;
-  max-width: 110px !important;
-  min-width: 110px !important;
+  max-width: 120px !important;
+  min-width: 120px !important;
   border: none !important;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   transform: none !important;
@@ -1787,6 +1787,9 @@ input[type=date]::-webkit-calendar-picker-indicator {
 .person-card .person-img {
   border-radius: 10px 10px 0px 0px;
 }
+.person-card i {
+  color: rgba(255, 255, 255, 0.85);
+}
 .person-card .person-detail {
   position: relative;
   padding: 20px 10px 7px 10px;
@@ -1836,6 +1839,9 @@ input[type=date]::-webkit-calendar-picker-indicator {
   .person-card .person-detail i {
     font-size: 12px;
   }
+}
+.person-card .person-detail .fa-check {
+  color: green;
 }
 .person-card .contact-icon {
   cursor: pointer;

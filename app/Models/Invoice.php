@@ -96,4 +96,12 @@ class Invoice extends Model {
     public static function getStatusColor($status) {
         return self::$statusColors[$status];
     }
+
+    public static function boot() {
+        parent::boot();
+
+        static::addGlobalScope('orderInvoice', function ($builder) {
+            $builder->orderBy('invoices.created_at', 'desc');
+        });
+    }
 }

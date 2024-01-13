@@ -31,7 +31,7 @@
                                         </div>
                                         <div class="dots-dropdown">
                                             <button class="dots-btn2">
-                                                <i class="bi bi-three-dots-vertical"></i>
+                                                <i class="fa-duotone fa-gear-complex"></i>
                                             </button>
                                             <div class=" dots-menu2">
                                                 <a class="dropdown-item editStaff" data-staff-id="{{ $member->id }}"
@@ -176,7 +176,7 @@
                                                 value="{{ $errors->hasBag('createStaff') ? old('country_code') : '' }}"
                                                 name="country_code">
                                             <!-- <label class="crm-label form-label" for="country">Country<span
-                                                                    class="text-danger">*</span></label> -->
+                                                                        class="text-danger">*</span></label> -->
                                             @if ($errors->createStaff->has('country'))
                                                 <small class="invalid-feedback " style="font-size: 11px">
                                                     {{ $errors->createStaff->first('country') }}
@@ -350,7 +350,7 @@
                                                 value="{{ $errors->hasBag('updateStaff') ? old('country_code') : '' }}"
                                                 name="country_code">
                                             <!-- <label class="crm-label form-label" for="country2">Country<span
-                                                                    class="text-danger">*</span></label> -->
+                                                                        class="text-danger">*</span></label> -->
                                             @if ($errors->updateStaff->has('country'))
                                                 <small class="invalid-feedback " style="font-size: 11px">
                                                     {{ $errors->updateStaff->first('country') }}

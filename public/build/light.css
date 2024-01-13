@@ -1040,8 +1040,8 @@ div.dataTables_wrapper div.dataTables_filter input {
   position: absolute !important;
   top: 30px !important;
   padding: 0px 5px 5px 5px !important;
-  max-width: 110px !important;
-  min-width: 110px !important;
+  max-width: 120px !important;
+  min-width: 120px !important;
   border: none !important;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   transform: none !important;
@@ -1699,6 +1699,9 @@ input:-webkit-autofill {
 .person-card .person-img {
   border-radius: 10px 10px 0px 0px;
 }
+.person-card i {
+  color: #5c607b;
+}
 .person-card .person-detail {
   position: relative;
   padding: 20px 10px 7px 10px;
@@ -1740,9 +1743,12 @@ input:-webkit-autofill {
 .person-card .person-detail a:hover {
   color: #0963ce;
 }
+.person-card .person-detail .fa-check {
+  color: green;
+}
 .person-card .person-detail i {
   font-size: 14px;
-  color: green;
+  color: #5c607b;
 }
 @media only screen and (max-width: 400px) {
   .person-card .person-detail i {

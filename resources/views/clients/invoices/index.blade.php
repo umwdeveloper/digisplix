@@ -23,7 +23,6 @@
                                                     Invoice ID
                                                 </div>
                                             </th>
-                                            <th>Created On</th>
                                             <th>Amount</th>
                                             <th>Due Date</th>
                                             <th>Status</th>
@@ -44,13 +43,13 @@
                                                 </td>
 
                                                 <td>
-                                                    <div class="d-flex align-items-center">
+                                                    <div class="d-flex align-items-center " style="cursor: pointer"
+                                                        onclick="location.href='{{ route('client.invoices.show', $invoice->id) }}'">
                                                         #{{ $invoice->invoice_id }}
                                                     </div>
                                                 </td>
-                                                <td>{{ $invoice->created_at->format('d M Y') }}</td>
                                                 <td class="bussiness-name">
-                                                    ${{ round($invoice->total_price) }}
+                                                    ${{ number_format(round($invoice->total_price), 0, ',') }}
                                                 </td>
                                                 <td>{{ \Carbon\Carbon::parse($invoice->due_date)->format('d M Y') }}</td>
 

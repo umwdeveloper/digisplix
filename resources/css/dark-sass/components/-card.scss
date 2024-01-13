@@ -14,13 +14,19 @@
         border-radius: 10px 10px 0px 0px;
     }
 
+    i {
+        color: $white-light;
+    }
+
     .person-detail {
         position: relative;
         padding: 20px 10px 7px 10px;
         text-align: center;
-        @media only screen and (max-width:336px){
+
+        @media only screen and (max-width:336px) {
             padding: 20px 7px 7px 7px;
         }
+
         h1 {
             color: #86c6f0;
             font-size: 22px;
@@ -39,7 +45,8 @@
             font-size: 14px;
             font-weight: 400;
             color: $white-light;
-            @media only screen and (max-width:336px){
+
+            @media only screen and (max-width:336px) {
                 font-size: 13px;
             }
         }
@@ -62,6 +69,10 @@
             @media only screen and (max-width:400px) {
                 font-size: 12px;
             }
+        }
+
+        .fa-check {
+            color: green;
         }
     }
 

@@ -386,7 +386,9 @@
                                                     <td>
                                                         <div class="dropdown table-dropdown">
                                                             <a class="btn  dropdown-toggle table-dropdown-btn invoice-{{ $invoice->status }}"
-                                                                href="#" role="button" id="dropdownMenuLink"
+                                                                href="#"
+                                                                style="{{ $invoice->status == 'pending' ? 'color: black' : '' }}"
+                                                                role="button" id="dropdownMenuLink"
                                                                 data-bs-toggle="dropdown" aria-expanded="false">
                                                                 {{ $status_labels[$invoice->status] }}
                                                             </a>
@@ -396,8 +398,10 @@
                                                                 aria-labelledby="dropdownMenuLink">
                                                                 @foreach ($statuses as $status)
                                                                     <li class="change-status invoice-{{ $status }}"
+                                                                        style="{{ $status === 'pending' ? 'color: black !important' : '' }}"
                                                                         data-status="{{ $status }}"><a
                                                                             class="dropdown-item {{ $status }}"
+                                                                            style="{{ $status === 'pending' ? 'color: black !important' : '' }}"
                                                                             href="#">{{ $status_labels[$status] }}</a>
                                                                     </li>
                                                                 @endforeach

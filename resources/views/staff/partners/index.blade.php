@@ -70,7 +70,7 @@
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div class="dots-dropdown">
                                                     <button class="dots-btn">
-                                                        <i class="bi bi-three-dots-vertical"></i>
+                                                        <i class="fa-duotone fa-gear-complex "></i>
                                                     </button>
                                                     <div class="dots-menu">
                                                         <a class="dropdown-item editPartner"
@@ -199,7 +199,7 @@
                                             value="{{ $errors->hasBag('createPartner') ? old('country_code') : '' }}"
                                             name="country_code">
                                         <!-- <label class="crm-label form-label" for="country">Country<span
-                                                                                                class="text-danger">*</span></label> -->
+                                                                                                            class="text-danger">*</span></label> -->
                                         @if ($errors->createPartner->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->createPartner->first('country') }}
@@ -419,7 +419,7 @@
                                         <input type="hidden" id="country2_code" value="{{ old('country_code') }}"
                                             name="country_code">
                                         <!-- <label class="crm-label form-label" for="country2">Country<span
-                                                                                                class="text-danger">*</span></label> -->
+                                                                                                            class="text-danger">*</span></label> -->
                                         @if ($errors->updatePartner->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updatePartner->first('country') }}
