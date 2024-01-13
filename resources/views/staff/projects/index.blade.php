@@ -106,7 +106,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <div class="me-3">
-                                                    <button type="submit" class="btn p-0"><a class="p-0">
+                                                    <button type="submit" class="btn p-0 delete-anchor"><a class="p-0">
                                                             <i class="fa-duotone fa-trash"></i></a></button>
                                                 </div>
                                             </form>

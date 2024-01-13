@@ -388,6 +388,25 @@
         </x-toast>
     @endif
 
+    {{-- Delete Confirmation Modal --}}
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                </div>
+                <div class="modal-body">
+                    <p class="text-dark-clr">Are you sure you want to delete this record? This process cannot be
+                        undone.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button id="confirmDelete" type="button" class="btn btn-danger">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script>
         const assetUrls = {

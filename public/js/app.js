@@ -351,3 +351,17 @@ window.onload = function () {
         }, 1000);
     }
 }
+
+// Delete Confirmation
+let deleteForm;
+$(document).on('click', '.delete, .delete-anchor', function (e) {
+    e.preventDefault();
+    deleteForm = null;
+
+    deleteForm = $(this).closest('form')
+    $('#deleteModal').modal('show')
+})
+
+$('#confirmDelete').click(function () {
+    deleteForm.submit()
+})
