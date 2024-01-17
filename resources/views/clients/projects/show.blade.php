@@ -90,12 +90,18 @@
                                                                 <div class="caption-step">Waiting</div>
                                                             </div>
                                                         @else
+                                                            <style>
+                                                                .progress-bar-{{ $phase->id }} {
+                                                                    --custom-progress-value: {{ $phase->progress }}
+                                                                }
+                                                            </style>
                                                             <div class="step-count">
                                                                 <div class="caption-step">{{ $phase->name }}</div>
 
                                                                 <div class="progress-step-div">
                                                                     <div class="progress-bar-container">
-                                                                        <div class="progress-bar html my-2">
+                                                                        <div
+                                                                            class="progress-bar html my-2 progress-bar-{{ $phase->id }}">
                                                                             <progress id="html" min="0"
                                                                                 max="100"
                                                                                 value="{{ $phase->progress }}"></progress>
