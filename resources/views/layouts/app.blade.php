@@ -45,9 +45,9 @@
     {{-- <link rel="stylesheet" id="theme-link"
         href="{{ asset($preferredMode && $preferredMode == 'dark' ? 'css/dark-theme.css' : 'css/light-theme.css') }}"> --}}
 
-    <link rel="preload"
+    {{-- <link rel="preload"
         href="{{ asset($preferredMode && $preferredMode == 'dark' ? Vite::asset('resources/css/dark-sass/light.scss') : Vite::asset('resources/css/light-sass/dark.scss')) }}"
-        as="style">
+        as="style"> --}}
     <link rel="stylesheet" id="theme-link"
         href="{{ asset($preferredMode && $preferredMode == 'dark' ? Vite::asset('resources/css/dark-sass/dark.scss') : Vite::asset('resources/css/light-sass/light.scss')) }}">
 
