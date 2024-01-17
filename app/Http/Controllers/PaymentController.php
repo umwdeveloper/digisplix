@@ -201,10 +201,13 @@ class PaymentController extends Controller {
             ]);
 
             if ($paymentIntent->status == 'succeeded') {
-                $invoice = Invoice::findOrFail($request->invoice_id);
+                $invoice = Invoice::with('client')->findOrFail($request->invoice_id);
 
                 $invoice->status = Invoice::PAID;
                 $invoice->save();
+
+                $invoice->client->active = 1;
+                $invoice->client->save();
             }
 
             if ($paymentIntent->status !== 'requires_action' && $paymentIntent->status !== 'succeeded') {
@@ -281,10 +284,13 @@ class PaymentController extends Controller {
                 ]);
 
                 if ($subscription->status == 'succeeded') {
-                    $invoice = Invoice::findOrFail($request->invoice_id);
+                    $invoice = Invoice::with('client')->findOrFail($request->invoice_id);
 
                     $invoice->status = Invoice::PAID;
                     $invoice->save();
+
+                    $invoice->client->active = 1;
+                    $invoice->client->save();
                 }
 
                 if ($subscription->status == 'active') {
@@ -357,6 +363,9 @@ class PaymentController extends Controller {
                     $invoice->status = Invoice::PAID;
                     $invoice->save();
 
+                    $invoice->client->active = 1;
+                    $invoice->client->save();
+
                     Notification::send($invoice->client->user, new InvoicePaid($invoice, $invoice->items_sum_price));
                     Notification::send(User::getAdmin(), new InvoicePaid($invoice, $invoice->items_sum_price));
                 }
@@ -372,6 +381,9 @@ class PaymentController extends Controller {
                         ->findOrFail($invoiceId);
                     $invoice->status = Invoice::PAID;
                     $invoice->save();
+
+                    $invoice->client->active = 1;
+                    $invoice->client->save();
 
                     Notification::send($invoice->client->user, new InvoicePaid($invoice, $invoice->items_sum_price));
                     Notification::send(User::getAdmin(), new InvoicePaid($invoice, $invoice->items_sum_price));
@@ -389,6 +401,9 @@ class PaymentController extends Controller {
                             ->findOrFail($invoiceId);
                         $invoice->status = Invoice::PAID;
                         $invoice->save();
+
+                        $invoice->client->active = 1;
+                        $invoice->client->save();
 
                         Notification::send($invoice->client->user, new InvoicePaid($invoice, $invoice->items_sum_price));
                         Notification::send(User::getAdmin(), new InvoicePaid($invoice, $invoice->items_sum_price));

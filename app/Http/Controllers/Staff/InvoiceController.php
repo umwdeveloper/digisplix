@@ -278,10 +278,15 @@ class InvoiceController extends Controller {
         $this->authorize('staff.invoices');
 
         try {
-            $invoice = Invoice::findOrFail($id);
+            $invoice = Invoice::with(['client'])->findOrFail($id);
             $invoice->status = $request->status;
 
             $invoice->save();
+
+            if ($invoice->status == Invoice::PAID) {
+                $invoice->client->active = 1;
+                $invoice->client->save();
+            }
 
             // Send notification
             if ($invoice->status !== Invoice::DRAFT) {
