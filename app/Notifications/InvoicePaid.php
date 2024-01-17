@@ -30,7 +30,7 @@ class InvoicePaid extends Notification implements ShouldQueue {
      * @return array<int, string>
      */
     public function via(object $notifiable): array {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
