@@ -316,7 +316,11 @@ class InvoiceController extends Controller {
         $this->authorize('staff.invoices');
 
         try {
-            $invoice = Invoice::withSum('items', 'price')->findOrFail($id);
+            $invoice = Invoice::with(['client', 'items'])
+                ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
+                    ->whereColumn('invoice_id', 'invoices.id')
+                    ->limit(1)])
+                ->findOrFail($id);
 
             $invoice->sent = 1;
 
