@@ -21,7 +21,7 @@
                                         style="color: #0963ce; cursor: pointer"></i>
                                 </div>
                                 <!-- pay -->
-                                @if ($invoice->status == 'paid')
+                                @if ($invoice->status == App\Models\Invoice::PAID)
                                     <div class="d-flex justify-content-center align-items-center">
                                         <button class="table-btn btn-success  px-2" type="button"
                                             style="background-color: #198754 !important">Paid <i
@@ -34,16 +34,18 @@
                                                 class="bi bi-check-circle ms-1"></i></button>
                                     </div>
                                 @else
-                                    <div class="d-flex justify-content-center me-3 align-items-center pay-now">
-                                        <button class="table-btn px-2" type="button" id="payment-button"
-                                            data-bs-toggle="modal" data-bs-target="#paymentModal">Pay Now <i
-                                                class="bi bi-coin ms-1"></i></button>
-                                    </div>
-                                    <div class="d-flex justify-content-center align-items-center pay-via-bank">
-                                        <button class="table-btn px-2" type="button" id="fetch-details"
-                                            data-bs-toggle="modal" data-bs-target="#bankModal">Pay via Bank <i
-                                                class="bi bi-bank ms-1"></i></button>
-                                    </div>
+                                    @if ($invoice->status !== App\Models\Invoice::CANCELLED)
+                                        <div class="d-flex justify-content-center me-3 align-items-center pay-now">
+                                            <button class="table-btn px-2" type="button" id="payment-button"
+                                                data-bs-toggle="modal" data-bs-target="#paymentModal">Pay Now <i
+                                                    class="bi bi-coin ms-1"></i></button>
+                                        </div>
+                                        <div class="d-flex justify-content-center align-items-center pay-via-bank">
+                                            <button class="table-btn px-2" type="button" id="fetch-details"
+                                                data-bs-toggle="modal" data-bs-target="#bankModal">Pay via Bank <i
+                                                    class="bi bi-bank ms-1"></i></button>
+                                        </div>
+                                    @endif
                                 @endif
                             </div>
 
