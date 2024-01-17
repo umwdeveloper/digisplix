@@ -52,7 +52,7 @@
                                     </li>
                                     <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
                                         <p class="pb-0 mb-0">
-                                            Web Design, Dev and Maintenance
+                                            Web Maintenance
                                         </p>
                                     </li>
                                     <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
@@ -121,7 +121,7 @@
                                     </li>
                                     <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
                                         <p class="pb-0 mb-0">
-                                            Web Design, Dev and Maintenance
+                                            Web Maintenance
                                         </p>
                                     </li>
                                     <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
@@ -201,7 +201,7 @@
                                     </li>
                                     <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
                                         <p class="pb-0 mb-0">
-                                            Web Design, Dev and Maintenance
+                                            Web Maintenance
                                         </p>
                                     </li>
                                     <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
@@ -300,7 +300,7 @@
                                     </li>
                                     <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
                                         <p class="pb-0 mb-0">
-                                            Web Design, Dev and Maintenance
+                                            Web Maintenance
                                         </p>
                                     </li>
                                     <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>

@@ -35,8 +35,12 @@ class CheckUnreadMessages extends Command {
             ->oldest('created_at')
             ->get();
 
-        $targetTime1 = now()->subHour()->startOfMinute();
+        $targetTime15Min = now()->subMinutes(15)->startOfMinute();
+        $users15Min = $users->filter(function ($user) use ($targetTime15Min) {
+            return $user->created_at->format('Y-m-d H:i') === $targetTime15Min->format('Y-m-d H:i');
+        });
 
+        $targetTime1 = now()->subHour()->startOfMinute();
         $users1Hour = $users->filter(function ($user) use ($targetTime1) {
             return $user->created_at->format('Y-m-d H:i') === $targetTime1->format('Y-m-d H:i');
         });
@@ -51,6 +55,7 @@ class CheckUnreadMessages extends Command {
             return $user->created_at->format('Y-m-d H:i') === $targetTime24->format('Y-m-d H:i');
         });
 
+        $this->sendReminders($users15Min, '');
         $this->sendReminders($users1Hour, '');
         $this->sendReminders($users12Hours, '');
         $this->sendReminders($users24Hours, '');

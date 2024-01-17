@@ -56,6 +56,13 @@ class PaymentController extends Controller {
             'invoice_number' => $request->invoice_number
         ];
 
+        $data['consent_collection'] = ['terms_of_service' => 'required'];
+        $data['custom_text'] = [
+            'terms_of_service_acceptance' => [
+                'message' => 'I agree to the [Terms of Service](https://digisplix.com/terms) and [Privacy Policy](https://digisplix.com/privacy)',
+            ],
+        ];
+
         if ($invoice->recurring) {
             $start_from = Carbon::parse($invoice->start_from)->startOfDay();
             $cancel_at = $start_from->addMonths($invoice->duration)->endOfDay();
@@ -146,6 +153,13 @@ class PaymentController extends Controller {
                 'price' => $plans[$request->plan],
                 'quantity' => 1
             ]
+        ];
+
+        $data['consent_collection'] = ['terms_of_service' => 'required'];
+        $data['custom_text'] = [
+            'terms_of_service_acceptance' => [
+                'message' => 'I agree to the [Terms of Service](https://digisplix.com/terms) and [Privacy Policy](https://digisplix.com/privacy)',
+            ],
         ];
 
         try {
