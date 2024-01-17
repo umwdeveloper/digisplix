@@ -14,6 +14,9 @@
                                             <div
                                                 class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-3 mt-lg-0 mt-2">
                                                 <h1 class="f-20 w-500 mb-0 pb-0 text-dark-clr">Project&nbsp;Update</h1>
+                                                <a class="table-btn" href="{{ route('client.projects.index') }}"> <i
+                                                        class="bi bi-arrow-left me-1"></i>
+                                                    Back To My Projects</a>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 mb-3">
