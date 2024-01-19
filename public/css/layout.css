@@ -18,6 +18,10 @@
     top: 0px !important;
 }
 
+main {
+    min-height: calc(100vh - 180px);
+}
+
 .main-area {
     padding: 0px 12px 0px 25px !important;
     margin: 12px 0px;

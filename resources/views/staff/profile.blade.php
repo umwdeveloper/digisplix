@@ -104,7 +104,7 @@
                                                         <input type="hidden" id="country_code" value=""
                                                             name="country_code">
                                                         <!-- <label class="crm-label form-label" for="country">Country<span
-                                                                    class="text-danger">*</span></label> -->
+                                                                        class="text-danger">*</span></label> -->
                                                         @if ($errors->has('country'))
                                                             <small class="invalid-feedback " style="font-size: 11px">
                                                                 {{ $errors->first('country') }}
@@ -146,7 +146,7 @@
                                                     <div
                                                         class="d-flex justify-content-lg-end justify-content-center mt-3 mb-3">
                                                         <!-- <button type="button" class="modal-btn-cancel me-3"
-                                                                                                                                                                                                                            data-bs-dismiss="modal">Cancel</button> -->
+                                                                                                                                                                                                                                data-bs-dismiss="modal">Cancel</button> -->
                                                         <button class="modal-btn-save ">Save </button>
                                                     </div>
                                                 </div>
@@ -160,13 +160,6 @@
                     </div>
                 </div>
 
-            </div>
-            <div class="row mb-3">
-                <div class="col-lg-12">
-                    <div class="box">
-                        <p class="f-14 w-500 mb-0 pb-0 text-center text-gray text-dark-clr" id="copyright-year"></p>
-                    </div>
-                </div>
             </div>
         </div>
     </main>

@@ -264,6 +264,18 @@
         </header>
         <!-- -----------Main Contents----------- -->
         @yield('content')
+
+        <div class="container-fluid">
+            <div class="row mb-3">
+                <div class="col-lg-12">
+                    <div class="box">
+                        <p class="f-14 w-500 mb-0 pb-0 text-center text-gray text-dark-clr" id="copyright-year">
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="overlay"></div>
 
     </div>
@@ -303,8 +315,6 @@
             </a>
         </div>
     </footer>
-
-
 
     <div id="overlay-all" class="overlay"></div>
 

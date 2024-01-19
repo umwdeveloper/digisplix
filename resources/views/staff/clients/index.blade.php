@@ -162,13 +162,6 @@
                 </div>
 
             </div>
-            <div class="row mb-3">
-                <div class="col-lg-12">
-                    <div class="box">
-                        <p class="f-14 w-500 mb-0 pb-0 text-center text-gray text-dark-clr" id="copyright-year"></p>
-                    </div>
-                </div>
-            </div>
         </div>
     </main>
 
@@ -343,7 +336,7 @@
                                             placeholder="Pakistan">
                                         <input type="hidden" id="country2_code" name="country_code">
                                         <!-- <label class="crm-label form-label" for="country2">Country<span
-                                                                                                class="text-danger">*</span></label> -->
+                                                                                                    class="text-danger">*</span></label> -->
                                         @if ($errors->updateClient->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updateClient->first('country') }}

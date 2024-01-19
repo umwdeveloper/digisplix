@@ -70,14 +70,6 @@
                             <x-no_data></x-no_data>
                         @endforelse
                     </div>
-                    <div class="row mb-3">
-                        <div class="col-lg-12">
-                            <div class="box">
-                                <p class="f-14 w-500 mb-0 pb-0 text-center text-gray text-dark-clr" id="copyright-year">
-                                </p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
             </div>
@@ -176,7 +168,7 @@
                                                 value="{{ $errors->hasBag('createStaff') ? old('country_code') : '' }}"
                                                 name="country_code">
                                             <!-- <label class="crm-label form-label" for="country">Country<span
-                                                                        class="text-danger">*</span></label> -->
+                                                                            class="text-danger">*</span></label> -->
                                             @if ($errors->createStaff->has('country'))
                                                 <small class="invalid-feedback " style="font-size: 11px">
                                                     {{ $errors->createStaff->first('country') }}
@@ -350,7 +342,7 @@
                                                 value="{{ $errors->hasBag('updateStaff') ? old('country_code') : '' }}"
                                                 name="country_code">
                                             <!-- <label class="crm-label form-label" for="country2">Country<span
-                                                                        class="text-danger">*</span></label> -->
+                                                                            class="text-danger">*</span></label> -->
                                             @if ($errors->updateStaff->has('country'))
                                                 <small class="invalid-feedback " style="font-size: 11px">
                                                     {{ $errors->updateStaff->first('country') }}
