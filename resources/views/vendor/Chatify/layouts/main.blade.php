@@ -1,7 +1,7 @@
 @include('Chatify::layouts.headLinks')
 
 
-<div class="messenger box p-0">
+<div class="messenger box p-0 mb-3">
     {{-- ----------------------Users/Groups lists side---------------------- --}}
     @php
         $is_staff = auth()->user()->userable_type === \App\Models\Staff::class;

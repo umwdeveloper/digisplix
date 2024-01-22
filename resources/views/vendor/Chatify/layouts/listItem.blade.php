@@ -42,7 +42,7 @@
                         <i class="fa-duotone fa-user-crown" style="font-size: 11px"></i>
                     @endif
                     <span class="contact-item-time"
-                        data-time="{{ $lastMessage->created_at }}">{{ $lastMessage->timeAgo }}</span>
+                        data-time="{{ $lastMessage->created_at->toISO8601String() }}">{{ $lastMessage->timeAgo }}</span>
                 </p>
                 <span>
                     {{-- Last Message user indicator --}}
