@@ -11,15 +11,15 @@ use Illuminate\Support\HtmlString;
 class InvoiceStatusUpdated extends Notification implements ShouldQueue {
     use Queueable;
 
-    public $name, $status, $id;
+    public $name, $status, $nid;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($name, $status, $id) {
+    public function __construct($name, $status, $nid) {
         $this->name = $name;
         $this->status = $status;
-        $this->id = $id;
+        $this->nid = $nid;
     }
 
     /**
@@ -49,7 +49,7 @@ class InvoiceStatusUpdated extends Notification implements ShouldQueue {
     public function toDatabase(object $notifiable): array {
         return [
             'message' => "Invoice status has been updated to " . $this->status,
-            "link" => route('client.invoices.show', $this->id)
+            "link" => route('client.invoices.show', $this->nid)
         ];
     }
 }
