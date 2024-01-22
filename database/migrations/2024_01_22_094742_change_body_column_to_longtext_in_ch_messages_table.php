@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void {
         Schema::table('ch_messages', function (Blueprint $table) {
-            $table->longText('body')->change();
+            $table->longText('body')->nullable()->change();
         });
     }
 
