@@ -9,6 +9,7 @@ use App\Models\Plan;
 use App\Models\User;
 use App\Notifications\InvoicePaid;
 use App\Notifications\PackagePaid;
+use App\Notifications\PackagePaidAdmin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -382,6 +383,7 @@ class PaymentController extends Controller {
                         $user = User::findOrFail($metadata->userID);
 
                         Notification::send($user, new PackagePaid($metadata->plan));
+                        Notification::send(User::getAdmin(), new PackagePaidAdmin($metadata->plan, $user->name));
                     } else {
                         $invoiceId = $metadata->invoice_id;
                         $invoice = Invoice::with(['client', 'items'])
