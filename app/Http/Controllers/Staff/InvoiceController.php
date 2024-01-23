@@ -23,7 +23,7 @@ class InvoiceController extends Controller {
     public function index() {
         $this->authorize('staff.invoices');
 
-        $invoices = Invoice::with(['category', 'client', 'items'])
+        $invoices = Invoice::with(['category', 'client', 'items', 'client.user'])
             ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
                 ->whereColumn('invoice_id', 'invoices.id')
                 ->limit(1)])

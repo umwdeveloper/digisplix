@@ -376,7 +376,7 @@
                                                     </td>
                                                     <td class="">{{ $invoice->category->name }}</td>
                                                     <td>{{ $invoice->created_at->format('d M Y') }}</td>
-                                                    <td class="bussiness-name">{{ $invoice->invoice_to }}</td>
+                                                    <td class="bussiness-name">{{ $invoice->client->user->name }}</td>
                                                     <td class="bussiness-name">
                                                         ${{ number_format(round($invoice->items_sum_price), 0, ',') }}
                                                     </td>
@@ -769,11 +769,12 @@
                         </div>
                     </div>
                     <div class="px-4 mt-md-0 mt-3">
-                        <div class="row align-items-center">
+                        <div class="row">
                             <div class="col-lg-6 mb-lg-0 mb-4 mx-auto">
                                 <div class="border-right">
                                     <h1 class="invoice-heading text-dark-clr">Invoice From:</h1>
-                                    <div class="  w-500 f-16 text-dark-clr" id="pv-invoice-from"></div>
+                                    <div class="  w-500 f-16 text-dark-clr" id="pv-invoice-from"
+                                        style="white-space: pre-line"></div>
                                     {{-- <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">5900 Balcones Dr #15419
                                     </p>
                                     <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">Austin, Texas 78731,

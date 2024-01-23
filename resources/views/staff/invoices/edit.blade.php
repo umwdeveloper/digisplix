@@ -263,7 +263,7 @@
                                                 </small>
                                             @enderror
                                             <textarea name="invoice_from" required id="invoice_from" rows="3" class="border-0 f-14 w-400 bg-transparent"
-                                                style="width: 100%; outline: none;">{{ $invoice->invoice_from }}</textarea>
+                                                style="width: 100%; outline: none;">DigiSplix, LLC&#13;&#10;5900 Balcones Dr #15419&#13;&#10;Austin, Texas 78731,&#13;&#10;United States</textarea>
 
                                         </div>
                                     </div>
@@ -348,7 +348,7 @@
                                                 </p>
 
                                                 <input type="hidden" name="grand_total" id="grand-total"
-                                                    value="0">
+                                                    value="{{ $total_price }}">
 
                                                 <p class="f-20 w-500 text-primary mb-0 pb-0">$<span
                                                         class="grand-total">{{ $total_price }}</span></p>
@@ -525,11 +525,12 @@
                         </div>
                     </div>
                     <div class="px-4 mt-md-0 mt-3">
-                        <div class="row align-items-center">
+                        <div class="row">
                             <div class="col-lg-6 mb-lg-0 mb-4 mx-auto">
                                 <div class="border-right">
                                     <h1 class="invoice-heading text-dark-clr">Invoice From:</h1>
-                                    <div class="  w-500 f-16 text-dark-clr" id="pv-invoice-from"></div>
+                                    <div class="  w-500 f-16 text-dark-clr" id="pv-invoice-from"
+                                        style="white-space: pre-line"></div>
                                     {{-- <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">5900 Balcones Dr #15419
                                     </p>
                                     <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">Austin, Texas 78731,
@@ -578,7 +579,7 @@
                             <div class="ps-4">
                                 <h1 class="f-16 w-600 text-dark-clr">Thank you for your business</h1>
 
-                                <div class="mt-3 mb-2 text-dark-clr">
+                                {{-- <div class="mt-3 mb-2 text-dark-clr">
                                     <h1 class="f-16 w-600">Payment Info:</h1>
                                     <p class="mb-0 pb-0 f-14 w-500">Account# : <span class="ms-3"
                                             id="pv-acc-num"></span></p>
@@ -588,7 +589,7 @@
                                             id="pv-bank-name"></span></p>
                                     <p class="mb-0 pb-0 f-14 w-500">IFSC Code : <span class="ms-3"
                                             id="pv-ifsc-code"></span></p>
-                                </div>
+                                </div> --}}
                                 <div class=" mt-3 text-dark-clr" id="pv-terms-conditions">
                                     <h1 class="f-16 w-600">Terms & Conditions:</h1>
                                     <p class="mb-0 pb-0 f-14 w-500"></p>
@@ -888,6 +889,11 @@
         $('#previewBtn').click(function() {
             let invoice_id = $('input[name="invoice_id"]').val()
             let invoice_from = $('textarea[name="invoice_from"]').val()
+
+            // Extract "DigiSplix, LLC" and make it bold
+            let companyName = invoice_from.split('5900')[0];
+            let formatted_invoice_from = `<b>${companyName}</b>${invoice_from.substring(companyName.length)}`;
+
             let invoice_to = $('textarea[name="invoice_to"]').val()
             let acc_num = $('input[name="account_number"]').val()
             let acc_name = $('input[name="account_holder_name"]').val()
@@ -898,7 +904,7 @@
             let total = $('input[name="grand_total"]').val()
 
             $('#pv-invoice-id').text(invoice_id)
-            $('#pv-invoice-from').text(invoice_from)
+            $('#pv-invoice-from').html(formatted_invoice_from)
             $('#pv-invoice-to').text(invoice_to)
             $('#pv-acc-num').text(acc_num)
             $('#pv-acc-name').text(acc_name)
@@ -922,10 +928,11 @@
             $('.pv-total').text('$' + total)
 
             // Items
+            $('#pv-items').empty()
             $('.item-add-box:not(.item-template)').each(function(index, element) {
-                var description = $(element).find('input[name="descriptions[]"]').val();
-                var price = $(element).find('input[name="prices[]"]').val();
-                var quantity = $(element).find('input[name="quantities[]"]').val();
+                var description = $(element).find(`input[name="descriptions[${index}]"]`).val();
+                var price = $(element).find(`input[name="prices[${index}]"]`).val();
+                var quantity = $(element).find(`input[name="quantities[${index}]"]`).val();
 
                 var total = price * quantity;
 
