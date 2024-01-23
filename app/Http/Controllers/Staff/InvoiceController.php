@@ -289,7 +289,7 @@ class InvoiceController extends Controller {
             }
 
             // Send notification
-            if ($invoice->status !== Invoice::DRAFT) {
+            if ($invoice->status !== Invoice::DRAFT && $invoice->status !== Invoice::PENDING) {
                 Notification::send($invoice->client->user, new InvoiceStatusUpdated($invoice->client->user->name, Invoice::getStatusLabel($invoice->status), $invoice->id));
             }
 

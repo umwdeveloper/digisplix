@@ -6,6 +6,12 @@
             <div class="row justify-content-center">
                 <div class="col-xl-8 mx-auto mb-3">
                     <div class="box box-p d-flex flex-column justify-content-center align-items-center ">
+                        <p class="text-success text-center" style="font-weight: 500">Thank you for your payment. We have
+                            successfully
+                            received
+                            and
+                            processed your
+                            payment.</p>
                         <img width="300px" src="{{ asset('images/successful-payment.svg') }}" alt="Successful payment">
 
                         <button onclick="location.href='{{ route('client.invoices.index') }}'" class="table-btn px-2"

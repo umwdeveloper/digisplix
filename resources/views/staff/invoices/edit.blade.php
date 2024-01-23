@@ -285,7 +285,7 @@
                                     <div class="col-lg-6 mt-4 ">
                                         <h1 class="invoice-heading text-primary mb-4">More Fields</h1>
                                         <div class="box-gray h-auto box-p text-center ">
-                                            @if ($errors->any(['account_holder_name', 'bank_name', 'ifsc_code', 'account_number']))
+                                            {{-- @if ($errors->any(['account_holder_name', 'bank_name', 'ifsc_code', 'account_number']))
                                                 <small class="invalid-feedback " style="font-size: 11px">
                                                     Bank details are not correct
                                                 </small>
@@ -294,7 +294,7 @@
                                             <button class="ticket-fill py-4 mb-3 w-100" type="button"
                                                 data-bs-toggle="modal" data-bs-target="#bankModal"><i
                                                     class="fa-solid fa-circle-plus me-2"></i> Add
-                                                Bank Details</button>
+                                                Bank Details</button> --}}
 
                                             <div class="accordion" id="accordionExample">
                                                 <div class="accordion-item">
@@ -840,7 +840,7 @@
     </script>
 
     {{-- Save bank details --}}
-    <script>
+    {{-- <script>
         $('#invoice-form').on('submit', function(e) {
             let accountHolderName = $('#name').val()
             let bankName = $('#bank-name').val()
@@ -866,7 +866,7 @@
 
             $(this).unbind('submit').submit();
         })
-    </script>
+    </script> --}}
 
     {{-- Preview Invoice --}}
     <script id="pv-items-template" type="text/template">

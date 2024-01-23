@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Invoice;
+use App\Models\InvoiceItem;
 use App\Models\Plan;
 use App\Models\User;
 use App\Notifications\InvoicePaid;
+use App\Notifications\PackagePaid;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -160,6 +162,12 @@ class PaymentController extends Controller {
             'terms_of_service_acceptance' => [
                 'message' => 'I agree to the [Terms of Service](https://digisplix.com/terms) and [Privacy Policy](https://digisplix.com/privacy)',
             ],
+        ];
+
+        $data['metadata'] = [
+            'type' => 'package',
+            'userID' => auth()->user()->id,
+            'plan' => strtoupper($request->plan)
         ];
 
         try {
@@ -370,18 +378,26 @@ class PaymentController extends Controller {
                 $metadata = $session->metadata;
 
                 if ($session->payment_status == "paid") {
-                    $invoiceId = $metadata->invoice_id;
-                    $invoice = Invoice::with('client')
-                        ->withSum('items', 'price')
-                        ->findOrFail($invoiceId);
-                    $invoice->status = Invoice::PAID;
-                    $invoice->save();
+                    if (!empty($metadata) && isset($metadata->type) && $metadata->type == 'package') {
+                        $user = User::findOrFail($metadata->userID);
 
-                    $invoice->client->active = 1;
-                    $invoice->client->save();
+                        Notification::send($user, new PackagePaid($metadata->plan));
+                    } else {
+                        $invoiceId = $metadata->invoice_id;
+                        $invoice = Invoice::with(['client', 'items'])
+                            ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
+                                ->whereColumn('invoice_id', 'invoices.id')
+                                ->limit(1)])
+                            ->findOrFail($invoiceId);
+                        $invoice->status = Invoice::PAID;
+                        $invoice->save();
 
-                    Notification::send($invoice->client->user, new InvoicePaid($invoice, $invoice->items_sum_price));
-                    Notification::send(User::getAdmin(), new InvoicePaid($invoice, $invoice->items_sum_price));
+                        $invoice->client->active = 1;
+                        $invoice->client->save();
+
+                        Notification::send($invoice->client->user, new InvoicePaid($invoice, $invoice->items_sum_price));
+                        Notification::send(User::getAdmin(), new InvoicePaid($invoice, $invoice->items_sum_price));
+                    }
                 }
                 break;
             case 'payment_intent.succeeded':
@@ -390,8 +406,10 @@ class PaymentController extends Controller {
 
                 if (!empty($metadata) && $payment->status == "succeeded") {
                     $invoiceId = $metadata->invoice_id;
-                    $invoice = Invoice::with('client')
-                        ->withSum('items', 'price')
+                    $invoice = Invoice::with(['client', 'items'])
+                        ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
+                            ->whereColumn('invoice_id', 'invoices.id')
+                            ->limit(1)])
                         ->findOrFail($invoiceId);
                     $invoice->status = Invoice::PAID;
                     $invoice->save();
@@ -405,13 +423,16 @@ class PaymentController extends Controller {
                 break;
             case 'invoice.paid':
                 $payment = $event->data->object;
+
                 if ($payment->subscription_details && !empty($payment->subscription_details)) {
                     $metadata = $payment->subscription_details->metadata;
 
                     if (!empty($metadata)) {
                         $invoiceId = $metadata->invoice_id;
-                        $invoice = Invoice::with('client')
-                            ->withSum('items', 'price')
+                        $invoice = Invoice::with(['client', 'items'])
+                            ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
+                                ->whereColumn('invoice_id', 'invoices.id')
+                                ->limit(1)])
                             ->findOrFail($invoiceId);
                         $invoice->status = Invoice::PAID;
                         $invoice->save();
