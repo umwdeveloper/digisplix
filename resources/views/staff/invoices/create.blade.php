@@ -494,7 +494,7 @@
     </div> --}}
 
     <!-- Preview Modal -->
-    <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="previewModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
 
             <div class="modal-content invoice-content">
@@ -637,6 +637,19 @@
         </div>
     </div>
 
+    <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" style="height: 100%">
+
+            <div class="modal-content" style="height: 100%">
+                <button class="ticket-fill invoice-download"><i class="fa fa-download f-18 me-2"
+                        aria-hidden="true"></i>Download</button>
+                <div class="modal-body p-0">
+                    <iframe width="100%" height="100%" id="preview-frame" src="" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
         integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA=="
@@ -644,7 +657,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
         integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.1/jspdf.plugin.autotable.min.js"
+        integrity="sha512-8+n4PSpp8TLHbSf28qpjRfu51IuWuJZdemtTC1EKCHsZmWi2O821UEdt6S3l4+cHyUQhU8uiAAUeVI1MUiFATA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvg/1.1/canvg.js"
+        integrity="sha512-Qw1+j4vl/AjCqxrx/omDzobdEepDHathD3Z0bwulQSrLlaTtTWhiH3sMSDU4oK2TP2EfyzHgg33gh2zxUAI3EQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {{-- <script>
         document.addEventListener("DOMContentLoaded", function() {
             const downloadButton = document.querySelector(".invoice-download");
             downloadButton.addEventListener("click", function() {
@@ -687,7 +706,7 @@
 
             });
         });
-    </script>
+    </script> --}}
 
     <script>
         $(document).ready(function() {
@@ -952,6 +971,20 @@
                 $('#pv-items').append(item)
             });
         })
+    </script>
+
+    <script>
+        $('#previewModal').on('shown.bs.modal', function() {
+            generatePDF()
+        })
+
+        $('.invoice-download').click(function() {
+            downloadPDF()
+        })
+
+        window.onload = function() {
+            $('#previewModal').modal('show')
+        }
     </script>
 @endsection
 @endsection

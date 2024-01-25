@@ -894,7 +894,7 @@
             let companyName = invoice_from.split('5900')[0];
             let formatted_invoice_from = `<b>${companyName}</b>${invoice_from.substring(companyName.length)}`;
 
-            let invoice_to = $('textarea[name="invoice_to"]').val()
+            let invoice_to = $('textarea[name="invoice_to"]').val().replace(/(?:\r\n|\r|\n)/g, '<br>')
             let acc_num = $('input[name="account_number"]').val()
             let acc_name = $('input[name="account_holder_name"]').val()
             let bank_name = $('input[name="bank_name"]').val()
@@ -905,7 +905,7 @@
 
             $('#pv-invoice-id').text(invoice_id)
             $('#pv-invoice-from').html(formatted_invoice_from)
-            $('#pv-invoice-to').text(invoice_to)
+            $('#pv-invoice-to').html(invoice_to)
             $('#pv-acc-num').text(acc_num)
             $('#pv-acc-name').text(acc_name)
             $('#pv-bank-name').text(bank_name)

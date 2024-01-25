@@ -1112,7 +1112,13 @@
                         var invoice = response.invoice;
                         var invoice_id = invoice.invoice_id
                         var invoice_from = invoice.invoice_from
-                        var invoice_to = invoice.invoice_to
+
+                        // Extract "DigiSplix, LLC" and make it bold
+                        let companyName = invoice_from.split('5900')[0];
+                        let formatted_invoice_from =
+                            `<b>${companyName}</b>${invoice_from.substring(companyName.length)}`;
+
+                        var invoice_to = invoice.invoice_to.replace(/(?:\r\n|\r|\n)/g, '<br>')
                         var termsNConditions = invoice.terms_n_conditions;
                         var note = invoice.note
                         let total = invoice.items_sum_price
@@ -1129,8 +1135,8 @@
 
                         $('#pv-invoice-id').text(invoice_id)
                         $('#pv-date-created').text(formattedDate)
-                        $('#pv-invoice-from').text(invoice_from)
-                        $('#pv-invoice-to').text(invoice_to)
+                        $('#pv-invoice-from').html(formatted_invoice_from)
+                        $('#pv-invoice-to').html(invoice_to)
 
                         if (termsNConditions != null) {
                             $('#pv-terms-conditions').css('display', 'block')

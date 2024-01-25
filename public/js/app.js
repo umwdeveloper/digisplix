@@ -365,3 +365,177 @@ $(document).on('click', '.delete, .delete-anchor', function (e) {
 $('#confirmDelete').click(function () {
     deleteForm.submit()
 })
+
+var pdf;
+const generatePDF = function () {
+    window.jsPDF = window.jspdf.jsPDF;
+    pdf = new jsPDF({
+        orientation: 'p',
+        unit: 'mm',
+        format: 'a4',
+    });
+    pdf.setProperties({
+        title: '8MBNKP'
+    })
+
+    var x = 5;
+    var y = 10;
+
+    function pageWidth() {
+        return pdf.internal.pageSize.width;
+    }
+
+    function pageHeight() {
+        return pdf.internal.pageSize.height;
+    }
+
+    function getTextWidth(text, fontSize) {
+        // Text width in mm
+        return (pdf.getStringUnitWidth(text) * pdf.getFontSize()) / (72 / 25.6)
+    }
+
+    pdf.addImage('../images/DigiSplix-logo-for-dark-mode.png', 'PNG', x, y - 3, 35, 10)
+
+    pdf.setTextColor('#5c607b')
+    pdf.text('Invoice#: ', pageWidth() - x - getTextWidth('Invoice#: ') - getTextWidth('8MBNKP') - 3.5, y)
+    pdf.text('8MBNKP', pageWidth() - x - getTextWidth('8MBNKP'), y)
+
+    y += 7;
+    const date = new Date();
+    const options = { day: 'numeric', month: 'short', year: 'numeric' };
+    const formattedDate = date.toLocaleDateString('en-US', options);
+    pdf.text('Date: ', pageWidth() - x - getTextWidth('Date: ') - getTextWidth('formattedDate'), y)
+    pdf.text(formattedDate, pageWidth() - x - getTextWidth(formattedDate), y)
+
+    y += 10
+    pdf.setFillColor('#0963ce')
+    pdf.rect(0, y, pageWidth() - 80, 10, 'F')
+
+    pdf.setTextColor('#000000')
+    pdf.setFontSize(34)
+    pdf.setFont("Helvetica", "Bold")
+    pdf.text('INVOICE', pageWidth() - 80 + 5, y + 9)
+
+    pdf.setFillColor('#0963ce')
+    pdf.rect(pageWidth() - 20, y, pageWidth(), 10, 'F')
+
+    y += 22
+    pdf.setTextColor('#212529')
+    pdf.setFontSize(16)
+    pdf.setFont("Helvetica", "")
+    pdf.text('Invoice From: ', x, y)
+
+    pdf.text('Invoice To: ', pageWidth() - 100, y)
+
+    y += 10
+    pdf.setFontSize(13)
+    pdf.text('DigiSplix, LLC\n5900 Balcones Dr #15419\nAustin, Texas 78731,\nUnited States', x, y)
+
+    pdf.text('Mike Roofers\n45 Balcones STE 200,\nLos Anageles, Califronia\nUnited States', pageWidth() - 100, y)
+
+    y += 25
+    const headers = ['Sr No', 'Description', 'Price', 'Qty', 'Total'];
+    const rows = [
+        [1, 'Saepe nam eum tempore excepturi sint laborum.', '$10.00', 2, '$20.00'],
+        [2, 'Item 2', '$15.00', 3, '$45.00'],
+        [3, 'Saepe nam eum tempore excepturi sint laborum. Saepe nam eum tempore excepturi sint laborum.', '$8.00', 1, '$8.00'],
+        [4, 'Item 4', '$12.00', 4, '$48.00'],
+        [5, 'Saepe nam eum tempore excepturi sint laborum.', '$10.00', 2, '$20.00'],
+        [6, 'Item 2', '$15.00', 3, '$45.00'],
+        [7, 'Saepe nam eum tempore excepturi sint laborum. Saepe nam eum tempore excepturi sint laborum.', '$8.00', 1, '$8.00'],
+        [8, 'Item 4', '$12.00', 4, '$48.00']
+    ];
+
+    pdf.autoTable({
+        head: [headers],
+        body: rows,
+        startY: y,
+        theme: 'plain',
+        tableLineColor: '#cccccc',
+        tableLineWidth: 0.3,
+        fontSize: 12,
+        margin: 5,
+        styles: {
+            cellPadding: 2
+        },
+        headStyles: {
+            fillColor: '#E6EFFA',
+            lineColor: '#ffffff',
+            lineWidth: { right: 0.5 },
+            textColor: '#0963ce'
+        },
+    });
+
+    y = (pdf.lastAutoTable.finalY || 10) + 12
+    var totalY = y + 10
+    pdf.setTextColor('#212529')
+    pdf.setFont('Helvetica', 'Bold')
+    pdf.setFontSize(14)
+    pdf.text('Thank you for your business', x, y)
+
+    pdf.setFont('Helvetica', '')
+    pdf.text('Subtotal: ', pageWidth() - 75, y)
+
+    pdf.text('$200', pageWidth() - getTextWidth('$200') - x, y)
+
+    y += 10
+    pdf.setFont('Helvetica', 'Bold')
+    pdf.setFontSize(13)
+    pdf.text('Terms & Conditions:', x, y)
+
+    y += 8
+    pdf.setFont('Helvetica', '')
+    pdf.setFontSize(12)
+    pdf.text('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', x, y, { maxWidth: 100 })
+
+    var lines = pdf.splitTextToSize('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', pdf.internal.pageSize.width);
+    var lineHeight = pdf.internal.getFontSize() / pdf.internal.scaleFactor + 2;
+    var height = lines.length * lineHeight + 10 + 5;
+
+    y += height - 5
+    pdf.setFont('Helvetica', 'Bold')
+    pdf.setFontSize(13)
+    pdf.text('Note:', x, y)
+
+    y += 8
+    pdf.setFont('Helvetica', '')
+    pdf.setFontSize(12)
+    pdf.text('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', x, y, { maxWidth: 100 })
+
+    pdf.setFillColor('#0963ce')
+    pdf.rect(pageWidth() - 80, totalY, pageWidth(), 10, 'F')
+
+    pdf.setFont('Helvetica', 'Bold')
+    pdf.setFontSize(16)
+    pdf.setTextColor('#ffffff')
+    pdf.text("Total Amount", pageWidth() - 75, totalY + 7)
+
+    pdf.text('$200', pageWidth() - getTextWidth('$200') - x, totalY + 7)
+
+    pdf.setDrawColor('#0963ce')
+    pdf.line(0, pageHeight() - 20, pageWidth(), pageHeight() - 20)
+
+    pdf.addImage('../images/envelope-fill.png', 'PNG', x, pageHeight() - 12, 5, 5)
+
+    pdf.setTextColor('#212529')
+    pdf.setFont('Helvetica', '')
+    pdf.setFontSize(12)
+    pdf.text('info@digisplix.com', x + 10, pageHeight() - 8)
+
+    pdf.addImage('../images/browser-chrome.png', 'PNG', (pageWidth() / 2) - 20, pageHeight() - 12, 5, 5)
+
+    pdf.text('www.digisplix.com', (pageWidth() / 2) - 21 + 10, pageHeight() - 8)
+
+    pdf.addImage('../images/telephone-fill.png', 'PNG', pageWidth() - 50, pageHeight() - 12, 5, 5)
+
+    pdf.text('+17373388038', pageWidth() - 42, pageHeight() - 8)
+
+    var blobPDF = new Blob([pdf.output('blob')], { type: "application/pdf" })
+    var blobURL = URL.createObjectURL(blobPDF)
+
+    $('#preview-frame').attr('src', blobURL + '#navpanes=0')
+}
+
+const downloadPDF = function () {
+    pdf.save('8MBNKP.pdf')
+}
