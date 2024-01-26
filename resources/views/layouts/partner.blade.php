@@ -388,7 +388,7 @@
     {{-- Country Selector --}}
     <script src="{{ asset('js/countrySelect.min.js') }}"></script>
     {{-- JS --}}
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/app.js') . '?v=1' }}"></script>
     <script src="{{ asset('js/layout.js') }}"></script>
     {{-- Loader --}}
     <script>

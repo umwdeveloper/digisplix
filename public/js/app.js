@@ -483,7 +483,7 @@ const generatePDF = function (data) {
     pdf.setFont('Poppins-Regular', 'normal')
     pdf.text('Subtotal: ', pageWidth() - 75, y)
 
-    pdf.text('$' + data.total.toFixed(2), pageWidth() - getTextWidth('$' + data.total.toFixed(2)) - x, y)
+    pdf.text('$' + (+data.total).toFixed(2), pageWidth() - getTextWidth('$' + (+data.total).toFixed(2)) - x, y)
 
     if (data.termsNConditions != null && data.termsNConditions.trim().length > 0) {
         y += 10
@@ -525,7 +525,7 @@ const generatePDF = function (data) {
     pdf.setTextColor('#ffffff')
     pdf.text("Total Amount", pageWidth() - 75, totalY + 7)
 
-    pdf.text('$' + data.total.toFixed(2), pageWidth() - getTextWidth('$' + data.total.toFixed(2)) - x, totalY + 7)
+    pdf.text('$' + (+data.total).toFixed(2), pageWidth() - getTextWidth('$' + (+data.total).toFixed(2)) - x, totalY + 7)
 
     pdf.setDrawColor('#0963ce')
     pdf.line(0, pageHeight() - 20, pageWidth(), pageHeight() - 20)
