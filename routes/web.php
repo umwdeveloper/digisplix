@@ -227,6 +227,8 @@ Route::domain(config('custom.client_alias'))
         Route::resource('invoices', ClientInvoiceController::class);
         Route::get('/invoices/{id}/bank', [ClientInvoiceController::class, 'bank'])
             ->name('invoices.bank');
+        Route::patch('/invoices/fetch-invoice/{invoice_id}', [ClientInvoiceController::class, 'fetchInvoice'])
+            ->name('invoices.fetch_invoice');
 
         // Services
         Route::get('/services', [ServiceController::class, 'index'])->name('services.index');

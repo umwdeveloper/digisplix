@@ -86,4 +86,19 @@ class InvoiceController extends Controller {
     public function destroy(string $id) {
         //
     }
+
+    public function fetchInvoice(Request $request, string $id) {
+        $invoice = Invoice::with(['items', 'category', 'client'])
+            ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
+                ->whereColumn('invoice_id', 'invoices.id')
+                ->limit(1)])
+            ->where('client_id', Auth::user()->userable->id)
+            ->where('sent', 1)
+            ->where('status', '!=', Invoice::DRAFT)
+            ->findOrFail($id);
+
+        $this->authorize('client.invoices', $invoice);
+
+        return response()->json(['status' => 'success', 'invoice' => $invoice]);
+    }
 }

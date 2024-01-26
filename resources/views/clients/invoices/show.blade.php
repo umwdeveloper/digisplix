@@ -18,7 +18,7 @@
                                 <!-- download -->
                                 <div class="header-option align-self-center me-0 hide-sm me-3 ms-2">
                                     <i class="fa-duotone fa-download header-icon invoice-download-btn"
-                                        style="color: #0963ce; cursor: pointer"></i>
+                                        style="color: #0963ce; cursor: pointer" data-id="{{ $invoice->id }}"></i>
                                 </div>
                                 <!-- pay -->
                                 @if ($invoice->status == App\Models\Invoice::PAID)
@@ -52,154 +52,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-8 col-lg-10 mx-auto ">
-                    <div class="box mb-3 box-p invoice" style="min-height: 80vh;">
-                        <div class="col-lg-12 mb-4 mt-2">
-                            <div class="invoice-heading-row">
-                                <h1 class="invoice-heading mb-0 pb-0">INVOICE</h1>
-                            </div>
-                        </div>
-                        <div class="px-4 mt-md-0 mt-3">
-                            <div class="row">
-                                <div class="col-lg-6 mb-lg-0 mb-4 mx-auto">
-                                    <div class="border-right">
-                                        <h1 class="invoice-heading text-dark-clr">Invoice From:</h1>
-                                        <div class="  w-500 f-16 text-dark-clr" style="white-space: pre-line">
-                                            {{ $invoice->invoice_from }}</div>
-                                        {{-- <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">5900 Balcones Dr #15419
-                                        </p>
-                                        <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">Austin, Texas 78731,
-                                        </p>
-                                        <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">United States
-                                        </p> --}}
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-lg-0 mb-4 mx-auto">
-                                    <div class="border-right">
-                                        <h1 class="invoice-heading  text-dark-clr">Customer:</h1>
-                                        <div class="  w-500 f-16 text-dark-clr">{{ $invoice->invoice_to }}</div>
-                                        {{-- <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">45 Balcones STE 200,
-                                        </p>
-                                        <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">Los Anageles, Califronia</p>
-                                        <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">United States</p> --}}
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="px-4">
-                            <div class="row mt-4 ">
-                                <div class="col-lg-12">
-                                    <div class=" dasboard-table h-auto"
-                                        style="height: fit-content !important; border: 1px solid #ece9e9; border-bottom: none; overflow-x: auto">
-                                        <table class="table data-table-style mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">SL NO.</th>
-                                                    <th scope="col">Item Description</th>
-                                                    <th scope="col">Price</th>
-                                                    <th scope="col">Qty.</th>
-                                                    <th scope="col">Total
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($invoice->items as $key => $item)
-                                                    <tr class="">
-                                                        <td>{{ ++$key }}.</td>
-                                                        <td scope="row" style="white-space: normal;">
-                                                            {{ $item->description }}
-                                                        </td>
-                                                        <td>${{ $item->price }}</td>
-                                                        <td class="text-center">
-                                                            {{ $item->quantity }}
-                                                        </td>
-                                                        <td>${{ round($item->price * $item->quantity) }}</td>
-
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mt-4 ">
-                            <div class="col-lg-6 ">
-                                <div class="ps-4">
-                                    <h1 class="f-16 w-600 text-dark-clr">Thank you for your business</h1>
-
-                                    {{-- <div class="mt-3 mb-2 text-dark-clr">
-                                        <h1 class="f-16 w-600">Payment Info:</h1>
-                                        <p class="mb-0 pb-0 f-14 w-500">Account# : <span
-                                                class="ms-3">{{ $invoice->account_number }}</span>
-                                        </p>
-                                        <p class="mb-0 pb-0 f-14 w-500">A/C Name : <span
-                                                class="ms-3">{{ $invoice->account_holder_name }}</span></p>
-                                        <p class="mb-0 pb-0 f-14 w-500">Bank Name : <span
-                                                class="ms-3">{{ $invoice->bank_name }}</span></p>
-                                        <p class="mb-0 pb-0 f-14 w-500">IFSC Code : <span
-                                                class="ms-3">{{ $invoice->ifsc_code }}</span></p>
-                                    </div> --}}
-                                    @if (!empty($invoice->terms_n_conditions))
-                                        <div class=" mt-3 text-dark-clr">
-                                            <h1 class="f-16 w-600">Terms & Conditions:</h1>
-                                            <p class="mb-0 pb-0 f-14 w-500">{{ $invoice->terms_n_conditions }}</p>
-                                        </div>
-                                    @endif
-                                    @if (!empty($invoice->note))
-                                        <div class=" mt-3 text-dark-clr">
-                                            <h1 class="f-16 w-600">Notes:</h1>
-                                            <p class="mb-0 pb-0 f-14 w-500">{{ $invoice->note }}</p>
-                                        </div>
-                                    @endif
-
-                                </div>
-                            </div>
-                            <div class="col-lg-5 ms-auto ">
-                                <div class="box-gray h-auto box-p bg-white border-0 p-0 text-dark-clr"
-                                    style="background-color: transparent !important;">
-                                    <div class="summary-box pe-4 ps-3" style="background-color: transparent;">
-                                        <div class="summary-div d-flex justify-content-between mb-1">
-                                            <p class="f-14 w-400 text-gray mb-0 pb-0">Sub Total:</p>
-                                            <p class="f-14 w-400 text-gray mb-0 pb-0">
-                                                ${{ number_format(round($invoice->total_price), 0, ',') }}</p>
-                                        </div>
-                                        <div class="summary-div d-flex justify-content-between mt-1">
-                                            {{-- <p class="f-14 w-400 text-gray mb-0 pb-0">Discount:</p> --}}
-                                            {{-- <p class="f-14 w-400 text-gray mb-0 pb-0">$22</p> --}}
-                                        </div>
-
-                                    </div>
-
-                                    <div class="summary-div-total d-flex justify-content-between  pe-4 mt-3 ps-3">
-                                        <p class="f-16 w-500   mb-0 pb-0">Total Amount
-                                        </p>
-                                        <p class="f-16 w-400   mb-0 pb-0">
-                                            ${{ number_format(round($invoice->total_price), 0, ',') }}</p>
-                                        <input type="hidden" id="amount" value="{{ $invoice->total_price }}">
-                                        <input type="hidden" id="invoice_id" value="{{ $invoice->id }}">
-                                        <input type="hidden" id="invoice_number" value="{{ $invoice->invoice_id }}">
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="col-lg-12 mt-3 ">
-                                <div class="invoice-footer px-4">
-                                    <p class="mb-0 pb-0 f-14 w-500 text-gray"><span><i
-                                                class="bi bi-envelope-fill text-primary me-1"></i></span>
-                                        info@digisplix.com
-                                    </p>
-                                    <p class="mb-0 pb-0 f-14 w-500 text-gray "><span class="w-600"><i
-                                                class="bi bi-browser-chrome text-primary me-1"></i></span>
-                                        www.digisplix.com</p>
-                                    <p class="mb-0 pb-0 f-14 w-500 text-gray"><span><i
-                                                class="bi bi-telephone-fill text-primary me-1"></i></span>
-                                        +17373388038</p>
-                                </div>
-                            </div>
-                        </div>
+                <div class="col-xl-8 col-lg-10 mx-auto mb-3" style="height: 100vh">
+                    <div class="text-center" id="spinner">
+                        <img width="20px" src="{{ asset('images/spinner.gif') }}">
                     </div>
+                    <iframe width="100%" height="100%" id="preview-frame" src="" frameborder="0"></iframe>
                 </div>
             </div>
         </div>
@@ -394,49 +251,89 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
         integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.1/jspdf.plugin.autotable.min.js"
+        integrity="sha512-8+n4PSpp8TLHbSf28qpjRfu51IuWuJZdemtTC1EKCHsZmWi2O821UEdt6S3l4+cHyUQhU8uiAAUeVI1MUiFATA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvg/1.1/canvg.js"
+        integrity="sha512-Qw1+j4vl/AjCqxrx/omDzobdEepDHathD3Z0bwulQSrLlaTtTWhiH3sMSDU4oK2TP2EfyzHgg33gh2zxUAI3EQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{ asset('js/Poppins-Regular-normal.js') }}"></script>
+    <script src="{{ asset('js/Poppins-Bold-normal.js') }}"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const downloadButton = document.querySelector(".invoice-download-btn");
-            downloadButton.addEventListener("click", function() {
-                const elementToCapture = document.querySelector('.invoice');
+        const baseUrl = '{{ url('/') }}';
+    </script>
 
-                html2canvas(elementToCapture).then(canvas => {
-                    // Convert the canvas to a data URL
-                    const imageDataUrl = canvas.toDataURL('image/png');
+    <script>
+        $(document).ready(() => {
+            let invoice_id = '{{ $invoice->id }}';
 
-                    // Create a new jsPDF instance
-                    window.jsPDF = window.jspdf.jsPDF;
-                    const pdf = new jsPDF();
+            $.ajax({
+                url: '{{ route('client.invoices.fetch_invoice', 'invoice_id') }}'.replace(
+                    'invoice_id',
+                    invoice_id),
+                type: 'PATCH',
+                data: {
+                    '_token': '{{ csrf_token() }}',
+                },
+                success: function(response) {
+                    var pdfData = {};
+                    if (response.status == 'success') {
+                        console.log(response.invoice);
+                        var invoice = response.invoice;
+                        var invoice_id = invoice.invoice_id
+                        var invoice_from = invoice.invoice_from
+                        var invoice_to = invoice.invoice_to
+                        var termsNConditions = invoice.terms_n_conditions;
+                        var note = invoice.note
+                        let total = invoice.items_sum_price
 
-                    // Calculate aspect ratio to maintain image proportions
-                    const aspectRatio = canvas.width / canvas.height;
+                        // const date = new Date();
+                        // const year = date.getFullYear();
+                        // const month = date.getMonth() + 1; // Months are 0-indexed
+                        // const day = date.getDate().toString().padStart(2, '0');
+                        // const monthName = date.toLocaleString('default', {
+                        //     month: 'short'
+                        // }).toUpperCase(); // Get short month name in uppercase
 
-                    // Set the maximum width and height for the image
-                    const maxWidth = pdf.internal.pageSize.getWidth() - 20; // Adjust margin
-                    const maxHeight = pdf.internal.pageSize.getHeight() - 20; // Adjust margin
+                        // const formattedDate = `${day} ${monthName} ${year}`;
 
-                    // Calculate width and height based on the aspect ratio and maximum dimensions
-                    let imgWidth = maxWidth;
-                    let imgHeight = maxWidth / aspectRatio;
+                        pdfData.invoice_id = invoice_id
+                        pdfData.invoice_from = invoice_from
+                        pdfData.invoice_to = invoice_to
+                        pdfData.termsNConditions = termsNConditions
+                        pdfData.note = note
+                        pdfData.total = total
+                        pdfData.created_at = invoice.created_at
 
-                    if (imgHeight > maxHeight) {
-                        imgHeight = maxHeight;
-                        imgWidth = maxHeight * aspectRatio;
+                        pdfData.items = []
+
+                        // Items
+                        $(invoice.items).each(function(index, item) {
+                            var description = item.description;
+                            var price = item.price;
+                            var quantity = item.quantity;
+
+                            var total = price * quantity;
+
+                            pdfData.items.push({
+                                description,
+                                price,
+                                quantity,
+                                total
+                            })
+                        });
+
+                        generatePDF(pdfData)
+                        $('#spinner').remove()
+                    } else {
+                        alert(response.message)
                     }
-
-                    // Calculate center position
-                    const xPos = (pdf.internal.pageSize.getWidth() - imgWidth) / 2;
-                    const yPos = (pdf.internal.pageSize.getHeight() - imgHeight) / 2;
-
-                    // Add the image to the PDF
-                    pdf.addImage(imageDataUrl, 'PNG', xPos, yPos, imgWidth, imgHeight);
-
-                    // Save or download the PDF
-                    pdf.save('invoice.pdf');
-                });
-
-            });
-        });
+                }
+            })
+        })
+        $('body').on('click', '.invoice-download-btn', function(e) {
+            downloadPDF(pdfData.invoice_id)
+        })
     </script>
 @endsection
 @endsection

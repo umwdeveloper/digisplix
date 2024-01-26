@@ -284,16 +284,6 @@
                                     <div class="col-lg-6 mt-4 ">
                                         <h1 class="invoice-heading text-primary mb-4">More Fields</h1>
                                         <div class="box-gray h-auto box-p text-center ">
-                                            {{-- @if ($errors->any(['account_holder_name', 'bank_name', 'ifsc_code', 'account_number']))
-                                                <small class="invalid-feedback " style="font-size: 11px">
-                                                    Bank details are not correct
-                                                </small>
-                                            @endif
-                                            <p class="text-danger f-14 d-none bank-error">Enter complete bank details</p>
-                                            <button class="ticket-fill py-4 mb-3 w-100" type="button"
-                                                data-bs-toggle="modal" data-bs-target="#bankModal"><i
-                                                    class="fa-solid fa-circle-plus me-2"></i> Add
-                                                Bank Details</button> --}}
 
                                             <div class="accordion" id="accordionExample">
                                                 <div class="accordion-item">
@@ -408,258 +398,39 @@
         </div>
     </div>
 
-    <!-- Bank Modal -->
-    {{-- <div class="modal fade" id="bankModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-medium">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Bank Details</h5>
-                    <button type="button" class=" close-btn text-white" data-bs-dismiss="modal" aria-label="Close"><i
-                            class="fa-duotone fa-xmark"></i></button>
-                </div>
-                <div class="modal-body">
-                    <form action="">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text" required value="{{ $invoice->account_holder_name }}"
-                                            name="account_holder_name" class="form-control crm-input" id="name"
-                                            placeholder="Mickel">
-                                        <label class="crm-label form-label" for="name">Account Holder Name<span
-                                                class="text-danger">*</span></label>
-                                        @error('account_holder_name')
-                                            <small class="invalid-feedback " style="font-size: 11px">
-                                                {{ $message }}
-                                            </small>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text" required value="{{ $invoice->bank_name }}"
-                                            name="bank_name" class="form-control crm-input" id="bank-name"
-                                            placeholder="Mickel">
-                                        <label class="crm-label form-label" for="bank-name">Bank name<span
-                                                class="text-danger">*</span></label>
-                                        @error('bank_name')
-                                            <small class="invalid-feedback " style="font-size: 11px">
-                                                {{ $message }}
-                                            </small>
-                                        @enderror
-                                    </div>
-                                </div>
-
-
-                                <div class="col-lg-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text" required value="{{ $invoice->ifsc_code }}"
-                                            name="ifsc_code" class="form-control crm-input" id="code"
-                                            placeholder="ABC">
-                                        <label class="crm-label form-label" for="code">IFSC Code<span
-                                                class="text-danger">*</span></label>
-                                        @error('ifsc_code')
-                                            <small class="invalid-feedback " style="font-size: 11px">
-                                                {{ $message }}
-                                            </small>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text" required value="{{ $invoice->account_number }}"
-                                            name="account_number" class="form-control crm-input" id="acc-num"
-                                            placeholder="ABC">
-                                        <label class="crm-label form-label" for="acc-num">Account Number<span
-                                                class="text-danger">*</span></label>
-                                        @error('account_number')
-                                            <small class="invalid-feedback " style="font-size: 11px">
-                                                {{ $message }}
-                                            </small>
-                                        @enderror
-                                    </div>
-                                </div>
-
-
-                                <div class="col-lg-12">
-                                    <div class="d-flex justify-content-lg-end justify-content-center mt-3 mb-3">
-                                        <button type="button" class="modal-btn-cancel me-3"
-                                            data-bs-dismiss="modal">Cancel</button>
-                                        <button type="button" class="modal-btn-save save-bank"
-                                            data-bs-dismiss="modal">Save
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-
     <!-- Preview Modal -->
     <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-dialog modal-dialog-centered modal-lg" style="height: 100%">
 
-            <div class="modal-content invoice-content">
+            <div class="modal-content" style="height: 100%">
                 <button class="ticket-fill invoice-download"><i class="fa fa-download f-18 me-2"
                         aria-hidden="true"></i>Download</button>
-                <div
-                    class="modal-header d-flex flex-md-row flex-column align-items-md-center align-items-start border-bottom-0">
-                    <img src="{{ asset('images/DigiSplix-Logo-for-Light-Mode.png') }}" alt=""
-                        class="img-fluid modal-logo">
-                    <div class="mt-md-0 mt-3 pe-2 text-gray">
-                        <p class="mb-0 pb-0 f-16 w-500 d-flex justify-content-between">Invoice # : <span class="ms-3"
-                                id="pv-invoice-id"></span></p>
-                        <p class="mb-0 pb-0 f-16 w-500 d-flex justify-content-between">Date : <span
-                                class="ms-3">{{ now()->format('d/m/Y') }}</span></p>
-                    </div>
-                </div>
                 <div class="modal-body p-0">
-                    <div class="col-lg-12 mb-4 mt-2">
-                        <div class="invoice-heading-row">
-                            <h1 class="invoice-heading mb-0 pb-0">INVOICE</h1>
-                        </div>
-                    </div>
-                    <div class="px-4 mt-md-0 mt-3">
-                        <div class="row">
-                            <div class="col-lg-6 mb-lg-0 mb-4 mx-auto">
-                                <div class="border-right">
-                                    <h1 class="invoice-heading text-dark-clr">Invoice From:</h1>
-                                    <div class="  w-500 f-16 text-dark-clr" id="pv-invoice-from"
-                                        style="white-space: pre-line"></div>
-                                    {{-- <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">5900 Balcones Dr #15419
-                                    </p>
-                                    <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">Austin, Texas 78731,
-                                    </p>
-                                    <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">United States
-                                    </p> --}}
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-lg-0 mb-4 mx-auto">
-                                <div class="border-right">
-                                    <h1 class="invoice-heading  text-dark-clr">Invoice To:</h1>
-                                    <div class="  w-500 f-16 text-dark-clr" id="pv-invoice-to"></div>
-                                    {{-- <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">45 Balcones STE 200,
-                                    </p>
-                                    <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">Los Anageles, Califronia</p>
-                                    <p class="f-14 w-400  mb-0 pb-0 text-dark-clr">United States</p> --}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-4">
-                        <div class="row mt-4 ">
-                            <div class="col-lg-12">
-                                <div class=" dasboard-table h-auto"
-                                    style="height: fit-content !important; border: 1px solid #ccc; border-bottom: none;">
-                                    <table class="table data-table-style mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">SL NO.</th>
-                                                <th scope="col">Item Description</th>
-                                                <th scope="col">Price</th>
-                                                <th scope="col">Qty.</th>
-                                                <th scope="col">Total
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="pv-items">
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt-4 ">
-                        <div class="col-lg-6 ">
-                            <div class="ps-4">
-                                <h1 class="f-16 w-600 text-dark-clr">Thank you for your business</h1>
-
-                                {{-- <div class="mt-3 mb-2 text-dark-clr">
-                                    <h1 class="f-16 w-600">Payment Info:</h1>
-                                    <p class="mb-0 pb-0 f-14 w-500">Account# : <span class="ms-3"
-                                            id="pv-acc-num"></span></p>
-                                    <p class="mb-0 pb-0 f-14 w-500">A/C Name : <span class="ms-3"
-                                            id="pv-acc-name"></span></p>
-                                    <p class="mb-0 pb-0 f-14 w-500">Bank Name : <span class="ms-3"
-                                            id="pv-bank-name"></span></p>
-                                    <p class="mb-0 pb-0 f-14 w-500">IFSC Code : <span class="ms-3"
-                                            id="pv-ifsc-code"></span></p>
-                                </div> --}}
-                                <div class=" mt-3 text-dark-clr" id="pv-terms-conditions">
-                                    <h1 class="f-16 w-600">Terms & Conditions:</h1>
-                                    <p class="mb-0 pb-0 f-14 w-500"></p>
-                                </div>
-                                <div class=" mt-3 text-dark-clr" id="pv-note">
-                                    <h1 class="f-16 w-600">Note:</h1>
-                                    <p class="mb-0 pb-0 f-14 w-500"></p>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-lg-5 ms-auto ">
-                            <div class="box-gray h-auto box-p bg-white border-0 p-0 text-dark-clr"
-                                style="background-color: transparent !important;">
-                                <div class="summary-box pe-4 ps-3" style="background-color: transparent;">
-                                    <div class="summary-div d-flex justify-content-between mb-1">
-                                        <p class="f-14 w-400 text-gray mb-0 pb-0">Sub Total:</p>
-                                        <p class="f-14 w-400 text-gray mb-0 pb-0 pv-total"></p>
-                                    </div>
-                                    {{-- <div class="summary-div d-flex justify-content-between mt-1">
-                                        <p class="f-14 w-400 text-gray mb-0 pb-0">Discount:</p>
-                                        <p class="f-14 w-400 text-gray mb-0 pb-0">$22</p>
-                                    </div> --}}
-
-                                </div>
-
-                                <div class="summary-div-total d-flex justify-content-between  pe-4 mt-3 ps-3">
-                                    <p class="f-16 w-500   mb-0 pb-0">Total Amount
-                                    </p>
-                                    <p class="f-16 w-400   mb-0 pb-0 pv-total"></p>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-lg-12 mt-3 ">
-                            <div class="invoice-footer px-4">
-                                <p class="mb-0 pb-0 f-14 w-500 text-gray"><span><i
-                                            class="bi bi-envelope-fill text-primary me-1"></i></span> info@digisplix.com
-                                </p>
-                                <p class="mb-0 pb-0 f-14 w-500 text-gray "><span class="w-600"><i
-                                            class="bi bi-browser-chrome text-primary me-1"></i></span>
-                                    www.digisplix.com</p>
-                                <p class="mb-0 pb-0 f-14 w-500 text-gray"><span><i
-                                            class="bi bi-telephone-fill text-primary me-1"></i></span> +17373388038</p>
-
-
-                            </div>
-                        </div>
-                    </div>
+                    <iframe width="100%" height="100%" id="preview-frame" src="" frameborder="0"></iframe>
                 </div>
             </div>
         </div>
     </div>
 
 @section('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+        integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+        integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.1/jspdf.plugin.autotable.min.js"
+        integrity="sha512-8+n4PSpp8TLHbSf28qpjRfu51IuWuJZdemtTC1EKCHsZmWi2O821UEdt6S3l4+cHyUQhU8uiAAUeVI1MUiFATA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvg/1.1/canvg.js"
+        integrity="sha512-Qw1+j4vl/AjCqxrx/omDzobdEepDHathD3Z0bwulQSrLlaTtTWhiH3sMSDU4oK2TP2EfyzHgg33gh2zxUAI3EQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{ asset('js/Poppins-Regular-normal.js') }}"></script>
+    <script src="{{ asset('js/Poppins-Bold-normal.js') }}"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const downloadButton = document.querySelector(".invoice-download");
-            downloadButton.addEventListener("click", function() {
-                window.jsPDF = window.jspdf.jsPDF;
-                const pdf = new jsPDF();
-                const modalContent = document.querySelector(".invoice-content");
-                console.log("clicked")
-                pdf.html(modalContent, {
-                    callback: function(pdf) {
-                        pdf.save("invoice.pdf");
-                    },
-                });
-            });
-        });
+        const baseUrl = '{{ url('/') }}';
     </script>
+
     <script>
         $(document).ready(function() {
             // Click event for tab buttons
@@ -733,16 +504,6 @@
 
                 updateNames();
 
-                // Add event listener to the trash icon for removal
-                // const trashIcon = newItemAddBox.find(".fa-trash-xmark");
-                // trashIcon.on("click", function() {
-                //     // Remove the parent .item-add-box when the trash icon is clicked
-                //     newItemAddBox.remove();
-                //     itemCount--;
-
-                //     // Update input names after removal
-                //     updateNames();
-                // });
             });
 
             // Add event listener to the item-add-box-div for trash icon click (event delegation)
@@ -839,35 +600,6 @@
         }
     </script>
 
-    {{-- Save bank details --}}
-    {{-- <script>
-        $('#invoice-form').on('submit', function(e) {
-            let accountHolderName = $('#name').val()
-            let bankName = $('#bank-name').val()
-            let ifscCode = $('#code').val()
-            let accountNumber = $('#acc-num').val()
-
-            $('.bank-error').addClass('d-none')
-
-            if (
-                accountHolderName.trim().length === 0 ||
-                bankName.trim().length === 0 ||
-                ifscCode.trim().length === 0 ||
-                accountNumber.trim().length === 0
-            ) {
-                $('.bank-error').removeClass('d-none')
-                return false;
-            }
-
-            $(this).append(`<input type="hidden" name="account_holder_name" value="${accountHolderName}">`)
-            $(this).append(`<input type="hidden" name="bank_name" value="${bankName}">`)
-            $(this).append(`<input type="hidden" name="ifsc_code" value="${ifscCode}">`)
-            $(this).append(`<input type="hidden" name="account_number" value="${accountNumber}">`)
-
-            $(this).unbind('submit').submit();
-        })
-    </script> --}}
-
     {{-- Preview Invoice --}}
     <script id="pv-items-template" type="text/template">
     <tr class="">
@@ -885,7 +617,10 @@
     </script>
 
     <script>
+        var pdfData = {};
+
         $('#previewBtn').click(function() {
+            $('#preview-frame').attr('src', '')
             let invoice_id = $('input[name="invoice_id"]').val()
             let invoice_from = $('textarea[name="invoice_from"]').val()
 
@@ -894,40 +629,18 @@
             let formatted_invoice_from = `<b>${companyName}</b>${invoice_from.substring(companyName.length)}`;
 
             let invoice_to = $('textarea[name="invoice_to"]').val()
-            let acc_num = $('input[name="account_number"]').val()
-            let acc_name = $('input[name="account_holder_name"]').val()
-            let bank_name = $('input[name="bank_name"]').val()
-            let ifsc_code = $('input[name="ifsc_code"]').val()
             let termsNConditions = $('textarea[name="terms_n_conditions"]').val()
             let note = $('textarea[name="note"]').val()
             let total = $('input[name="grand_total"]').val()
 
-            $('#pv-invoice-id').text(invoice_id)
-            $('#pv-invoice-from').html(formatted_invoice_from)
-            $('#pv-invoice-to').text(invoice_to)
-            $('#pv-acc-num').text(acc_num)
-            $('#pv-acc-name').text(acc_name)
-            $('#pv-bank-name').text(bank_name)
-            $('#pv-ifsc-code').text(ifsc_code)
+            pdfData.invoice_id = invoice_id
+            pdfData.invoice_from = invoice_from
+            pdfData.invoice_to = invoice_to
+            pdfData.termsNConditions = termsNConditions
+            pdfData.note = note
+            pdfData.total = total
 
-            if (termsNConditions.trim().length > 0) {
-                $('#pv-terms-conditions').css('display', 'block')
-                $('#pv-terms-conditions p').text(termsNConditions)
-            } else {
-                $('#pv-terms-conditions').css('display', 'none')
-            }
-
-            if (note.trim().length > 0) {
-                $('#pv-note').css('display', 'block')
-                $('#pv-note p').text(note)
-            } else {
-                $('#pv-note').css('display', 'none')
-            }
-
-            $('.pv-total').text('$' + total)
-
-            // Items
-            $('#pv-items').empty()
+            pdfData.items = []
             $('.item-add-box:not(.item-template)').each(function(index, element) {
                 var description = $(element).find(`input[name="descriptions[${index}]"]`).val();
                 var price = $(element).find(`input[name="prices[${index}]"]`).val();
@@ -935,34 +648,24 @@
 
                 var total = price * quantity;
 
-                var itemTemplate = $('#pv-items-template').html()
-                var item = itemTemplate.replace('{sr_num}', index + 1)
-                    .replace('{description}', description)
-                    .replace('{price}', price)
-                    .replace('{qty}', quantity)
-                    .replace('{total}', total)
-
-                $('#pv-items').append(item)
+                pdfData.items.push({
+                    description,
+                    price,
+                    quantity,
+                    total
+                })
             });
         })
     </script>
 
-    {{-- <script>
-        let draftButtonClicked = false;
-
-        $('#draftBtn').on('click', function() {
-            draftButtonClicked = true;
-
-            $('#save-invoice').click()
+    <script>
+        $('#previewModal').on('shown.bs.modal', function() {
+            generatePDF(pdfData)
         })
 
-        $('#save-invoice').on('click', function() {
-            if (draftButtonClicked) {
-                $('#invoice-form').append('<input type="hidden" value="draft" name="status">');
-            }
-
-            draftButtonClicked = false;
-        });
-    </script> --}}
+        $('.invoice-download').click(function() {
+            downloadPDF(pdfData.invoice_id)
+        })
+    </script>
 @endsection
 @endsection
