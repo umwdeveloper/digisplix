@@ -1050,6 +1050,10 @@
                 }
             })
         })
+
+        $('.invoice-download').click(function() {
+            downloadPDF(pdfData.invoice_id)
+        })
     </script>
 @endsection
 @endsection
