@@ -981,6 +981,7 @@
     </script>
 
     <script>
+        var pdfData = {};
         $('body').on('click', '.previewBtn', function(e) {
             $('.loading').removeClass('d-none')
             let invoice_id = $(this).data('id')
@@ -994,7 +995,7 @@
                     '_token': '{{ csrf_token() }}',
                 },
                 success: function(response) {
-                    var pdfData = {};
+                    pdfData = {};
                     if (response.status == 'success') {
                         $('.loading').addClass('d-none')
                         var invoice = response.invoice;
