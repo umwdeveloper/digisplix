@@ -446,9 +446,9 @@ const generatePDF = function (data) {
             rows.push([
                 index + 1,
                 item.description || '',
-                '$' + item.price.toFixed(2),
+                '$' + (+item.price).toFixed(2),
                 item.quantity || '',
-                '$' + item.total.toFixed(2)
+                '$' + (+item.total).toFixed(2)
             ])
         })
     }
