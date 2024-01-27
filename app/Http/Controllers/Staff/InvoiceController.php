@@ -8,12 +8,15 @@ use App\Models\Category;
 use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
+use App\Models\NotificationType;
 use App\Models\User;
 use App\Notifications\InvoiceStatusUpdated;
 use App\Notifications\SendInvoice;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 
 class InvoiceController extends Controller {
@@ -255,6 +258,14 @@ class InvoiceController extends Controller {
         $this->authorize('staff.invoices');
 
         $invoice = Invoice::findOrFail($id);
+
+        $notificationTypeIds = $invoice->notificationTypes()->pluck('notification_id');
+
+        DB::transaction(function () use ($invoice, $notificationTypeIds) {
+            $invoice->notificationTypes()->delete();
+
+            DatabaseNotification::whereIn('id', $notificationTypeIds)->delete();
+        });
 
         $invoice->delete();
 

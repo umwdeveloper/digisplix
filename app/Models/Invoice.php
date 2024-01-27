@@ -39,6 +39,10 @@ class Invoice extends Model {
         return $this->hasMany(InvoiceItem::class);
     }
 
+    public function notificationTypes() {
+        return $this->morphMany(NotificationType::class, 'notifiable');
+    }
+
     public function getTotalPriceAttribute() {
         return $this->items->sum('total_price');
     }

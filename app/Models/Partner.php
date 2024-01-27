@@ -29,6 +29,7 @@ class Partner extends Model {
         parent::boot();
 
         static::deleting(function (Partner $partner) {
+            $partner->user->notifications()->delete();
             $partner->clients()->delete();
         });
     }

@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Invoice;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -11,7 +12,7 @@ use Illuminate\Support\HtmlString;
 class InvoiceStatusUpdated extends Notification implements ShouldQueue {
     use Queueable;
 
-    public $name, $status, $nid;
+    public $name, $status, $nid, $nType;
 
     /**
      * Create a new notification instance.
@@ -20,6 +21,7 @@ class InvoiceStatusUpdated extends Notification implements ShouldQueue {
         $this->name = $name;
         $this->status = $status;
         $this->nid = $nid;
+        $this->nType = Invoice::class;
     }
 
     /**
@@ -48,6 +50,8 @@ class InvoiceStatusUpdated extends Notification implements ShouldQueue {
      */
     public function toDatabase(object $notifiable): array {
         return [
+            // 'nid' => $this->nid,
+            // 'nType' => $this->nType,
             'message' => "Invoice status has been updated to " . $this->status,
             "link" => route('client.invoices.show', $this->nid)
         ];

@@ -111,6 +111,7 @@ class Client extends Model {
         parent::boot();
 
         static::deleting(function (Client $client) {
+            $client->user->notifications()->delete();
             $client->user()->delete();
             $client->projects()->delete();
         });

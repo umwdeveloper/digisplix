@@ -17,4 +17,12 @@ class Staff extends Model {
     public function permissions() {
         return $this->belongsToMany(Permission::class, 'staff_permissions')->withTimestamps();
     }
+
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function (Staff $staff) {
+            $staff->user->notifications()->delete();
+        });
+    }
 }

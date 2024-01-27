@@ -87,4 +87,13 @@ class User extends Authenticatable {
     public static function getAdmin() {
         return static::where('is_admin', true)->first();
     }
+
+    // public static function boot() {
+    //     parent::boot();
+
+    //     static::deleting(function (User $user) {
+    //         dd($user);
+    //         $user->notifications()->delete();
+    //     });
+    // }
 }
