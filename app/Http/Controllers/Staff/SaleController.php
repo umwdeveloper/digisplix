@@ -33,7 +33,7 @@ class SaleController extends Controller {
             ->groupBy('users.country')
             ->get();
 
-        $deliveries = Project::with('client.user')->orderBy('deadline')->take(5)->get();
+        $deliveries = Project::with('client.user')->where('current_status', 0)->orderBy('deadline')->take(5)->get();
 
         return view('staff.sales.index', [
             'invoices' => $invoices,

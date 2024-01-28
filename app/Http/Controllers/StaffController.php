@@ -35,7 +35,7 @@ class StaffController extends Controller {
             ->where('is_client', 1)
             ->get();
 
-        $deliveries = Project::with('client.user')->orderBy('deadline')->take(5)->get();
+        $deliveries = Project::with('client.user')->where('current_status', 0)->orderBy('deadline')->take(5)->get();
 
         $regionalSales = Invoice::join('clients', 'invoices.client_id', '=', 'clients.id')
             ->join('users', function ($join) {
