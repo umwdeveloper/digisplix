@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Partner;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -14,12 +15,16 @@ class PartnerCreated extends Notification implements ShouldQueue {
     public $password;
     public $url;
 
+    public $nid, $nType;
+
     /**
      * Create a new notification instance.
      */
-    public function __construct($password) {
+    public function __construct($password, $nid) {
         $this->password = $password;
         $this->url = config('custom.partner_subdomain');
+        $this->nid = $nid;
+        $this->nType = Partner::class;
     }
 
     /**

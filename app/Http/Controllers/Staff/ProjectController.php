@@ -15,7 +15,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Chatify\Facades\ChatifyMessenger as Chatify;
+use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 
 class ProjectController extends Controller {
@@ -90,7 +92,7 @@ class ProjectController extends Controller {
             ['name' => 'Phase 4'],
         ]);
 
-        Notification::send($project->client->user, new ProjectAdded($project->client->user->name, $project->id, $project->name));
+        Notification::send($project->client->user, new ProjectAdded($project->client->user->name, $project->id, $project->name, $project->id));
 
         return redirect()->back()->with('status', 'Project created successfully!');
     }
@@ -176,6 +178,15 @@ class ProjectController extends Controller {
         if (!empty($project->img)) {
             Storage::disk('public')->delete($project->img);
         }
+
+        $notificationTypeIds = $project->notificationTypes()->pluck('notification_id');
+
+        DB::transaction(function () use ($project, $notificationTypeIds) {
+            $project->notificationTypes()->delete();
+
+            DatabaseNotification::whereIn('id', $notificationTypeIds)->delete();
+        });
+
         $project->delete();
         return redirect()->back()->with('status', 'Project deleted successfully!');
     }

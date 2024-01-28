@@ -24,7 +24,7 @@ class NotificationSentListener {
         $existingRecord = NotificationType::where('notification_id', $notification->id)->first();
 
         /** @var NotificationType $notification */
-        if (!$existingRecord) {
+        if (!$existingRecord && isset($notification->nType) && !empty($notification->nType)) {
             NotificationType::create([
                 'notification_id' => $notification->id,
                 'notifiable_id' => $notification->nid,

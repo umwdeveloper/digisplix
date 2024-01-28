@@ -12,6 +12,8 @@ use App\Models\Project;
 use App\Notifications\CommissionCreated;
 use App\Notifications\CommissionStatus;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 
@@ -40,11 +42,11 @@ class CommissionController extends Controller {
         $project = Project::findOrFail($validatedData['project_id']);
         $partner = Partner::findOrFail($client->partner_id);
 
-        Commission::create($validatedData);
+        $commission = Commission::create($validatedData);
 
         Session::flash('submitted');
 
-        Notification::send($partner->user, new CommissionCreated($validatedData['status'], $project->name, $validatedData['commission'], $validatedData['type'] == 0 ? 'Straight' : 'Recurring', $client->business_name));
+        Notification::send($partner->user, new CommissionCreated($validatedData['status'], $project->name, $validatedData['commission'], $validatedData['type'] == 0 ? 'Straight' : 'Recurring', $client->business_name, $commission->id));
 
         return redirect()->back()->with('status', 'Commission created successfully!');
     }
@@ -78,7 +80,7 @@ class CommissionController extends Controller {
         Session::flash('submitted');
 
         if ($statusUpdated) {
-            Notification::send($commission->client->partner->user, new CommissionStatus($commission->status, $commission->project->name, $commission->commission, $commission->type == 0 ? 'Straight' : 'Recurring', $commission->client->business_name));
+            Notification::send($commission->client->partner->user, new CommissionStatus($commission->status, $commission->project->name, $commission->commission, $commission->type == 0 ? 'Straight' : 'Recurring', $commission->client->business_name, $commission->id));
         }
 
         return redirect()->back()->with('status', 'Commission updated successfully!');
@@ -88,7 +90,17 @@ class CommissionController extends Controller {
      * Remove the specified resource from storage.
      */
     public function destroy(string $id) {
-        Commission::destroy($id);
+        $commission = Commission::findOrFail($id);
+
+        $notificationTypeIds = $commission->notificationTypes()->pluck('notification_id');
+
+        DB::transaction(function () use ($commission, $notificationTypeIds) {
+            $commission->notificationTypes()->delete();
+
+            DatabaseNotification::whereIn('id', $notificationTypeIds)->delete();
+        });
+
+        $commission->delete();
 
         return redirect()->back()->with('status', 'Commission deleted successfully!');
     }
@@ -99,7 +111,7 @@ class CommissionController extends Controller {
 
         $commission->save();
 
-        Notification::send($commission->client->partner->user, new CommissionStatus($commission->status, $commission->project->name, $commission->commission, $commission->type == 0 ? 'Straight' : 'Recurring', $commission->client->business_name));
+        Notification::send($commission->client->partner->user, new CommissionStatus($commission->status, $commission->project->name, $commission->commission, $commission->type == 0 ? 'Straight' : 'Recurring', $commission->client->business_name, $commission->id));
 
         return response()->json(['status' => 'success']);
     }

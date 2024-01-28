@@ -8,6 +8,7 @@ use App\Models\Client;
 use App\Models\Partner;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -115,6 +116,14 @@ class ClientController extends Controller {
             if (!empty($client->user->img)) {
                 Storage::disk('public')->delete($client->user->img);
             }
+
+            $notificationTypeIds = $client->notificationTypes()->pluck('notification_id');
+
+            DB::transaction(function () use ($client, $notificationTypeIds) {
+                $client->notificationTypes()->delete();
+
+                DatabaseNotification::whereIn('id', $notificationTypeIds)->delete();
+            });
 
             $client->delete();
         }

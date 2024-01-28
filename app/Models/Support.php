@@ -31,6 +31,10 @@ class Support extends Model {
         return $this->morphMany(Attachment::class, 'attachable');
     }
 
+    public function notificationTypes() {
+        return $this->morphMany(NotificationType::class, 'notifiable');
+    }
+
     const OPEN = 'open';
     const AWAITING_USER_RESPONSE = 'awaiting_user_response';
     const USER_REPLIED = 'user_replied';

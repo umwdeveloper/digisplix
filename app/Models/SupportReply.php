@@ -25,4 +25,8 @@ class SupportReply extends Model {
     public function attachments() {
         return $this->morphMany(Attachment::class, 'attachable');
     }
+
+    public function notificationTypes() {
+        return $this->morphMany(NotificationType::class, 'notifiable');
+    }
 }

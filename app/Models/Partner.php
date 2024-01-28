@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Partner extends Model {
     use HasFactory;
@@ -25,10 +26,20 @@ class Partner extends Model {
         return $this->hasMany(Client::class);
     }
 
+    public function notificationTypes() {
+        return $this->morphMany(NotificationType::class, 'notifiable');
+    }
+
     public static function boot() {
         parent::boot();
 
         static::deleting(function (Partner $partner) {
+            $notificationIds = $partner->user->notifications()->pluck('id');
+
+            DB::transaction(function () use ($partner, $notificationIds) {
+                NotificationType::whereIn('notification_id', $notificationIds)->delete();
+            });
+
             $partner->user->notifications()->delete();
             $partner->clients()->delete();
         });

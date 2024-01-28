@@ -397,8 +397,8 @@ class PaymentController extends Controller {
                         $invoice->client->active = 1;
                         $invoice->client->save();
 
-                        Notification::send($invoice->client->user, new InvoicePaid($invoice, $invoice->items_sum_price));
-                        Notification::send(User::getAdmin(), new InvoicePaid($invoice, $invoice->items_sum_price));
+                        Notification::send($invoice->client->user, new InvoicePaid($invoice, $invoice->items_sum_price, $invoice->id));
+                        Notification::send(User::getAdmin(), new InvoicePaid($invoice, $invoice->items_sum_price, $invoice->id));
                     }
                 }
                 break;
@@ -419,8 +419,8 @@ class PaymentController extends Controller {
                     $invoice->client->active = 1;
                     $invoice->client->save();
 
-                    Notification::send($invoice->client->user, new InvoicePaid($invoice, $invoice->items_sum_price));
-                    Notification::send(User::getAdmin(), new InvoicePaid($invoice, $invoice->items_sum_price));
+                    Notification::send($invoice->client->user, new InvoicePaid($invoice, $invoice->items_sum_price, $invoice->id));
+                    Notification::send(User::getAdmin(), new InvoicePaid($invoice, $invoice->items_sum_price, $invoice->id));
                 }
                 break;
             case 'invoice.paid':
@@ -442,8 +442,8 @@ class PaymentController extends Controller {
                         $invoice->client->active = 1;
                         $invoice->client->save();
 
-                        Notification::send($invoice->client->user, new InvoicePaid($invoice, $invoice->items_sum_price));
-                        Notification::send(User::getAdmin(), new InvoicePaid($invoice, $invoice->items_sum_price));
+                        Notification::send($invoice->client->user, new InvoicePaid($invoice, $invoice->items_sum_price, $invoice->id));
+                        Notification::send(User::getAdmin(), new InvoicePaid($invoice, $invoice->items_sum_price, $invoice->id));
                     }
                 }
                 break;

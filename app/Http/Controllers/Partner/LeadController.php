@@ -16,6 +16,7 @@ use App\Notifications\QualifiedLead;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -80,7 +81,7 @@ class LeadController extends Controller {
 
             DB::commit();
 
-            Notification::send(User::getAdmin(), new LeadCreated($lead->partner->user->name));
+            Notification::send(User::getAdmin(), new LeadCreated($lead->partner->user->name, $lead->id));
             // Mail::to($lead->user->email)->send(new LeadAddedMail($lead->user->name, $lead->user->email, $validatedData['original_password']));
 
             return redirect()->back()->with('status', 'Lead created successfully!');
@@ -138,11 +139,11 @@ class LeadController extends Controller {
             }
 
             if ($validatedData['status'] == Client::QUALIFIED && $validatedData['status'] != $lead->status) {
-                Notification::send(User::getAdmin(), new QualifiedLead($lead->partner->user->name));
+                Notification::send(User::getAdmin(), new QualifiedLead($lead->partner->user->name, $lead->id));
             }
 
             if ($validatedData['status'] == Client::IN_PROGRESS && $validatedData['status'] != $lead->status) {
-                Notification::send(User::getAdmin(), new ProgressLead($lead->partner->user->name));
+                Notification::send(User::getAdmin(), new ProgressLead($lead->partner->user->name, $lead->id));
             }
 
             $lead->update($validatedData);
@@ -179,6 +180,14 @@ class LeadController extends Controller {
                 Storage::disk('public')->delete($lead->user->img);
             }
 
+            $notificationTypeIds = $lead->notificationTypes()->pluck('notification_id');
+
+            DB::transaction(function () use ($lead, $notificationTypeIds) {
+                $lead->notificationTypes()->delete();
+
+                DatabaseNotification::whereIn('id', $notificationTypeIds)->delete();
+            });
+
             $lead->user()->delete();
             $lead->delete();
         }
@@ -204,11 +213,11 @@ class LeadController extends Controller {
             }
 
             if ($lead->status == Client::QUALIFIED) {
-                Notification::send(User::getAdmin(), new QualifiedLead($lead->partner->user->name));
+                Notification::send(User::getAdmin(), new QualifiedLead($lead->partner->user->name, $lead->id));
             }
 
             if ($lead->status == Client::IN_PROGRESS) {
-                Notification::send(User::getAdmin(), new ProgressLead($lead->partner->user->name));
+                Notification::send(User::getAdmin(), new ProgressLead($lead->partner->user->name, $lead->id));
             }
 
             $lead->save();

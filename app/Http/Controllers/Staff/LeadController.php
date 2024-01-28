@@ -15,6 +15,7 @@ use App\Notifications\LeadStatusUpdated;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -80,7 +81,7 @@ class LeadController extends Controller {
 
             DB::commit();
 
-            Notification::send($lead->partner->user, new LeadAdded());
+            Notification::send($lead->partner->user, new LeadAdded($lead->id));
 
             // Mail::to($lead->user->email)->send(new LeadAddedMail($lead->user->name, $lead->user->email, $validatedData['original_password']));
 
@@ -171,6 +172,14 @@ class LeadController extends Controller {
             if (!empty($lead->user->img)) {
                 Storage::disk('public')->delete($lead->user->img);
             }
+
+            $notificationTypeIds = $lead->notificationTypes()->pluck('notification_id');
+
+            DB::transaction(function () use ($lead, $notificationTypeIds) {
+                $lead->notificationTypes()->delete();
+
+                DatabaseNotification::whereIn('id', $notificationTypeIds)->delete();
+            });
 
             $lead->user()->delete();
             $lead->delete();

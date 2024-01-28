@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Project;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -13,15 +14,17 @@ class ProjectAdded extends Notification implements ShouldQueue {
 
     public $name;
     public $project_id;
-    public $title;
+    public $title, $nid, $nType;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($name, $project_id, $title) {
+    public function __construct($name, $project_id, $title, $nid) {
         $this->name = $name;
         $this->project_id = $project_id;
         $this->title = $title;
+        $this->nid = $nid;
+        $this->nType = Project::class;
     }
 
     /**

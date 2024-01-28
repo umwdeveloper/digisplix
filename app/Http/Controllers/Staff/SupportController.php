@@ -7,6 +7,7 @@ use App\Models\Support;
 use App\Models\SupportReply;
 use App\Notifications\SupportUpdate;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
@@ -101,6 +102,14 @@ class SupportController extends Controller {
 
         $this->deleteAttachments($ticket->replies->pluck('attachments')->flatten());
         $this->deleteAttachments($ticket->attachments);
+
+        $notificationTypeIds = $ticket->notificationTypes()->pluck('notification_id');
+
+        DB::transaction(function () use ($ticket, $notificationTypeIds) {
+            $ticket->notificationTypes()->delete();
+
+            DatabaseNotification::whereIn('id', $notificationTypeIds)->delete();
+        });
 
         $ticket->delete();
 

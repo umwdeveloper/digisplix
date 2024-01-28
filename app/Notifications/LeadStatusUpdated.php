@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -12,13 +13,16 @@ class LeadStatusUpdated extends Notification implements ShouldQueue {
     use Queueable;
 
     public $name, $status;
+    public $nid, $nType;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($name, $status) {
+    public function __construct($name, $status, $nid) {
         $this->name = $name;
         $this->status = $status;
+        $this->nid = $nid;
+        $this->nType = Client::class;
     }
 
     /**

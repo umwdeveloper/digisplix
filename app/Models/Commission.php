@@ -30,6 +30,10 @@ class Commission extends Model {
         return $this->belongsTo(Project::class);
     }
 
+    public function notificationTypes() {
+        return $this->morphMany(NotificationType::class, 'notifiable');
+    }
+
     private static $statuses = [
         self::EARNED,
         self::PROCESSING,

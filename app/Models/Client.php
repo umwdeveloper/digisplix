@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Client extends Model {
     use HasFactory;
@@ -46,6 +47,10 @@ class Client extends Model {
 
     public function commissions() {
         return $this->hasMany(Commission::class);
+    }
+
+    public function notificationTypes() {
+        return $this->morphMany(NotificationType::class, 'notifiable');
     }
 
     private static $statuses = [
@@ -111,6 +116,13 @@ class Client extends Model {
         parent::boot();
 
         static::deleting(function (Client $client) {
+
+            $notificationIds = $client->user->notifications()->pluck('id');
+
+            DB::transaction(function () use ($client, $notificationIds) {
+                NotificationType::whereIn('notification_id', $notificationIds)->delete();
+            });
+
             $client->user->notifications()->delete();
             $client->user()->delete();
             $client->projects()->delete();

@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Support;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -10,7 +11,7 @@ use Illuminate\Notifications\Notification;
 class SupportReplied extends Notification implements ShouldQueue {
     use Queueable;
 
-    public $subject, $ticket_id;
+    public $subject, $ticket_id, $nid, $nType;
 
     /**
      * Create a new notification instance.
@@ -18,6 +19,8 @@ class SupportReplied extends Notification implements ShouldQueue {
     public function __construct($subject, $ticket_id) {
         $this->subject = $subject;
         $this->ticket_id = $ticket_id;
+        $this->nid = $ticket_id;
+        $this->nType = Support::class;
     }
 
     /**

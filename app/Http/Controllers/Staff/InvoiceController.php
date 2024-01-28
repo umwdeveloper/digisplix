@@ -344,7 +344,7 @@ class InvoiceController extends Controller {
 
             $invoice->save();
 
-            Notification::send($invoice->client->user, new SendInvoice($invoice, $invoice->items_sum_price));
+            Notification::send($invoice->client->user, new SendInvoice($invoice, $invoice->items_sum_price, $invoice->id));
 
             return response()->json(['status' => 'success']);
         } catch (Exception $e) {

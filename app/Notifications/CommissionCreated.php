@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Commission;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -12,16 +13,19 @@ class CommissionCreated extends Notification implements ShouldQueue {
     use Queueable;
 
     public $status, $project, $commission, $commission_type, $business_name;
+    public $nid, $nType;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($status, $project, $commission, $commission_type, $business_name) {
+    public function __construct($status, $project, $commission, $commission_type, $business_name, $nid) {
         $this->status = $status;
         $this->project = $project;
         $this->commission = $commission;
         $this->commission_type = $commission_type;
         $this->business_name = $business_name;
+        $this->nid = $nid;
+        $this->nType = Commission::class;
     }
 
     /**

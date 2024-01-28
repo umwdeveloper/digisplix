@@ -31,6 +31,10 @@ class Project extends Model {
         return $this->hasOne(Commission::class);
     }
 
+    public function notificationTypes() {
+        return $this->morphMany(NotificationType::class, 'notifiable');
+    }
+
     private static $statusLabels = [
         "Ongoing",
         "Completed"

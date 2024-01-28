@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -11,12 +12,15 @@ class ProgressLead extends Notification implements ShouldQueue {
     use Queueable;
 
     public $name;
+    public $nid, $nType;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($name) {
+    public function __construct($name, $nid) {
         $this->name = $name;
+        $this->nid = $nid;
+        $this->nType = Client::class;
     }
 
     /**

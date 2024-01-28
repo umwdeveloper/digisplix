@@ -16,6 +16,7 @@ use App\Notifications\PartnerCreated;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -72,7 +73,7 @@ class PartnerController extends Controller {
 
             DB::commit();
 
-            Notification::send($partner->user, new PartnerCreated($original_password));
+            Notification::send($partner->user, new PartnerCreated($original_password, $partner->id));
 
             return redirect()->back()->with('status', 'Partner created successfully!');
         } catch (QueryException $e) {
@@ -254,6 +255,15 @@ class PartnerController extends Controller {
         if (!empty($partner->user->img)) {
             Storage::disk('public')->delete($partner->user->img);
         }
+
+        $notificationTypeIds = $partner->notificationTypes()->pluck('notification_id');
+
+        DB::transaction(function () use ($partner, $notificationTypeIds) {
+            $partner->notificationTypes()->delete();
+
+            DatabaseNotification::whereIn('id', $notificationTypeIds)->delete();
+        });
+
         $partner->user()->delete();
         // $partner->client()->delete();
         $partner->delete();
