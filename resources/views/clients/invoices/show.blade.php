@@ -116,9 +116,13 @@
     <script>
         $(document).ready(function() {
             const stripe = Stripe('{{ config('custom.stripe_key') }}');
-            let amount = $('#amount').val()
-            let invoice_id = $('#invoice_id').val()
-            let invoice_number = $('#invoice_number').val()
+            // let amount = $('#amount').val()
+            // let invoice_id = $('#invoice_id').val()
+            // let invoice_number = $('#invoice_number').val()
+
+            let amount = '{{ $invoice->total_price }}';
+            let invoice_id = '{{ $invoice->id }}';
+            let invoice_number = '{{ $invoice->invoice_id }}';
 
             async function initialize() {
 
@@ -264,6 +268,7 @@
     </script>
 
     <script>
+        var pdfData = {};
         $(document).ready(() => {
             let invoice_id = '{{ $invoice->id }}';
 
@@ -276,7 +281,7 @@
                     '_token': '{{ csrf_token() }}',
                 },
                 success: function(response) {
-                    var pdfData = {};
+                    pdfData = {};
                     if (response.status == 'success') {
                         console.log(response.invoice);
                         var invoice = response.invoice;

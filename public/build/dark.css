@@ -2576,6 +2576,9 @@ input[type=date]::-webkit-calendar-picker-indicator {
   -webkit-animation-iteration-count: infinite;
   animation-iteration-count: infinite;
 }
+.success-payment {
+  color: #ffffff !important;
+}
 @media only screen and (max-width: 500px) {
   .box-p {
     padding: 15px 15px !important;

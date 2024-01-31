@@ -6,7 +6,9 @@
             <div class="row justify-content-center">
                 <div class="col-xl-8 mx-auto mb-3">
                     <div class="box box-p d-flex flex-column justify-content-center align-items-center ">
-                        <p class="text-success text-center" style="font-weight: 500">Thank you for your payment. We have
+                        <p class="text-success text-center success-payment" style="font-weight: 500">Thank you for your
+                            payment.
+                            We have
                             successfully
                             received
                             and
