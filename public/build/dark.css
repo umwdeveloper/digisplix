@@ -2329,7 +2329,6 @@ input[type=date]::-webkit-calendar-picker-indicator {
   margin-bottom: 20px;
 }
 .ticket-links .ticket-notify h4 {
-  width: 74px;
   font-size: 18px;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.85);
@@ -2338,6 +2337,9 @@ input[type=date]::-webkit-calendar-picker-indicator {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.ticket-links .ticket-notify .ticket-time {
+  width: 74px !important;
 }
 .ticket-links .ticket-notify .ticket-body {
   border-left-width: 5px;

@@ -148,7 +148,7 @@
                                                                 <a class="btn  dropdown-toggle table-dropdown-btn {{ $lead->status }}"
                                                                     href="#" role="button" id="dropdownMenuLink"
                                                                     data-bs-toggle="dropdown" aria-expanded="false"
-                                                                    style="{{ $lead->status == App\Models\Client::NEW_LEAD ? 'color: #000000' : '' }}">
+                                                                    style="{{ $lead->status == App\Models\Client::NEW_LEAD ? 'color: #000000 !important' : '' }}">
                                                                     {{ $status_labels[$lead->status] }}
                                                                 </a>
 
@@ -771,7 +771,7 @@
                                             placeholder="Pakistan">
                                         <input type="hidden" id="country_code" name="country_code">
                                         <!-- <label class="crm-label form-label" for="country">Country<span
-                                                                                                                                                                                                                                                                                                                                                                                                                        class="text-danger">*</span></label> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                            class="text-danger">*</span></label> -->
                                         @if ($errors->createLead->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->createLead->first('country') }}

@@ -294,10 +294,20 @@
                         </div>
                     </div>
                     @forelse ($shared_tickets as $ticket)
+                        @php
+                            $time = \Carbon\Carbon::parse($ticket->created_at)->diffForHumans();
+                            $timeInt = filter_var($time, FILTER_SANITIZE_NUMBER_INT);
+                            $timeText = str_replace($timeInt, '', $time);
+                        @endphp
                         <div class="col-lg-12 pe-1 mb-2">
-                            <a class="ticket-notify px-0 " href="{{ route('client.support.show', $ticket->id) }}">
-                                <h4 class=" text-gray ">
-                                    {{ \Carbon\Carbon::parse($ticket->created_at)->diffForHumans() }}</h4>
+                            <a class="ticket-notify px-0 " href="{{ route('staff.support.show', $ticket->id) }}">
+                                <h4 class=" text-gray  ticket-time">
+                                    {{ $timeInt }}
+                                    <br>
+                                    <p class="mb-0 pb-0 ms-2" style="font-size:10px; color:gray; font-weight:500;">
+                                        {{ $timeText }}
+                                    </p>
+                                </h4>
                                 <div class="ticket-body ticket-{{ $colors[array_rand($colors)] }}">
                                     <p class="mb-2">{{ $ticket->description }}</p>
                                     <span class="text-fade">by {{ $ticket->user->name }}</span>

@@ -2242,7 +2242,6 @@ input:-webkit-autofill {
   margin-bottom: 20px;
 }
 .ticket-links .ticket-notify h4 {
-  width: 74px;
   font-size: 18px;
   font-weight: 500;
   color: #172b4c;
@@ -2251,6 +2250,9 @@ input:-webkit-autofill {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.ticket-links .ticket-notify .ticket-time {
+  width: 74px !important;
 }
 .ticket-links .ticket-notify .ticket-body {
   border-left-width: 5px;

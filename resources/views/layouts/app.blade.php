@@ -495,7 +495,7 @@
                             @endphp
                             <div class="col-lg-12 pe-1 mb-2">
                                 <a class="ticket-notify px-0 " href="{{ route('staff.support.show', $ticket->id) }}">
-                                    <h4 class=" text-gray  ">
+                                    <h4 class=" text-gray  ticket-time">
                                         {{ $timeInt }}
                                         <br>
                                         <p class="mb-0 pb-0 ms-2" style="font-size:10px; color:gray; font-weight:500;">

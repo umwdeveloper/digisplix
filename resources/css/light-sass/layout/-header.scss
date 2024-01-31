@@ -321,7 +321,7 @@
         margin-bottom: 20px;
 
         h4 {
-            width: 74px;
+            // width: 74px;
             font-size: 18px;
             font-weight: 500;
             color: $dark-blue;
@@ -330,6 +330,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+
+        .ticket-time {
+            width: 74px !important;
         }
 
         .ticket-body {
