@@ -309,6 +309,7 @@
                         pdfData.note = note
                         pdfData.total = total
                         pdfData.created_at = invoice.created_at
+                        pdfData.due_date = invoice.due_date
 
                         pdfData.items = []
 

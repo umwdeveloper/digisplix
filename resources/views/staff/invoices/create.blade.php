@@ -230,8 +230,8 @@
                                                 </div>
                                                 <div class="d-flex align-items-center">
                                                     <div class="invoice-label">Due Date&nbsp;:&nbsp;</div>
-                                                    <div class="invoice-value"><input type="date" required
-                                                            name="due_date" value="{{ old('due_date') }}"
+                                                    <div class="invoice-value"><input type="date" id="due_date"
+                                                            required name="due_date" value="{{ old('due_date') }}"
                                                             class="border-0 bg-transparent text-primary invoice-date"
                                                             style="outline: none;"></div>
                                                 </div>
@@ -611,6 +611,7 @@
             let termsNConditions = $('textarea[name="terms_n_conditions"]').val()
             let note = $('textarea[name="note"]').val()
             let total = $('input[name="grand_total"]').val()
+            let due_date = $('#due_date').val()
 
             pdfData.invoice_id = invoice_id
             pdfData.invoice_from = invoice_from
@@ -618,6 +619,7 @@
             pdfData.termsNConditions = termsNConditions
             pdfData.note = note
             pdfData.total = total
+            pdfData.due_date = due_date
 
             pdfData.items = []
             $('.item-add-box:not(.item-template)').each(function(index, element) {
