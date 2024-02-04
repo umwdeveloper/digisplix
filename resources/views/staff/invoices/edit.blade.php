@@ -612,12 +612,13 @@
 
             // Function to update input names based on their index
             function updateNames() {
-                $(".item-add-box").each(function(index) {
+                $(".item-add-box:not(.item-template)").each(function(index) {
                     $(this).find("input[name^='descriptions']").attr("name", `descriptions[${index}]`);
                     $(this).find("input[name^='prices']").attr("name", `prices[${index}]`);
                     $(this).find("input[name^='quantities']").attr("name", `quantities[${index}]`);
                     $(this).find(".f-16.w-500.text-primary").text(`Item (${index+1}):`);;
                 });
+                calculateGrandTotal()
             }
 
             // Function to reindex input fields when needed

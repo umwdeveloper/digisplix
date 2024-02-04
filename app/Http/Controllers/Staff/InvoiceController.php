@@ -247,6 +247,12 @@ class InvoiceController extends Controller {
             }
         }
 
+        foreach ($invoiceItems as $key => $item) {
+            if (!isset($descriptions[$key])) {
+                $item->delete();
+            }
+        }
+
         return redirect()->back()->with('status', 'Invoice updated successfully!');
     }
 

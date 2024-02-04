@@ -527,6 +527,7 @@
                     $(this).find("input[name^='quantities']").attr("name", `quantities[${index}]`);
                     $(this).find(".f-16.w-500.text-primary").text(`Item (${index+1}):`);;
                 });
+                calculateGrandTotal()
             }
 
             // Function to reindex input fields when needed
