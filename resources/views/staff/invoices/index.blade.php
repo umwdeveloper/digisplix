@@ -476,7 +476,7 @@
                                                             </div>
                                                         </td>
                                                         <td>{{ $invoice->created_at->format('d M Y') }}</td>
-                                                        <td class="bussiness-name">{{ $invoice->invoice_to }}</td>
+                                                        <td class="bussiness-name">{{ $invoice->client->user->name }}</td>
                                                         <td class="bussiness-name">
                                                             ${{ number_format(round($invoice->items_sum_price), 0, ',') }}
                                                         </td>
@@ -536,7 +536,7 @@
                                                         </div>
                                                     </td>
                                                     <td>{{ $invoice->created_at->format('d M Y') }}</td>
-                                                    <td class="bussiness-name">{{ $invoice->invoice_to }}</td>
+                                                    <td class="bussiness-name">{{ $invoice->client->user->name }}</td>
                                                     <td class="bussiness-name">
                                                         ${{ number_format(round($invoice->items_sum_price), 0, ',') }}
                                                     </td>
@@ -596,7 +596,7 @@
                                                         </div>
                                                     </td>
                                                     <td>{{ $invoice->created_at->format('d M Y') }}</td>
-                                                    <td class="bussiness-name">{{ $invoice->invoice_to }}</td>
+                                                    <td class="bussiness-name">{{ $invoice->client->user->name }}</td>
                                                     <td class="bussiness-name">
                                                         ${{ number_format(round($invoice->items_sum_price), 0, ',') }}
                                                     </td>
@@ -653,7 +653,7 @@
                                                         </div>
                                                     </td>
                                                     <td>{{ $invoice->created_at->format('d M Y') }}</td>
-                                                    <td class="bussiness-name">{{ $invoice->invoice_to }}</td>
+                                                    <td class="bussiness-name">{{ $invoice->client->user->name }}</td>
                                                     <td class="bussiness-name">
                                                         ${{ number_format(round($invoice->items_sum_price), 0, ',') }}
                                                     </td>
@@ -710,7 +710,7 @@
                                                         </div>
                                                     </td>
                                                     <td>{{ $invoice->created_at->format('d M Y') }}</td>
-                                                    <td class="bussiness-name">{{ $invoice->invoice_to }}</td>
+                                                    <td class="bussiness-name">{{ $invoice->client->user->name }}</td>
                                                     <td class="bussiness-name">
                                                         ${{ number_format(round($invoice->items_sum_price), 0, ',') }}
                                                     </td>
