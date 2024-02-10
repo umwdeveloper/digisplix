@@ -385,7 +385,7 @@ class PaymentController extends Controller {
 
                         Notification::send($user, new PackagePaid($metadata->plan));
                         Notification::send(User::getAdmin(), new PackagePaidAdmin($metadata->plan, $user->name));
-                        $this->generateInvoice($metadata->plan);
+                        $this->generateInvoice($metadata->plan, $user->userable_id, $user->name);
                     } else {
                         $invoiceId = $metadata->invoice_id;
                         $invoice = Invoice::with(['client', 'items'])
@@ -454,13 +454,13 @@ class PaymentController extends Controller {
         return response()->json(['success' => true]);
     }
 
-    public function generateInvoice($plan) {
+    public function generateInvoice($plan, $client_id, $name) {
         $invoice = Invoice::create([
             'invoice_id' => $this->generateInvoiceNumber(),
-            'client_id' => auth()->user()->userable_id,
+            'client_id' => $client_id,
             'category_id' => 25,
             'invoice_from' => "DigiSplix, LLC\n5900 Balcones Dr #15419\nAustin, Texas 78731,\nUnited States",
-            'invoice_to' => auth()->user()->name,
+            'invoice_to' => $name,
             'status' => Invoice::PAID,
             'sent' => 1,
             'due_date' => now(),
