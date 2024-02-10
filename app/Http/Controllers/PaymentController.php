@@ -171,9 +171,11 @@ class PaymentController extends Controller {
             'plan' => strtoupper($request->plan)
         ];
 
+        // $user = User::find(auth()->user()->id);
+
         try {
             $session = Session::create($data);
-            // $this->generateInvoice($request->plan);
+            // $this->generateInvoice(strtoupper($request->plan), $user->userable_id, $user->name, $user->userable->business_name);
             return response()->json(['session' => $session]);
         } catch (ApiErrorException $e) {
             return response()->json([
@@ -385,7 +387,7 @@ class PaymentController extends Controller {
 
                         Notification::send($user, new PackagePaid($metadata->plan));
                         Notification::send(User::getAdmin(), new PackagePaidAdmin($metadata->plan, $user->name));
-                        $this->generateInvoice($metadata->plan, $user->userable_id, $user->name);
+                        $this->generateInvoice($metadata->plan, $user->userable_id, $user->name, $user->userable->business_name);
                     } else {
                         $invoiceId = $metadata->invoice_id;
                         $invoice = Invoice::with(['client', 'items'])
@@ -454,13 +456,13 @@ class PaymentController extends Controller {
         return response()->json(['success' => true]);
     }
 
-    public function generateInvoice($plan, $client_id, $name) {
+    public function generateInvoice($plan, $client_id, $name, $business) {
         $invoice = Invoice::create([
             'invoice_id' => $this->generateInvoiceNumber(),
             'client_id' => $client_id,
             'category_id' => 25,
             'invoice_from' => "DigiSplix, LLC\n5900 Balcones Dr #15419\nAustin, Texas 78731,\nUnited States",
-            'invoice_to' => $name,
+            'invoice_to' => $name . "\n" . $business,
             'status' => Invoice::PAID,
             'sent' => 1,
             'due_date' => now(),
@@ -479,7 +481,7 @@ class PaymentController extends Controller {
         ];
 
         $invoice->items()->create([
-            'description' => ucfirst($plan),
+            'description' => ucfirst($plan) . " - Business Growth Plan",
             'price' => $plans[strtolower($plan)],
             'quantity' => 1
         ]);

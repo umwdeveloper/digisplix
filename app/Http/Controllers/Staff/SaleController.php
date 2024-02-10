@@ -20,7 +20,7 @@ class SaleController extends Controller {
                 ->whereColumn('invoice_id', 'invoices.id')
                 ->limit(1)])
             ->where('status', Invoice::PAID)
-            ->where('recurring', 0)
+            // ->where('recurring', 0)
             ->get();
 
         $regionalSales = Invoice::join('clients', 'invoices.client_id', '=', 'clients.id')
@@ -83,7 +83,7 @@ class SaleController extends Controller {
                 ->whereColumn('invoice_id', 'invoices.id')
                 ->limit(1)])
             ->where('status', Invoice::PAID)
-            ->where('recurring', 0)
+            // ->where('recurring', 0)
             ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
                 $query->whereBetween('created_at', [$startDate, $endDate]);
             })
