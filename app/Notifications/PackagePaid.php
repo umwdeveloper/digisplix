@@ -47,7 +47,7 @@ class PackagePaid extends Notification implements ShouldQueue {
     public function toArray(object $notifiable): array {
         return [
             "message" => 'Package subscription successful',
-            'link' => route('client.services.index')
+            'link' => route('client.invoices.index')
         ];
     }
 }

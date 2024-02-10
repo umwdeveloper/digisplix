@@ -48,7 +48,7 @@ class PackagePaidAdmin extends Notification implements ShouldQueue {
     public function toArray(object $notifiable): array {
         return [
             "message" => 'Package subscription',
-            'link' => route('staff.sales.index')
+            'link' => route('staff.invoices.index')
         ];
     }
 }
