@@ -24,7 +24,8 @@ class Invoice extends Model {
         'account_holder_name',
         'bank_name',
         'ifsc_code',
-        'account_number'
+        'account_number',
+        'sent'
     ];
 
     public function category() {
