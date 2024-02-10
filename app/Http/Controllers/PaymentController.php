@@ -480,7 +480,7 @@ class PaymentController extends Controller {
 
         $invoice->items()->create([
             'description' => ucfirst($plan),
-            'price' => $plans[$plan],
+            'price' => $plans[strtolower($plan)],
             'quantity' => 1
         ]);
     }
