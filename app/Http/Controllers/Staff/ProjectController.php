@@ -10,6 +10,7 @@ use App\Models\Client;
 use App\Models\Project;
 use App\Models\User;
 use App\Notifications\ProjectAdded;
+use App\Notifications\ProjectCompleted;
 use App\Notifications\ProjectStatusUpdated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -158,7 +159,11 @@ class ProjectController extends Controller {
         $status = ["Ongoing", "Completed"];
 
         if ($statusUpdated) {
-            Notification::send($project->client->user, new ProjectStatusUpdated($project->name, $status[$project->current_status], $project->id));
+            if ($project->current_status == 0) {
+                Notification::send($project->client->user, new ProjectStatusUpdated($project->name, $status[$project->current_status], $project->id));
+            } else {
+                Notification::send($project->client->user, new ProjectCompleted($project->name, $status[$project->current_status], $project->id));
+            }
         }
 
         if ($request->input('_target') == 'ajax') {

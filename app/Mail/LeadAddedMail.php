@@ -28,7 +28,7 @@ class LeadAddedMail extends Mailable implements ShouldQueue {
      */
     public function envelope(): Envelope {
         return new Envelope(
-            subject: 'Registration',
+            subject: 'Welcome to the DigiSplix Family',
         );
     }
 

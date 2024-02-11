@@ -10,6 +10,9 @@ use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use App\Models\NotificationType;
 use App\Models\User;
+use App\Notifications\InvoiceOverdue;
+use App\Notifications\InvoicePaid;
+use App\Notifications\InvoiceSent;
 use App\Notifications\InvoiceStatusUpdated;
 use App\Notifications\SendInvoice;
 use Carbon\Carbon;
@@ -295,7 +298,11 @@ class InvoiceController extends Controller {
         $this->authorize('staff.invoices');
 
         try {
-            $invoice = Invoice::with(['client'])->findOrFail($id);
+            $invoice = Invoice::with(['client', 'items'])
+                ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
+                    ->whereColumn('invoice_id', 'invoices.id')
+                    ->limit(1)])
+                ->findOrFail($id);
             $invoice->status = $request->status;
 
             $invoice->save();
@@ -303,12 +310,19 @@ class InvoiceController extends Controller {
             if ($invoice->status == Invoice::PAID) {
                 $invoice->client->active = 1;
                 $invoice->client->save();
+
+                Notification::send($invoice->client->user, new InvoicePaid($invoice, $invoice->items_sum_price, $invoice->id));
+                // Notification::send(User::getAdmin(), new InvoicePaid($invoice, $invoice->items_sum_price, $invoice->id));
+            }
+
+            if ($invoice->status == Invoice::OVERDUE) {
+                Notification::send($invoice->client->user, new InvoiceOverdue($invoice, $invoice->id, $invoice->items_sum_price));
             }
 
             // Send notification
-            if ($invoice->status !== Invoice::DRAFT && $invoice->status !== Invoice::PENDING) {
-                Notification::send($invoice->client->user, new InvoiceStatusUpdated($invoice->client->user->name, Invoice::getStatusLabel($invoice->status), $invoice->id));
-            }
+            // if ($invoice->status !== Invoice::DRAFT && $invoice->status !== Invoice::PENDING && $invoice->status !== Invoice::CANCELLED && $invoice->status !== Invoice::PAID) {
+            //     Notification::send($invoice->client->user, new InvoiceStatusUpdated($invoice->client->user->name, Invoice::getStatusLabel($invoice->status), $invoice->id));
+            // }
 
             // Send email
             // Mail::to($lead->user->email)->send(new LeadStatusChangedMail($lead->user->name, Client::getStatusLabel($lead->status)));
@@ -351,6 +365,7 @@ class InvoiceController extends Controller {
             $invoice->save();
 
             Notification::send($invoice->client->user, new SendInvoice($invoice, $invoice->items_sum_price, $invoice->id));
+            Notification::send(User::getAdmin(), new InvoiceSent($invoice->client->user->name, $invoice->id));
 
             return response()->json(['status' => 'success']);
         } catch (Exception $e) {

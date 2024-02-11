@@ -40,9 +40,16 @@ class InvoicePaid extends Notification implements ShouldQueue {
      */
     public function toMail(object $notifiable): MailMessage {
         return (new MailMessage)
-            ->subject("Invoice Paid")
+            ->subject("Thank You for Your Payment - Invoice Cleared")
             ->greeting("Hi " . $notifiable->name . ",")
-            ->line(new HtmlString('The invoice with number <strong>' . $this->invoice->number . '</strong> has been paid successfully for the amount <strong>$' . $this->price . '</strong>'));
+            ->line('We wanted to express our sincere appreciation for your prompt attention to the invoice. We have Received the payment, and we are pleased to confirm that your Invoice has been cleared.')
+            ->line(new HtmlString(
+                "<strong>Invoice ID:</strong> " . $this->invoice->invoice_id . "<br>"
+                    . "<strong>Amount Due:</strong> $" . $this->price . "<br>"
+                    . "<strong>Invoice Status:</strong> Paid"
+            ))
+            ->line("Your timely cooperation is invaluable, and we are excited to move forward with your project. If there is anything specific you would like to discuss or if you have additional questions, please feel free to reach out.")
+            ->line("Once again, thank you for choosing our services. We look forward to delivering excellent results and a successful collaboration.");
     }
 
     /**
@@ -53,7 +60,7 @@ class InvoicePaid extends Notification implements ShouldQueue {
     public function toArray(object $notifiable): array {
         $userable = $notifiable->userable_type === Staff::class ? 'staff' : 'client';
         return [
-            'message' => "Invoice# " . $this->invoice->invoice_id . " has been paid",
+            'message' => "Invoice #" . $this->invoice->invoice_id . " Paid Successfully",
             "link" => route($userable . '.invoices.index', $this->invoice->id)
         ];
     }

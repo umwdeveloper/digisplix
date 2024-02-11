@@ -585,9 +585,9 @@ const generatePDF = function (data) {
 
     pdf.text('www.digisplix.com', (pageWidth() / 2) - 21 + 10, pageHeight() - 8)
 
-    pdf.addImage(baseUrl + '/images/telephone-fill.png', 'PNG', pageWidth() - 50, pageHeight() - 12, 5, 5)
+    pdf.addImage(baseUrl + '/images/telephone-fill.png', 'PNG', pageWidth() - 55, pageHeight() - 12, 5, 5)
 
-    pdf.text('+1 (737) 338 8038', pageWidth() - 42, pageHeight() - 8)
+    pdf.text('+1 (737) 338 8038', pageWidth() - 47, pageHeight() - 8)
 
     var blobPDF = new Blob([pdf.output('blob')], { type: "application/pdf" })
     var blobURL = URL.createObjectURL(blobPDF)
