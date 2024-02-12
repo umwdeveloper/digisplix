@@ -12,6 +12,7 @@ use App\Models\NotificationType;
 use App\Models\User;
 use App\Notifications\InvoiceOverdue;
 use App\Notifications\InvoicePaid;
+use App\Notifications\InvoicePaidAdmin;
 use App\Notifications\InvoiceSent;
 use App\Notifications\InvoiceStatusUpdated;
 use App\Notifications\SendInvoice;
@@ -312,7 +313,7 @@ class InvoiceController extends Controller {
                 $invoice->client->save();
 
                 Notification::send($invoice->client->user, new InvoicePaid($invoice, $invoice->items_sum_price, $invoice->id));
-                // Notification::send(User::getAdmin(), new InvoicePaid($invoice, $invoice->items_sum_price, $invoice->id));
+                Notification::send(User::getAdmin(), new InvoicePaidAdmin($invoice, $invoice->items_sum_price, $invoice->id, $invoice->client->user->name));
             }
 
             if ($invoice->status == Invoice::OVERDUE) {

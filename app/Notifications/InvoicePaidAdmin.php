@@ -2,23 +2,28 @@
 
 namespace App\Notifications;
 
+use App\Models\Invoice;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\HtmlString;
 
-class PackagePaidAdmin extends Notification implements ShouldQueue {
+class InvoicePaidAdmin extends Notification implements ShouldQueue {
     use Queueable;
 
-    public $plan, $name;
+    public Invoice $invoice;
+    public $price, $nid, $nType, $clientName;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($plan, $name) {
-        $this->plan = $plan;
-        $this->name = $name;
+    public function __construct(Invoice $invoice, $price, $nid, $clientName) {
+        $this->invoice = $invoice;
+        $this->price = $price;
+        $this->nid = $nid;
+        $this->nType = Invoice::class;
+        $this->clientName = $clientName;
     }
 
     /**
@@ -35,15 +40,11 @@ class PackagePaidAdmin extends Notification implements ShouldQueue {
      */
     public function toMail(object $notifiable): MailMessage {
         return (new MailMessage)
-            ->subject(ucfirst(strtolower($this->plan)) . " Plan Subscribed Successfully")
+            ->subject("Good News: Invoice Paid")
             ->greeting("Hi " . $notifiable->name . ",")
             ->line(new HtmlString(
-                "We wanted to inform you that we have a New Subscriber for our Business Growth Plans. The client <strong>" . $this->name . "</strong>, has Successfully completed the subscription process."
-            ))
-            ->line(new HtmlString(
-                "Here are some details:
-                <br><strong>Client Name:</strong> " . $this->name .
-                    "<br><strong>Subscription Plan:</strong> " . strtoupper($this->plan) . " - Business Growth Plan"
+                "We wanted to inform you that we have Received the Payment for Invoice #<strong>" . $this->invoice->invoice_id .
+                    "</strong> from our client, <strong>" . $this->clientName . "</strong>. The transaction has been processed Successfully, and the funds have been Deposited into our account."
             ))
             ->line("Thank you for your attention to this matter.");
     }
@@ -55,8 +56,8 @@ class PackagePaidAdmin extends Notification implements ShouldQueue {
      */
     public function toArray(object $notifiable): array {
         return [
-            "message" => ucfirst(strtolower($this->plan)) . ' Plan subscribed by ' . $this->name,
-            'link' => route('staff.invoices.index')
+            'message' => "Invoice #" . $this->invoice->invoice_id . " Paid Successfully",
+            "link" => route('staff.invoices.index', $this->invoice->id)
         ];
     }
 }

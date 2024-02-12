@@ -46,7 +46,7 @@ class SendInvoice extends Notification implements ShouldQueue {
                 "<strong>Invoice ID:</strong> " . $this->invoice->invoice_id . "<br>"
                     . "<strong>Amount Due:</strong> $" . $this->price . "<br>"
                     . "<strong>Invoice Status:</strong> Unpaid<br>"
-                    . "<strong>Due Date:</strong> " . $this->invoice->due_date
+                    . "<strong>Due Date:</strong> " . date('d M, Y', strtotime($this->invoice->due_date))
             ))
             ->line('Your prompt attention to this matter is greatly appreciated, as settling the invoice will enable us to kickstart the project without any delays. We are eager to dive into the work and deliver exceptional results for you.')
             ->line('If you encounter any issues or have any questions regarding the payment process, please do not hesitate to reach out. We are here to assist you every step of the way.')

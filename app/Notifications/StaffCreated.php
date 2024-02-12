@@ -36,9 +36,9 @@ class StaffCreated extends Notification implements ShouldQueue {
      */
     public function toMail(object $notifiable): MailMessage {
         return (new MailMessage)
-            ->subject("Registration")
+            ->subject("Welcome to the DigiSplix’s Team")
             ->greeting('Hi ' . $notifiable->name)
-            ->line('You are registered successfully! Please use the following credentials to login to the website.')
+            ->line('You have been registered successfully as our team member. Please use the following credentials to login to your Dashboard.')
             ->line(new HtmlString("Email: <strong>" . $notifiable->email . "</strong>"))
             ->line(new HtmlString("Password: <strong>" . $this->password . "</strong>"))
             ->action('Login', $this->url);

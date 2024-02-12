@@ -8,6 +8,7 @@ use App\Models\InvoiceItem;
 use App\Models\Plan;
 use App\Models\User;
 use App\Notifications\InvoicePaid;
+use App\Notifications\InvoicePaidAdmin;
 use App\Notifications\PackagePaid;
 use App\Notifications\PackagePaidAdmin;
 use Carbon\Carbon;
@@ -385,6 +386,10 @@ class PaymentController extends Controller {
                     if (!empty($metadata) && isset($metadata->type) && $metadata->type == 'package') {
                         $user = User::findOrFail($metadata->userID);
 
+                        $client = Client::findOrFail($user->userable_id);
+                        $client->active = 1;
+                        $client->save();
+
                         Notification::send($user, new PackagePaid($metadata->plan));
                         Notification::send(User::getAdmin(), new PackagePaidAdmin($metadata->plan, $user->name));
                         $this->generateInvoice($metadata->plan, $user->userable_id, $user->name, $user->userable->business_name);
@@ -402,7 +407,7 @@ class PaymentController extends Controller {
                         $invoice->client->save();
 
                         Notification::send($invoice->client->user, new InvoicePaid($invoice, $invoice->items_sum_price, $invoice->id));
-                        Notification::send(User::getAdmin(), new InvoicePaid($invoice, $invoice->items_sum_price, $invoice->id));
+                        Notification::send(User::getAdmin(), new InvoicePaidAdmin($invoice, $invoice->items_sum_price, $invoice->id, $invoice->client->user->name));
                     }
                 }
                 break;
@@ -424,7 +429,7 @@ class PaymentController extends Controller {
                     $invoice->client->save();
 
                     Notification::send($invoice->client->user, new InvoicePaid($invoice, $invoice->items_sum_price, $invoice->id));
-                    Notification::send(User::getAdmin(), new InvoicePaid($invoice, $invoice->items_sum_price, $invoice->id));
+                    Notification::send(User::getAdmin(), new InvoicePaidAdmin($invoice, $invoice->items_sum_price, $invoice->id, $invoice->client->user->name));
                 }
                 break;
             case 'invoice.paid':
@@ -447,7 +452,7 @@ class PaymentController extends Controller {
                         $invoice->client->save();
 
                         Notification::send($invoice->client->user, new InvoicePaid($invoice, $invoice->items_sum_price, $invoice->id));
-                        Notification::send(User::getAdmin(), new InvoicePaid($invoice, $invoice->items_sum_price, $invoice->id));
+                        Notification::send(User::getAdmin(), new InvoicePaidAdmin($invoice, $invoice->items_sum_price, $invoice->id, $invoice->client->user->name));
                     }
                 }
                 break;

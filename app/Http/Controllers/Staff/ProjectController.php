@@ -160,7 +160,7 @@ class ProjectController extends Controller {
 
         if ($statusUpdated) {
             if ($project->current_status == 0) {
-                Notification::send($project->client->user, new ProjectStatusUpdated($project->name, $status[$project->current_status], $project->id));
+                // Notification::send($project->client->user, new ProjectStatusUpdated($project->name, $status[$project->current_status], $project->id));
             } else {
                 Notification::send($project->client->user, new ProjectCompleted($project->name, $status[$project->current_status], $project->id));
             }

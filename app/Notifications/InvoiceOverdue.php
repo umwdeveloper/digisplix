@@ -42,7 +42,7 @@ class InvoiceOverdue extends Notification implements ShouldQueue {
             ->subject("Urgent: Overdue Invoice - Action Required")
             ->greeting("Hi " . $notifiable->name . ",")
             ->line(new HtmlString(
-                "We hope this email finds you well. We've noticed that Invoice <strong>#" . $this->invoice->invoice_id . "</strong> is overdue as of <strong>" . $this->invoice->due_date . "</strong>. Your prompt attention to this matter is crucial."
+                "We hope this email finds you well. We've noticed that Invoice <strong>#" . $this->invoice->invoice_id . "</strong> is overdue as of <strong>" . date('d M, Y', strtotime($this->invoice->due_date)) . "</strong>. Your prompt attention to this matter is crucial."
             ))
             ->line(new HtmlString(
                 "Please settle the outstanding amount of <strong>$" . $this->price . "</strong> at your earliest convenience to avoid any service interruptions."
@@ -50,7 +50,7 @@ class InvoiceOverdue extends Notification implements ShouldQueue {
             ->line(new HtmlString(
                 "<strong>Invoice ID:</strong> " . $this->invoice->invoice_id . "<br>"
                     . "<strong>Amount Due:</strong> $" . $this->price . "<br>"
-                    . "<strong>Due Date:</strong> " . $this->invoice->due_date
+                    . "<strong>Due Date:</strong> " . date('d M, Y', strtotime($this->invoice->due_date))
             ))
             ->line("You can make the payment through Debit/Credit Card, CashApp ApplePay, GooglePay, and Bank/Wire/ACH Transfer. If you've already processed the payment, kindly disregard this message.")
             ->line(new HtmlString(

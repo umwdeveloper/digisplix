@@ -34,7 +34,7 @@ class PackagePaid extends Notification implements ShouldQueue {
      */
     public function toMail(object $notifiable): MailMessage {
         return (new MailMessage)
-            ->subject(ucfirst($this->plan) . "Plan Subscribed Successfully")
+            ->subject(ucfirst(strtolower($this->plan)) . " Plan Subscribed Successfully")
             ->greeting("Hi " . $notifiable->name . ",")
             ->line(new HtmlString("Congratulations on taking the exciting step of Subscribing to our <strong>" . strtoupper($this->plan) . "</strong> - Business Growth Plan! 🎉 We're thrilled to have you on board and can't wait to support your business journey."))
             ->line("Thank you for choosing DigiSplix as your partner in growth. We are committed to delivering valuable insights, strategic digital marketing solutions, and resources to propel your online presence and elevate your business to new heights.")
@@ -49,7 +49,7 @@ class PackagePaid extends Notification implements ShouldQueue {
      */
     public function toArray(object $notifiable): array {
         return [
-            "message" => ucfirst($this->plan) . " Plan Subscribed Successfully!",
+            "message" => ucfirst(strtolower($this->plan)) . " Plan Subscribed Successfully!",
             'link' => route('client.invoices.index')
         ];
     }
