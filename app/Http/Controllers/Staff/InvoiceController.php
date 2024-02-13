@@ -313,7 +313,7 @@ class InvoiceController extends Controller {
                 $invoice->client->save();
 
                 Notification::send($invoice->client->user, new InvoicePaid($invoice, $invoice->items_sum_price, $invoice->id));
-                Notification::send(User::getAdmin(), new InvoicePaidAdmin($invoice, $invoice->items_sum_price, $invoice->id, $invoice->client->user->name));
+                Notification::send(User::getAdmin(), new InvoicePaidAdmin($invoice, $invoice->items_sum_price, $invoice->id, $invoice->client->user->name, true));
             }
 
             if ($invoice->status == Invoice::OVERDUE) {

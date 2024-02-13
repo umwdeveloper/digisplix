@@ -457,7 +457,17 @@ const generatePDF = function (data) {
     pdf.setFont("Poppins-Regular", "normal")
     pdf.text(originalAddress, x, y)
 
-    pdf.text(data.invoice_to, pageWidth() - 100, y)
+    var invoiceTo = data.invoice_to;
+    var lines = invoiceTo.split('\n');
+    var name = lines.shift();
+    var address = lines.join('\n');
+
+    pdf.setFont("Poppins-Bold", "normal")
+    pdf.text(name, pageWidth() - 100, y)
+
+    y += 7
+    pdf.setFont("Poppins-Regular", "normal")
+    pdf.text(address, pageWidth() - 100, y)
     var newLines = (data.invoice_to.match(/\n/g) || []).length;
 
     var lines = pdf.splitTextToSize(data.invoice_to, pdf.internal.pageSize.width);

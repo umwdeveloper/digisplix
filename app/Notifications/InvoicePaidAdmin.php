@@ -14,16 +14,18 @@ class InvoicePaidAdmin extends Notification implements ShouldQueue {
 
     public Invoice $invoice;
     public $price, $nid, $nType, $clientName;
+    public $manual;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(Invoice $invoice, $price, $nid, $clientName) {
+    public function __construct(Invoice $invoice, $price, $nid, $clientName, $manual = false) {
         $this->invoice = $invoice;
         $this->price = $price;
         $this->nid = $nid;
         $this->nType = Invoice::class;
         $this->clientName = $clientName;
+        $this->manual = $manual;
     }
 
     /**
@@ -56,7 +58,7 @@ class InvoicePaidAdmin extends Notification implements ShouldQueue {
      */
     public function toArray(object $notifiable): array {
         return [
-            'message' => "Invoice #" . $this->invoice->invoice_id . " Paid Successfully",
+            'message' => $this->manual ? "Invoice #" . $this->invoice->invoice_id . " Marked as Completed" : "Invoice #" . $this->invoice->invoice_id . " Paid Successfully",
             "link" => route('staff.invoices.index', $this->invoice->id)
         ];
     }

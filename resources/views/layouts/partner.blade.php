@@ -220,7 +220,8 @@
                                             @if (empty($notification->read_at))
                                                 <i class="bi bi-dot"></i>
                                             @endif
-                                            <p class="mb-0 pb-0 ">{{ $notification->data['message'] }}</p>
+                                            <p class="mb-0 pb-0 " title="{{ $notification->data['message'] }}">
+                                                {{ $notification->data['message'] }}</p>
                                         </a>
                                     </li>
                                 @empty

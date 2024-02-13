@@ -44,7 +44,7 @@ class SendInvoice extends Notification implements ShouldQueue {
             ->line('We are thrilled to let you know that your invoice for the upcoming project is now prepared and accessible for payment. To proceed, kindly log in to your dashboard on our platform and complete the payment process.')
             ->line(new HtmlString(
                 "<strong>Invoice ID:</strong> " . $this->invoice->invoice_id . "<br>"
-                    . "<strong>Amount Due:</strong> $" . $this->price . "<br>"
+                    . "<strong>Amount Due:</strong> $" . number_format($this->price, 0, ',') . "<br>"
                     . "<strong>Invoice Status:</strong> Unpaid<br>"
                     . "<strong>Due Date:</strong> " . date('d M, Y', strtotime($this->invoice->due_date))
             ))
