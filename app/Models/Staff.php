@@ -30,6 +30,9 @@ class Staff extends Model {
             });
 
             $staff->user->notifications()->delete();
+
+            ChMessage::where('from_id', $staff->user->id)->orWhere('to_id', $staff->user->id)->delete();
+
             $staff->user()->delete();
         });
     }

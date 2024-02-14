@@ -42,6 +42,9 @@ class Partner extends Model {
 
             $partner->user->notifications()->delete();
             $partner->clients()->delete();
+
+            ChMessage::where('from_id', $partner->user->id)->orWhere('to_id', $partner->user->id)->delete();
+
             $partner->user()->delete();
         });
     }

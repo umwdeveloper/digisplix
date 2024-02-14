@@ -124,6 +124,9 @@ class Client extends Model {
             });
 
             $client->user->notifications()->delete();
+
+            ChMessage::where('from_id', $client->user->id)->orWhere('to_id', $client->user->id)->delete();
+
             $client->user()->delete();
             $client->projects()->delete();
         });
