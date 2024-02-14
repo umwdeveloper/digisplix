@@ -181,7 +181,7 @@ class LeadController extends Controller {
                 DatabaseNotification::whereIn('id', $notificationTypeIds)->delete();
             });
 
-            $lead->user()->delete();
+            // $lead->user()->delete();
             $lead->delete();
         }
 
