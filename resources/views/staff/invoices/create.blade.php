@@ -266,7 +266,7 @@
                                                 </small>
                                             @enderror
                                             <textarea name="invoice_to" required id="invoice_to" rows="3" class="border-0 f-14 w-400 bg-transparent"
-                                                style="width: 100%; outline: none;">{{ !empty($clients) ? $clients->first()->user->name : '' }}</textarea>
+                                                style="width: 100%; outline: none;">{{ optional($clients->first())->user->name ?? '' }}</textarea>
 
 
 

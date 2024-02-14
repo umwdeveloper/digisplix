@@ -122,8 +122,6 @@ class InvoiceController extends Controller {
         $this->authorize('staff.invoices');
 
         $clients = Client::with('user')->where('is_client', 1)->get();
-
-        dd($clients);
         $categories = Category::all();
         $admin = User::getAdmin();
         return view('staff.invoices.create', [
