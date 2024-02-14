@@ -42,6 +42,7 @@ class Partner extends Model {
 
             $partner->user->notifications()->delete();
             $partner->clients()->delete();
+            $partner->user()->delete();
         });
     }
 }

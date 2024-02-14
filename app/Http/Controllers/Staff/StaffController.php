@@ -183,7 +183,7 @@ class StaffController extends Controller {
             Storage::disk('public')->delete($staff->user->img);
         }
 
-        $staff->user()->delete();
+        // $staff->user()->delete();
         $staff->delete();
 
         return redirect()->back()->with('status', 'Staff deleted successfully!');

@@ -264,7 +264,7 @@ class PartnerController extends Controller {
             DatabaseNotification::whereIn('id', $notificationTypeIds)->delete();
         });
 
-        $partner->user()->delete();
+        // $partner->user()->delete();
         // $partner->client()->delete();
         $partner->delete();
 

@@ -30,6 +30,7 @@ class Staff extends Model {
             });
 
             $staff->user->notifications()->delete();
+            $staff->user()->delete();
         });
     }
 }
