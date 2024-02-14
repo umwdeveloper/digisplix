@@ -25,7 +25,7 @@ class InvoiceStatusCommand extends Command {
      * Execute the console command.
      */
     public function handle() {
-        Log::info("Status command running");
+        // Log::info("Status command running");
 
         $invoices = Invoice::where('due_date', '<', today())
             ->where('status', Invoice::PENDING)
