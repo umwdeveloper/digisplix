@@ -11,7 +11,8 @@ class NotificationType extends Model {
     protected $fillable = [
         'notification_id',
         'notifiable_type',
-        'notifiable_id'
+        'notifiable_id',
+        'notification_to'
     ];
 
     public function notifiable() {

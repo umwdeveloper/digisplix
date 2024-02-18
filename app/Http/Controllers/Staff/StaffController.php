@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Staff;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreStaff;
 use App\Http\Requests\UpdateStaff;
+use App\Models\NotificationType;
 use App\Models\Permission;
 use App\Models\Staff;
 use App\Models\User;
 use App\Notifications\StaffCreated;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -80,7 +82,7 @@ class StaffController extends Controller {
 
             DB::commit();
 
-            Notification::send($staff->user, new StaffCreated($original_password));
+            Notification::send($staff->user, new StaffCreated($original_password, $staff->user->id));
 
             return redirect()->back()->with('status', 'Staff created successfully!');
         } catch (QueryException $e) {
@@ -182,6 +184,18 @@ class StaffController extends Controller {
         if (!empty($staff->user->img)) {
             Storage::disk('public')->delete($staff->user->img);
         }
+
+        $notificationTypeIds = $staff->notificationTypes()->pluck('notification_id');
+        $notificationIds2 = NotificationType::where('notification_to', $staff->user->id)
+            ->pluck('notification_id');
+
+        DB::transaction(function () use ($staff, $notificationTypeIds, $notificationIds2) {
+            $staff->notificationTypes()->delete();
+
+            NotificationType::whereIn('notification_id', $notificationIds2)->delete();
+            DatabaseNotification::whereIn('id', $notificationIds2)->delete();
+            DatabaseNotification::whereIn('id', $notificationTypeIds)->delete();
+        });
 
         // $staff->user()->delete();
         $staff->delete();

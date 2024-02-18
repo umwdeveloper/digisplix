@@ -14,15 +14,17 @@ class SendInvoice extends Notification implements ShouldQueue {
 
     public Invoice $invoice;
     public $price, $nid, $nType;
+    public $notification_to;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(Invoice $invoice, $price, $nid) {
+    public function __construct(Invoice $invoice, $price, $nid, $notification_to) {
         $this->invoice = $invoice;
         $this->price = $price;
         $this->nid = $nid;
         $this->nType = Invoice::class;
+        $this->notification_to = $notification_to;
     }
 
     /**

@@ -13,13 +13,15 @@ class LeadAdded extends Notification implements ShouldQueue {
     use Queueable;
 
     public $nid, $nType;
+    public $notification_to;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($nid) {
+    public function __construct($nid, $notification_to) {
         $this->nid = $nid;
         $this->nType = Client::class;
+        $this->notification_to = $notification_to;
     }
 
     /**

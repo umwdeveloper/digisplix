@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\DB;
 
 class Partner extends Model {
@@ -35,8 +36,12 @@ class Partner extends Model {
 
         static::deleting(function (Partner $partner) {
             $notificationIds = $partner->user->notifications()->pluck('id');
+            $notificationIds2 = NotificationType::where('notification_to', $partner->user->id)
+                ->pluck('notification_id');
 
-            DB::transaction(function () use ($partner, $notificationIds) {
+            DB::transaction(function () use ($partner, $notificationIds, $notificationIds2) {
+                DatabaseNotification::whereIn('id', $notificationIds2)->delete();
+                NotificationType::whereIn('notification_id', $notificationIds2)->delete();
                 NotificationType::whereIn('notification_id', $notificationIds)->delete();
             });
 

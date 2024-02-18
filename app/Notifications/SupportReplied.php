@@ -12,15 +12,17 @@ class SupportReplied extends Notification implements ShouldQueue {
     use Queueable;
 
     public $subject, $ticket_id, $nid, $nType;
+    public $notification_to;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($subject, $ticket_id) {
+    public function __construct($subject, $ticket_id, $notification_to) {
         $this->subject = $subject;
         $this->ticket_id = $ticket_id;
         $this->nid = $ticket_id;
         $this->nType = Support::class;
+        $this->notification_to = $notification_to;
     }
 
     /**

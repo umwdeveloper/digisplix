@@ -16,15 +16,17 @@ class PartnerCreated extends Notification implements ShouldQueue {
     public $url;
 
     public $nid, $nType;
+    public $notification_to;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($password, $nid) {
+    public function __construct($password, $nid, $notification_to) {
         $this->password = $password;
         $this->url = config('custom.partner_subdomain');
         $this->nid = $nid;
         $this->nType = Partner::class;
+        $this->notification_to = $notification_to;
     }
 
     /**

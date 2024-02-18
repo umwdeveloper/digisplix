@@ -7,6 +7,7 @@ use App\Http\Requests\StoreLead;
 use App\Http\Requests\UpdateLead;
 use App\Mail\LeadAddedMail;
 use App\Models\Client;
+use App\Models\NotificationType;
 use App\Models\Partner;
 use App\Models\User;
 use App\Notifications\LeadCreated;
@@ -81,7 +82,7 @@ class LeadController extends Controller {
 
             DB::commit();
 
-            Notification::send(User::getAdmin(), new LeadCreated($lead->partner->user->name, $lead->id));
+            Notification::send(User::getAdmin(), new LeadCreated($lead->partner->user->name, $lead->id, $lead->partner->user->id));
             // Mail::to($lead->user->email)->send(new LeadAddedMail($lead->user->name, $lead->user->email, $validatedData['original_password']));
 
             return redirect()->back()->with('status', 'Lead created successfully!');
@@ -139,11 +140,11 @@ class LeadController extends Controller {
             }
 
             if ($validatedData['status'] == Client::QUALIFIED && $validatedData['status'] != $lead->status) {
-                Notification::send(User::getAdmin(), new QualifiedLead($lead->partner->user->name, $lead->id));
+                Notification::send(User::getAdmin(), new QualifiedLead($lead->partner->user->name, $lead->id, $lead->partner->user->id));
             }
 
             if ($validatedData['status'] == Client::IN_PROGRESS && $validatedData['status'] != $lead->status) {
-                Notification::send(User::getAdmin(), new ProgressLead($lead->partner->user->name, $lead->id));
+                Notification::send(User::getAdmin(), new ProgressLead($lead->partner->user->name, $lead->id, $lead->partner->user->id));
             }
 
             $lead->update($validatedData);
@@ -181,10 +182,14 @@ class LeadController extends Controller {
             }
 
             $notificationTypeIds = $lead->notificationTypes()->pluck('notification_id');
+            $notificationIds2 = NotificationType::where('notification_to', $lead->user->id)
+                ->pluck('notification_id');
 
-            DB::transaction(function () use ($lead, $notificationTypeIds) {
+            DB::transaction(function () use ($lead, $notificationTypeIds, $notificationIds2) {
                 $lead->notificationTypes()->delete();
 
+                NotificationType::whereIn('notification_id', $notificationIds2)->delete();
+                DatabaseNotification::whereIn('id', $notificationIds2)->delete();
                 DatabaseNotification::whereIn('id', $notificationTypeIds)->delete();
             });
 
@@ -213,11 +218,11 @@ class LeadController extends Controller {
             }
 
             if ($lead->status == Client::QUALIFIED) {
-                Notification::send(User::getAdmin(), new QualifiedLead($lead->partner->user->name, $lead->id));
+                Notification::send(User::getAdmin(), new QualifiedLead($lead->partner->user->name, $lead->id, $lead->partner->user->id));
             }
 
             if ($lead->status == Client::IN_PROGRESS) {
-                Notification::send(User::getAdmin(), new ProgressLead($lead->partner->user->name, $lead->id));
+                Notification::send(User::getAdmin(), new ProgressLead($lead->partner->user->name, $lead->id, $lead->partner->user->id));
             }
 
             $lead->save();

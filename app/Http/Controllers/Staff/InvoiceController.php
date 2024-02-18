@@ -312,12 +312,12 @@ class InvoiceController extends Controller {
                 $invoice->client->active = 1;
                 $invoice->client->save();
 
-                Notification::send($invoice->client->user, new InvoicePaid($invoice, $invoice->items_sum_price, $invoice->id));
-                Notification::send(User::getAdmin(), new InvoicePaidAdmin($invoice, $invoice->items_sum_price, $invoice->id, $invoice->client->user->name, true));
+                Notification::send($invoice->client->user, new InvoicePaid($invoice, $invoice->items_sum_price, $invoice->id, $invoice->client->user->id));
+                Notification::send(User::getAdmin(), new InvoicePaidAdmin($invoice, $invoice->items_sum_price, $invoice->id, $invoice->client->user->name, true, $invoice->client->user->id));
             }
 
             if ($invoice->status == Invoice::OVERDUE) {
-                Notification::send($invoice->client->user, new InvoiceOverdue($invoice, $invoice->id, $invoice->items_sum_price));
+                Notification::send($invoice->client->user, new InvoiceOverdue($invoice, $invoice->id, $invoice->items_sum_price, $invoice->client->user->id));
             }
 
             // Send notification
@@ -365,8 +365,8 @@ class InvoiceController extends Controller {
 
             $invoice->save();
 
-            Notification::send($invoice->client->user, new SendInvoice($invoice, $invoice->items_sum_price, $invoice->id));
-            Notification::send(User::getAdmin(), new InvoiceSent($invoice->client->user->name, $invoice->id));
+            Notification::send($invoice->client->user, new SendInvoice($invoice, $invoice->items_sum_price, $invoice->id, $invoice->client->user->id));
+            Notification::send(User::getAdmin(), new InvoiceSent($invoice->client->user->name, $invoice->id, $invoice->client->user->id));
 
             return response()->json(['status' => 'success']);
         } catch (Exception $e) {

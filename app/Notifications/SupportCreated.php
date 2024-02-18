@@ -12,14 +12,16 @@ class SupportCreated extends Notification implements ShouldQueue {
     use Queueable;
 
     public $ticket_id, $nid, $nType;
+    public $notification_to;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($ticket_id) {
+    public function __construct($ticket_id, $notification_to) {
         $this->ticket_id = $ticket_id;
         $this->nid = $ticket_id;
         $this->nType = Support::class;
+        $this->notification_to = $notification_to;
     }
 
     /**

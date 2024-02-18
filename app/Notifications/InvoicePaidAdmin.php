@@ -15,17 +15,19 @@ class InvoicePaidAdmin extends Notification implements ShouldQueue {
     public Invoice $invoice;
     public $price, $nid, $nType, $clientName;
     public $manual;
+    public $notification_to;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(Invoice $invoice, $price, $nid, $clientName, $manual = false) {
+    public function __construct(Invoice $invoice, $price, $nid, $clientName, $manual = false, $notification_to) {
         $this->invoice = $invoice;
         $this->price = $price;
         $this->nid = $nid;
         $this->nType = Invoice::class;
         $this->clientName = $clientName;
         $this->manual = $manual;
+        $this->notification_to = $notification_to;
     }
 
     /**

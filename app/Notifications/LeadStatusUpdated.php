@@ -14,15 +14,17 @@ class LeadStatusUpdated extends Notification implements ShouldQueue {
 
     public $name, $status;
     public $nid, $nType;
+    public $notification_to;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($name, $status, $nid) {
+    public function __construct($name, $status, $nid, $notification_to) {
         $this->name = $name;
         $this->status = $status;
         $this->nid = $nid;
         $this->nType = Client::class;
+        $this->notification_to = $notification_to;
     }
 
     /**

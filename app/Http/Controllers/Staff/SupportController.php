@@ -151,7 +151,7 @@ class SupportController extends Controller {
             'reply' => $request->input('reply'),
         ]);
 
-        Notification::send($ticket->user, new SupportUpdate($ticket->id, $ticket->subject));
+        Notification::send($ticket->user, new SupportUpdate($ticket->id, $ticket->subject, $ticket->user->id));
 
         return response()->json([
             'status' => 'success',

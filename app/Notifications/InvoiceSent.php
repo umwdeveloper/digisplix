@@ -12,14 +12,16 @@ class InvoiceSent extends Notification implements ShouldQueue {
     use Queueable;
 
     public $name, $nid, $nType;
+    public $notification_to;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($name, $nid) {
+    public function __construct($name, $nid, $notification_to) {
         $this->name = $name;
         $this->nid = $nid;
         $this->nType = Invoice::class;
+        $this->notification_to = $notification_to;
     }
 
     /**

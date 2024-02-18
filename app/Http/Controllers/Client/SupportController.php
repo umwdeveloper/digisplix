@@ -48,7 +48,7 @@ class SupportController extends Controller {
             'department' => $request->input('department'),
         ]);
 
-        Notification::send(User::getAdmin(), new SupportCreated($ticket->id));
+        Notification::send(User::getAdmin(), new SupportCreated($ticket->id, Auth::user()->id));
 
         return response()->json([
             'status' => 'success',
@@ -158,7 +158,7 @@ class SupportController extends Controller {
             'reply' => $request->input('reply'),
         ]);
 
-        Notification::send(User::getAdmin(), new SupportReplied($ticket->subject, $ticket->id));
+        Notification::send(User::getAdmin(), new SupportReplied($ticket->subject, $ticket->id, $ticket->user->id));
 
         return response()->json([
             'status' => 'success',

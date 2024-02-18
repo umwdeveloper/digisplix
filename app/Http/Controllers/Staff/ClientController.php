@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Staff;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateClient;
 use App\Models\Client;
+use App\Models\NotificationType;
 use App\Models\Partner;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -118,10 +119,14 @@ class ClientController extends Controller {
             }
 
             $notificationTypeIds = $client->notificationTypes()->pluck('notification_id');
+            $notificationIds2 = NotificationType::where('notification_to', $client->user->id)
+                ->pluck('notification_id');
 
-            DB::transaction(function () use ($client, $notificationTypeIds) {
+            DB::transaction(function () use ($client, $notificationTypeIds, $notificationIds2) {
                 $client->notificationTypes()->delete();
 
+                NotificationType::whereIn('notification_id', $notificationIds2)->delete();
+                DatabaseNotification::whereIn('id', $notificationIds2)->delete();
                 DatabaseNotification::whereIn('id', $notificationTypeIds)->delete();
             });
 

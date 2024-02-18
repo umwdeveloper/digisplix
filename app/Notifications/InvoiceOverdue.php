@@ -14,15 +14,17 @@ class InvoiceOverdue extends Notification implements ShouldQueue {
 
     public Invoice $invoice;
     public $nid, $nType, $price;
+    public $notification_to;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(Invoice $invoice, $nid, $price) {
+    public function __construct(Invoice $invoice, $nid, $price, $notification_to) {
         $this->invoice = $invoice;
         $this->nid = $nid;
         $this->nType = Invoice::class;
         $this->price = $price;
+        $this->notification_to = $notification_to;
     }
 
     /**

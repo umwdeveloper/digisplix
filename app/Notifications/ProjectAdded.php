@@ -15,16 +15,18 @@ class ProjectAdded extends Notification implements ShouldQueue {
     public $name;
     public $project_id;
     public $title, $nid, $nType;
+    public $notification_to;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($name, $project_id, $title, $nid) {
+    public function __construct($name, $project_id, $title, $nid, $notification_to) {
         $this->name = $name;
         $this->project_id = $project_id;
         $this->title = $title;
         $this->nid = $nid;
         $this->nType = Project::class;
+        $this->notification_to = $notification_to;
     }
 
     /**

@@ -46,7 +46,7 @@ class CommissionController extends Controller {
 
         Session::flash('submitted');
 
-        Notification::send($partner->user, new CommissionCreated($validatedData['status'], $project->name, $validatedData['commission'], $validatedData['type'] == 0 ? 'Straight' : 'Recurring', $client->business_name, $commission->id));
+        Notification::send($partner->user, new CommissionCreated($validatedData['status'], $project->name, $validatedData['commission'], $validatedData['type'] == 0 ? 'Straight' : 'Recurring', $client->business_name, $commission->id, $partner->user->id));
 
         return redirect()->back()->with('status', 'Commission created successfully!');
     }
@@ -80,7 +80,7 @@ class CommissionController extends Controller {
         Session::flash('submitted');
 
         if ($statusUpdated) {
-            Notification::send($commission->client->partner->user, new CommissionStatus($commission->status, $commission->project->name, $commission->commission, $commission->type == 0 ? 'Straight' : 'Recurring', $commission->client->business_name, $commission->id));
+            Notification::send($commission->client->partner->user, new CommissionStatus($commission->status, $commission->project->name, $commission->commission, $commission->type == 0 ? 'Straight' : 'Recurring', $commission->client->business_name, $commission->id, $commission->client->partner->user->id));
         }
 
         return redirect()->back()->with('status', 'Commission updated successfully!');
@@ -111,7 +111,7 @@ class CommissionController extends Controller {
 
         $commission->save();
 
-        Notification::send($commission->client->partner->user, new CommissionStatus($commission->status, $commission->project->name, $commission->commission, $commission->type == 0 ? 'Straight' : 'Recurring', $commission->client->business_name, $commission->id));
+        Notification::send($commission->client->partner->user, new CommissionStatus($commission->status, $commission->project->name, $commission->commission, $commission->type == 0 ? 'Straight' : 'Recurring', $commission->client->business_name, $commission->id, $commission->client->partner->user->id));
 
         return response()->json(['status' => 'success']);
     }

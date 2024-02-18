@@ -17,16 +17,18 @@ class ProjectCompleted extends Notification implements ShouldQueue {
     public $project_id;
 
     public $nid, $nType;
+    public $notification_to;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($title, $status, $project_id) {
+    public function __construct($title, $status, $project_id, $notification_to) {
         $this->status = $status;
         $this->title = $title;
         $this->project_id = $project_id;
         $this->nid = $project_id;
         $this->nType = Project::class;
+        $this->notification_to = $notification_to;
     }
 
     /**

@@ -13,14 +13,16 @@ class ProgressLead extends Notification implements ShouldQueue {
 
     public $name;
     public $nid, $nType;
+    public $notification_to;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($name, $nid) {
+    public function __construct($name, $nid, $notification_to) {
         $this->name = $name;
         $this->nid = $nid;
         $this->nType = Client::class;
+        $this->notification_to = $notification_to;
     }
 
     /**

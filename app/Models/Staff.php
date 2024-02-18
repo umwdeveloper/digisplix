@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\DB;
 
 class Staff extends Model {
@@ -24,8 +25,12 @@ class Staff extends Model {
 
         static::deleting(function (Staff $staff) {
             $notificationIds = $staff->user->notifications()->pluck('id');
+            $notificationIds2 = NotificationType::where('notification_to', $staff->user->id)
+                ->pluck('notification_id');
 
-            DB::transaction(function () use ($staff, $notificationIds) {
+            DB::transaction(function () use ($staff, $notificationIds, $notificationIds2) {
+                DatabaseNotification::whereIn('id', $notificationIds2)->delete();
+                NotificationType::whereIn('notification_id', $notificationIds2)->delete();
                 NotificationType::whereIn('notification_id', $notificationIds)->delete();
             });
 

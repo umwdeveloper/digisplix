@@ -12,12 +12,14 @@ class PackagePaid extends Notification implements ShouldQueue {
     use Queueable;
 
     public $plan;
+    public $notification_to;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($plan) {
+    public function __construct($plan, $notification_to) {
         $this->plan = $plan;
+        $this->notification_to = $notification_to;
     }
 
     /**

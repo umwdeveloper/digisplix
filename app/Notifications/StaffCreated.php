@@ -13,13 +13,15 @@ class StaffCreated extends Notification implements ShouldQueue {
 
     public $password;
     public $url;
+    public $notification_to;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($password) {
+    public function __construct($password, $notification_to) {
         $this->password = $password;
         $this->url = config('custom.staff_subdomain');
+        $this->notification_to = $notification_to;
     }
 
     /**

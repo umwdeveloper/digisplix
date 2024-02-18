@@ -9,6 +9,7 @@ use App\Models\Client;
 use App\Models\Commission;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
+use App\Models\NotificationType;
 use App\Models\Partner;
 use App\Models\Project;
 use App\Models\User;
@@ -73,7 +74,7 @@ class PartnerController extends Controller {
 
             DB::commit();
 
-            Notification::send($partner->user, new PartnerCreated($original_password, $partner->id));
+            Notification::send($partner->user, new PartnerCreated($original_password, $partner->id, $partner->user->id));
 
             return redirect()->back()->with('status', 'Partner created successfully!');
         } catch (QueryException $e) {
@@ -257,10 +258,14 @@ class PartnerController extends Controller {
         }
 
         $notificationTypeIds = $partner->notificationTypes()->pluck('notification_id');
+        $notificationIds2 = NotificationType::where('notification_to', $partner->user->id)
+            ->pluck('notification_id');
 
-        DB::transaction(function () use ($partner, $notificationTypeIds) {
+        DB::transaction(function () use ($partner, $notificationTypeIds, $notificationIds2) {
             $partner->notificationTypes()->delete();
 
+            NotificationType::whereIn('notification_id', $notificationIds2)->delete();
+            DatabaseNotification::whereIn('id', $notificationIds2)->delete();
             DatabaseNotification::whereIn('id', $notificationTypeIds)->delete();
         });
 

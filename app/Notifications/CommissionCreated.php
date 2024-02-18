@@ -14,11 +14,12 @@ class CommissionCreated extends Notification implements ShouldQueue {
 
     public $status, $project, $commission, $commission_type, $business_name;
     public $nid, $nType;
+    public $notification_to;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($status, $project, $commission, $commission_type, $business_name, $nid) {
+    public function __construct($status, $project, $commission, $commission_type, $business_name, $nid, $notification_to) {
         $this->status = $status;
         $this->project = $project;
         $this->commission = $commission;
@@ -26,6 +27,7 @@ class CommissionCreated extends Notification implements ShouldQueue {
         $this->business_name = $business_name;
         $this->nid = $nid;
         $this->nType = Commission::class;
+        $this->notification_to = $notification_to;
     }
 
     /**

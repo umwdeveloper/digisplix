@@ -93,7 +93,7 @@ class ProjectController extends Controller {
             ['name' => 'Phase 4'],
         ]);
 
-        Notification::send($project->client->user, new ProjectAdded($project->client->user->name, $project->id, $project->name, $project->id));
+        Notification::send($project->client->user, new ProjectAdded($project->client->user->name, $project->id, $project->name, $project->id, $project->client->user->id));
 
         return redirect()->back()->with('status', 'Project created successfully!');
     }
@@ -162,7 +162,7 @@ class ProjectController extends Controller {
             if ($project->current_status == 0) {
                 // Notification::send($project->client->user, new ProjectStatusUpdated($project->name, $status[$project->current_status], $project->id));
             } else {
-                Notification::send($project->client->user, new ProjectCompleted($project->name, $status[$project->current_status], $project->id));
+                Notification::send($project->client->user, new ProjectCompleted($project->name, $status[$project->current_status], $project->id, $project->client->user->id));
             }
         }
 

@@ -28,7 +28,8 @@ class NotificationSentListener {
             NotificationType::create([
                 'notification_id' => $notification->id,
                 'notifiable_id' => $notification->nid,
-                'notifiable_type' => $notification->nType
+                'notifiable_type' => $notification->nType,
+                'notification_to' => $notification->notification_to
             ]);
         }
     }
