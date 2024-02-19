@@ -60,7 +60,7 @@ class InvoicePaidAdmin extends Notification implements ShouldQueue {
      */
     public function toArray(object $notifiable): array {
         return [
-            'message' => $this->manual ? "Invoice #" . $this->invoice->invoice_id . " Marked as Completed" : "Invoice #" . $this->invoice->invoice_id . " Paid Successfully",
+            'message' => $this->manual ? "Invoice #" . $this->invoice->invoice_id . " Marked as Paid" : "Invoice #" . $this->invoice->invoice_id . " Paid Successfully",
             "link" => route('staff.invoices.index', $this->invoice->id)
         ];
     }
