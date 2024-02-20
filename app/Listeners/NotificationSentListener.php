@@ -32,5 +32,14 @@ class NotificationSentListener {
                 'notification_to' => $notification->notification_to
             ]);
         }
+
+        if (!$existingRecord && isset($notification->plan) && !empty($notification->plan)) {
+            NotificationType::create([
+                'notification_id' => $notification->id,
+                'notifiable_id' => 0,
+                'notifiable_type' => 'Package',
+                'notification_to' => $notification->notification_to
+            ]);
+        }
     }
 }
