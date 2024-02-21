@@ -417,6 +417,10 @@ class PaymentController extends Controller {
                 $payment = $event->data->object;
                 $metadata = $payment->metadata;
 
+                Log::info("Got here 1");
+                Log::info($metadata);
+                Log::info($payment->status);
+
                 if (!empty($metadata) && $payment->status == "succeeded") {
                     $invoiceId = $metadata->invoice_id;
                     $invoice = Invoice::with(['client', 'items'])
@@ -433,7 +437,7 @@ class PaymentController extends Controller {
                     Notification::send($invoice->client->user, new InvoicePaid($invoice, $invoice->items_sum_price, $invoice->id, $invoice->client->user->id));
                     Notification::send(User::getAdmin(), new InvoicePaidAdmin($invoice, $invoice->items_sum_price, $invoice->id, $invoice->client->user->name, false, $invoice->client->user->id));
                 }
-                Log::info("Got here");
+                Log::info("Got here 2");
                 break;
             case 'invoice.paid':
                 $payment = $event->data->object;
@@ -461,7 +465,7 @@ class PaymentController extends Controller {
                 break;
         }
 
-        Log::info("Got here too");
+        Log::info("Got here 3");
         return response()->json(['success' => true]);
     }
 
