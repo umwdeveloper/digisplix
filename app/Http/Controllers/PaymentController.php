@@ -424,12 +424,7 @@ class PaymentController extends Controller {
                 Log::info($metadata);
                 Log::info($payment->status);
 
-                Log::info(empty(json_decode($metadata)));
-
-                Log::info(Str::length($metadata->invoice_id));
-
-                if (!empty($metadata) && $payment->status == "succeeded") {
-                    Log::info("Got inside the condition");
+                if (!empty(json_decode($metadata)) && $payment->status == "succeeded") {
                     $invoiceId = $metadata->invoice_id;
                     $invoice = Invoice::with(['client', 'items'])
                         ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
@@ -444,18 +439,17 @@ class PaymentController extends Controller {
 
                     Notification::send($invoice->client->user, new InvoicePaid($invoice, $invoice->items_sum_price, $invoice->id, $invoice->client->user->id));
                     Notification::send(User::getAdmin(), new InvoicePaidAdmin($invoice, $invoice->items_sum_price, $invoice->id, $invoice->client->user->name, false, $invoice->client->user->id));
-                } else {
-                    Log::info("Got inside the else");
                 }
-                Log::info("Got here 2");
                 break;
             case 'invoice.paid':
                 $payment = $event->data->object;
 
+                Log::info($payment->subscription_details);
+
                 if ($payment->subscription_details && !empty($payment->subscription_details)) {
                     $metadata = $payment->subscription_details->metadata;
 
-                    if (!empty($metadata)) {
+                    if (!empty(json_decode($metadata))) {
                         $invoiceId = $metadata->invoice_id;
                         $invoice = Invoice::with(['client', 'items'])
                             ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
