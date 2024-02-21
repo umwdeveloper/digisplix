@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Str;
 use Stripe\Checkout\Session;
 use Stripe\Customer;
 use Stripe\Exception\ApiErrorException;
@@ -423,8 +424,7 @@ class PaymentController extends Controller {
                 Log::info($metadata);
                 Log::info($payment->status);
 
-                Log::info((string)(isset($metadata->invoice_id) && !empty($metadata->invoice_id)));
-                Log::info($metadata->invoice_id);
+                Log::info(Str::length($metadata->invoice_id));
 
                 if (!empty($metadata) && $payment->status == "succeeded") {
                     Log::info("Got inside the condition");
