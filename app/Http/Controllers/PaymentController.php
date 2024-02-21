@@ -421,7 +421,7 @@ class PaymentController extends Controller {
                 Log::info($metadata);
                 Log::info($payment->status);
 
-                if (!empty($metadata) && $payment->status == "succeeded") {
+                if (!empty((array)$metadata) && $payment->status == "succeeded") {
                     $invoiceId = $metadata->invoice_id;
                     $invoice = Invoice::with(['client', 'items'])
                         ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
