@@ -25,6 +25,8 @@ use Stripe\Stripe;
 use Stripe\Subscription;
 use Stripe\Webhook;
 
+use function PHPUnit\Framework\isEmpty;
+
 class PaymentController extends Controller {
     public function createCheckoutSession(Request $request) {
 
@@ -421,8 +423,7 @@ class PaymentController extends Controller {
                 Log::info($metadata);
                 Log::info($payment->status);
 
-                Log::info(!empty($metadata));
-                Log::info(!empty((array)$metadata));
+                Log::info($metadata->isEmpty());
 
                 if (!empty($metadata) && $payment->status == "succeeded") {
                     Log::info("Got inside the condition");
