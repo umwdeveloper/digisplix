@@ -421,8 +421,9 @@ class PaymentController extends Controller {
 
                 Log::info("Got here 1");
                 Log::info($metadata);
-                Log::info("array log: ", (array)$metadata);
                 Log::info($payment->status);
+
+                Log::info($metadata ?? "");
 
                 if (!empty($metadata) && $payment->status == "succeeded") {
                     Log::info("Got inside the condition");
