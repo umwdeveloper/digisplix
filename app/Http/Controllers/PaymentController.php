@@ -420,10 +420,6 @@ class PaymentController extends Controller {
                 $payment = $event->data->object;
                 $metadata = $payment->metadata;
 
-                Log::info("Got here 1");
-                Log::info($metadata);
-                Log::info($payment->status);
-
                 if (!empty(json_decode($metadata)) && $payment->status == "succeeded") {
                     $invoiceId = $metadata->invoice_id;
                     $invoice = Invoice::with(['client', 'items'])
@@ -469,7 +465,6 @@ class PaymentController extends Controller {
                 break;
         }
 
-        Log::info("Got here 3");
         return response()->json(['success' => true]);
     }
 
