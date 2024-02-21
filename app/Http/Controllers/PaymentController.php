@@ -424,6 +424,9 @@ class PaymentController extends Controller {
                 Log::info($metadata);
                 Log::info($payment->status);
 
+                Log::info("Log Array: ", json_decode($metadata));
+                Log::info(empty(json_decode($metadata)));
+
                 Log::info(Str::length($metadata->invoice_id));
 
                 if (!empty($metadata) && $payment->status == "succeeded") {
