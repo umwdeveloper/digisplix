@@ -421,7 +421,8 @@ class PaymentController extends Controller {
                 Log::info($metadata);
                 Log::info($payment->status);
 
-                if (!empty((array)$metadata) && $payment->status == "succeeded") {
+                if (!empty($metadata) && $payment->status == "succeeded") {
+                    Log::info("Got inside the condition");
                     $invoiceId = $metadata->invoice_id;
                     $invoice = Invoice::with(['client', 'items'])
                         ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
@@ -436,6 +437,8 @@ class PaymentController extends Controller {
 
                     Notification::send($invoice->client->user, new InvoicePaid($invoice, $invoice->items_sum_price, $invoice->id, $invoice->client->user->id));
                     Notification::send(User::getAdmin(), new InvoicePaidAdmin($invoice, $invoice->items_sum_price, $invoice->id, $invoice->client->user->name, false, $invoice->client->user->id));
+                } else {
+                    Log::info("Got inside the else");
                 }
                 Log::info("Got here 2");
                 break;
