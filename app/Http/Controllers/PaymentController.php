@@ -423,7 +423,8 @@ class PaymentController extends Controller {
                 Log::info($metadata);
                 Log::info($payment->status);
 
-                Log::info(isset($metadata->invoice_id));
+                Log::info(isset($metadata->invoice_id) && !empty($metadata->invoice_id));
+                Log::info($metadata->invoice_id);
 
                 if (!empty($metadata) && $payment->status == "succeeded") {
                     Log::info("Got inside the condition");
