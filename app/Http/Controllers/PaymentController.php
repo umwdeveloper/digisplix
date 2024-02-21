@@ -377,6 +377,8 @@ class PaymentController extends Controller {
             return response()->json(['error' => 'Invalid signature'], 400);
         }
 
+        Log::info($event);
+
         switch ($event->type) {
             case 'checkout.session.completed':
                 $session = $event->data->object;
@@ -412,6 +414,8 @@ class PaymentController extends Controller {
                 }
                 break;
             case 'payment_intent.succeeded':
+                Log::info("Event Start");
+                Log::info($event);
                 $payment = $event->data->object;
                 $metadata = $payment->metadata;
 
