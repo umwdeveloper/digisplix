@@ -386,13 +386,7 @@ class PaymentController extends Controller {
                 $metadata = $session->metadata;
 
                 if ($session->payment_status == "paid") {
-                    Log::info($metadata);
-                    Log::info(empty(json_decode($metadata)));
-                    Log::info($metadata->type);
-                    Log::info(isset($metadata->type));
-                    Log::info($metadata->type == 'package');
-                    if (!empty(json_decode($metadata)) && isset($metadata->type) && $metadata->type == 'package') {
-                        Log::info("Got in if");
+                    if (!empty($metadata) && isset($metadata->type) && $metadata->type == 'package') {
                         $user = User::findOrFail($metadata->userID);
 
                         $client = Client::findOrFail($user->userable_id);
@@ -403,7 +397,6 @@ class PaymentController extends Controller {
                         Notification::send(User::getAdmin(), new PackagePaidAdmin($metadata->plan, $user->name, $user->id));
                         $this->generateInvoice($metadata->plan, $user->userable_id, $user->name, $user->userable->business_name);
                     } else {
-                        Log::info("Got in else");
                         $invoiceId = $metadata->invoice_id;
                         $invoice = Invoice::with(['client', 'items'])
                             ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
@@ -420,7 +413,6 @@ class PaymentController extends Controller {
                         Notification::send(User::getAdmin(), new InvoicePaidAdmin($invoice, $invoice->items_sum_price, $invoice->id, $invoice->client->user->name, false, $invoice->client->user->id));
                     }
                 }
-                Log::info("Got before break");
                 break;
             case 'payment_intent.succeeded':
                 $payment = $event->data->object;
@@ -469,7 +461,6 @@ class PaymentController extends Controller {
                 break;
         }
 
-        Log::info("Got before response");
         return response()->json(['success' => true]);
     }
 
