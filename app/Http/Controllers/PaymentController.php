@@ -29,6 +29,8 @@ use Stripe\Webhook;
 use function PHPUnit\Framework\isEmpty;
 
 class PaymentController extends Controller {
+
+    // Invoice using Checkout Session
     public function createCheckoutSession(Request $request) {
 
         $invoice = Invoice::findOrFail($request->invoice_id);
@@ -74,6 +76,8 @@ class PaymentController extends Controller {
             $start_from = Carbon::parse($invoice->start_from)->startOfDay();
             $cancel_at = $start_from->addMonths($invoice->duration)->endOfDay();
 
+            $data['metadata']['cancel_at'] = $cancel_at->timestamp;
+
             $data['mode'] = 'subscription';
             $data['line_items'] = [
                 [
@@ -113,6 +117,7 @@ class PaymentController extends Controller {
         }
     }
 
+    // Package Subscription
     public function subscribe(Request $request) {
 
         $client = Client::findOrFail(auth()->user()->userable_id);
@@ -188,6 +193,7 @@ class PaymentController extends Controller {
         }
     }
 
+    // Simple Invoice using Bank
     public static function createPaymentIntent(Request $request) {
         Stripe::setApiKey(config('custom.stripe_secret'));
 
@@ -257,6 +263,7 @@ class PaymentController extends Controller {
         }
     }
 
+    // Recurring Invoice using bank
     public static function createSubscription(Request $request) {
         Stripe::setApiKey(config('custom.stripe_secret'));
 
@@ -408,6 +415,26 @@ class PaymentController extends Controller {
 
                         $invoice->client->active = 1;
                         $invoice->client->save();
+
+                        // Add cancel_at time to subscription
+                        if ($session->mode == 'subscription') {
+                            $cancel_at = $metadata->cancel_at;
+
+                            // Retrieve the subscription ID from the Checkout Session
+                            $subscriptionId = $session->subscription;
+
+                            // Update the subscription with cancel_at attribute
+                            try {
+                                $subscription = Subscription::update(
+                                    $subscriptionId,
+                                    [
+                                        'cancel_at' => $cancel_at->timestamp,
+                                    ]
+                                );
+                            } catch (\Exception $e) {
+                                Log::info("Stripe error: " . $e->getMessage());
+                            }
+                        }
 
                         Notification::send($invoice->client->user, new InvoicePaid($invoice, $invoice->items_sum_price, $invoice->id, $invoice->client->user->id));
                         Notification::send(User::getAdmin(), new InvoicePaidAdmin($invoice, $invoice->items_sum_price, $invoice->id, $invoice->client->user->name, false, $invoice->client->user->id));
