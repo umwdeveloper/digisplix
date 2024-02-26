@@ -428,7 +428,7 @@ class PaymentController extends Controller {
                                 $subscription = Subscription::update(
                                     $subscriptionId,
                                     [
-                                        'cancel_at' => $cancel_at->timestamp,
+                                        'cancel_at' => $cancel_at,
                                     ]
                                 );
                             } catch (\Exception $e) {
