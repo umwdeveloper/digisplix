@@ -41,9 +41,9 @@
                                                     class="bi bi-coin ms-1"></i></button>
                                         </div>
                                         <div class="d-flex justify-content-center align-items-center pay-via-bank">
-                                            <button class="table-btn px-2" type="button" id="fetch-details"
-                                                data-bs-toggle="modal" data-bs-target="#bankModal">Pay via Bank <i
-                                                    class="bi bi-bank ms-1"></i></button>
+                                            <button class="table-btn px-2" type="button"
+                                                onclick="window.location.href = '{{ route('client.invoices.bank', $invoice->id) }}'">Pay
+                                                via Bank <i class="bi bi-bank ms-1"></i></button>
                                         </div>
                                     @endif
                                 @endif

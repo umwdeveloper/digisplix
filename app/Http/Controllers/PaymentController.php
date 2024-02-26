@@ -380,15 +380,13 @@ class PaymentController extends Controller {
             return response()->json(['error' => 'Invalid signature'], 400);
         }
 
-        Log::info($event);
-
         switch ($event->type) {
             case 'checkout.session.completed':
                 $session = $event->data->object;
                 $metadata = $session->metadata;
 
                 if ($session->payment_status == "paid") {
-                    if (!empty($metadata) && isset($metadata->type) && $metadata->type == 'package') {
+                    if (!empty(json_decode($metadata)) && isset($metadata->type) && $metadata->type == 'package') {
                         $user = User::findOrFail($metadata->userID);
 
                         $client = Client::findOrFail($user->userable_id);
@@ -439,8 +437,6 @@ class PaymentController extends Controller {
                 break;
             case 'invoice.paid':
                 $payment = $event->data->object;
-
-                Log::info($payment->subscription_details);
 
                 if ($payment->subscription_details && !empty($payment->subscription_details)) {
                     $metadata = $payment->subscription_details->metadata;

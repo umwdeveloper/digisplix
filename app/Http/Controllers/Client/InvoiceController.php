@@ -56,13 +56,28 @@ class InvoiceController extends Controller {
         ]);
     }
 
+    // public function bank(Request $request, string $id) {
+    //     $bank = $request->query('bankDetails');
+
+    //     $bank = json_decode($bank);
+
+    //     return view('clients.invoices.bank2', [
+    //         'bank' => $bank
+    //     ]);
+    // }
+
     public function bank(Request $request, string $id) {
-        $bank = $request->query('bankDetails');
+        $invoice = Invoice::with(['items', 'category', 'client'])
+            ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
+                ->whereColumn('invoice_id', 'invoices.id')
+                ->limit(1)])
+            ->where('client_id', Auth::user()->userable->id)
+            ->where('sent', 1)
+            ->where('status', '!=', Invoice::DRAFT)
+            ->findOrFail($id);
 
-        $bank = json_decode($bank);
-
-        return view('clients.invoices.bank', [
-            'bank' => $bank
+        return view('clients.invoices.bank2', [
+            'amount' => $invoice->items_sum_price
         ]);
     }
 
