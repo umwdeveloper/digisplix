@@ -432,6 +432,9 @@ class PaymentController extends Controller {
                                     $subscriptionId,
                                     [
                                         'cancel_at' => $cancel_at,
+                                        'metadata' => [
+                                            'invoice_id' => $invoiceId
+                                        ]
                                     ]
                                 );
                             } catch (\Exception $e) {
