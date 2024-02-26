@@ -386,6 +386,11 @@ class PaymentController extends Controller {
                 $metadata = $session->metadata;
 
                 if ($session->payment_status == "paid") {
+                    Log::info($metadata);
+                    Log::info(empty(json_decode($metadata)));
+                    Log::info($metadata->type);
+                    Log::info(isset($metadata->type));
+                    Log::info($metadata->type == 'package');
                     if (!empty(json_decode($metadata)) && isset($metadata->type) && $metadata->type == 'package') {
                         $user = User::findOrFail($metadata->userID);
 
