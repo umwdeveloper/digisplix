@@ -73,12 +73,9 @@ class PaymentController extends Controller {
         ];
 
         if ($invoice->recurring) {
-            $start_from = Carbon::parse($invoice->start_from)->startOfDay();
-            $cancel_at = $start_from->addMonths($invoice->duration)->endOfDay();
-
-            Log::info("Start from: " . $start_from);
-            Log::info("Cancel at: " . $cancel_at);
-            Log::info("Cancel at UTC: " . $cancel_at->utc());
+            // $start_from = Carbon::parse($invoice->start_from)->startOfDay();
+            $start_from = now()->startOfDay();
+            $cancel_at = $start_from->addMonths($invoice->duration)->endOfDay()->subHours(5);
 
             $data['metadata']['cancel_at'] = $cancel_at->timestamp;
 
