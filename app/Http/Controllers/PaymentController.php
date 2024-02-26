@@ -76,6 +76,10 @@ class PaymentController extends Controller {
             $start_from = Carbon::parse($invoice->start_from)->startOfDay();
             $cancel_at = $start_from->addMonths($invoice->duration)->endOfDay();
 
+            Log::info("Start from: " . $start_from);
+            Log::info("Cancel at: " . $cancel_at);
+            Log::info("Cancel at UTC: " . $cancel_at->utc());
+
             $data['metadata']['cancel_at'] = $cancel_at->timestamp;
 
             $data['mode'] = 'subscription';
