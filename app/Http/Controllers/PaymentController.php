@@ -74,8 +74,8 @@ class PaymentController extends Controller {
 
         if ($invoice->recurring) {
             // $start_from = Carbon::parse($invoice->start_from)->startOfDay();
-            $start_from = now()->startOfDay();
-            $cancel_at = $start_from->addMonths($invoice->duration)->endOfDay()->subHours(5);
+            $start_from = now();
+            $cancel_at = $start_from->addMonths($invoice->duration)->subHours(5);
 
             $data['metadata']['cancel_at'] = $cancel_at->timestamp;
 
@@ -420,6 +420,8 @@ class PaymentController extends Controller {
                         // Add cancel_at time to subscription
                         if ($session->mode == 'subscription') {
                             $cancel_at = $metadata->cancel_at;
+                            // $created = Carbon::parse($session->created);
+                            // $cancel_at = $created->addMonths($invoice->duration)->subHours(5);
 
                             // Retrieve the subscription ID from the Checkout Session
                             $subscriptionId = $session->subscription;
