@@ -571,14 +571,18 @@ class PaymentController extends Controller {
             'duration' => $invoice->duration,
         ]);
 
-        $items = [];
+        $items = array();
+        Log::info("Items: ", $invoice->items);
         $invoice->items->each(function ($item) use ($items) {
             array_push($items, [
                 'description' => $item->description,
                 'price' => $item->price,
                 'quantity' => $item->quantity
             ]);
+            Log::info("Items New: ", $items);
         });
+
+        Log::info("Items End: ", $items);
 
         $invoiceClone->items()->createMany($items);
     }
