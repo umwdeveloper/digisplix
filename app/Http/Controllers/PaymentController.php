@@ -510,6 +510,10 @@ class PaymentController extends Controller {
 
                             Notification::send($invoice->client->user, new ServiceRenewed($invoice, $invoice->id, $invoice->client->user->id));
                             Notification::send(User::getAdmin(), new ServiceRenewedAdmin($invoice, $invoice->client->user->name, $invoice->id, $invoice->client->user->id));
+
+                            $date = Carbon::createFromTimestamp($payment->created);
+                            $due_date = $date->format('Y-m-d');
+                            $this->generateClonedInvoice($invoice, $due_date);
                         }
                     }
                 }
@@ -548,6 +552,35 @@ class PaymentController extends Controller {
             'price' => $plans[strtolower($plan)],
             'quantity' => 1
         ]);
+    }
+
+    public function generateClonedInvoice($invoice, $due_date) {
+        $invoiceClone = Invoice::create([
+            'invoice_id' => $this->generateInvoiceNumber(),
+            'client_id' => $invoice->client->id,
+            'category_id' => $invoice->category->id,
+            'invoice_from' => $invoice->invoice_from,
+            'invoice_to' => $invoice->invoice_to,
+            'status' => Invoice::PAID,
+            'sent' => 1,
+            'due_date' => $due_date,
+            'terms_n_conditions' => $invoice->terms_n_conditions,
+            'note' => $invoice->note,
+            'recurring' => 1,
+            'start_from' => $invoice->start_from,
+            'duration' => $invoice->duration,
+        ]);
+
+        $items = [];
+        $invoice->items->each(function ($item) {
+            array_push($items, [
+                'description' => $item->description,
+                'price' => $item->price,
+                'quantity' => $item->quantity
+            ]);
+        });
+
+        $invoiceClone->items()->createMany($items);
     }
 
     public function generateInvoiceNumber() {

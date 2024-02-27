@@ -45,12 +45,12 @@ class ServiceRenewedAdmin extends Notification implements ShouldQueue {
             ->greeting("Hi " . $notifiable->name . ",")
             ->line(new HtmlString(
                 "We are excited to inform you that <strong>" . $this->client . "</strong>, a valued Client of ours, has chosen to Renew their Subscription for our <strong>" . $this->invoice->category->name .
-                    "</strong> services. We greatly appreciate <strong>" . $this->invoice->category->name . "'s</strong> continued trust in our services."
+                    "</strong> services. We greatly appreciate <strong>" . $this->client . "'s</strong> continued trust in our services."
             ))
             ->line(new HtmlString(
                 "Here are the details of the Renewal:<br>" .
                     "<strong>Client Name:</strong> " . $this->client . "<br>"
-                    . "<strong>Service:</strong> $" . $this->invoice->category->name
+                    . "<strong>Service:</strong> " . $this->invoice->category->name
             ))
             ->line(new HtmlString("<strong>" . $this->client . "</strong> has Successfully Completed the Renewal process, ensuring uninterrupted access to our premium services. We are committed to providing the highest level of support and value to <strong>" . $this->client . "</strong> as they strive for business success."))
             ->line("Thank you for your attention to this matter.");
