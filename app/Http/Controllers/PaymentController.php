@@ -547,7 +547,11 @@ class PaymentController extends Controller {
 
                                 Notification::send($user, new PackageRenewed($metadata->plan, $user->id));
                                 Notification::send(User::getAdmin(), new PackageRenewedAdmin($metadata->plan, $user->name, $user->id));
-                                $this->generateInvoice($metadata->plan, $user->userable_id, $user->name, $user->userable->business_name);
+
+                                $date = Carbon::createFromTimestamp($payment->created);
+                                $due_date = $date->format('Y-m-d');
+
+                                $this->generateInvoice($metadata->plan, $user->userable_id, $user->name, $user->userable->business_name, $due_date);
                             }
                         }
                     }
@@ -558,7 +562,7 @@ class PaymentController extends Controller {
         return response()->json(['success' => true]);
     }
 
-    public function generateInvoice($plan, $client_id, $name, $business) {
+    public function generateInvoice($plan, $client_id, $name, $business, $due_date = null) {
         $invoice = Invoice::create([
             'invoice_id' => $this->generateInvoiceNumber(),
             'client_id' => $client_id,
@@ -567,7 +571,7 @@ class PaymentController extends Controller {
             'invoice_to' => $name . "\n" . $business,
             'status' => Invoice::PAID,
             'sent' => 1,
-            'due_date' => now(),
+            'due_date' => $due_date === null ? now() : $due_date,
             'terms_n_conditions' => null,
             'note' => null,
             'recurring' => 1,
