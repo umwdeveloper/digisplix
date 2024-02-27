@@ -572,7 +572,7 @@ class PaymentController extends Controller {
         ]);
 
         $items = [];
-        $invoice->items->each(function ($item) {
+        $invoice->items->each(function ($item) use ($items) {
             array_push($items, [
                 'description' => $item->description,
                 'price' => $item->price,
