@@ -11,6 +11,8 @@ use App\Notifications\InvoicePaid;
 use App\Notifications\InvoicePaidAdmin;
 use App\Notifications\PackagePaid;
 use App\Notifications\PackagePaidAdmin;
+use App\Notifications\PackageRenewed;
+use App\Notifications\PackageRenewedAdmin;
 use App\Notifications\ServiceRenewed;
 use App\Notifications\ServiceRenewedAdmin;
 use Carbon\Carbon;
@@ -403,6 +405,27 @@ class PaymentController extends Controller {
                         $client->active = 1;
                         $client->save();
 
+                        if ($session->mode == 'subscription') {
+                            // Retrieve the subscription ID from the Checkout Session
+                            $subscriptionId = $session->subscription;
+
+                            // Update the subscription with cancel_at attribute
+                            try {
+                                $subscription = Subscription::update(
+                                    $subscriptionId,
+                                    [
+                                        'metadata' => [
+                                            'type' => 'package',
+                                            'userID' => $metadata->userID,
+                                            'plan' => $metadata->plan
+                                        ]
+                                    ]
+                                );
+                            } catch (\Exception $e) {
+                                Log::info("Stripe error: " . $e->getMessage());
+                            }
+                        }
+
                         Notification::send($user, new PackagePaid($metadata->plan, $user->id));
                         Notification::send(User::getAdmin(), new PackagePaidAdmin($metadata->plan, $user->name, $user->id));
                         $this->generateInvoice($metadata->plan, $user->userable_id, $user->name, $user->userable->business_name);
@@ -435,7 +458,8 @@ class PaymentController extends Controller {
                                     [
                                         'cancel_at' => $cancel_at,
                                         'metadata' => [
-                                            'invoice_id' => $invoiceId
+                                            'invoice_id' => $invoiceId,
+                                            'type' => 'invoice'
                                         ]
                                     ]
                                 );
@@ -494,6 +518,7 @@ class PaymentController extends Controller {
                     }
                 }
 
+                // Send notification for future payments
                 if ($payment->billing_reason == "subscription_cycle") {
                     $subscription = Subscription::retrieve($payment->subscription);
 
@@ -501,19 +526,29 @@ class PaymentController extends Controller {
                         $metadata = $subscription->metadata;
 
                         if ($metadata) {
-                            $invoiceId = $metadata->invoice_id;
-                            $invoice = Invoice::with(['client', 'items', 'category'])
-                                ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
-                                    ->whereColumn('invoice_id', 'invoices.id')
-                                    ->limit(1)])
-                                ->findOrFail($invoiceId);
+                            // Notification for Invoice
+                            if ($metadata->type == 'invoice') {
+                                $invoiceId = $metadata->invoice_id;
+                                $invoice = Invoice::with(['client', 'items', 'category'])
+                                    ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
+                                        ->whereColumn('invoice_id', 'invoices.id')
+                                        ->limit(1)])
+                                    ->findOrFail($invoiceId);
 
-                            Notification::send($invoice->client->user, new ServiceRenewed($invoice, $invoice->id, $invoice->client->user->id));
-                            Notification::send(User::getAdmin(), new ServiceRenewedAdmin($invoice, $invoice->client->user->name, $invoice->id, $invoice->client->user->id));
+                                Notification::send($invoice->client->user, new ServiceRenewed($invoice, $invoice->id, $invoice->client->user->id));
+                                Notification::send(User::getAdmin(), new ServiceRenewedAdmin($invoice, $invoice->client->user->name, $invoice->id, $invoice->client->user->id));
 
-                            $date = Carbon::createFromTimestamp($payment->created);
-                            $due_date = $date->format('Y-m-d');
-                            $this->generateClonedInvoice($invoice, $due_date);
+                                $date = Carbon::createFromTimestamp($payment->created);
+                                $due_date = $date->format('Y-m-d');
+                                $this->generateClonedInvoice($invoice, $due_date);
+                            } else if ($metadata->type == 'package') {
+                                // Notification for Package
+                                $user = User::findOrFail($metadata->userID);
+
+                                Notification::send($user, new PackageRenewed($metadata->plan, $user->id));
+                                Notification::send(User::getAdmin(), new PackageRenewedAdmin($metadata->plan, $user->name, $user->id));
+                                $this->generateInvoice($metadata->plan, $user->userable_id, $user->name, $user->userable->business_name);
+                            }
                         }
                     }
                 }
@@ -572,17 +607,13 @@ class PaymentController extends Controller {
         ]);
 
         $items = array();
-        Log::info("Items: ", $invoice->items->toArray());
         $invoice->items->each(function ($item) use (&$items) {
             array_push($items, [
                 'description' => $item->description,
                 'price' => $item->price,
                 'quantity' => $item->quantity
             ]);
-            Log::info("Items New: ", $items);
         });
-
-        Log::info("Items End: ", $items);
 
         $invoiceClone->items()->createMany($items);
     }
