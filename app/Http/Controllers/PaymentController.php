@@ -12,6 +12,7 @@ use App\Notifications\InvoicePaidAdmin;
 use App\Notifications\PackagePaid;
 use App\Notifications\PackagePaidAdmin;
 use App\Notifications\ServiceRenewed;
+use App\Notifications\ServiceRenewedAdmin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -508,6 +509,7 @@ class PaymentController extends Controller {
                                 ->findOrFail($invoiceId);
 
                             Notification::send($invoice->client->user, new ServiceRenewed($invoice, $invoice->id, $invoice->client->user->id));
+                            Notification::send(User::getAdmin(), new ServiceRenewedAdmin($invoice, $invoice->client->user->name, $invoice->id, $invoice->client->user->id));
                         }
                     }
                 }
