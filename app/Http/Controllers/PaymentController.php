@@ -11,6 +11,7 @@ use App\Notifications\InvoicePaid;
 use App\Notifications\InvoicePaidAdmin;
 use App\Notifications\PackagePaid;
 use App\Notifications\PackagePaidAdmin;
+use App\Notifications\ServiceRenewed;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -489,6 +490,25 @@ class PaymentController extends Controller {
 
                         Notification::send($invoice->client->user, new InvoicePaid($invoice, $invoice->items_sum_price, $invoice->id, $invoice->client->user->id));
                         Notification::send(User::getAdmin(), new InvoicePaidAdmin($invoice, $invoice->items_sum_price, $invoice->id, $invoice->client->user->name, false, $invoice->client->user->id));
+                    }
+                }
+
+                if ($payment->billing_reason == "subscription_cycle") {
+                    $subscription = Subscription::retrieve($payment->subscription);
+
+                    if ($subscription) {
+                        $metadata = $subscription->metadata;
+
+                        if ($metadata) {
+                            $invoiceId = $metadata->invoice_id;
+                            $invoice = Invoice::with(['client', 'items', 'category'])
+                                ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
+                                    ->whereColumn('invoice_id', 'invoices.id')
+                                    ->limit(1)])
+                                ->findOrFail($invoiceId);
+
+                            Notification::send($invoice->client->user, new ServiceRenewed($invoice, $invoice->id, $invoice->client->user->id));
+                        }
                     }
                 }
                 break;
