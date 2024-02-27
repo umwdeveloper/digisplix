@@ -572,7 +572,7 @@ class PaymentController extends Controller {
         ]);
 
         $items = array();
-        Log::info("Items: ", $invoice->items);
+        Log::info("Items: ", $invoice->items->toArray());
         $invoice->items->each(function ($item) use ($items) {
             array_push($items, [
                 'description' => $item->description,
