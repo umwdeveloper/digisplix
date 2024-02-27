@@ -13,6 +13,10 @@ use App\Notifications\PackagePaid;
 use App\Notifications\PackagePaidAdmin;
 use App\Notifications\PackageRenewed;
 use App\Notifications\PackageRenewedAdmin;
+use App\Notifications\PaymentFailed;
+use App\Notifications\PaymentFailedAdmin;
+use App\Notifications\PaymentFailedPackage;
+use App\Notifications\PaymentFailedPackageAdmin;
 use App\Notifications\ServiceRenewed;
 use App\Notifications\ServiceRenewedAdmin;
 use Carbon\Carbon;
@@ -61,6 +65,7 @@ class PaymentController extends Controller {
         }
 
         $data = [];
+        $data['customer'] = $customer_id;
         $data['ui_mode'] = 'embedded';
         $data['currency'] = 'usd';
         $data['return_url'] = route('payment.success');
@@ -160,6 +165,7 @@ class PaymentController extends Controller {
         ];
 
         $data = [];
+        $data['customer'] = $customer_id;
         $data['ui_mode'] = 'embedded';
         $data['currency'] = 'usd';
         $data['return_url'] = route('payment.success');
@@ -557,6 +563,37 @@ class PaymentController extends Controller {
                     }
                 }
                 break;
+            case 'invoice.payment_failed':
+                $payment = $event->data->object;
+
+                if ($payment->billing_reason == "subscription_cycle") {
+                    $subscription = Subscription::retrieve($payment->subscription);
+
+                    if ($subscription) {
+                        $metadata = $subscription->metadata;
+
+                        if ($metadata) {
+                            // Notification for Invoice
+                            if ($metadata->type == 'invoice') {
+                                $invoiceId = $metadata->invoice_id;
+                                $invoice = Invoice::with(['client', 'items', 'category'])
+                                    ->addSelect(['items_sum_price' => InvoiceItem::selectRaw('SUM(price * quantity)')
+                                        ->whereColumn('invoice_id', 'invoices.id')
+                                        ->limit(1)])
+                                    ->findOrFail($invoiceId);
+
+                                Notification::send($invoice->client->user, new PaymentFailed($invoice, $invoice->id, $invoice->client->user->id));
+                                Notification::send(User::getAdmin(), new PaymentFailedAdmin($invoice, $invoice->client->user->name, $invoice->id, $invoice->client->user->id));
+                            } else if ($metadata->type == 'package') {
+                                // Notification for Package
+                                $user = User::findOrFail($metadata->userID);
+
+                                Notification::send($user, new PaymentFailedPackage($metadata->plan, $user->id));
+                                Notification::send(User::getAdmin(), new PaymentFailedPackageAdmin($metadata->plan, $user->name, $user->id));
+                            }
+                        }
+                    }
+                }
         }
 
         return response()->json(['success' => true]);
