@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\HtmlString;
 
 class PaymentFailedPackageAdmin extends Notification implements ShouldQueue {
     use Queueable;
@@ -36,9 +37,15 @@ class PaymentFailedPackageAdmin extends Notification implements ShouldQueue {
      */
     public function toMail(object $notifiable): MailMessage {
         return (new MailMessage)
-            ->subject("Payment Failed")
+            ->subject("Unsuccessful Subscription Payment")
             ->greeting("Hi " . $notifiable->name . ",")
-            ->line('Payment Failed');
+            ->line('I hope this message finds you well. We would like to bring to your attention that there has been a failure in processing the monthly subscription payment for one of our clients.')
+            ->line(new HtmlString("
+            Here are the key details<br>
+            <strong>Client Name:</strong> " . $this->name . "<br>
+            <strong>Subscription Plan:</strong> " . strtoupper($this->plan) . "
+            "))
+            ->line("Thank you for your prompt attention to this matter.");
     }
 
     /**
@@ -48,7 +55,7 @@ class PaymentFailedPackageAdmin extends Notification implements ShouldQueue {
      */
     public function toArray(object $notifiable): array {
         return [
-            'message' => "Payment Failed",
+            'message' => "Unsuccessful Subscription Payment",
             "link" => route('staff.invoices.index')
         ];
     }
