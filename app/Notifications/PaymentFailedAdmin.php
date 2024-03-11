@@ -44,11 +44,11 @@ class PaymentFailedAdmin extends Notification implements ShouldQueue {
             ->subject("Unsuccessful Subscription Payment")
             ->greeting("Hi " . $notifiable->name . ",")
             ->line('I hope this message finds you well. We would like to bring to your attention that there has been a failure in processing the monthly subscription payment for one of our clients.')
-            ->line(new HtmlString("
-            Here are the key details<br>
-            <strong>Client Name:</strong> " . $this->client . "<br>
-            <strong>Service:</strong> " . $this->invoice->category->name . "
-            "))
+            ->line(new HtmlString(
+                "Here are the key details:
+                <br><strong>Client Name:</strong> " . $this->client .
+                    "<br><strong>Service:</strong> " . $this->invoice->category->name
+            ))
             ->line("Thank you for your prompt attention to this matter.");
     }
 
