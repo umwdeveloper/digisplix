@@ -158,10 +158,10 @@ class PaymentController extends Controller {
         }
 
         $plans = [
-            'silver' => 'price_1ORSXPHymsUfbx7xSvZRkySS',
-            'gold' => 'price_1ORSXeHymsUfbx7xbjJupdB7',
-            'platinum' => 'price_1ORSXsHymsUfbx7xZI00QCVp',
-            'diamond' => 'price_1ORSY4HymsUfbx7xlZQO4cNQ'
+            'silver' => 'price_1ORQCFHymsUfbx7xhGtUSwpP',
+            'gold' => 'price_1ORQDzHymsUfbx7xPnV7Hqev',
+            'platinum' => 'price_1ORQENHymsUfbx7xUn8WeRgk',
+            'diamond' => 'price_1ORQEsHymsUfbx7xM9jVU23C'
         ];
 
         $data = [];

@@ -16,7 +16,7 @@
 
                             <div class="ms-auto d-flex align-items-center text-gray">
                                 Amount: <h5 class="text-primary ms-2 p-0 m-0">
-                                    ${{ round($amount) }}
+                                    ${{ number_format(round($amount), 0, ',') }}
                                 </h5>
                             </div>
 
