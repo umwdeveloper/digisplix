@@ -12,7 +12,8 @@
                     <div class="row">
 
                         <div class="col-xl-4 col-md-6 mb-3">
-                            <div class="box selected-ticket-type hover-ticket position-relative">
+                            <div class="box selected-ticket-type hover-ticket position-relative"
+                                style="border: 2px solid #0963ce">
                                 <input type="radio" name="ticket-type" id="" value="0" class="box-radio"
                                     checked>
                                 <div class="d-flex align-items-center">
@@ -97,11 +98,11 @@
                                             <textarea name="" id="description" rows="3" class="px-lg-3 crm-input" style="width: 100%; outline: none;"></textarea>
                                         </div>
                                         <div class="col-lg-12">
-                                            <button class="upload-attchment attachment-btn mt-2 d-block">
+                                            <button class="upload-attchment attachment-btn mt-2 d-block d-none">
                                                 <i class="bi bi-plus-circle-fill"></i>
                                                 Click to Upload
                                                 Attachment</button>
-                                            <div class="upload-area mt-4 ">
+                                            <div class="upload-area mt-4 " style="display: block">
                                                 <p class="f-14 w-600 text-dark-clr ">Upload Attachments <span
                                                         class="text-gray f-12">(Optional)</span></p>
                                                 <div id="dropzone">
@@ -173,7 +174,12 @@
             const h2Element = document.querySelector(".selected-heading");
 
             boxes.forEach((box, index) => {
+                if (index > 0) {
+                    box.style.border = "none"
+                }
                 box.addEventListener("click", function() {
+                    $(".hover-ticket").css("border", "none")
+                    box.style.border = "2px solid #0963ce"
                     // Remove the class from all boxes
                     boxes.forEach(b => {
                         b.classList.remove("selected-ticket-type");
@@ -313,8 +319,9 @@
                             window.location.href = '{{ route('client.support.index') }}';
                         }
                     }
-                    // location.reload()
+                    location.reload()
                 }
+
             })
         }
     </script>

@@ -212,7 +212,7 @@
                                     <h1 class="mb-0 pb-0">Notifications</h1>
                                     {{-- <button>Clear All</button> --}}
                                 </div>
-                                @forelse (auth()->user()->notifications->take(5) as $notification)
+                                @forelse ($all_notifications as $notification)
                                     <li class="{{ empty($notification->read_at) ? 'unread-notification' : '' }}">
 
                                         <a

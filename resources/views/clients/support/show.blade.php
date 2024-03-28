@@ -65,8 +65,8 @@
                                         </div>
 
                                         <div class="d-flex align-items-center mt-3">
+                                            <button class="ticket-fill me-1 reply-btn2">Reply</button>
                                             @if ($ticket->status !== Support::CLOSED)
-                                                <button class="ticket-fill me-1 reply-btn2">Reply</button>
                                                 <form action="{{ route('client.support.update_status', $ticket->id) }}"
                                                     method="post">
                                                     @csrf
@@ -190,9 +190,9 @@
                                             </div>
                                             <!-- cdk Editor for form -->
                                         </div>
-                                        <button class="upload-attchment attachment-btn mt-2">Click to Upload
+                                        <button class="upload-attchment attachment-btn mt-2 d-none">Click to Upload
                                             Attachment</button>
-                                        <div class="upload-area mt-4">
+                                        <div class="upload-area mt-4" style="display: block">
                                             <p class="f-14 w-600 text-dark-clr">Upload Attachments <span
                                                     class="text-gray f-12">(Optional)</span></p>
                                             <div id="dropzone">
@@ -214,13 +214,13 @@
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-end mt-3">
-                                        @if ($ticket->status !== Support::CLOSED)
-                                            <button id="replyBtn" class="ticket-fill me-1 flex-grow-0 px-4 reply-btn"
-                                                style="width: fit-content !important;">Reply</button>
-                                            <button id="submitBtn" style="display: none"
-                                                class="ticket-fill me-1 flex-grow-0 px-4 reply-btn"
-                                                style="width: fit-content !important;">Submit</button>
-                                        @endif
+                                        {{-- @if ($ticket->status !== Support::CLOSED) --}}
+                                        <button id="replyBtn" class="ticket-fill me-1 flex-grow-0 px-4 reply-btn"
+                                            style="width: fit-content !important;">Reply</button>
+                                        <button id="submitBtn" style="display: none"
+                                            class="ticket-fill me-1 flex-grow-0 px-4 reply-btn"
+                                            style="width: fit-content !important;">Submit</button>
+                                        {{-- @endif --}}
                                     </div>
 
                                 </div>
@@ -413,7 +413,7 @@
                             location.reload()
                         }
                     }
-                    // location.reload()
+                    location.reload()
                 }
             })
         }

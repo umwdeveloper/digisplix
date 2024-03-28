@@ -13,6 +13,7 @@ use App\Notifications\SupportReplied;
 use App\Notifications\SupportUpdate;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class SupportMiddleware {
@@ -29,7 +30,21 @@ class SupportMiddleware {
         $totalClientTickets = 0;
 
         if (auth()->check() && auth()->user()->userable_type === Staff::class) {
-            $sharedTickets = Support::with('user')->orderByDesc('created_at')->take(10)->get();
+            // $sharedTickets = Support::with('user')->orderByDesc('created_at')->take(10)->get();
+
+            // Tickets
+            $ticketNotifications = DB::table('notifications')
+                ->select('notifications.*')
+                ->join('notification_types', 'notifications.id', '=', 'notification_types.notification_id')
+                ->where('notifications.notifiable_id', auth()->user()->id)
+                ->where('notification_types.notifiable_type', Support::class)
+                ->orderBy('notifications.created_at', 'DESC')
+                ->get();
+
+            $ticketNotifications = $ticketNotifications->map(function ($notification) {
+                $notification->data = json_decode($notification->data, true);
+                return $notification;
+            });
 
             // Get messages count for admin
             $query = Message::where('to_id', User::getAdmin()->id)
@@ -42,7 +57,21 @@ class SupportMiddleware {
                 })
                 ->count();
         } elseif (auth()->check() && (auth()->user()->userable_type === Client::class || auth()->user()->userable_type === Partner::class)) {
-            $sharedTickets = Support::with('user')->where('user_id', auth()->user()->id)->orderByDesc('created_at')->take(10)->get();
+            // $sharedTickets = Support::with('user')->where('user_id', auth()->user()->id)->orderByDesc('created_at')->take(10)->get();
+
+            // Tickets
+            $ticketNotifications = DB::table('notifications')
+                ->select('notifications.*')
+                ->join('notification_types', 'notifications.id', '=', 'notification_types.notification_id')
+                ->where('notifications.notifiable_id', auth()->user()->id)
+                ->where('notification_types.notifiable_type', Support::class)
+                ->orderBy('notifications.created_at', 'DESC')
+                ->get();
+
+            $ticketNotifications = $ticketNotifications->map(function ($notification) {
+                $notification->data = json_decode($notification->data, true);
+                return $notification;
+            });
 
             // Get messages count for client/partner
             $query = Message::where('to_id', auth()->user()->id)
@@ -55,16 +84,36 @@ class SupportMiddleware {
         }
 
         if (auth()->check()) {
-            $totalNotificationsCount = auth()->user()->unreadNotifications->count();
+            // $totalNotificationsCount = auth()->user()->unreadNotifications->count();
+
+            $notifications = DB::table('notifications')
+                ->select('notifications.*')
+                ->join('notification_types', 'notifications.id', '=', 'notification_types.notification_id')
+                ->where('notifications.notifiable_id', auth()->user()->id)
+                ->where('notification_types.notifiable_type', '!=', Support::class)
+                ->orderBy('notifications.created_at', 'DESC')
+                ->get();
+
+            $notifications = $notifications->map(function ($notification) {
+                $notification->data = json_decode($notification->data, true);
+                return $notification;
+            });
+
+            $totalNotificationsCount = $notifications->where('read_at', null)->count();
+            $allNotifications = $notifications->take(5);
         }
 
-        view()->share([
-            'shared_tickets' => $sharedTickets,
-            'total_messages_count' => $totalMessagesCount,
-            'total_notifications_count' => $totalNotificationsCount,
-            'total_staff_tickets' => $totalStaffTickets,
-            'total_client_tickets' => $totalClientTickets,
-        ]);
+        if (auth()->check()) {
+            view()->share([
+                'ticket_notifications' => $ticketNotifications,
+                'ticket_notifications_count' => $ticketNotifications->where('read_at', null)->count(),
+                'total_messages_count' => $totalMessagesCount,
+                'all_notifications' => $allNotifications,
+                'total_notifications_count' => $totalNotificationsCount,
+                'total_staff_tickets' => $totalStaffTickets,
+                'total_client_tickets' => $totalClientTickets,
+            ]);
+        }
         return $next($request);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateProfile;
 use App\Models\Client;
+use App\Models\Support;
 use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -122,7 +123,24 @@ class ClientController extends Controller {
     }
 
     public function notifications() {
-        return view('clients.notifications');
+        $notifications = DB::table('notifications')
+            ->select('notifications.*')
+            ->join('notification_types', 'notifications.id', '=', 'notification_types.notification_id')
+            ->where('notifications.notifiable_id', auth()->user()->id)
+            ->where('notification_types.notifiable_type', '!=', Support::class)
+            ->orderBy('notifications.created_at', 'DESC')
+            ->get();
+
+        $notifications = $notifications->map(function ($notification) {
+            $notification->data = json_decode($notification->data, true);
+            return $notification;
+        });
+
+        // dd($notifications);
+
+        return view('clients.notifications', [
+            "notifications" => $notifications
+        ]);
     }
 
     public function resetPassword(Request $request) {

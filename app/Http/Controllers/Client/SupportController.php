@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Support;
 use App\Models\SupportReply;
 use App\Models\User;
+use App\Notifications\SupportClosedAdmin;
 use App\Notifications\SupportCreated;
+use App\Notifications\SupportCreatedClient;
 use App\Notifications\SupportReplied;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -48,7 +50,8 @@ class SupportController extends Controller {
             'department' => $request->input('department'),
         ]);
 
-        Notification::send(User::getAdmin(), new SupportCreated($ticket->id, Auth::user()->id));
+        Notification::send(User::getAdmin(), new SupportCreated($ticket->id, Auth::user()->id, Auth::user()->name));
+        Notification::send(Auth::user(), new SupportCreatedClient($ticket->id, Auth::user()->id, Auth::user()->name));
 
         return response()->json([
             'status' => 'success',
@@ -158,7 +161,7 @@ class SupportController extends Controller {
             'reply' => $request->input('reply'),
         ]);
 
-        Notification::send(User::getAdmin(), new SupportReplied($ticket->subject, $ticket->id, $ticket->user->id));
+        Notification::send(User::getAdmin(), new SupportReplied($ticket->subject, $ticket->id, $ticket->user->id, Auth::user()->name));
 
         return response()->json([
             'status' => 'success',
@@ -173,6 +176,10 @@ class SupportController extends Controller {
 
         $ticket->status = $request->input('status');
         $ticket->update();
+
+        if ($request->input('status') === Support::CLOSED) {
+            Notification::send(User::getAdmin(), new SupportClosedAdmin($ticket->id, Auth::user()->id, Auth::user()->name));
+        }
 
         return redirect()->back()->with('status', 'Ticket status updated successfully!');
     }

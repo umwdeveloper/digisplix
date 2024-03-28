@@ -197,9 +197,9 @@
                                             </div>
                                             <!-- cdk Editor for form -->
                                         </div>
-                                        <button class="upload-attchment attachment-btn mt-2">Click to Upload
+                                        <button class="upload-attchment attachment-btn mt-2 d-none">Click to Upload
                                             Attachment</button>
-                                        <div class="upload-area mt-4">
+                                        <div class="upload-area mt-4" style="display: block">
                                             <p class="f-14 w-600 text-dark-clr">Upload Attachments <span
                                                     class="text-gray f-12">(Optional)</span></p>
                                             <div id="dropzone">
@@ -419,7 +419,7 @@
                             location.reload()
                         }
                     }
-                    // location.reload()
+                    location.reload()
                 }
             })
         }

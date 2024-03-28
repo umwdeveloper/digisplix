@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Staff;
 use App\Http\Controllers\Controller;
 use App\Models\Support;
 use App\Models\SupportReply;
+use App\Notifications\SupportClosed;
 use App\Notifications\SupportUpdate;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\DatabaseNotification;
@@ -165,6 +166,10 @@ class SupportController extends Controller {
         $ticket = Support::findOrFail($id);
         $ticket->status = $request->input('status');
         $ticket->update();
+
+        if ($request->input('status') === Support::CLOSED) {
+            Notification::send($ticket->user, new SupportClosed($ticket->id, $ticket->subject, $ticket->user->id));
+        }
 
         return redirect()->back()->with('status', 'Ticket status updated successfully!');
     }

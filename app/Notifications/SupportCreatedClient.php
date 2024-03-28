@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class SupportCreated extends Notification implements ShouldQueue {
+class SupportCreatedClient extends Notification implements ShouldQueue {
     use Queueable;
 
     public $ticket_id, $nid, $nType;
@@ -31,18 +31,29 @@ class SupportCreated extends Notification implements ShouldQueue {
      * @return array<int, string>
      */
     public function via(object $notifiable): array {
-        return ['database'];
+        return ['mail', 'database'];
     }
 
     /**
-     * Get the database representation of the notification.
+     * Get the mail representation of the notification.
+     */
+    public function toMail(object $notifiable): MailMessage {
+        return (new MailMessage)
+            ->subject("Ticket Opened")
+            ->greeting("Hi " . $notifiable->name . ",")
+            ->line('A new support ticket was opened successfully.')
+            ->action('View Ticket', route('client.support.show', $this->ticket_id));
+    }
+
+    /**
+     * Get the array representation of the notification.
      *
      * @return array<string, mixed>
      */
-    public function toDatabase(object $notifiable): array {
+    public function toArray(object $notifiable): array {
         return [
-            "message" => "Ticket Opened by " . $this->clientName,
-            "link" => route('staff.support.show', $this->ticket_id)
+            "message" => "A new ticket was opened",
+            "link" => route('client.support.show', $this->ticket_id)
         ];
     }
 }

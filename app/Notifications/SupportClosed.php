@@ -9,7 +9,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\HtmlString;
 
-class SupportUpdate extends Notification implements ShouldQueue {
+class SupportClosed extends Notification implements ShouldQueue {
     use Queueable;
 
     public $ticket_id, $subject, $nid, $nType;
@@ -40,10 +40,10 @@ class SupportUpdate extends Notification implements ShouldQueue {
      */
     public function toMail(object $notifiable): MailMessage {
         return (new MailMessage)
-            ->subject("Ticket Replied")
-            ->line(new HtmlString('You have an update for the ticket - <strong>' . $this->subject . "<strong>"))
-            ->line("Click the button to see update")
-            ->action('View Update', route('client.support.show', $this->ticket_id));
+            ->subject("Ticket Closed")
+            ->line(new HtmlString('Your ticket has been closed by the company.'))
+            ->line("Click the button to see ticket")
+            ->action('View Ticket', route('client.support.show', $this->ticket_id));
     }
 
     /**
@@ -53,7 +53,7 @@ class SupportUpdate extends Notification implements ShouldQueue {
      */
     public function toDatabase(object $notifiable): array {
         return [
-            "message" => "Ticket Replied By Company",
+            "message" => "Ticket Closed By Company",
             "link" => route('client.support.show', $this->ticket_id)
         ];
     }

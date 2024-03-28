@@ -316,7 +316,7 @@
                                     <h1 class="mb-0 pb-0">Notifications</h1>
                                     {{-- <button>Clear All</button> --}}
                                 </div>
-                                @forelse (auth()->user()->notifications->take(5) as $notification)
+                                @forelse ($all_notifications as $notification)
                                     <li class="{{ empty($notification->read_at) ? 'unread-notification' : '' }}">
 
                                         <a
@@ -353,8 +353,8 @@
                         <div class="header-option align-self-center hide-sm side-menu-ticket-btn position-relative ">
                             <!-- <i class="bi bi-app-indicator path-1"></i> -->
                             <i class="fa-duotone fa-life-ring header-icon"></i>
-                            @if ($total_staff_tickets > 0)
-                                <span class="tickets-count">{{ $total_staff_tickets }}</span>
+                            @if ($ticket_notifications_count > 0)
+                                <span class="tickets-count">{{ $ticket_notifications_count }}</span>
                             @endif
                         </div>
                     @endcan
@@ -488,14 +488,15 @@
                                 </button>
                             </div>
                         </div>
-                        @forelse ($shared_tickets as $ticket)
+                        @forelse ($ticket_notifications as $notification)
                             @php
-                                $time = \Carbon\Carbon::parse($ticket->created_at)->diffForHumans();
+                                $time = \Carbon\Carbon::parse($notification->created_at)->diffForHumans();
                                 $timeInt = filter_var($time, FILTER_SANITIZE_NUMBER_INT);
                                 $timeText = str_replace($timeInt, '', $time);
                             @endphp
                             <div class="col-lg-12 pe-1 mb-2">
-                                <a class="ticket-notify px-0 " href="{{ route('staff.support.show', $ticket->id) }}">
+                                <a class="ticket-notify px-0 "
+                                    href="{{ !empty($notification->data['link']) ? route('notifications.mark_as_read') . '?url=' . $notification->data['link'] : '#' }}">
                                     <h4 class=" text-gray  ticket-time">
                                         {{ $timeInt }}
                                         <br>
@@ -504,8 +505,14 @@
                                         </p>
                                     </h4>
                                     <div class="ticket-body ticket-{{ $colors[array_rand($colors)] }}">
-                                        <p class="mb-2">{{ $ticket->description }}</p>
-                                        <span class="text-fade">by {{ $ticket->user->name }}</span>
+                                        <p style="{{ empty($notification->read_at) ? 'font-weight: 500' : '' }}"
+                                            class="mb-2">
+                                            @if (empty($notification->read_at))
+                                                <i class="bi bi-dot"></i>
+                                            @endif
+                                            {{ $notification->data['message'] }}
+                                        </p>
+                                        {{-- <span class="text-fade">by {{ $ticket->user->name }}</span> --}}
                                     </div>
                                 </a>
                             </div>

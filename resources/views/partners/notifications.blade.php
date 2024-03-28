@@ -11,7 +11,7 @@
                     <div class="box ticket-links mb-3">
                         <h1 class="f-20 w-500 mb-3 text-dark-clr pt-1">All Notifications</h1>
                         <div class="pt-2">
-                            @forelse (auth()->user()->notifications as $notification)
+                            @forelse ($notifications as $notification)
                                 <a class="ticket-notify px-0  mb-3"
                                     href="{{ !empty($notification->data['link']) ? $notification->data['link'] : '#' }}">
                                     <div class="ticket-body ticket-{{ $colors[array_rand($colors)] }}">
