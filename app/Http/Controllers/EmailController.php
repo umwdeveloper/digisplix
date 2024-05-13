@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class EmailController extends Controller {
     public function index(Client $client) {
-        $emails = $client->emails;
+        $emails = $client->emails()->orderByDesc('created_at')->get();
         return view('staff.emails.emails', compact("emails"));
     }
 
