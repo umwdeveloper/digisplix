@@ -6,6 +6,7 @@ use App\Http\Controllers\Client\ProjectController as ClientProjectController;
 use App\Http\Controllers\Client\ServiceController;
 use App\Http\Controllers\Client\SupportController as ClientSupportController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Partner\ClientController as PartnerClientController;
 use App\Http\Controllers\Partner\LeadController as PartnerLeadController;
@@ -142,6 +143,10 @@ Route::domain(config('custom.staff_alias'))
         // Logs
         Route::get('/logs', [StaffController::class, 'logs'])->name('logs');
         Route::get('/clear_logs', [StaffController::class, 'clearLogs'])->name('clear_logs');
+
+        // Emails
+        Route::get('/emails/{client}', [EmailController::class, 'index'])->name('emails');
+        Route::get('/emails/email/{email}', [EmailController::class, 'view'])->name('view');
 
         // If route not found
         Route::fallback(function () {

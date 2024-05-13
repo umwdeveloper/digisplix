@@ -3,6 +3,10 @@
     "file": "bg-img.jpg",
     "src": "public/images/bg-img.jpg"
   },
+  "public/images/emailBG.jpg": {
+    "file": "emailBG.jpg",
+    "src": "public/images/emailBG.jpg"
+  },
   "public/images/walling-XFwnAACel-o-unsplash.jpg": {
     "file": "walling-XFwnAACel-o-unsplash.jpg",
     "src": "public/images/walling-XFwnAACel-o-unsplash.jpg"

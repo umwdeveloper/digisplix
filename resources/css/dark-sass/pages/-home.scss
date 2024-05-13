@@ -347,3 +347,58 @@
 .text-dark-clr {
     color: $white-light;
 }
+
+// Email History
+
+.tab button.active {
+    border-bottom: 2px solid #0963ce !important;
+}
+
+.email-table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control:before,
+.email-table.dataTable.dtr-inline.collapsed>tbody>tr>th.dtr-control:before {
+    flex-shrink: 0 !important;
+}
+
+.email-history {
+    position: fixed;
+    top: 0;
+    left: -700px;
+    bottom: 0;
+    height: 100vh;
+    overflow-y: auto;
+    background-color: #F6F6F6;
+    padding: 30px;
+    border-radius: 0 15px 15px 0;
+    max-width: 700px;
+    z-index: 1000;
+    transition: all 0.5s;
+    background-color: $dark-blue;
+
+    .box-white {
+        color: #F6F6F6;
+    }
+
+    &::-webkit-scrollbar {
+        width: 6px;
+        border-radius: 7px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #4188df;
+        border-radius: 7px;
+    }
+}
+
+.email-title {
+    background-image: url('../../../public/images/emailBG.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 30px 20px;
+    border-radius: 7px;
+}
+
+@media only screen and (max-width:769px) {
+    .email-history {
+        padding: 15px;
+    }
+}

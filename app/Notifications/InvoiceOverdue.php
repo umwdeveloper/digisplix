@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Models\Invoice;
+use App\Notifications\Channels\DbMailChannel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -33,7 +34,7 @@ class InvoiceOverdue extends Notification implements ShouldQueue {
      * @return array<int, string>
      */
     public function via(object $notifiable): array {
-        return ['mail', 'database'];
+        return ['mail', 'database', DbMailChannel::class];
     }
 
     /**

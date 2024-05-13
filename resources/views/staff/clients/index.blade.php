@@ -146,6 +146,10 @@
                                                                 @method('DELETE')
                                                                 <button class="delete">Delete</button>
                                                             </form>
+                                                            <button class="table-btn"
+                                                                style="margin-left: 10px; background-color: #17cc44"
+                                                                onclick="window.location.href = '{{ route('staff.emails', $client->id) }}'">Email
+                                                                History</button>
                                                         </div>
 
 
@@ -336,7 +340,7 @@
                                             placeholder="Pakistan">
                                         <input type="hidden" id="country2_code" name="country_code">
                                         <!-- <label class="crm-label form-label" for="country2">Country<span
-                                                                                                    class="text-danger">*</span></label> -->
+                                                                                                                                                        class="text-danger">*</span></label> -->
                                         @if ($errors->updateClient->has('country'))
                                             <small class="invalid-feedback " style="font-size: 11px">
                                                 {{ $errors->updateClient->first('country') }}

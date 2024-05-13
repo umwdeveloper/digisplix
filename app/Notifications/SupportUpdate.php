@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Models\Support;
+use App\Notifications\Channels\DbMailChannel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -32,7 +33,7 @@ class SupportUpdate extends Notification implements ShouldQueue {
      * @return array<int, string>
      */
     public function via(object $notifiable): array {
-        return ['mail', 'database'];
+        return ['mail', 'database', DbMailChannel::class];
     }
 
     /**
@@ -41,6 +42,7 @@ class SupportUpdate extends Notification implements ShouldQueue {
     public function toMail(object $notifiable): MailMessage {
         return (new MailMessage)
             ->subject("Ticket Replied")
+            ->greeting("Hi " . $notifiable->name . ",")
             ->line(new HtmlString('You have an update for the ticket - <strong>' . $this->subject . "<strong>"))
             ->line("Click the button to see update")
             ->action('View Update', route('client.support.show', $this->ticket_id));

@@ -54,6 +54,10 @@ class Client extends Model {
         return $this->morphMany(NotificationType::class, 'notifiable');
     }
 
+    public function emails() {
+        return $this->hasMany(Email::class);
+    }
+
     private static $statuses = [
         self::NEW_LEAD,
         self::CONTACTED,
