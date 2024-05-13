@@ -10,6 +10,7 @@ use App\Models\Client;
 use App\Models\NotificationType;
 use App\Models\Partner;
 use App\Models\User;
+use App\Notifications\ClientAdded;
 use App\Notifications\LeadCreated;
 use App\Notifications\LeadStatusUpdated;
 use App\Notifications\ProgressLead;
@@ -136,7 +137,8 @@ class LeadController extends Controller {
 
                 $validatedData['is_client'] = 1;
 
-                Mail::to($validatedData['email'])->send(new LeadAddedMail($validatedData['name'], $validatedData['email'], $password));
+                // Mail::to($validatedData['email'])->send(new LeadAddedMail($validatedData['name'], $validatedData['email'], $password));
+                Notification::send($lead->user, new ClientAdded($password, $lead->id, $lead->user->id));
             }
 
             if ($validatedData['status'] == Client::QUALIFIED && $validatedData['status'] != $lead->status) {
@@ -214,7 +216,8 @@ class LeadController extends Controller {
 
                 $lead->user->save();
 
-                Mail::to($lead->user->email)->send(new LeadAddedMail($lead->user->name, $lead->user->email, $password));
+                // Mail::to($lead->user->email)->send(new LeadAddedMail($lead->user->name, $lead->user->email, $password));
+                Notification::send($lead->user, new ClientAdded($password, $lead->id, $lead->user->id));
             }
 
             if ($lead->status == Client::QUALIFIED) {

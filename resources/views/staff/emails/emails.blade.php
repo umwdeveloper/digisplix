@@ -4,7 +4,7 @@
 
     <main class="content ">
         <div class="container-fluid px-lg-0">
-            <div class="row justify-content-center">
+            <div class="row justify-content-center mb-3">
                 <div class="col-xl-12 ">
                     <div class="row">
                         <div class="col-xl-12  mb-3">
@@ -84,13 +84,13 @@
                 </div>
 
             </div>
-            <div class="row mb-3 mt-3">
+            {{-- <div class="row mb-3 mt-3">
                 <div class="col-lg-12">
                     <div class="box">
                         <p class="f-14 w-500 mb-0 pb-0 text-center text-gray text-dark-clr" id="copyright-year"></p>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </main>
 
@@ -106,28 +106,12 @@
 
         <div class="email-title mb-3">
             <h1 class="f-26 w-600 mb-4 text-white  " id="greeting"></h1>
-            {{-- <p class="mb-0 pb-0 text-white f-16 w-500">Lorem ipsum dolor sit adipisicing elit. Consequuntur, voluptas. --}}
-            </p>
         </div>
         <div class="box-white px-3 py-4 mb-3">
-            {{-- <div class="d-flex align-items-center">
-                <div><i class="fa-duotone fa-square-envelope f-30 text-primary "></i></div>
-                <h2 class="f-20 w-600 text-dark  ms-3 mb-0 pb-0">Email Heading</h2>
-            </div> --}}
             <div class="mt-3" id="message">
-                {{-- <p class="text w-500">
-                    Hello,
-                </p>
-                <p class="text">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero inventore unde fuga velit, ipsum qui
-                    rem, architecto aspernatur accusantium enim dolorum minima dolores asperiores tenetur nemo provident
-                    molestias mollitia ipsa hic dolorem laboriosam voluptatum ab nostrum. Natus iste quas fuga!
-                </p> --}}
             </div>
         </div>
-
     </div>
-
 
 @section('script')
     <script>

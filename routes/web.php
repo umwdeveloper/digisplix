@@ -45,6 +45,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::domain(config('custom.staff_alias'))
+    // Route::prefix('admin')
     ->middleware(['auth', 'staff', '2fa', 'support_middleware'])
     ->name('staff.')
     ->group(function () {
