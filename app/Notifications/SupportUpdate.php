@@ -55,7 +55,7 @@ class SupportUpdate extends Notification implements ShouldQueue {
      */
     public function toDatabase(object $notifiable): array {
         return [
-            "message" => "Ticket Replied By Company",
+            "message" => "Ticket Replied By Staff",
             "link" => route('client.support.show', $this->ticket_id)
         ];
     }

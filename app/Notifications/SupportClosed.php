@@ -43,7 +43,7 @@ class SupportClosed extends Notification implements ShouldQueue {
         return (new MailMessage)
             ->subject("Ticket Closed")
             ->greeting("Hi " . $notifiable->name . ",")
-            ->line(new HtmlString('Your ticket has been closed by the company.'))
+            ->line(new HtmlString('Your ticket has been closed by the staff.'))
             ->line("Click the button to see ticket")
             ->action('View Ticket', route('client.support.show', $this->ticket_id));
     }
@@ -55,7 +55,7 @@ class SupportClosed extends Notification implements ShouldQueue {
      */
     public function toDatabase(object $notifiable): array {
         return [
-            "message" => "Ticket Closed By Company",
+            "message" => "Ticket Closed By Staff",
             "link" => route('client.support.show', $this->ticket_id)
         ];
     }
