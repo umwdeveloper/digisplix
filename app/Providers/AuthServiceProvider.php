@@ -88,6 +88,11 @@ class AuthServiceProvider extends ServiceProvider {
             return $user->is_admin;
         });
 
+        // Plans
+        Gate::define('staff.plans', function (User $user) {
+            return $user->staff()->permissions->contains('name', 'plans');
+        });
+
         // Partner
 
         // Client

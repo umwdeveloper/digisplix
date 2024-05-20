@@ -13,364 +13,53 @@
                         </div>
                     </div>
                     <div class="row justify-content-center pt-3 pb-2">
-                        <div class="col-xl-3 col-lg-6 mb-4 pb-2 col-md-6 col-12">
-                            <div class="pricing-card basic">
-                                <div class="pricing-header">
-                                    <span class="plan-title">SILVER</span>
-                                    <a href="#" class="text-white buy-now-btn" data-plan="silver">
-                                        <div class="price-circle">
-                                            <span class="price-title">
-                                                <small>$</small><span>2499</span>
-                                            </span>
-                                            <span class="info">/ Month</span>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="d-flex justify-content-center text-center">
-                                    <div class="badge-box">
-                                        <a href="#" class="text-white buy-now-btn" data-plan="silver">
-                                            <span>Save 89%</span>
-                                        </a>
-                                    </div>
-                                </div>
-                                <ul>
-                                    <li class="d-flex  align-items-start">
-                                        <i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Search Engine Optimization
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Up to 100 Keyphrases Optimized
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Up to 30 Pages Optimized
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Web Maintenance
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            1 Additional Landing Page Design
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Graphic Design (Max 5 Designs)
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            1 Animated Business Video
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Initial Audit
-                                        </p>
-                                    </li>
-                                </ul>
-                                <div class="d-flex justify-content-center ">
-                                    <div class="buy-button-box mx-auto">
-                                        <a href="#" class="buy-now buy-now-btn" data-plan="silver">BUY NOW</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-6 mb-4 pb-2 col-md-6 col-12">
-                            <div class="pricing-card eco">
-                                <div class="pricing-header">
-                                    <span class="plan-title">GOLD</span>
-                                    <a href="#" class="text-white buy-now-btn" data-plan="gold">
-                                        <div class="price-circle">
-                                            <span class="price-title">
-                                                <small>$</small><span>4999</span>
-                                            </span>
-                                            <span class="info">/ Month</span>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="d-flex justify-content-center text-center">
-                                    <div class="badge-box">
-                                        <a href="#" class="text-white buy-now-btn" data-plan="gold">
-                                            <span>Save 85%</span>
-                                        </a>
-                                    </div>
-                                </div>
-                                <ul>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Search Engine Optimization
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Up to 150 Keyphrases Optimized
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Up to 40 Pages Optimized
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Web Maintenance
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            2 Additional Landing Page Design
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Graphic Design (Max 10 Designs)
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            3 Animated Business Video
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Initial Audit
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Video Editing and Motion Graphics
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Social Media Management (2 Platforms)
-                                        </p>
-                                    </li>
-                                </ul>
-                                <div class="d-flex justify-content-center">
-                                    <div class="buy-button-box mx-auto">
-                                        <a href="#" class="buy-now buy-now-btn" data-plan="gold">BUY NOW</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-6 mb-4 pb-2 col-md-6 col-12">
-                            <div class="pricing-card pro">
-                                <div class="popular">BEST SELLING</div>
-                                <div class="pricing-header">
-                                    <span class="plan-title">PLATINUM</span>
-                                    <a href="#" class="text-white buy-now-btn" data-plan="platinum">
-                                        <div class="price-circle">
-                                            <span class="price-title">
-                                                <small>$</small><span>7499</span>
-                                            </span>
-                                            <span class="info">/ Month</span>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="d-flex justify-content-center text-center">
-                                    <div class="badge-box">
+
+                        @php
+                            $colors = ['basic', 'eco', 'pro', 'business'];
+                            $prices = ['2499', '4999', '7499', '9499'];
+                        @endphp
+                        @foreach ($plans as $key => $plan)
+                            <div class="col-xl-3 col-lg-6 mb-4 pb-2 col-md-6 col-12">
+                                <div class="pricing-card {{ $colors[$key] }}">
+                                    @if ($key == 2)
+                                        <div class="popular">BEST SELLING</div>
+                                    @endif
+                                    <div class="pricing-header">
+                                        <span class="plan-title">{{ strtoupper($plan->name) }}</span>
                                         <a href="#" class="text-white buy-now-btn" data-plan="platinum">
-                                            <span>Save 84%</span>
+                                            <div class="price-circle">
+                                                <span class="price-title">
+                                                    <small>$</small><span>{{ $prices[$key] }}</span>
+                                                </span>
+                                                <span class="info">/ Month</span>
+                                            </div>
                                         </a>
                                     </div>
-                                </div>
-                                <ul>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Search Engine Optimization
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Up to 200 Keyphrases Optimized
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Up to 50 Pages Optimized
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Web Maintenance
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            3 Additional Landing Page Design
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Graphic Design (Max 15 Designs)
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            5 Animated Business Video
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Initial Audit
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Video Editing and Motion Graphics
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Social Media Management (3 Platforms)
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Social Media Marketing
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            15 Posts per Month
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            SMM on 3 Platforms
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Pay-Per-Click / Google Ads
-                                        </p>
-                                    </li>
-                                </ul>
-                                <div class="d-flex justify-content-center">
-                                    <div class="buy-button-box">
-                                        <a href="#" class="buy-now buy-now-btn" data-plan="platinum">BUY NOW</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-6 mb-4 pb-2 col-md-6 col-12">
-                            <div class="pricing-card business">
-                                <div class="pricing-header">
-                                    <span class="plan-title">DIAMOND</span>
-                                    <a href="#" class="text-white buy-now-btn" data-plan="diamond">
-                                        <div class="price-circle">
-                                            <span class="price-title">
-                                                <small>$</small><span>9499</span>
-                                            </span>
-                                            <span class="info">/ Month</span>
+                                    <div class="d-flex justify-content-center text-center">
+                                        <div class="badge-box">
+                                            <a href="#" class="text-white buy-now-btn" data-plan="platinum">
+                                                <span>Save 84%</span>
+                                            </a>
                                         </div>
-                                    </a>
-                                </div>
-                                <div class="d-flex justify-content-center text-center">
-                                    <div class="badge-box">
-                                        <a href="#" class="text-decoration-none buy-now-btn" data-plan="diamond">
-                                            <span>Save 84%</span>
-                                        </a>
                                     </div>
-                                </div>
-                                <ul>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Search Engine Optimization
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Up to 250 Keyphrases Optimized
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Up to 60 Pages Optimized
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Web Maintenance
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            4 Additional Landing Page Design
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Graphic Design (Max 20 Designs)
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            7 Animated Business Video
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Initial Audit
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Video Editing and Motion Graphics
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Social Media Management (4 Platforms)
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Social Media Marketing
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            30 Posts per Month
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            SMM on 4 Platforms
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Pay-Per-Click / Google Ads
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            Mobile App Services
-                                        </p>
-                                    </li>
-                                    <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
-                                        <p class="pb-0 mb-0">
-                                            E-Commerce Services (Optional)
-                                        </p>
-                                    </li>
-                                </ul>
-                                <div class="d-flex justify-content-center">
-                                    <div class="buy-button-box">
-                                        <a href="#" class="buy-now buy-now-btn" data-plan="diamond">BUY NOW</a>
+                                    <ul>
+                                        @foreach ($plan->features as $feature)
+                                            <li class="d-flex  align-items-start"><i class="fa-solid fa-check"></i>
+                                                <p class="pb-0 mb-0">
+                                                    {{ $feature->description }}
+                                                </p>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                    <div class="d-flex justify-content-center">
+                                        <div class="buy-button-box">
+                                            <a href="#" class="buy-now buy-now-btn" data-plan="platinum">BUY NOW</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        @endforeach
+
                     </div>
 
 

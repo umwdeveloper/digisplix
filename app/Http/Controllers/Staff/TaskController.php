@@ -63,18 +63,37 @@ class TaskController extends Controller {
         $tasksData = $request->input('tasks');
         $phase_id = $request->input('phase_id');
 
-        foreach ($tasksData as $taskData) {
-            if ($taskData['id'] == 0) {
-                Task::create([
-                    'phase_id' => $phase_id,
-                    'task' => $taskData['task'],
-                    'status' => $taskData['status']
-                ]);
-            } else {
-                $task = Task::findOrFail($taskData['id']);
-                $task->task = $taskData['task'];
-                $task->status = $taskData['status'];
-                $task->update();
+        // Collect all task IDs from the incoming request
+        $taskIdsFromRequest = collect($tasksData)->pluck('id')->filter()->all();
+
+        // Fetch existing tasks for the phase
+        $existingTasks = Task::where('phase_id', $phase_id)->get();
+
+        // Identify tasks that need to be deleted
+        $tasksToDelete = $existingTasks->filter(function ($task) use ($taskIdsFromRequest) {
+            return !in_array($task->id, $taskIdsFromRequest);
+        });
+
+        // Delete the tasks that are not in the request data
+        foreach ($tasksToDelete as $taskToDelete) {
+            $taskToDelete->delete();
+        }
+
+        // Process the incoming request data
+        if (!empty($tasksData)) {
+            foreach ($tasksData as $taskData) {
+                if ($taskData['id'] == 0) {
+                    Task::create([
+                        'phase_id' => $phase_id,
+                        'task' => $taskData['task'],
+                        'status' => $taskData['status']
+                    ]);
+                } else {
+                    $task = Task::findOrFail($taskData['id']);
+                    $task->task = $taskData['task'];
+                    $task->status = $taskData['status'];
+                    $task->save();
+                }
             }
         }
 

@@ -239,6 +239,18 @@
                                 </li>
                             @endcan
 
+                            @can('staff.plans')
+                                <li class="menu-item">
+                                    <a href="{{ route('staff.plans.index') }}">
+                                        <span class="menu-icon">
+                                            <i class="fa-duotone fa-box-taped"></i>
+                                        </span>
+                                        <span class="menu-title">Plans
+                                        </span>
+                                    </a>
+                                </li>
+                            @endcan
+
                             @can('staff.support')
                                 <li class="menu-item">
                                     <a href="{{ route('staff.support.index') }}">
@@ -638,6 +650,17 @@
                     </div>
 
                     Staff
+                </a>
+            </div>
+        @endcan
+        @can('staff.plans')
+            <div class="d-flex align-items-center more-footer-link">
+                <a href="{{ route('staff.plans.index') }}">
+                    <div class="more-icon">
+                        <i class="fa-duotone fa-box-taped"></i>
+                    </div>
+
+                    Plans
                 </a>
             </div>
         @endcan

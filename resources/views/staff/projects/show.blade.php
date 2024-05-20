@@ -1,7 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <main class="content ">
+    @if (session('error'))
+        <x-toast type="error">
+            {{ session('error') }}
+        </x-toast>
+    @endif
+    <main class="content mb-3">
         <div class="container-fluid px-lg-0">
             <div class="row justify-content-center">
                 <div class="col-xl-12 ">
@@ -72,7 +77,8 @@
                                         </div>
                                         <div class="col-xl-6 col-lg-12  order-xl-2 order-3 mb-3">
                                             <div class="box-gray">
-                                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                                <div
+                                                    class="d-flex flex-wrap  align-items-center justify-content-between mb-2">
                                                     @php
                                                         $phasesCount = 0;
                                                         $phasesProgress = 0;
@@ -121,7 +127,8 @@
                                                     @endforeach
                                                 </div>
                                                 @php
-                                                    $progressWidth = $phasesCount > 0 ? round($phasesProgress / $phasesCount) : 0;
+                                                    $progressWidth =
+                                                        $phasesCount > 0 ? round($phasesProgress / $phasesCount) : 0;
                                                 @endphp
                                                 <div class="progress-stripped progress-striped">
                                                     <div class="progress-bar progress-bar-animated"
@@ -260,6 +267,9 @@
                                                                     <div class="edit-task ms-2">
                                                                         <i class="bi bi-pencil-fill"></i>
                                                                     </div>
+                                                                    <div class="delete-task ms-2">
+                                                                        <i class="bi bi-trash"></i>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         @endforeach
@@ -281,9 +291,16 @@
                                             </div>
                                         @endforeach
                                     </div>
+                                    @if (count($project->phases) < 10)
+                                        <div class="d-flex justify-content-center">
+                                            <button class="table-btn w-25 mb-2"
+                                                onclick="location.href = '{{ route('staff.phases.store', $project->id) }}'">Add
+                                                Phase</button>
+                                        </div>
+                                    @endif
                                     <div class="d-flex justify-content-end">
                                         {{-- <button class="table-btn">Edit</button> --}}
-                                        <button class="table-btn ms-2" id="save-data-btn">Save</button>
+                                        <button type="button" class="table-btn ms-2" id="save-data-btn">Save</button>
                                     </div>
                                 </div>
 
@@ -430,6 +447,11 @@
                 }
             });
 
+            $('body').on('click', '.delete-task', function(e) {
+                var taskDiv = $(this).closest('.task-div');
+                taskDiv.remove()
+            });
+
             $(document).click(function(e) {
                 e.stopPropagation();
                 var editAbleTaskElements = $('.edit-able-task');
@@ -550,6 +572,9 @@
                 <div class="edit-task ms-2">
                     <i class="bi bi-pencil-fill"></i>
                 </div>
+                <div class="delete-task ms-2">
+                    <i class="bi bi-trash"></i>
+                </div>
             </div>
         </div>
     </script>
@@ -599,6 +624,7 @@
 
     <script>
         $("body").on('click', '#save-data-btn', function() {
+            $(".loading").removeClass('d-none')
             // Update project data
             var projectID = '{{ $project->id }}';
             var projectName = $("#ProjectDetails #P-name").val();
@@ -637,11 +663,15 @@
 
             // Update phases and tasks
             var projectDetailsContainer = $("#ProjectDetails");
-            projectDetailsContainer.find('.task-card').each(function() {
+            var taskCards = projectDetailsContainer.find('.task-card');
+            var totalTaskCards = taskCards.length;
+            var ajaxRequestsCompleted = 0;
+
+            taskCards.each(function(index) {
                 var phaseID = $(this).find('.edit-able').data("phase-id");
                 var phaseName = $(this).find('.edit-able').text().trim();
-                var phaseStatus = $(this).find('.phase-complete')
-                    .hasClass('table-btn-blank-completed') ? 1 : 0;
+                var phaseStatus = $(this).find('.phase-complete').hasClass('table-btn-blank-completed') ?
+                    1 : 0;
                 var phaseProgress = $(this).find('.score').val().replace("%", "");
                 var tasks = $(this).find('.tasks-container .task-div');
                 var tasksData = [];
@@ -655,8 +685,8 @@
                         id: taskID,
                         task: task,
                         status: taskStatus
-                    })
-                })
+                    });
+                });
 
                 $.ajax({
                     url: '{{ route('staff.phases.update', 'phase_id') }}'.replace('phase_id',
@@ -668,23 +698,32 @@
                         'status': phaseStatus,
                         'progress': phaseProgress,
                     },
-                    success: function(response) {}
-                })
-
-                $.ajax({
-                    url: '{{ route('staff.tasks.updateAll') }}',
-                    type: 'PUT',
-                    data: {
-                        '_token': '{{ csrf_token() }}',
-                        'phase_id': phaseID,
-                        'tasks': tasksData
-                    },
                     success: function(response) {
-
+                        // Optionally handle the response if needed
+                    },
+                    complete: function() {
+                        // Only proceed to tasks update after phase update is complete
+                        $.ajax({
+                            url: '{{ route('staff.tasks.updateAll') }}',
+                            type: 'PUT',
+                            data: {
+                                '_token': '{{ csrf_token() }}',
+                                'phase_id': phaseID,
+                                'tasks': tasksData
+                            },
+                            success: function(response) {
+                                // Optionally handle the response if needed
+                            },
+                            complete: function() {
+                                ajaxRequestsCompleted++;
+                                if (ajaxRequestsCompleted === totalTaskCards) {
+                                    location.reload();
+                                }
+                            }
+                        });
                     }
-                })
-            })
-            location.reload()
+                });
+            });
         })
     </script>
 @endsection

@@ -17,10 +17,12 @@ use App\Http\Controllers\PDFController;
 use App\Http\Controllers\Staff\PartnerController as StaffPartnerController;
 use App\Http\Controllers\Staff\ClientController as StaffClientController;
 use App\Http\Controllers\Staff\CommissionController;
+use App\Http\Controllers\Staff\FeatureController;
 use App\Http\Controllers\Staff\InvoiceController;
 use App\Http\Controllers\Staff\StaffController as StaffStaffController;
 use App\Http\Controllers\Staff\PhaseController;
 use App\Http\Controllers\Staff\LeadController;
+use App\Http\Controllers\Staff\PlanController;
 use App\Http\Controllers\Staff\ProjectController;
 use App\Http\Controllers\Staff\SaleController as StaffSaleController;
 use App\Http\Controllers\Staff\TaskController;
@@ -79,6 +81,7 @@ Route::domain(config('custom.staff_alias'))
         // Phases
         Route::patch('phases/update/{phase_id}', [PhaseController::class, 'update'])
             ->name('phases.update');
+        Route::get('phases/{project_id}', [PhaseController::class, 'store'])->name('phases.store');
 
         // Tasks
         Route::put('tasks/updateAll', [TaskController::class, 'updateAll'])
@@ -141,6 +144,19 @@ Route::domain(config('custom.staff_alias'))
         Route::get('/commissions/fetch_commission/{commission_id}', [CommissionController::class, 'fetchCommission'])
             ->name('commissions.fetch_commission');
 
+        // Plans
+        Route::get('/plans', [PlanController::class, 'index'])->name('plans.index');
+        Route::get('/plans/{plan}/features', [PlanController::class, 'features'])->name('plans.features');
+        Route::post('/features', [FeatureController::class, 'store'])->name('features.store');
+        Route::patch('/features/{feature}', [FeatureController::class, 'update'])->name('features.update');
+        Route::delete('/features/{feature}', [FeatureController::class, 'destroy'])->name('features.destroy');
+        Route::get('/features/fetch_feature/{feature_id}', [FeatureController::class, 'fetchFeature'])
+            ->name('features.fetch_feature');
+        Route::get('/plans/fetch_plan/{plan_id}', [PlanController::class, 'fetchPlan'])
+            ->name('plans.fetch_plan');
+        Route::patch('/plans/update_discount/{plan_id}', [PlanController::class, 'updateDiscount'])
+            ->name('plans.update_discount');
+
         // Logs
         Route::get('/logs', [StaffController::class, 'logs'])->name('logs');
         Route::get('/clear_logs', [StaffController::class, 'clearLogs'])->name('clear_logs');
@@ -199,6 +215,7 @@ Route::domain(config('custom.partner_alias'))
     });
 
 Route::domain(config('custom.client_alias'))
+    // Route::prefix('client')
     ->name('client.')
     ->middleware(['auth', '2fa', 'support_middleware', 'is_client'])
     ->group(function () {

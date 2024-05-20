@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
 use App\Models\Phase;
+use App\Models\Project;
 use Illuminate\Http\Request;
 
 class PhaseController extends Controller {
@@ -24,8 +25,19 @@ class PhaseController extends Controller {
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) {
-        //
+    public function store($project_id) {
+        $project = Project::findOrFail($project_id);
+        $phases_count = count($project->phases);
+
+        if ($phases_count === 10) {
+            return redirect()->back()->with("error", "You can create maximum of 10 phases!");
+        } else {
+            $project->phases()->create([
+                'name' => "Phase " . $phases_count + 1
+            ]);
+
+            return redirect()->back();
+        }
     }
 
     /**
