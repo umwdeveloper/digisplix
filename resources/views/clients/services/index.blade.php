@@ -38,7 +38,7 @@
                                     <div class="d-flex justify-content-center text-center">
                                         <div class="badge-box">
                                             <a href="#" class="text-white buy-now-btn" data-plan="platinum">
-                                                <span>Save 84%</span>
+                                                <span>Save {{ $plan->discount }}%</span>
                                             </a>
                                         </div>
                                     </div>
