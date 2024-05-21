@@ -602,7 +602,7 @@ const generatePDF = function (data) {
     var blobPDF = new Blob([pdf.output('blob')], { type: "application/pdf" })
     var blobURL = URL.createObjectURL(blobPDF)
 
-    $('#preview-frame').attr('src', blobURL + '#navpanes=0')
+    $('#preview-frame').attr('src', blobURL + '#toolbar=0&navpanes=0')
 }
 
 const downloadPDF = function (title) {
