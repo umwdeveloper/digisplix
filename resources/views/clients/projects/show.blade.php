@@ -69,7 +69,8 @@
                                         </div>
                                         <div class="col-xl-6 col-lg-12  order-xl-2 order-3 mb-3">
                                             <div class="box-gray">
-                                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                                <div
+                                                    class="d-flex flex-wrap  align-items-center justify-content-between mb-2">
                                                     @php
                                                         $phasesCount = 0;
                                                         $phasesProgress = 0;
@@ -118,7 +119,8 @@
                                                     @endforeach
                                                 </div>
                                                 @php
-                                                    $progressWidth = $phasesCount > 0 ? round($phasesProgress / $phasesCount) : 0;
+                                                    $progressWidth =
+                                                        $phasesCount > 0 ? round($phasesProgress / $phasesCount) : 0;
                                                 @endphp
                                                 <div class="progress-stripped progress-striped">
                                                     <div class="progress-bar progress-bar-animated"
