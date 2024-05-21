@@ -49,11 +49,20 @@
                                             </p>
                                         </div>
 
-                                        <div class="mt-1 pt-2">
-                                            <h3 class="ticket-heading mb-0">Client Name</h3>
-                                            <p class="ticket-text mb-0 pb-2">
-                                                {{ $ticket->user->name }}
-                                            </p>
+                                        <div
+                                            class="d-flex align-items-start justify-content-between flex-xl-row flex-column">
+                                            <div class="mt-1 pt-2">
+                                                <h3 class="ticket-heading mb-0">Client Name</h3>
+                                                <p class="ticket-text mb-0 pb-2">
+                                                    {{ $ticket->user->name }}
+                                                </p>
+                                            </div>
+                                            <div class="mt-3">
+                                                <h3 class="ticket-heading mb-0">Department</h3>
+                                                <p class="ticket-text mb-0 pb-2">
+                                                    {{ $ticket->department == 0 ? 'General' : ($ticket->department == 1 ? 'Sales/Billings' : 'Technical') }}
+                                                </p>
+                                            </div>
                                         </div>
                                         <div
                                             class="d-flex align-items-start justify-content-between flex-xl-row flex-column">

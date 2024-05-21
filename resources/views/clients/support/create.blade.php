@@ -319,7 +319,7 @@
                             window.location.href = '{{ route('client.support.index') }}';
                         }
                     }
-                    location.reload()
+                    // location.reload()
                 }
 
             })
