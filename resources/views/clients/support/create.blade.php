@@ -266,6 +266,7 @@
                     });
 
                     if (allFilesValid) {
+                        $(".loading").addClass("d-none")
                         window.location.href = '{{ route('client.support.index') }}';
                     }
 
@@ -284,6 +285,7 @@
 
         // Save editor data
         const saveData = function() {
+            $(".loading").removeClass("d-none")
             var department = $('input[name="ticket-type"]:checked').val()
             var subject = $('#subject').val()
             var description = $('#description').val()
@@ -313,9 +315,11 @@
                     if (response.status == 'success') {
                         ticketID = response.ticket.id;
 
-                        if ($('.upload-area').css('display') == 'block') {
+                        if (myDropzone.files.length > 0) {
+                            console.log("Processing queue");
                             myDropzone.processQueue();
                         } else {
+                            $(".loading").addClass("d-none")
                             window.location.href = '{{ route('client.support.index') }}';
                         }
                     }

@@ -272,9 +272,11 @@
 .step-count {
     text-align: center;
     padding: 10px;
+    width: 20%;
 
     @media only screen and (max-width: 580px) {
         padding: 5px;
+        width: 33%;
     }
 
     i {

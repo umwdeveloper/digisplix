@@ -70,7 +70,7 @@
                                         <div class="col-xl-6 col-lg-12  order-xl-2 order-3 mb-3">
                                             <div class="box-gray">
                                                 <div
-                                                    class="d-flex flex-wrap  align-items-center justify-content-between mb-2">
+                                                    class="d-flex flex-wrap {{ count($project->phases) < 5 ? 'justify-content-between' : '' }} mb-2 ">
                                                     @php
                                                         $phasesCount = 0;
                                                         $phasesProgress = 0;

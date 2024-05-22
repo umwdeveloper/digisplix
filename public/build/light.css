@@ -3050,10 +3050,12 @@ input:-webkit-autofill {
 .step-count {
   text-align: center;
   padding: 10px;
+  width: 20%;
 }
 @media only screen and (max-width: 580px) {
   .step-count {
     padding: 5px;
+    width: 33%;
   }
 }
 .step-count i {

@@ -78,7 +78,7 @@
                                         <div class="col-xl-6 col-lg-12  order-xl-2 order-3 mb-3">
                                             <div class="box-gray">
                                                 <div
-                                                    class="d-flex flex-wrap  align-items-center justify-content-between mb-2">
+                                                    class="d-flex flex-wrap {{ count($project->phases) < 5 ? 'justify-content-between' : '' }} mb-2 ">
                                                     @php
                                                         $phasesCount = 0;
                                                         $phasesProgress = 0;
@@ -89,14 +89,14 @@
                                                             $phasesProgress += $phase->progress;
                                                         @endphp
                                                         @if ($phase->status == 1)
-                                                            <div class="step-count">
+                                                            <div class="step-count ">
                                                                 <div class="caption-step">{{ $phase->name }}</div>
                                                                 <i
                                                                     class="fa-duotone fa-octagon-check my-3 complete-step"></i>
                                                                 <div class="caption-step complete-step">Completed</div>
                                                             </div>
                                                         @elseif ($phase->progress == 0)
-                                                            <div class="step-count">
+                                                            <div class="step-count ">
                                                                 <div class="caption-step">{{ $phase->name }}</div>
                                                                 <i class="fa-duotone fa-clock-three my-3"></i>
                                                                 <div class="caption-step">Waiting</div>
@@ -107,7 +107,7 @@
                                                                     --custom-progress-value: {{ $phase->progress }}
                                                                 }
                                                             </style>
-                                                            <div class="step-count">
+                                                            <div class="step-count ">
                                                                 <div class="caption-step">{{ $phase->name }}</div>
 
                                                                 <div class="progress-step-div">
