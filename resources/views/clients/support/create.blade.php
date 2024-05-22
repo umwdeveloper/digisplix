@@ -267,7 +267,8 @@
 
                     if (allFilesValid) {
                         $(".loading").addClass("d-none")
-                        window.location.href = '{{ route('client.support.index') }}';
+                        window.location.href = '{{ route('client.support.show', ':ticketID') }}'
+                            .replace(':ticketID', ticketID);
                     }
 
                     fileValidity = {};
@@ -320,7 +321,8 @@
                             myDropzone.processQueue();
                         } else {
                             $(".loading").addClass("d-none")
-                            window.location.href = '{{ route('client.support.index') }}';
+                            window.location.href = '{{ route('client.support.show', ':ticketID') }}'
+                                .replace(':ticketID', ticketID);
                         }
                     }
                     // location.reload()
