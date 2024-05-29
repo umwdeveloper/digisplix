@@ -20,6 +20,10 @@ class Staff extends Model {
         return $this->belongsToMany(Permission::class, 'staff_permissions')->withTimestamps();
     }
 
+    public function notificationTypes() {
+        return $this->morphMany(NotificationType::class, 'notifiable');
+    }
+
     public static function boot() {
         parent::boot();
 
