@@ -26,7 +26,7 @@
                                     @endif
                                     <div class="pricing-header">
                                         <span class="plan-title">{{ strtoupper($plan->name) }}</span>
-                                        <a href="#" class="text-white buy-now-btn" data-plan="platinum">
+                                        <a href="#" class="text-white buy-now-btn" data-plan="{{ $plan->name }}">
                                             <div class="price-circle">
                                                 <span class="price-title">
                                                     <small>$</small><span>{{ $prices[$key] }}</span>
