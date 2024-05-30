@@ -53,7 +53,8 @@
                                     </ul>
                                     <div class="d-flex justify-content-center">
                                         <div class="buy-button-box">
-                                            <a href="#" class="buy-now buy-now-btn" data-plan="platinum">BUY NOW</a>
+                                            <a href="#" class="buy-now buy-now-btn"
+                                                data-plan="{{ $plan->name }}">BUY NOW</a>
                                         </div>
                                     </div>
                                 </div>
