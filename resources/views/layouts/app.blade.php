@@ -130,7 +130,8 @@
                         <ul>
                             <li class="menu-item">
                                 <a href="{{ route('staff.index') }}" class="dashboard-link">
-                                    <span class="menu-icon">
+                                    <span class="menu-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Dashboard">
                                         <i class="fa-duotone fa-grid-2"></i>
                                     </span>
                                     <span class="menu-title">Dashboard </span>
@@ -140,7 +141,8 @@
                             @can('staff.leads')
                                 <li class="menu-item">
                                     <a href="{{ route('staff.leads.index') }}">
-                                        <span class="menu-icon">
+                                        <span class="menu-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="Leads">
                                             <i class="fa-duotone fa-people-group"></i>
 
                                         </span>
@@ -152,7 +154,8 @@
                             @can('staff.projects')
                                 <li class="menu-item">
                                     <a href="{{ route('staff.projects.index') }}">
-                                        <span class="menu-icon">
+                                        <span class="menu-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="Projects">
                                             <i class="fa-duotone fa-rectangle-history"></i>
 
                                         </span>
@@ -164,7 +167,8 @@
                             @can('staff.sales')
                                 <li class="menu-item">
                                     <a href="{{ route('staff.sales.index') }}">
-                                        <span class="menu-icon">
+                                        <span class="menu-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="Sales">
                                             <i class="fa-duotone fa-chart-mixed-up-circle-dollar"></i>
                                         </span>
                                         <span class="menu-title">Sales
@@ -177,7 +181,8 @@
                             @can('staff.invoices')
                                 <li class="menu-item">
                                     <a href="{{ route('staff.invoices.index') }}">
-                                        <span class="menu-icon">
+                                        <span class="menu-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="Invoices">
                                             <i class="fa-duotone fa-file-invoice-dollar"></i>
                                         </span>
                                         <span class="menu-title">Invoices
@@ -190,7 +195,8 @@
                             @can('staff.partners')
                                 <li class="menu-item">
                                     <a href="{{ route('staff.partners.index') }}">
-                                        <span class="menu-icon">
+                                        <span class="menu-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="Partners">
                                             <i class="fa-duotone fa-user-group-simple"></i>
                                         </span>
 
@@ -203,7 +209,8 @@
                             @can('staff.clients')
                                 <li class="menu-item">
                                     <a href="{{ route('staff.clients.index') }}">
-                                        <span class="menu-icon">
+                                        <span class="menu-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="Clients">
                                             <i class="fa-duotone fa-users-line"></i>
 
                                         </span>
@@ -216,7 +223,8 @@
                             @can('staff.chats')
                                 <li class="menu-item">
                                     <a href="{{ route('chat') }}">
-                                        <span class="menu-icon">
+                                        <span class="menu-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="Chats">
                                             <i class="fa-duotone fa-messages"></i>
 
                                         </span>
@@ -229,7 +237,8 @@
                             @can('staff.staff')
                                 <li class="menu-item">
                                     <a href="{{ route('staff.staff.index') }}">
-                                        <span class="menu-icon">
+                                        <span class="menu-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="Staff">
                                             <i class="fa-duotone fa-user-tie"></i>
 
                                         </span>
@@ -242,7 +251,8 @@
                             @can('staff.plans')
                                 <li class="menu-item">
                                     <a href="{{ route('staff.plans.index') }}">
-                                        <span class="menu-icon">
+                                        <span class="menu-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="Plans">
                                             <i class="fa-duotone fa-box-taped"></i>
                                         </span>
                                         <span class="menu-title">Plans
@@ -254,7 +264,8 @@
                             @can('staff.support')
                                 <li class="menu-item">
                                     <a href="{{ route('staff.support.index') }}">
-                                        <span class="menu-icon">
+                                        <span class="menu-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="Support">
                                             <i class="fa-duotone fa-user-headset"></i>
                                         </span>
                                         <span class="menu-title">Support
@@ -266,7 +277,8 @@
                             @can('staff.emails')
                                 <li class="menu-item">
                                     <a href="{{ config('custom.staff_subdomain') . '/webmail' }}" target="_blank">
-                                        <span class="menu-icon">
+                                        <span class="menu-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="Email">
                                             <i class="fa-duotone fa-envelopes"></i>
                                         </span>
                                         <span class="menu-title">Email
@@ -278,7 +290,8 @@
                             @can('staff.logs')
                                 <li class="menu-item">
                                     <a href="{{ route('staff.logs') }}">
-                                        <span class="menu-icon">
+                                        <span class="menu-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="Logs">
                                             <i class="fa-duotone fa-file"></i>
                                         </span>
                                         <span class="menu-title">Logs

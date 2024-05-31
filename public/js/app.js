@@ -608,3 +608,60 @@ const generatePDF = function (data) {
 const downloadPDF = function (title) {
     pdf.save(title + '.pdf')
 }
+
+// Tooltips
+// $("#btn-collapse").click(function () {
+//     // if ($("#sidebar").hasClass('collapsed')) {
+//     //     $('[data-bs-toggle="tooltip"]').each(function () {
+//     //         $(this).attr("title", "Hello")
+//     //     })
+//     // }
+// })
+
+var titles = [];
+var sidebar = document.getElementById('sidebar');
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    titles.push(tooltipTriggerEl.title);
+    return new bootstrap.Tooltip(tooltipTriggerEl);
+});
+
+// Function to initialize tooltips
+function initializeTooltips() {
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl, index) {
+        tooltipTriggerEl.setAttribute("title", titles[index])
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+}
+
+// Function to destroy tooltips
+function destroyTooltips() {
+    tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+        var tooltipInstance = bootstrap.Tooltip.getInstance(tooltipTriggerEl);
+        if (tooltipInstance) {
+            tooltipInstance.dispose();
+        }
+    });
+}
+
+// Initialize tooltips if sidebar is initially collapsed
+if (sidebar.classList.contains('collapsed')) {
+    initializeTooltips();
+} else {
+    tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+        tooltipTriggerEl.setAttribute("data-bs-original-title", "");
+    });
+}
+
+document.getElementById("btn-collapse").addEventListener('click', function () {
+    if (sidebar.classList.contains('collapsed')) {
+        // Sidebar is about to be expanded, remove tooltips
+        destroyTooltips();
+    } else {
+        // Sidebar is about to be collapsed, add tooltips
+        initializeTooltips();
+    }
+    // Toggle the 'collapsed' class on the sidebar
+    // sidebar.classList.toggle('collapsed');
+});
+

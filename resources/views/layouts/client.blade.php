@@ -130,7 +130,8 @@
                         <ul>
                             <li class="menu-item">
                                 <a href="{{ route('client.projects.index') }}" class="dashboard-link">
-                                    <span class="menu-icon">
+                                    <span class="menu-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="My Projects">
                                         <i class="fa-duotone fa-rectangle-history"></i>
 
                                     </span>
@@ -140,7 +141,8 @@
 
                             <li class="menu-item">
                                 <a href="{{ route('user', \App\Models\User::getAdmin()->id) }}">
-                                    <span class="menu-icon">
+                                    <span class="menu-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Chats">
                                         <i class="fa-duotone fa-messages"></i>
 
                                     </span>
@@ -150,7 +152,8 @@
                             </li>
                             <li class="menu-item">
                                 <a href="{{ route('client.invoices.index') }}">
-                                    <span class="menu-icon">
+                                    <span class="menu-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Billing">
                                         <i class="fa-duotone fa-credit-card"></i>
                                     </span>
                                     <span class="menu-title">Billing
@@ -159,7 +162,8 @@
                             </li>
                             <li class="menu-item">
                                 <a href="{{ route('client.services.index') }}">
-                                    <span class="menu-icon">
+                                    <span class="menu-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Business Growth">
                                         <i class="fa-duotone fa-chart-line-up"></i>
                                     </span>
                                     <span class="menu-title">Business Growth
@@ -168,7 +172,8 @@
                             </li>
                             <li class="menu-item">
                                 <a href="{{ route('client.support.index') }}">
-                                    <span class="menu-icon">
+                                    <span class="menu-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Support">
                                         <i class="fa-duotone fa-user-headset"></i>
                                     </span>
                                     <span class="menu-title">Support

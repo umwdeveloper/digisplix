@@ -130,7 +130,8 @@
                         <ul>
                             <li class="menu-item">
                                 <a href="{{ route('partner.leads.index') }}">
-                                    <span class="menu-icon">
+                                    <span class="menu-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Leads">
                                         <i class="fa-duotone fa-people-group"></i>
 
                                     </span>
@@ -140,7 +141,8 @@
 
                             <li class="menu-item">
                                 <a href="{{ route('partner.clients.index') }}">
-                                    <span class="menu-icon">
+                                    <span class="menu-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Clients">
                                         <i class="fa-duotone fa-users-line"></i>
 
                                     </span>
@@ -151,7 +153,8 @@
 
                             <li class="menu-item">
                                 <a href="{{ route('partner.sales.index') }}">
-                                    <span class="menu-icon">
+                                    <span class="menu-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Commission">
                                         <i class="fa-duotone fa-chart-mixed-up-circle-dollar"></i>
                                     </span>
                                     <span class="menu-title">Commission
@@ -162,7 +165,8 @@
 
                             <li class="menu-item">
                                 <a href="{{ route('chat') }}">
-                                    <span class="menu-icon">
+                                    <span class="menu-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Chats">
                                         <i class="fa-duotone fa-messages"></i>
 
                                     </span>
