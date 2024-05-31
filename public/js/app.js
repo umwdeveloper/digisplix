@@ -610,17 +610,15 @@ const downloadPDF = function (title) {
 }
 
 // Tooltips
-// $("#btn-collapse").click(function () {
-//     // if ($("#sidebar").hasClass('collapsed')) {
-//     //     $('[data-bs-toggle="tooltip"]').each(function () {
-//     //         $(this).attr("title", "Hello")
-//     //     })
-//     // }
-// })
+var tooltipTriggerList2 = [].slice.call(document.querySelectorAll('.main-area [data-bs-toggle="tooltip"]'));
+var tooltipList2 = tooltipTriggerList2.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl);
+});
 
+// Sidebar Tooltips
 var titles = [];
 var sidebar = document.getElementById('sidebar');
-var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('#sidebar [data-bs-toggle="tooltip"]'));
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     titles.push(tooltipTriggerEl.title);
     return new bootstrap.Tooltip(tooltipTriggerEl);

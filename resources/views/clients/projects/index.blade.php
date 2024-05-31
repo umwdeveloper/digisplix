@@ -82,7 +82,9 @@
                             <div class=" col-xxl-3 col-xl-4  col-md-6 mb-3">
                                 <div class="project-card">
                                     <div class="project-card--header">
-                                        <h2 class="mb-0 pb-0 ">{{ $status_labels[$project->current_status] }}</h2>
+                                        <h2 class="mb-0 pb-0 " data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="Project {{ $status_labels[$project->current_status] }}">
+                                            {{ $status_labels[$project->current_status] }}</h2>
 
                                     </div>
                                     <a href="{{ route('client.projects.show', $project->id) }}" class="project-card-data">
@@ -100,7 +102,8 @@
                                             {{ $project->client->user->name }}
                                         </p>
                                         <div class="d-flex justify-content-between align-items-end mt-4">
-                                            <button disabled
+                                            <button disabled data-bs-toggle="tooltip" data-bs-placement="top"
+                                                title="Invoice {{ $project->billing_status == 0 ? 'Overdue' : 'Paid' }}"
                                                 class="{{ $project->billing_status == 0 ? 'overdue' : 'paid' }}">{{ $billing_labels[$project->billing_status] }}</button>
                                             <div>
                                                 <div class="completed">

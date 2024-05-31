@@ -121,9 +121,11 @@
                         </ul>
                     </div>
                 </div>
+
                 <div class="menu-item py-3 menu-heading-div">
                     <span class="ps-4 f-14 w-500 text-light-white ls-3 menu-heading ">Main Menu</span>
                 </div>
+
                 <div class="sidebar-content">
                     <nav class="menu open-current-submenu">
 
