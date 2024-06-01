@@ -9,5 +9,6 @@ return [
     'client_alias' => env('CLIENT_ALIAS'),
     'stripe_key' => env('STRIPE_KEY'),
     'stripe_secret' => env('STRIPE_SECRET'),
-    'stripe_webhook_payment' => env('STRIPE_WEBHOOK_PAYMENT')
+    'stripe_webhook_payment' => env('STRIPE_WEBHOOK_PAYMENT'),
+    'geo_location_key' => env('GEOLOCATION_API_KEY')
 ];

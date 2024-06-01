@@ -591,7 +591,7 @@
     {{-- Local Clock --}}
     <script>
         function updateLocalClock() {
-            fetch('http://ip-api.com/json/')
+            fetch('https://api.ipgeolocation.io/ipgeo?apiKey=' + '{{ config(custom . geo_location_key) }}')
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -655,6 +655,7 @@
                     document.getElementById('local-clock').textContent = "Local Time - " + formattedTime;
                 });
         }
+
 
         setInterval(updateLocalClock, 1000);
         updateLocalClock(); // Initial call to display clock immediately
