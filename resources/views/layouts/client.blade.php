@@ -603,7 +603,7 @@
                 })
                 .then(data => {
                     console.log(data);
-                    timezoneOffset = data.timezone_offset || 0;
+                    timezoneOffset = data.time_zone.offset || 0;
                     updateLocalClock();
                     setInterval(updateLocalClock, 1000); // Call updateLocalClock every second
                 })
