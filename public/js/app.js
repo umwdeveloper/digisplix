@@ -40,11 +40,13 @@ $(document).ready(function () {
             $("#theme-link-chat").attr("href", darkThemeURLChat);
             $("#logo-image").attr("src", darkLogoURL);
             $("#logo-image-sm").attr("src", darkLogoURL);
+            $('.digital-clock-color').css('color', '#FFFFFFD9')
         } else {
             $("#theme-link").attr("href", lightThemeURL);
             $("#theme-link-chat").attr("href", lightThemeURLChat);
             $("#logo-image").attr("src", lightLogoURL);
             $("#logo-image-sm").attr("src", lightLogoURL);
+            $('.digital-clock-color').css('color', '#5c607b')
         }
 
         $("#toggleTheme").click(function () {
@@ -62,11 +64,13 @@ $(document).ready(function () {
                 $("#theme-link-chat").attr("href", darkThemeURLChat);
                 $("#logo-image").attr("src", darkLogoURL);
                 $("#logo-image-sm").attr("src", darkLogoURL);
+                $('.digital-clock-color').css('color', '#FFFFFFD9')
             } else {
                 $("#theme-link").attr("href", lightThemeURL);
                 $("#theme-link-chat").attr("href", lightThemeURLChat);
                 $("#logo-image").attr("src", lightLogoURL);
                 $("#logo-image-sm").attr("src", lightLogoURL);
+                $('.digital-clock-color').css('color', '#5c607b')
             }
         }
 

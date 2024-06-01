@@ -461,24 +461,20 @@
                         <h6 id="local-clock" class="mb-5 mt-3 text-center"></h6>
                         <div class="row">
                             <div class="col-lg-3 d-flex flex-column justify-content-between align-items-center">
-                                <h6 class="mb-4">GMT - Greenwich Mean Time</h6>
+                                <h6 class="mb-4 text-gray text-dark-clr">GMT - Greenwich Mean Time</h6>
                                 <div id="clock-gmt"></div>
-                                {{-- <h6>Sat 4-4-4</h6> --}}
                             </div>
                             <div class="col-lg-3 d-flex flex-column justify-content-between align-items-center">
-                                <h6 class="mb-4">EST - Eastern Mean Time</h6>
+                                <h6 class="mb-4 text-gray text-dark-clr">EST - Eastern Mean Time</h6>
                                 <div id="clock-est"></div>
-                                {{-- <h6>Sat 4-4-4</h6> --}}
                             </div>
                             <div class="col-lg-3 d-flex flex-column justify-content-between align-items-center">
-                                <h6 class="mb-4">PST - Pacific Mean Time</h6>
+                                <h6 class="mb-4 text-gray text-dark-clr">PST - Pacific Mean Time</h6>
                                 <div id="clock-pst"></div>
-                                {{-- <h6>Sat 4-4-4</h6> --}}
                             </div>
                             <div class="col-lg-3 d-flex flex-column justify-content-between align-items-center">
-                                <h6 class="mb-4">CST - Central Mean Time</h6>
+                                <h6 class="mb-4 text-gray text-dark-clr">CST - Central Mean Time</h6>
                                 <div id="clock-cst"></div>
-                                {{-- <h6>Sat 4-4-4</h6> --}}
                             </div>
                         </div>
                     </div>

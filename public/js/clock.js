@@ -75,7 +75,8 @@ function AnalogClock(id, option) {
     label.style.marginTop = "20px";
     label.style.marginBottom = "20px";
     // label.style.color = that.foreColor;
-    label.style.color = "#000000";
+    label.style.color = "#5c607b";
+    label.classList.add('digital-clock-color')
     label.innerHTML = dateTimeFormat(new Date());
     if (that.width >= 100)//hide if the width is not enough to show the digital clock
         that.container.appendChild(label);

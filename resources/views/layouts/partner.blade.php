@@ -370,24 +370,20 @@
                         <h6 id="local-clock" class="mb-5 mt-3 text-center"></h6>
                         <div class="row">
                             <div class="col-lg-3 d-flex flex-column justify-content-between align-items-center">
-                                <h6 class="mb-4">GMT - Greenwich Mean Time</h6>
+                                <h6 class="mb-4 text-gray text-dark-clr">GMT - Greenwich Mean Time</h6>
                                 <div id="clock-gmt"></div>
-                                {{-- <h6>Sat 4-4-4</h6> --}}
                             </div>
                             <div class="col-lg-3 d-flex flex-column justify-content-between align-items-center">
-                                <h6 class="mb-4">EST - Eastern Mean Time</h6>
+                                <h6 class="mb-4 text-gray text-dark-clr">EST - Eastern Mean Time</h6>
                                 <div id="clock-est"></div>
-                                {{-- <h6>Sat 4-4-4</h6> --}}
                             </div>
                             <div class="col-lg-3 d-flex flex-column justify-content-between align-items-center">
-                                <h6 class="mb-4">PST - Pacific Mean Time</h6>
+                                <h6 class="mb-4 text-gray text-dark-clr">PST - Pacific Mean Time</h6>
                                 <div id="clock-pst"></div>
-                                {{-- <h6>Sat 4-4-4</h6> --}}
                             </div>
                             <div class="col-lg-3 d-flex flex-column justify-content-between align-items-center">
-                                <h6 class="mb-4">CST - Central Mean Time</h6>
+                                <h6 class="mb-4 text-gray text-dark-clr">CST - Central Mean Time</h6>
                                 <div id="clock-cst"></div>
-                                {{-- <h6>Sat 4-4-4</h6> --}}
                             </div>
                         </div>
                     </div>
@@ -499,20 +495,47 @@
 
     {{-- Local Clock --}}
     <script>
+        let timezoneOffset = 0;
+        let api = "{{ config('custom.geo_location_key') }}"
+
+        function fetchTimezoneOffset() {
+            fetch('https://api.ipgeolocation.io/ipgeo?apiKey=' + api)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                    timezoneOffset = data.time_zone.offset_with_dst * 60 * 60 * 1000 || 0;
+                    updateLocalClock();
+                    setInterval(updateLocalClock, 1000); // Call updateLocalClock every second
+                })
+                .catch(error => {
+                    console.error('Error fetching IP API:', error);
+                    // If an error occurs, fallback to local time and still call the clock update
+                    updateLocalClock();
+                    setInterval(updateLocalClock, 1000); // Call updateLocalClock every second
+                });
+        }
+
         function updateLocalClock() {
             var now = new Date();
+            var utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
+            var localTime = new Date(utcTime + timezoneOffset);
 
             var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
             var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-            var day = days[now.getDay()];
-            var date = ('0' + now.getDate()).slice(-2);
-            var month = months[now.getMonth()];
-            var year = now.getFullYear();
+            var day = days[localTime.getDay()];
+            var date = ('0' + localTime.getDate()).slice(-2);
+            var month = months[localTime.getMonth()];
+            var year = localTime.getFullYear();
 
-            var hours = now.getHours();
-            var minutes = ('0' + now.getMinutes()).slice(-2);
-            var seconds = ('0' + now.getSeconds()).slice(-2);
+            var hours = localTime.getHours();
+            var minutes = ('0' + localTime.getMinutes()).slice(-2);
+            var seconds = ('0' + localTime.getSeconds()).slice(-2);
 
             var ampm = hours >= 12 ? 'PM' : 'AM';
             hours = hours % 12;
@@ -525,8 +548,12 @@
             document.getElementById('local-clock').textContent = "Local Time - " + formattedTime;
         }
 
-        setInterval(updateLocalClock, 1000);
-        updateLocalClock(); // Initial call to display clock immediately
+        // Fetch timezone offset initially
+        fetchTimezoneOffset();
+
+
+        // setInterval(updateLocalClock, 1000);
+        // updateLocalClock(); // Initial call to display clock immediately
     </script>
 
     @yield('script')
