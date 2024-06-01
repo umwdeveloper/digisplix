@@ -265,7 +265,7 @@
                     </div>
 
                     <!-- chat -->
-                    <div class="header-option align-self-center hide-sm chat-btn messages-count-container"
+                    <div class="header-option align-self-center chat-btn messages-count-container"
                         style="position: relative"
                         onclick="window.location.href = '{{ route('user', \App\Models\User::getAdmin()->id) }}'">
                         <i class="fa-duotone fa-messages header-icon"></i>
@@ -458,7 +458,7 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="container-fluid">
-                        <h6 id="local-clock" class="mb-5 mt-3 text-center"></h6>
+                        <h6 id="local-clock" class="mb-5 mt-3 text-center text-gray text-dark-clr"></h6>
                         <div class="row">
                             <div class="col-lg-3 d-flex flex-column justify-content-between align-items-center">
                                 <h6 class="mb-4 text-gray text-dark-clr">GMT - Greenwich Mean Time</h6>

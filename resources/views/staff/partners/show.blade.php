@@ -19,7 +19,7 @@
 
                                     <div class="d-flex align-items-center mt-md-0 mt-3">
                                         <a href="{{ route('staff.partners.index') }}" class="text-gray text-dark-clr"> <i
-                                                class="fa-solid fa-circle-left me-2"></i> Back Partners</a>
+                                                class="fa-solid fa-circle-left me-2"></i> Back to Partners</a>
                                     </div>
 
                                 </div>

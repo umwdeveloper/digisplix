@@ -395,8 +395,8 @@
 
                     <!-- chat -->
                     @can('staff.chats')
-                        <div class="header-option align-self-center hide-sm messages-count-container"
-                            style="position: relative" onclick="window.location.href = '{{ route('chat') }}'">
+                        <div class="header-option align-self-center messages-count-container" style="position: relative"
+                            onclick="window.location.href = '{{ route('chat') }}'">
                             <i class="fa-duotone fa-messages header-icon"></i>
                             @if ($total_messages_count > 0)
                                 <span class="messages-count">{{ $total_messages_count }}</span>
