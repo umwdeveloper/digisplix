@@ -600,6 +600,7 @@
                     return response.json();
                 })
                 .then(data => {
+                    console.log(data);
                     var timezoneOffset = data.timezone_offset || 0; // Get timezone offset from API response
                     var now = new Date();
                     now.setMinutes(now.getMinutes() + timezoneOffset);
