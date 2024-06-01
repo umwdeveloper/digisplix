@@ -591,9 +591,10 @@
     {{-- Local Clock --}}
     <script>
         let timezoneOffset = 0;
+        let api = "{{ config('custom.geo_location_key') }}"
 
         function fetchTimezoneOffset() {
-            fetch('https://api.ipgeolocation.io/ipgeo?apiKey=YOUR_API_KEY')
+            fetch('https://api.ipgeolocation.io/ipgeo?apiKey=' + api)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -601,6 +602,7 @@
                     return response.json();
                 })
                 .then(data => {
+                    console.log(data);
                     timezoneOffset = data.timezone_offset || 0;
                     updateLocalClock();
                     setInterval(updateLocalClock, 1000); // Call updateLocalClock every second
