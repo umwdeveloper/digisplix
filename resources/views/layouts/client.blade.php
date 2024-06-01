@@ -591,7 +591,8 @@
     {{-- Local Clock --}}
     <script>
         function updateLocalClock() {
-            fetch('https://api.ipgeolocation.io/ipgeo?apiKey=' + '{{ config(custom . geo_location_key) }}')
+            var api = "{{ config('custom.geo_location_key') }}";
+            fetch('https://api.ipgeolocation.io/ipgeo?apiKey=' + api)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
