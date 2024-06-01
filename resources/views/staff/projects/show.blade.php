@@ -626,6 +626,23 @@
     <script>
         $("body").on('click', '#save-data-btn', function() {
             $(".loading").removeClass('d-none')
+
+            var hasEmptyScore = false;
+
+            $('.score').each(function() {
+                var score = $(this).val().replace("%", "").trim();
+                if (score.length === 0) {
+                    hasEmptyScore = true;
+                    return false;
+                }
+            });
+
+            if (hasEmptyScore) {
+                alert("Please add phases progress correctly!");
+                $(".loading").addClass('d-none')
+                return false;
+            }
+
             // Update project data
             var projectID = '{{ $project->id }}';
             var projectName = $("#ProjectDetails #P-name").val();

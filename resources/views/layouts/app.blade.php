@@ -326,6 +326,13 @@
 
                 <!-- Notification -->
                 <div class="ms-auto d-flex">
+                    <!-- Clocks -->
+                    <div class="header-option align-self-center" data-bs-toggle="modal" data-bs-dismiss="modal"
+                        data-bs-target="#clocksModal">
+                        <i class="fa-duotone fa-clock header-icon"></i>
+
+                    </div>
+
                     <div class="notification-dropdown-div  align-self-center header-option">
                         <button type="button" style="position: relative;">
                             <div class="notifications ">
@@ -744,6 +751,44 @@
         </div>
     </div>
 
+    {{-- Clocks Modal --}}
+    <div class="modal fade" id="clocksModal" tabindex="-1" aria-labelledby="clocksModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <h6 id="local-clock" class="mb-5 mt-3 text-center"></h6>
+                        <div class="row">
+                            <div class="col-lg-3 d-flex flex-column justify-content-between align-items-center">
+                                <h6 class="mb-4">GMT - Greenwich Mean Time</h6>
+                                <div id="clock-gmt"></div>
+                                {{-- <h6>Sat 4-4-4</h6> --}}
+                            </div>
+                            <div class="col-lg-3 d-flex flex-column justify-content-between align-items-center">
+                                <h6 class="mb-4">EST - Eastern Mean Time</h6>
+                                <div id="clock-est"></div>
+                                {{-- <h6>Sat 4-4-4</h6> --}}
+                            </div>
+                            <div class="col-lg-3 d-flex flex-column justify-content-between align-items-center">
+                                <h6 class="mb-4">PST - Pacific Mean Time</h6>
+                                <div id="clock-pst"></div>
+                                {{-- <h6>Sat 4-4-4</h6> --}}
+                            </div>
+                            <div class="col-lg-3 d-flex flex-column justify-content-between align-items-center">
+                                <h6 class="mb-4">CST - Central Mean Time</h6>
+                                <div id="clock-cst"></div>
+                                {{-- <h6>Sat 4-4-4</h6> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
     <script>
@@ -783,6 +828,8 @@
     <script src="{{ asset('js/table.js') }}"></script>
     {{-- Country Selector --}}
     <script src="{{ asset('js/countrySelect.min.js') }}"></script>
+    {{-- Clocks --}}
+    <script src="{{ asset('js/clock.js') }}"></script>
     {{-- JS --}}
     <script src="{{ asset('js/app.js') . '?v=1' }}"></script>
     <script src="{{ asset('js/layout.js') }}"></script>
@@ -796,6 +843,81 @@
                 }
             }, 4000);
         });
+    </script>
+
+    {{-- Clocks --}}
+    <script>
+        var opt = new AnalogClockOption();
+        opt.width = 150;
+        opt.bgColor = '#000000'
+        opt.foreColor = '#ffffff'
+        // can define the timezone (+-) of the clock
+        opt.timezone = 0;
+        var clock = new AnalogClock("clock-gmt", opt);
+        clock.panel.style.border = "solid 1px white";
+        clock.panel.style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.5)";
+
+        opt = new AnalogClockOption();
+        opt.width = 150;
+        opt.bgColor = '#000000'
+        opt.foreColor = '#ffffff'
+        // can define the timezone (+-) of the clock
+        opt.timezone = -4;
+        var clock = new AnalogClock("clock-est", opt);
+        clock.panel.style.border = "solid 1px white";
+        clock.panel.style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.5)";
+
+        opt = new AnalogClockOption();
+        opt.width = 150;
+        opt.bgColor = '#000000'
+        opt.foreColor = '#ffffff'
+        // can define the timezone (+-) of the clock
+        opt.timezone = -7;
+        var clock = new AnalogClock("clock-pst", opt);
+        clock.panel.style.border = "solid 1px white";
+        clock.panel.style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.5)";
+
+        opt = new AnalogClockOption();
+        opt.width = 150;
+        opt.bgColor = '#000000'
+        opt.foreColor = '#ffffff'
+        // can define the timezone (+-) of the clock
+        opt.timezone = -5;
+        var clock = new AnalogClock("clock-cst", opt);
+        clock.panel.style.border = "solid 1px white";
+        clock.panel.style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.5)";
+    </script>
+
+    {{-- Local Clock --}}
+    <script>
+        function updateLocalClock() {
+            var now = new Date();
+
+            var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+            var day = days[now.getDay()];
+            var date = ('0' + now.getDate()).slice(-2);
+            var month = months[now.getMonth()];
+            var year = now.getFullYear();
+
+            var hours = now.getHours();
+            var minutes = ('0' + now.getMinutes()).slice(-2);
+            var seconds = ('0' + now.getSeconds()).slice(-2);
+
+            var ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // The hour '0' should be '12'
+            hours = ('0' + hours).slice(-2);
+
+            var formattedTime = day + ', ' + date + ' ' + month + ' ' + year + ' ' + hours + ':' + minutes + ':' + seconds +
+                ' ' + ampm;
+
+            document.getElementById('local-clock').textContent = "Local Time - " + formattedTime;
+        }
+
+        setInterval(updateLocalClock, 1000);
+        updateLocalClock(); // Initial call to display clock immediately
     </script>
 
     @yield('script')
