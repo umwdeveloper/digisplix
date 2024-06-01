@@ -590,9 +590,10 @@
 
     {{-- Local Clock --}}
     <script>
-        function updateLocalClock() {
-            var api = "{{ config('custom.geo_location_key') }}";
-            fetch('https://api.ipgeolocation.io/ipgeo?apiKey=' + api)
+        let timezoneOffset = 0;
+
+        function fetchTimezoneOffset() {
+            fetch('https://api.ipgeolocation.io/ipgeo?apiKey=YOUR_API_KEY')
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -600,63 +601,47 @@
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data);
-                    var timezoneOffset = data.timezone_offset || 0; // Get timezone offset from API response
-                    var now = new Date();
-                    now.setMinutes(now.getMinutes() + timezoneOffset);
-
-                    var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-                    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-                    var day = days[now.getDay()];
-                    var date = ('0' + now.getDate()).slice(-2);
-                    var month = months[now.getMonth()];
-                    var year = now.getFullYear();
-
-                    var hours = now.getHours();
-                    var minutes = ('0' + now.getMinutes()).slice(-2);
-                    var seconds = ('0' + now.getSeconds()).slice(-2);
-
-                    var ampm = hours >= 12 ? 'PM' : 'AM';
-                    hours = hours % 12;
-                    hours = hours ? hours : 12; // The hour '0' should be '12'
-                    hours = ('0' + hours).slice(-2);
-
-                    var formattedTime = day + ', ' + date + ' ' + month + ' ' + year + ' ' + hours + ':' + minutes +
-                        ':' + seconds +
-                        ' ' + ampm;
-
-                    document.getElementById('local-clock').textContent = "Local Time - " + formattedTime;
+                    timezoneOffset = data.timezone_offset || 0;
+                    updateLocalClock();
+                    setInterval(updateLocalClock, 1000); // Call updateLocalClock every second
                 })
                 .catch(error => {
                     console.error('Error fetching IP API:', error);
-                    // If an error occurs, fallback to local time
-                    var now = new Date();
-
-                    var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-                    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-                    var day = days[now.getDay()];
-                    var date = ('0' + now.getDate()).slice(-2);
-                    var month = months[now.getMonth()];
-                    var year = now.getFullYear();
-
-                    var hours = now.getHours();
-                    var minutes = ('0' + now.getMinutes()).slice(-2);
-                    var seconds = ('0' + now.getSeconds()).slice(-2);
-
-                    var ampm = hours >= 12 ? 'PM' : 'AM';
-                    hours = hours % 12;
-                    hours = hours ? hours : 12; // The hour '0' should be '12'
-                    hours = ('0' + hours).slice(-2);
-
-                    var formattedTime = day + ', ' + date + ' ' + month + ' ' + year + ' ' + hours + ':' + minutes +
-                        ':' + seconds +
-                        ' ' + ampm;
-
-                    document.getElementById('local-clock').textContent = "Local Time - " + formattedTime;
+                    // If an error occurs, fallback to local time and still call the clock update
+                    updateLocalClock();
+                    setInterval(updateLocalClock, 1000); // Call updateLocalClock every second
                 });
         }
+
+        function updateLocalClock() {
+            var now = new Date();
+            now.setMinutes(now.getMinutes() + timezoneOffset);
+
+            var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+            var day = days[now.getDay()];
+            var date = ('0' + now.getDate()).slice(-2);
+            var month = months[now.getMonth()];
+            var year = now.getFullYear();
+
+            var hours = now.getHours();
+            var minutes = ('0' + now.getMinutes()).slice(-2);
+            var seconds = ('0' + now.getSeconds()).slice(-2);
+
+            var ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // The hour '0' should be '12'
+            hours = ('0' + hours).slice(-2);
+
+            var formattedTime = day + ', ' + date + ' ' + month + ' ' + year + ' ' + hours + ':' + minutes + ':' + seconds +
+                ' ' + ampm;
+
+            document.getElementById('local-clock').textContent = "Local Time - " + formattedTime;
+        }
+
+        // Fetch timezone offset initially
+        fetchTimezoneOffset();
 
 
         setInterval(updateLocalClock, 1000);
