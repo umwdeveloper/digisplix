@@ -591,29 +591,69 @@
     {{-- Local Clock --}}
     <script>
         function updateLocalClock() {
-            var now = new Date();
+            fetch('http://ip-api.com/json/')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    var timezoneOffset = data.timezone_offset || 0; // Get timezone offset from API response
+                    var now = new Date();
+                    now.setMinutes(now.getMinutes() + timezoneOffset);
 
-            var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-            var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                    var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-            var day = days[now.getDay()];
-            var date = ('0' + now.getDate()).slice(-2);
-            var month = months[now.getMonth()];
-            var year = now.getFullYear();
+                    var day = days[now.getDay()];
+                    var date = ('0' + now.getDate()).slice(-2);
+                    var month = months[now.getMonth()];
+                    var year = now.getFullYear();
 
-            var hours = now.getHours();
-            var minutes = ('0' + now.getMinutes()).slice(-2);
-            var seconds = ('0' + now.getSeconds()).slice(-2);
+                    var hours = now.getHours();
+                    var minutes = ('0' + now.getMinutes()).slice(-2);
+                    var seconds = ('0' + now.getSeconds()).slice(-2);
 
-            var ampm = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12;
-            hours = hours ? hours : 12; // The hour '0' should be '12'
-            hours = ('0' + hours).slice(-2);
+                    var ampm = hours >= 12 ? 'PM' : 'AM';
+                    hours = hours % 12;
+                    hours = hours ? hours : 12; // The hour '0' should be '12'
+                    hours = ('0' + hours).slice(-2);
 
-            var formattedTime = day + ', ' + date + ' ' + month + ' ' + year + ' ' + hours + ':' + minutes + ':' + seconds +
-                ' ' + ampm;
+                    var formattedTime = day + ', ' + date + ' ' + month + ' ' + year + ' ' + hours + ':' + minutes +
+                        ':' + seconds +
+                        ' ' + ampm;
 
-            document.getElementById('local-clock').textContent = "Local Time - " + formattedTime;
+                    document.getElementById('local-clock').textContent = "Local Time - " + formattedTime;
+                })
+                .catch(error => {
+                    console.error('Error fetching IP API:', error);
+                    // If an error occurs, fallback to local time
+                    var now = new Date();
+
+                    var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+                    var day = days[now.getDay()];
+                    var date = ('0' + now.getDate()).slice(-2);
+                    var month = months[now.getMonth()];
+                    var year = now.getFullYear();
+
+                    var hours = now.getHours();
+                    var minutes = ('0' + now.getMinutes()).slice(-2);
+                    var seconds = ('0' + now.getSeconds()).slice(-2);
+
+                    var ampm = hours >= 12 ? 'PM' : 'AM';
+                    hours = hours % 12;
+                    hours = hours ? hours : 12; // The hour '0' should be '12'
+                    hours = ('0' + hours).slice(-2);
+
+                    var formattedTime = day + ', ' + date + ' ' + month + ' ' + year + ' ' + hours + ':' + minutes +
+                        ':' + seconds +
+                        ' ' + ampm;
+
+                    document.getElementById('local-clock').textContent = "Local Time - " + formattedTime;
+                });
         }
 
         setInterval(updateLocalClock, 1000);
