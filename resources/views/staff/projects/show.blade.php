@@ -192,7 +192,8 @@
                                                                                 class="me-2">{{ $index + 1 }}.</span>
                                                                             <p class="mb-2 pb-0">{{ $task->task }}</p>
                                                                         </div>
-                                                                        <i
+                                                                        <i data-bs-toggle="tooltip" data-placement="top"
+                                                                            title="{{ $task->status == 1 ? 'Task Completed' : 'In Progress' }}"
                                                                             class="bi bi-check-circle{{ $task->status == 1 ? '-fill' : '' }} ms-2 {{ $task->status == 1 ? 'complete-step' : '' }}"></i>
                                                                     </div>
                                                                 @endforeach
