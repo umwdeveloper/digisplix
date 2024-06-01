@@ -6,6 +6,9 @@
             {{ session('error') }}
         </x-toast>
     @endif
+    @php
+        $isProjectsChat = true;
+    @endphp
     <main class="content mb-3">
         <div class="container-fluid px-lg-0">
             <div class="row justify-content-center">
@@ -324,6 +327,8 @@
             </div>
         </div>
     </main>
+
+    @include('Chatify::layouts.modals')
 
     <!-- Modal -->
     <div class="modal fade" id="taskModal" data-phase-id="" tabindex="-1" aria-labelledby="exampleModalLabel"

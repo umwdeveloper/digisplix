@@ -133,5 +133,9 @@
     var chatAdmin = '{{ $admin->id }}';
     var isStaff = '{{ $is_staff }}';
 </script>
-@include('Chatify::layouts.modals')
+
+@if (!isset($isProjectsChat))
+    @include('Chatify::layouts.modals')
+@endif
+
 @include('Chatify::layouts.footerLinks')
