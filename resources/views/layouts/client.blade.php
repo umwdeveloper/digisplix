@@ -603,7 +603,7 @@
                 })
                 .then(data => {
                     console.log(data);
-                    timezoneOffset = data.time_zone.offset || 0;
+                    timezoneOffset = data.time_zone.offset * 60 * 60 * 1000 || 0;
                     updateLocalClock();
                     setInterval(updateLocalClock, 1000); // Call updateLocalClock every second
                 })
@@ -617,19 +617,19 @@
 
         function updateLocalClock() {
             var now = new Date();
-            now.setMinutes(now.getMinutes() + timezoneOffset);
+            var localTime = new Date(now.getTime() + timezoneOffset);
 
             var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
             var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-            var day = days[now.getDay()];
-            var date = ('0' + now.getDate()).slice(-2);
-            var month = months[now.getMonth()];
-            var year = now.getFullYear();
+            var day = days[localTime.getDay()];
+            var date = ('0' + localTime.getDate()).slice(-2);
+            var month = months[localTime.getMonth()];
+            var year = localTime.getFullYear();
 
-            var hours = now.getHours();
-            var minutes = ('0' + now.getMinutes()).slice(-2);
-            var seconds = ('0' + now.getSeconds()).slice(-2);
+            var hours = localTime.getHours();
+            var minutes = ('0' + localTime.getMinutes()).slice(-2);
+            var seconds = ('0' + localTime.getSeconds()).slice(-2);
 
             var ampm = hours >= 12 ? 'PM' : 'AM';
             hours = hours % 12;
