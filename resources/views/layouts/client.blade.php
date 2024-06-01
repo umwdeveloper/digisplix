@@ -646,8 +646,8 @@
         fetchTimezoneOffset();
 
 
-        setInterval(updateLocalClock, 1000);
-        updateLocalClock(); // Initial call to display clock immediately
+        // setInterval(updateLocalClock, 1000);
+        // updateLocalClock(); // Initial call to display clock immediately
     </script>
 
     @yield('script')
