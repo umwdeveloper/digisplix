@@ -617,19 +617,20 @@
 
         function updateLocalClock() {
             var now = new Date();
-            var localTime = new Date(now.getTime() + timezoneOffset);
+            var utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
+            var localTime = new Date(utcTime + timezoneOffset);
 
             var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
             var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-            var day = days[localTime.getDay()];
-            var date = ('0' + localTime.getDate()).slice(-2);
-            var month = months[localTime.getMonth()];
-            var year = localTime.getFullYear();
+            var day = days[localTime.getUTCDay()];
+            var date = ('0' + localTime.getUTCDate()).slice(-2);
+            var month = months[localTime.getUTCMonth()];
+            var year = localTime.getUTCFullYear();
 
-            var hours = localTime.getHours();
-            var minutes = ('0' + localTime.getMinutes()).slice(-2);
-            var seconds = ('0' + localTime.getSeconds()).slice(-2);
+            var hours = localTime.getUTCHours();
+            var minutes = ('0' + localTime.getUTCMinutes()).slice(-2);
+            var seconds = ('0' + localTime.getUTCSeconds()).slice(-2);
 
             var ampm = hours >= 12 ? 'PM' : 'AM';
             hours = hours % 12;
