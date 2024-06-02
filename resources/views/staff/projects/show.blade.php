@@ -251,8 +251,17 @@
                                                             {{ $phase->name }}
                                                         </p>
                                                         <div class="edit">
-                                                            <i class="bi bi-pencil-fill"></i>
+                                                            <i class="bi bi-gear"></i>
                                                         </div>
+                                                        <form action="{{ route('staff.phases.destroy', $phase->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <div class="delete"
+                                                                style="position: absolute; top: 3px; right: 40px; cursor: pointer;">
+                                                                <i class="bi bi-trash"></i>
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                     <div class="task-card--body tasks-container"
                                                         data-phase-id="{{ $phase->id }}">

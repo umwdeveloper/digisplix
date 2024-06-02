@@ -82,6 +82,7 @@ Route::domain(config('custom.staff_alias'))
         Route::patch('phases/update/{phase_id}', [PhaseController::class, 'update'])
             ->name('phases.update');
         Route::get('phases/{project_id}', [PhaseController::class, 'store'])->name('phases.store');
+        Route::delete('phases/{phase}', [PhaseController::class, 'destroy'])->name('phases.destroy');
 
         // Tasks
         Route::put('tasks/updateAll', [TaskController::class, 'updateAll'])

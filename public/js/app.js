@@ -667,3 +667,15 @@ document.getElementById("btn-collapse").addEventListener('click', function () {
     // sidebar.classList.toggle('collapsed');
 });
 
+// Set min date to today
+let today = new Date();
+let year = today.getFullYear();
+let month = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+let day = String(today.getDate()).padStart(2, '0');
+
+let todayDate = `${year}-${month}-${day}`;
+
+// Set the min attribute of the date input to today's date
+document.querySelectorAll('input[type="date"]').forEach(function (dateInput) {
+    dateInput.setAttribute('min', todayDate);
+});
